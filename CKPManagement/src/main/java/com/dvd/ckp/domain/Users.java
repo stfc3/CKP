@@ -5,11 +5,13 @@
  */
 package com.dvd.ckp.domain;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -18,7 +20,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-public class Users {
+@NamedQuery(name = "Users.getUserByName", query = "FROM Users u WHERE userName = :userName")
+public class Users implements Serializable {
 
     private long userId;
     private String userName;
@@ -27,6 +30,7 @@ public class Users {
     private String phone;
     private String address;
     private String card;
+    private int status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,5 +96,15 @@ public class Users {
     public void setCard(String card) {
         this.card = card;
     }
+
+    @Column(name = "status")
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
 
 }

@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-
+    <window apply="com.dvd.ckp.controller.LoginController">
+            <textbox id="txtUserName" placeholder="${c:l('login.username')}" constraint="no empty: ${c:l('login.username.empty')}"/>
+            <textbox id="txtPassword" placeholder="${c:l('login.password')}" type="password" constraint="no empty: ${c:l('login.password.empty')}"/>
+            <button id="btnSubmit" label="${c:l('login.submit')}"  width="100px"/>
+            <label id="mesg" style="color:red"/>
+    </window>
+<!--    <borderlayout apply="com.dvd.ckp.controller.LoginController">
+        <west size="25%" border="none" flex="true">
+		West		
+        </west>
+        <center flex="true">
+            
+        </center>
+        <east size="25%" border="none" flex="true">
+                East		
+        </east>
+    </borderlayout>-->
 </zk>

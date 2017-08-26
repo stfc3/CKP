@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dvd.ckp.business.dao;
-
-import com.dvd.ckp.domain.Users;
-import java.util.List;
+package com.dvd.ckp.utils;
 
 /**
  *
  * @author dmin
  */
-public interface UserDAO {
-
-    <T> List<T> getAll(Class<T> klass);
-    Users getUserByName(String pstrUserName);
+public interface SpringConstant {
+    
+    String USER_SERVICES="UserService";
+    
 }

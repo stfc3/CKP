@@ -1,0 +1,80 @@
+25/08/2017 21:04:16 ERROR [main] EncodeUtil: Error encrypt: Wrong IV length: must be 16 bytes long
+java.security.InvalidAlgorithmParameterException: Wrong IV length: must be 16 bytes long
+	at com.sun.crypto.provider.CipherCore.init(CipherCore.java:525)
+	at com.sun.crypto.provider.AESCipher.engineInit(AESCipher.java:346)
+	at javax.crypto.Cipher.implInit(Cipher.java:806)
+	at javax.crypto.Cipher.chooseProvider(Cipher.java:864)
+	at javax.crypto.Cipher.init(Cipher.java:1396)
+	at javax.crypto.Cipher.init(Cipher.java:1327)
+	at com.dvd.ckp.utils.EncodeUtil.encrypt(EncodeUtil.java:20)
+	at com.dvd.ckp.utils.EncodeUtil.main(EncodeUtil.java:54)
+25/08/2017 21:04:16 ERROR [main] EncodeUtil: Error decrypt: Wrong IV length: must be 16 bytes long
+java.security.InvalidAlgorithmParameterException: Wrong IV length: must be 16 bytes long
+	at com.sun.crypto.provider.CipherCore.init(CipherCore.java:525)
+	at com.sun.crypto.provider.AESCipher.engineInit(AESCipher.java:346)
+	at javax.crypto.Cipher.implInit(Cipher.java:806)
+	at javax.crypto.Cipher.chooseProvider(Cipher.java:864)
+	at javax.crypto.Cipher.init(Cipher.java:1396)
+	at javax.crypto.Cipher.init(Cipher.java:1327)
+	at com.dvd.ckp.utils.EncodeUtil.decrypt(EncodeUtil.java:38)
+	at com.dvd.ckp.utils.EncodeUtil.main(EncodeUtil.java:55)
+25/08/2017 21:05:47 ERROR [main] EncodeUtil: Error encrypt: Invalid AES key length: 15 bytes
+java.security.InvalidKeyException: Invalid AES key length: 15 bytes
+	at com.sun.crypto.provider.AESCipher.engineGetKeySize(AESCipher.java:509)
+	at javax.crypto.Cipher.passCryptoPermCheck(Cipher.java:1067)
+	at javax.crypto.Cipher.checkCryptoPerm(Cipher.java:1038)
+	at javax.crypto.Cipher.implInit(Cipher.java:805)
+	at javax.crypto.Cipher.chooseProvider(Cipher.java:864)
+	at javax.crypto.Cipher.init(Cipher.java:1396)
+	at javax.crypto.Cipher.init(Cipher.java:1327)
+	at com.dvd.ckp.utils.EncodeUtil.encrypt(EncodeUtil.java:20)
+	at com.dvd.ckp.utils.EncodeUtil.main(EncodeUtil.java:54)
+25/08/2017 21:05:47 ERROR [main] EncodeUtil: Error decrypt: Invalid AES key length: 15 bytes
+java.security.InvalidKeyException: Invalid AES key length: 15 bytes
+	at com.sun.crypto.provider.AESCipher.engineGetKeySize(AESCipher.java:509)
+	at javax.crypto.Cipher.passCryptoPermCheck(Cipher.java:1067)
+	at javax.crypto.Cipher.checkCryptoPerm(Cipher.java:1038)
+	at javax.crypto.Cipher.implInit(Cipher.java:805)
+	at javax.crypto.Cipher.chooseProvider(Cipher.java:864)
+	at javax.crypto.Cipher.init(Cipher.java:1396)
+	at javax.crypto.Cipher.init(Cipher.java:1327)
+	at com.dvd.ckp.utils.EncodeUtil.decrypt(EncodeUtil.java:38)
+	at com.dvd.ckp.utils.EncodeUtil.main(EncodeUtil.java:55)
+25/08/2017 21:06:09 ERROR [main] EncodeUtil: Error decrypt: Given final block not properly padded
+javax.crypto.BadPaddingException: Given final block not properly padded
+	at com.sun.crypto.provider.CipherCore.doFinal(CipherCore.java:989)
+	at com.sun.crypto.provider.CipherCore.doFinal(CipherCore.java:845)
+	at com.sun.crypto.provider.AESCipher.engineDoFinal(AESCipher.java:446)
+	at javax.crypto.Cipher.doFinal(Cipher.java:2165)
+	at com.dvd.ckp.utils.EncodeUtil.decrypt(EncodeUtil.java:40)
+	at com.dvd.ckp.utils.EncodeUtil.main(EncodeUtil.java:55)
+25/08/2017 21:07:31 ERROR [main] EncodeUtil: Error decrypt: Given final block not properly padded
+javax.crypto.BadPaddingException: Given final block not properly padded
+	at com.sun.crypto.provider.CipherCore.doFinal(CipherCore.java:989)
+	at com.sun.crypto.provider.CipherCore.doFinal(CipherCore.java:845)
+	at com.sun.crypto.provider.AESCipher.engineDoFinal(AESCipher.java:446)
+	at javax.crypto.Cipher.doFinal(Cipher.java:2165)
+	at com.dvd.ckp.utils.EncodeUtil.decrypt(EncodeUtil.java:40)
+	at com.dvd.ckp.utils.EncodeUtil.main(EncodeUtil.java:55)
+25/08/2017 21:12:17 ERROR [main] EncodeUtil: Error encrypt: Invalid AES key length: 19 bytes
+java.security.InvalidKeyException: Invalid AES key length: 19 bytes
+	at com.sun.crypto.provider.AESCipher.engineGetKeySize(AESCipher.java:509)
+	at javax.crypto.Cipher.passCryptoPermCheck(Cipher.java:1067)
+	at javax.crypto.Cipher.checkCryptoPerm(Cipher.java:1038)
+	at javax.crypto.Cipher.implInit(Cipher.java:805)
+	at javax.crypto.Cipher.chooseProvider(Cipher.java:864)
+	at javax.crypto.Cipher.init(Cipher.java:1396)
+	at javax.crypto.Cipher.init(Cipher.java:1327)
+	at com.dvd.ckp.utils.EncodeUtil.encrypt(EncodeUtil.java:20)
+	at com.dvd.ckp.utils.EncodeUtil.main(EncodeUtil.java:54)
+25/08/2017 21:13:24 ERROR [main] EncodeUtil: Error encrypt: Invalid AES key length: 15 bytes
+java.security.InvalidKeyException: Invalid AES key length: 15 bytes
+	at com.sun.crypto.provider.AESCipher.engineGetKeySize(AESCipher.java:509)
+	at javax.crypto.Cipher.passCryptoPermCheck(Cipher.java:1067)
+	at javax.crypto.Cipher.checkCryptoPerm(Cipher.java:1038)
+	at javax.crypto.Cipher.implInit(Cipher.java:805)
+	at javax.crypto.Cipher.chooseProvider(Cipher.java:864)
+	at javax.crypto.Cipher.init(Cipher.java:1396)
+	at javax.crypto.Cipher.init(Cipher.java:1327)
+	at com.dvd.ckp.utils.EncodeUtil.encrypt(EncodeUtil.java:20)
+	at com.dvd.ckp.utils.EncodeUtil.main(EncodeUtil.java:54)

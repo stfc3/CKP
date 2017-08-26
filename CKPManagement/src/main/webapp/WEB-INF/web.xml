@@ -42,6 +42,7 @@
             classpath:applicationContext.xml
             classpath:applicationContext_hib.xml
             classpath:springOrmContext.xml
+            <!--classpath:log4j.properties-->
         </param-value>
     </context-param>
     <!-- Loads the Spring web application context -->
@@ -198,7 +199,7 @@
     </mime-mapping>
  
     <welcome-file-list>
-        <welcome-file>index.zul</welcome-file>
+        <welcome-file>login.zul</welcome-file>
         <welcome-file>index.zhtml</welcome-file>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>

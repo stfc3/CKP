@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.business.service;
 
+import com.dvd.ckp.domain.Users;
 import java.util.List;
 
 /**
@@ -14,4 +15,5 @@ import java.util.List;
 public interface UserService {
 
     <T> List<T> getAll(Class<T> klass);
+     Users getUserByName(String pstrUserName);
 }
