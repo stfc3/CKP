@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:n="native">
+    <window  id="mainCustomer" >
+        <groupbox>
+            <caption label="${c:l('revenue.contract')}" />
+            <!--<label id ="msgCateMainErr" style="align:right" />-->
+         
+        </groupbox>
+        
+    </window>  
+</zk>
