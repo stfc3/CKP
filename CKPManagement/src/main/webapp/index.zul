@@ -7,7 +7,7 @@
     <borderlayout apply="com.dvd.ckp.controller.MainController">
         <north size="7%" border="none" style="background-color:#7cb5d6;">
             <image src="/images/logo.png">
-                
+
             </image>
             <!--<button id="btnLogout">${c:l('logout.submit')}</button>-->
         </north>
@@ -27,13 +27,14 @@
                                 </treechildren>
                             </treeitem>
                         </treechildren>
-                    </tree>	
+                    </tree>
                 </west>
                 <center >
                     <tabbox id="tabContent">
                         <tabs id="tabs">
                             <tab label="Home"></tab>
                         </tabs>
+                        
                         <tabpanels id="tabpanels">
                             <tabpanel >Trang chủ</tabpanel>
                         </tabpanels>
@@ -45,7 +46,7 @@
                     src="E:\PHUONG ANH\CONG TAC QUAN LY\BAO CAO\BAO CAO THANG\2017\BAO CAO THANG 1-17.xlsx"
                    />-->
                 </center>
-            </borderlayout>	
+            </borderlayout>
         </center>
         <south  size="5%" border="none" style="background-color:#8c826d;">
             <div style="text-align:center; margin-top:6px;  color:white">© 2017 DVD company. All rights reserved</div>
