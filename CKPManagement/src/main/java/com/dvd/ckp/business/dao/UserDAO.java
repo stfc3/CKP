@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author dmin
+ * @author Admin
  */
 public interface UserDAO {
 
