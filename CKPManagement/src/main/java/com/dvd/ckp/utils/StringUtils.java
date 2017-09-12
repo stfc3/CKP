@@ -9,9 +9,10 @@ package com.dvd.ckp.utils;
  *
  * @author dmin
  */
-public interface SpringConstant {
+public class StringUtils {
     
-    String USER_SERVICES="UserService";
-    String CUSTOMER_SERVICES="CustomerService";
+    public static boolean isValidString(String input){
+        return input!=null && !"".equals(input);
+    }
     
 }

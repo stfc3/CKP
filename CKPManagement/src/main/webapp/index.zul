@@ -5,15 +5,12 @@
     <!--<button id="btnAdd">Add</button>-->
     <!--<button id="btnLogout">${c:l('logout.submit')}</button>-->
     <borderlayout apply="com.dvd.ckp.controller.MainController">
-        <north size="7%" border="none" style="background-color:#7cb5d6;">
-            <image src="/images/logo.png">
-
-            </image>
-            <!--<button id="btnLogout">${c:l('logout.submit')}</button>-->
-        </north>
-        <center border="none">
+        <west size="20%"  maxsize="250" splittable="true" collapsible="true">
             <borderlayout>
-                <west size="20%"  maxsize="250" splittable="true" collapsible="true">
+                <north size="7%">
+                    
+                </north>
+                <center >
                     <tree id="tree" >
                         <!--                        <treecols sizable="true">
                             <treecol label="Name" />
@@ -28,7 +25,14 @@
                             </treeitem>
                         </treechildren>
                     </tree>
-                </west>
+                </center>
+            </borderlayout>
+        </west>
+        <center border="none">
+            <borderlayout>
+                <north size="7%">
+                    
+                </north>
                 <center >
                     <tabbox id="tabContent">
                         <tabs id="tabs">
@@ -39,18 +43,13 @@
                             <tabpanel >Trang chủ</tabpanel>
                         </tabpanels>
                     </tabbox>
-<!--                    <spreadsheet id="ss" width="100%" height="100%" context="myContext"
-                    showFormulabar="true" showContextMenu="true" showToolbar="true"
-                    showSheetbar="true" maxVisibleRows="100" maxVisibleColumns="40"
-                    preloadRowSize="50"
-                    src="E:\PHUONG ANH\CONG TAC QUAN LY\BAO CAO\BAO CAO THANG\2017\BAO CAO THANG 1-17.xlsx"
-                   />-->
                 </center>
+                <south  size="5%" border="none" style="background-color:#8c826d;">
+                    <div style="text-align:center; margin-top:6px;  color:white">© 2017 DVD company. All rights reserved</div>
+                </south>
             </borderlayout>
         </center>
-        <south  size="5%" border="none" style="background-color:#8c826d;">
-            <div style="text-align:center; margin-top:6px;  color:white">© 2017 DVD company. All rights reserved</div>
-        </south>
+        
     </borderlayout>
     <!--</window>-->
 </zk>

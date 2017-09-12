@@ -46,15 +46,14 @@ public class LoginController extends SelectorComposer<Component> {
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         session = Sessions.getCurrent();
+        userService = (UserService) SpringUtil.getBean(SpringConstant.USER_SERVICES);
         if (session.getAttribute(Constants.TOKEN) != null) {
             Executions.sendRedirect(Constants.PAGE_HOME);
         }
     }
 
-    @Listen("onClick = #btnSubmit")
+    @Listen("onClick = #btnSubmit; onOK = #txtPassword")
     public void login() {
-        
-        userService = (UserService) SpringUtil.getBean(SpringConstant.USER_SERVICES);
         String vstrUserName = txtUserName.getValue();
         String vstrPassword = txtPassword.getValue();
         Users vuser = userService.getUserByName(vstrUserName);

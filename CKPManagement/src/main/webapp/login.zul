@@ -47,7 +47,7 @@
                                 <x:li class="clearfix">
                                     <div class="form-control">
                                         <!--<input type="text" value="" placeholder="Tên đăng nhập" />-->
-                                        <textbox id="txtUserName" placeholder="${c:l('login.username')}" constraint="no empty: ${c:l('login.username.empty')}"/>
+                                        <textbox id="txtUserName" focus="true" placeholder="${c:l('login.username')}" constraint="no empty: ${c:l('login.username.empty')}"/>
                                     </div>
                                 </x:li>               
                                 <!--</li>-->
@@ -74,6 +74,7 @@
                                 </x:li>     
                                 <!--</li>-->
                                 <!--<li class="clearfix">-->
+                                <label id="mesg" style="color:red"/>
                                 <x:li class="clearfix">
                                     <div class="fl resg">
                                         <!--Bạn chưa có tài khoản? -->
