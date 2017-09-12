@@ -5,58 +5,29 @@
 
 <!-- load .css file under WebContent -->
 
-<zk xmlns="http://www.zkoss.org/2005/zul">
-    <!--<html><![CDATA[-->
-    <!--<link rel="stylesheet" type="text/css" href="css/theme.css" media="all"></link>-->
-    
-    <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
-    <!--<link rel="stylesheet" type="text/css" href="css/settings.css" media="screen"></link>-->
-    
+<zk xmlns:x="xhtml" xmlns:zk="zk">
+
     <!--<title>BIDC</title>-->
     <!--]]></html>-->
     
     <window apply="com.dvd.ckp.controller.LoginController">
         
         <style src="css/theme.css"> </style>
-        <style src="css/settings.css"> </style>
         
-        <script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/js1.js"></script>
-        <script type="text/javascript" src="js/js2.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/myjs.js"></script>
-        <script type="text/javascript" src="js/jquery.min.js"></script>
-        <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
-        
+
         <!--daond comment
         <textbox id="txtUserName" placeholder="${c:l('login.username')}" constraint="no empty: ${c:l('login.username.empty')}"/>
         <textbox id="txtPassword" placeholder="${c:l('login.password')}" type="password" constraint="no empty: ${c:l('login.password.empty')}"/>
         <button id="btnSubmit" label="${c:l('login.submit')}"  width="100px"/>
         <label id="mesg" style="color:red"/>
         -->
-        <html><![CDATA[
-    <div class="box-login">
-    <div id="header">
-    <div class="main clearfix">
-    <h1 id="logo"><a href="#">CKP<span></span></a></h1>
-    <button class="navbar-toggle collapsed menu-mobile-user" type="button" data-toggle="collapse" data-target=".user"> <span class="sr-only">Menu</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-   
-    <!--<div class="header-r">
-      <div class="top-header-r"> 
-      <div class="top-page clearfix">      
-      <ul class="nav-pills navbar-right">
-        <li class="hotline"> <a href="tel:023210044">Hotline: (+84) 986-648-226</a></li>
-        <li class="dropdown language"> <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#"><strong class="glyphicon glyphicon-globe"></strong> <span class="username">Tiếng việt</span> <i class="glyphicon glyphicon-triangle-bottom"></i> </a>
-          <ul class="dropdown-menu">
-            <li><a href="#"><img src="images/ic_vi.png" width="24" height="24" alt=""/> Tiếng việt <i class="glyphicon glyphicon-ok"></i></a></li>
-            <li><a href="#"><img src="images/ic_en.png" width="24" height="24" alt=""/> English</a></li>   
-          </ul>
-        </li>
-      </ul>      
-      </div>
-       </div>       
-      
-                    </div>-->
+        
+        <div class="box-login">
+            <div id="header">
+                <div class="main clearfix">
+                    <x:h1 id="logo">
+                        <a href="#">CKP Logo<span></span></a>
+                    </x:h1>
                 </div>
                 <!-- End main--> 
             </div>
@@ -65,57 +36,72 @@
                 <div class="main clearfix">  
                     <div class="boxmodule login">
                         <div class="title">
-                            <img src="images/logo-slogan.png" width="213" height="30" alt=""/> 
+                            <!--<image src="images/logo-slogan.png" width="213" height="30" alt="" />--> 
+                            <image id="image" src="images/logo-slogan.png" width="213px" height="30px"  />
                         </div>
                         <div class="box-cont clearfix">
-                                <ul class="form">
-                                    <li class="clearfix">
-                                        <div class="form-control">
-                                            <input type="text" value="" placeholder="Tên đăng nhập"/>
-                                        </div>                    
-                                    </li>
-                                    <li class="clearfix">
-                                        <div class="form-control">
-                                            <input id="txtPassword" type="password" value="" placeholder="Mật khẩu"/>
-                                        </div>                    
-                                    </li>
-                                    <!--
-                    <li class="clearfix">
-                    <div class="charmap clearfix">
-                    <div class="form-control"><input type="password" value="" placeholder="Ký tự xác thực"></div>
-                    <img class="charmaps" src="images/capchar.png" alt="" width="116" height="32">
-                    <a class="btn_refress" href="#"><img src="images/btn_refress.png" width="32" height="32" alt=""/></a>
-                    </div>                    
-                    </li>
-                                    -->
-                                    <li class="clearfix">
-                                        <div class="text-right">
-                                            <a href="CN-0-SetPass.html" class="under">Quên mật khẩu?</a>
-                                        </div>                 
-                                    </li> 
+                            <!--<form method="" action="CN-1-0-Tailkhoan.html">-->
+                            <!--<ul class="form">-->
+                            <x:ul class="form">
+                                <!--<li class="clearfix">-->
+                                <x:li class="clearfix">
+                                    <div class="form-control">
+                                        <!--<input type="text" value="" placeholder="Tên đăng nhập" />-->
+                                        <textbox id="txtUserName" placeholder="${c:l('login.username')}" constraint="no empty: ${c:l('login.username.empty')}"/>
+                                    </div>
+                                </x:li>               
+                                <!--</li>-->
+                                <!--<li class="clearfix">-->
+                                <x:li class="clearfix">
+                                    <div class="form-control">
+                                        <!--<input type="password" value="" placeholder="Mật khẩu" />-->
+                                        <textbox id="txtPassword" placeholder="${c:l('login.password')}" type="password" constraint="no empty: ${c:l('login.password.empty')}"/>
+                                    </div>
+                                </x:li>              
+                                <!--</li>-->
+                                <!--<li class="clearfix">-->
+                                <x:li class="clearfix">
+                                    <div class="text-right">
+                                        <!--<a href="CN-0-SetPass.html" class="under">Quên mật khẩu?</a>-->
+                                    </div>    
+                                </x:li>
+                                <!--</li>--> 
                  
-                                    <li class="clearfix">
-                                        <input id="btnSubmit" class="button button-blue" type="submit" value="Đăng nhập" />                  
-                                    </li>
-                                    <li class="clearfix">
-                                        <div class="fl resg">
-                                            Bạn chưa có tài khoản?
-                                        </div>   
-                                        <div class="fr">
-                                            <a class="button button" href="#">Đăng ký dịch vụ</a>
-                                        </div>                 
-                                    </li>         
-                                </ul>
+                                <!--<li class="clearfix">-->
+                                <x:li class="clearfix">
+                                    <!--<input class="button button-blue" type="submit" value="Đăng nhập" />-->
+                                    <button id="btnSubmit" label="${c:l('login.submit')}" class="button button-blue btn-login" type="submit"/>
+                                </x:li>     
+                                <!--</li>-->
+                                <!--<li class="clearfix">-->
+                                <x:li class="clearfix">
+                                    <div class="fl resg">
+                                        <!--Bạn chưa có tài khoản? -->
+                                        Nếu bạn chưa có tài khoản, vui lòng liên hệ quản trị hệ thống !
+                                    </div>   
+                                    <div class="fr">
+                                        <!--<a class="button button" href="#">Đăng ký dịch vụ</a>-->
+                                    </div>
+                                </x:li>             
+                                <!--</li>-->       
+                            </x:ul>
+                            <!--</form>-->
                         </div>
                         <div class="bottom-login">
-                            <ul class="list">
-                                <li>
+                            <!--<ul class="list">-->
+                            <x:ul class="list">
+                                <!--<li>-->
+                                <x:li>
                                     <a href="#">Hướng dẫn sử dụng</a>
-                                </li>
-                                <li>
-                                    <a href="#">Hỗ trợ </a>
-                                </li>
-                            </ul>
+                                </x:li>
+                                <!--</li>-->
+                                <!--<li>-->
+                                <x:li>
+                                    <a href="#">Hỗ trợ: <span class="support-phone">098.664.8226</span> </a>
+                                </x:li>
+                                <!--</li>-->
+                            </x:ul>
+                            <!--</ul>-->
                         </div>
                     </div>
           
@@ -125,159 +111,31 @@
             </div>
             <!-- End container-->
             <div class="tp-banner-container">
-                <div class="tp-banner" >
-                    <ul>	<!-- SLIDE  -->
-                        <li data-transition="fade" data-slotamount="7" data-masterspeed="2000" data-thumb="images/banner1.jpg" data-saveperformance="on"  data-title="Banner1">
-                            <!-- MAIN IMAGE -->
-                            <img src="images/dummy.png" alt="slidebg1" data-lazyload="images/banner1.jpg" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat"> </img>
-                            <!-- LAYERS -->
-                            <div class="tp-caption black_heavy_60 title_slide"
-                                 data-x="0"
-                                 data-y="200" 
-                                 data-speed="500"
-                                 data-start="100"
-                                 data-easing="Power3.easeInOut"
-                                 data-splitin="chars"
-                                 data-splitout="none"
-                                 data-elementdelay="0.1"
-                                 data-endelementdelay="0.1"
-                                 style="z-index: 7; max-width: auto; max-height
-            : auto; white-space: nowrap;">Ưu đãi những khách hàng bơm vào ban ngày
-                            </div>
+                <div class="tp-banner">
 
-                            <div class="tp-caption grey_regular_18 customin tp-resizeme rs-parallaxlevel-0 decript_slide"
-                                 data-x="0"
-                                 data-y="270" 
-                                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-                                 data-speed="500"
-                                 data-start="2000"
-                                 data-easing="Power3.easeInOut"
-                                 data-splitin="none"
-                                 data-splitout="none"
-                                 data-elementdelay="0.05"
-                                 data-endelementdelay="0.1"
-                                 style="z-index: 9; max-width: auto; max-height: auto; white-space: nowrap; word-break:break-all;">
-                                <div style=" width:200px; word-break:break-all">Áp dụng cho khách hàng doanh nghiệp, cá nhân đặt hàng tại KCP</div>
-                            </div>        
-                            <div class="tp-caption black_heavy_60 title_slide"
-                                 data-x="0"
-                                 data-y="350" 
-                                 data-speed="500"
-                                 data-start="2300">
-                                <div class="btn-url">
-                                    <a href="#" class="button button-red">Xem thêm</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li data-transition="slideleft" data-slotamount="7" data-masterspeed="2000" data-thumb="images/banner2.jpg" data-delay="10000" data-saveperformance="on"  data-title="Banner 2">
-                            <!-- MAIN IMAGE -->
-                            <img src="images/dummy.png"  alt="slidebg1" data-lazyload="images/banner2.jpg" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat"></img>
-                            <!-- LAYERS -->
-                            <div class="tp-caption black_heavy_60 skewfromleftshort tp-resizeme rs-parallaxlevel-0 title_slide"
-                                 data-x="0"
-                                 data-y="200" 
-                                 data-speed="500"
-                                 data-start="100"
-                                 data-easing="Power3.easeInOut"
-                                 data-splitin="chars"
-                                 data-splitout="none"
-                                 data-elementdelay="0.1"
-                                 data-endelementdelay="0.1"
-                                 style="z-index: 7; max-width: auto; max-height: auto; white-space: nowrap;">Đầu tư như một chuyên gia
-                            </div>
+                    <!-- MAIN IMAGE -->
+                    <!--<img src="images/banner3.jpg" alt="slidebg1" />-->
+                    <image id="banner" src="images/banner3.jpg" />
+                    <!-- LAYERS -->
 
-                            <div class="tp-caption grey_regular_18 customin tp-resizeme rs-parallaxlevel-0 decript_slide"
-                                 data-x="0"
-                                 data-y="270" 
-                                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-                                 data-speed="500"
-                                 data-start="2000"
-                                 data-easing="Power3.easeInOut"
-                                 data-splitin="none"
-                                 data-splitout="none"
-                                 data-elementdelay="0.05"
-                                 data-endelementdelay="0.1"
-                                 style="z-index: 9; max-width: auto; max-height: auto; white-space: nowrap;">
-                                <div>Đầu tư như một chuyên gia gia gia</div>
-                            </div>
-                            <div class="tp-caption black_heavy_60 title_slide"
-                                 data-x="0"
-                                 data-y="350" 
-                                 data-speed="500"
-                                 data-start="2300">
-                                <div class="btn-url">
-                                    <a href="#" class="button button-red">Xem thêm</a>
-                                </div>
-                            </div>
-		
-                        </li>
-                        <li data-transition="slideup" data-slotamount="7" data-masterspeed="1000" data-thumb="images/banner3.jpg"  data-saveperformance="on"  data-title="Banner 3">
-                            <!-- MAIN IMAGE -->
-                            <img src="images/dummy.png"  alt="slidebg1" data-lazyload="images/banner3.jpg" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat"></img>
-                            <!-- LAYERS -->
-
-                            <div class="tp-caption black_heavy_60 skewfromleftshort tp-resizeme rs-parallaxlevel-0 title_slide"
-                                 data-x="0"
-                                 data-y="200" 
-                                 data-speed="500"
-                                 data-start="100"
-                                 data-easing="Power3.easeInOut"
-                                 data-splitin="chars"
-                                 data-splitout="none"
-                                 data-elementdelay="0.1"
-                                 data-endelementdelay="0.1"
-                                 style="z-index: 7; max-width: auto; max-height
-            : auto; white-space: nowrap;">CPK - Core key to Prosperity
-                            </div>
-
-                            <div class="tp-caption grey_regular_18 customin tp-resizeme rs-parallaxlevel-0 decript_slide"
-                                 data-x="0"
-                                 data-y="270" 
-                                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
-                                 data-speed="500"
-                                 data-start="2000"
-                                 data-easing="Power3.easeInOut"
-                                 data-splitin="none"
-                                 data-splitout="none"
-                                 data-elementdelay="0.05"
-                                 data-endelementdelay="0.1"
-                                 style="z-index: 9; max-width: auto; max-height: auto; white-space: nowrap; word-break:break-all;">
-                                <div style=" width:200px; word-break:break-all">CPK - Core key to Prosperity</div>
-                            </div>
-                            <div class="tp-caption black_heavy_60 title_slide"
-                                 data-x="0"
-                                 data-y="350" 
-                                 data-speed="500"
-                                 data-start="2300">
-                                <div class="btn-url">
-                                    <a href="#" class="button button-red">Xem thêm</a>
-                                </div>
-                            </div>
-        
-                        </li>
-                        <!-- SLIDE  -->
-                    </ul>
                     <div class="tp-bannertimer"></div>	
                 </div>
             </div>	
 
-            
+			
+			
             <!-- END REVOLUTION SLIDER -->
-            <div id="footer">
+            <div id="footer" class="footer">
                 <div class="main clearfix">
                     <div class="pull-left">© daond 2017. All rights reserved</div>
-                    <!--<div class="pull-right">
-                    <ul class="social-icons">
-                        <li><a class="ion-social-facebook" href="#"><img src="images/ic_face.png" width="34" height="34" alt=""/></a></li>
-                        <li><a class="ion-social-twitter" href="#" target="_blank"><img src="images/ic_socal2.png" width="34" height="34" alt=""/></a></li>
-                        <li><a class="ion-social-googleplus" href="#" target="_blank"><img src="images/ic_socal3.png" width="34" height="34" alt=""/></a></li>
-                    </ul>
-                    </div>-->
+    
                 </div>
             </div>
             <!-- End Footer -->
         </div>
-        ]]></html>
+
+        
+        
     </window>
 			
 </zk>
