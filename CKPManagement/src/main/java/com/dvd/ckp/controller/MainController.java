@@ -22,6 +22,7 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zss.ui.Spreadsheet;
+import org.zkoss.zul.Div;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
@@ -29,6 +30,7 @@ import org.zkoss.zul.Tabpanel;
 import org.zkoss.zul.Tabpanels;
 import org.zkoss.zul.Tabs;
 import org.zkoss.zul.Treeitem;
+import org.zkoss.zul.West;
 
 /**
  *
@@ -50,6 +52,10 @@ public class MainController extends SelectorComposer<Component> {
     Treeitem itemCustomer;
     @Wire
     Treeitem itemContract;
+    @Wire
+    West westMenu;
+    @Wire
+    Div showHideMenue;
     private Session session;
     private List<Tab> lstTabs;
     private int limitTabs = 100;
@@ -64,10 +70,15 @@ public class MainController extends SelectorComposer<Component> {
         lstTabs = new ArrayList<Tab>();
     }
 
-    @Listen("onClick = #btnLogout")
+    @Listen("onClick = #logout")
     public void logout() throws IOException {
         session.invalidate();
         Executions.sendRedirect(Constants.PAGE_LOGIN);
+    }
+    
+    @Listen("onClick = #showHideMenue")
+    public void showHideMenue() throws IOException {
+        westMenu.setOpen(!westMenu.isOpen());
     }
 
     @Listen("onClick = #itemCustomer")

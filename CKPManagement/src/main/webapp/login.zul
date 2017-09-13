@@ -11,17 +11,7 @@
     <!--]]></html>-->
     
     <window apply="com.dvd.ckp.controller.LoginController">
-        
-        <style src="css/theme.css"> </style>
-        
-
-        <!--daond comment
-        <textbox id="txtUserName" placeholder="${c:l('login.username')}" constraint="no empty: ${c:l('login.username.empty')}"/>
-        <textbox id="txtPassword" placeholder="${c:l('login.password')}" type="password" constraint="no empty: ${c:l('login.password.empty')}"/>
-        <button id="btnSubmit" label="${c:l('login.submit')}"  width="100px"/>
-        <label id="mesg" style="color:red"/>
-        -->
-        
+        <style src="css/theme.css"></style>
         <div class="box-login">
             <div id="header">
                 <div class="main clearfix">
@@ -128,7 +118,7 @@
             <!-- END REVOLUTION SLIDER -->
             <div id="footer" class="footer">
                 <div class="main clearfix">
-                    <div class="pull-left">© daond 2017. All rights reserved</div>
+                    <div class="pull-left">© 2017 - Công ty cổ phần CKP. Được phát triển bởi stfc Team</div>
     
                 </div>
             </div>
