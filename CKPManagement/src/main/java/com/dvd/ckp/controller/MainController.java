@@ -6,11 +6,11 @@
 package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.UserService;
+import com.dvd.ckp.domain.Users;
 import com.dvd.ckp.utils.Constants;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
@@ -24,6 +24,8 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zss.ui.Spreadsheet;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Include;
+import org.zkoss.zul.Label;
+import org.zkoss.zul.Span;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -56,6 +58,8 @@ public class MainController extends SelectorComposer<Component> {
     West westMenu;
     @Wire
     Div showHideMenue;
+    @Wire
+    Span userName;
     private Session session;
     private List<Tab> lstTabs;
     private int limitTabs = 100;
@@ -67,6 +71,8 @@ public class MainController extends SelectorComposer<Component> {
         if (session.getAttribute(Constants.TOKEN) == null) {
             Executions.sendRedirect(Constants.PAGE_LOGIN);
         }
+        Users users=(Users) session.getAttribute(Constants.SESSION_USER);
+        userName.appendChild(new Label(users.getUserName()));
         lstTabs = new ArrayList<Tab>();
     }
 

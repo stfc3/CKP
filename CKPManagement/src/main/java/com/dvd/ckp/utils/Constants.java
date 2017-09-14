@@ -13,6 +13,7 @@ public interface Constants {
     
     //Session
     String TOKEN="token"; 
+    String SESSION_USER="user"; 
     
     //Page
     String PAGE_HOME="/index.zul";

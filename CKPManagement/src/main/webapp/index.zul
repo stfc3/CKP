@@ -46,7 +46,7 @@
                         <image id="image" class="index-banner" src="images/logo.png" height="58px"/>
                         <div class="index-user">
                             <span class="fa fa-user"></span>
-                            <span class="user-login">Nguyễn Đức Đạo</span>
+                            <span id="userName" class="user-login" ></span>
                             
                             <div id="logout" class="fa fa-power-off user-logout"></div>
                         </div>
