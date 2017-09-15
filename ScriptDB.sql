@@ -1,3 +1,5 @@
+#### Kinh doanh ######
+
 DROP TABLE IF EXISTS customers;
 CREATE TABLE IF NOT EXISTS customers
 (
@@ -123,9 +125,12 @@ CREATE TABLE IF NOT EXISTS bill_detail
     PRIMARY KEY(bill_detail_id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng phiếu bơm chi tiết';
 
+
+#### Luong ######
+DROP TABLE IF EXISTS bill_detail;
 CREATE TABLE IF NOT EXISTS staff
 (
-    staff_id BIGINT NOT NULL,
+    staff_id BIGINT NOT NULL AUTO_INCREMENT,
     staff_code VARCHAR(10),
     staff_name VARCHAR(100),
     phone VARCHAR(15),
@@ -137,12 +142,81 @@ CREATE TABLE IF NOT EXISTS staff
     PRIMARY KEY(staff_id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng nhân viên';
 
+DROP TABLE IF EXISTS bill_detail;
 CREATE TABLE IF NOT EXISTS quantity_staff
 (
-    id BIGINT NOT NULL,
+    id BIGINT NOT NULL AUTO_INCREMENT,
     staff_id BIGINT,
     bill_detail_id BIGINT,
     quantity DOUBLE comment 'Khối lượng của từng công nhân',
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng sản lượng của nhân viên theo phiếu bơm';
+
+
+
+### USERS ####
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE IF NOT EXISTS users
+(
+    user_id BIGINT NOT NULL AUTO_INCREMENT,
+    user_name VARCHAR(100),
+    password VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(20) comment 'Số điện thoai',
+    address VARCHAR(200) comment 'Địa chỉ',
+    card VARCHAR(20) comment 'Số CMT',
+    status INT DEFAULT 1,
+    create_date timestamp DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(user_id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng người dùng';
+
+DROP TABLE IF EXISTS roles;
+CREATE TABLE IF NOT EXISTS roles
+(
+    role_id BIGINT NOT NULL AUTO_INCREMENT,
+    role_code VARCHAR(50),
+    role_name VARCHAR(100),
+    description VARCHAR(400),
+    status INT DEFAULT 1,
+    create_date timestamp DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(role_id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng vai trò';
+
+DROP TABLE IF EXISTS objects;
+CREATE TABLE IF NOT EXISTS objects
+(
+    object_id BIGINT NOT NULL AUTO_INCREMENT,
+    object_code VARCHAR(50),
+    object_name VARCHAR(200),
+    object_type INT comment 'loại đối tượng 1: chức năng danh mục; 2: chức năng báo cáo',
+    status INT DEFAULT 1,
+    path VARCHAR(100) comment 'đường dẫn chức năng',
+    parent_id BIGINT comment 'mã chức năng cha',
+    icon VARCHAR(100) comment 'icon của chức năng',
+    create_date timestamp DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(object_id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng danh mục chức năng';
+
+DROP TABLE IF EXISTS role_object;
+CREATE TABLE IF NOT EXISTS role_object
+(
+    role_object_id BIGINT NOT NULL AUTO_INCREMENT,
+    role_id BIGINT,
+    object_id BIGINT,
+    status INT DEFAULT 1,
+    create_date timestamp DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(role_object_id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng map vai trò với chức năng';
+
+DROP TABLE IF EXISTS user_role;
+CREATE TABLE IF NOT EXISTS user_role
+(
+    user_role_id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT,
+    role_id BIGINT,
+    status INT DEFAULT 1,
+    create_date timestamp DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(user_role_id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng map user với vai trò';
