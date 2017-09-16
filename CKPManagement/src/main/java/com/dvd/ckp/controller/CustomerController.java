@@ -164,7 +164,7 @@ public class CustomerController extends GenericForwardComposer {
         Customers customer = new Customers();
         listDataModel.add(0,customer);
         lstCustomer.setModel(listDataModel);
-//        lstCustomer.renderAll();
+        lstCustomer.renderAll();
         List<Component> lstCell = lstCustomer.getRows().getChildren().get(0).getChildren();
         setEnableComponent(lstCell);
     }
@@ -205,7 +205,7 @@ public class CustomerController extends GenericForwardComposer {
         lstCustomer.setModel(listDataModel);
     }
 
-    public void onChange$txtFilterCode() {
+    public void onOK$txtFilterCode() {
         Customers customer = new Customers();
         String vstrCustomerCode = txtFilterCode.getValue();
         customer.setCustomerCode(vstrCustomerCode);
@@ -214,7 +214,7 @@ public class CustomerController extends GenericForwardComposer {
         filter(customer);
     }
 
-    public void onChange$txtFilterName() {
+    public void onOK$txtFilterName() {
         Customers customer = new Customers();
         String vstrCustomerCode = txtFilterCode.getValue();
         customer.setCustomerCode(vstrCustomerCode);

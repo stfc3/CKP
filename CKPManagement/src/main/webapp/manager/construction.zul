@@ -17,11 +17,11 @@
         margin-right: 5px;
         }
     </style>
-    <window  id="mainContract" apply="com.dvd.ckp.controller.CustomerController">
-        <groupbox>
-            <caption label="${c:l('customer.category')}" />
-            <grid id="lstCustomer"  mold="paging" pageSize="5" pagingPosition="both">
-                <auxhead sclass="category-center">
+    <window  id="mainConstruction" apply="com.dvd.ckp.controller.ConstructionController">
+        <groupbox >
+            <caption label="${c:l('construction.category')}" />
+            <grid id="lstConstruction" >
+                <auxhead sclass="category-center" >
                     <auxheader colspan="10">
                         <a id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <space width="10px"/>
@@ -43,16 +43,14 @@
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">
-                    <column hflex="1">${c:l('customer.index')}</column>
-                    <column hflex="2">${c:l('customer.code')}</column>
-                    <column hflex="6">${c:l('customer.name')}</column>
-                    <column hflex="2">${c:l('customer.phone')}</column>
-                    <column hflex="3">${c:l('customer.taxcode')}</column>
-                    <column hflex="3">${c:l('customer.address')}</column>
-                    <column hflex="3">${c:l('customer.accountnumber')}</column>
-                    <column hflex="3">${c:l('customer.bankname')}</column>
-                    <column hflex="2">${c:l('customer.status')}</column>
-                    <column hflex="2">${c:l('customer.action')}</column>
+                    <column hflex="1">${c:l('construction.index')}</column>
+                    <column hflex="2">${c:l('construction.code')}</column>
+                    <column hflex="6">${c:l('construction.name')}</column>
+                    <column hflex="6">${c:l('construction.contract')}</column>
+                    <column hflex="2">${c:l('construction.far')}</column>
+                    <column hflex="2">${c:l('construction.convert')}</column>
+                    <column hflex="2">${c:l('construction.status')}</column>
+                    <column hflex="2">${c:l('construction.action')}</column>
                 </columns>
                 <template name="model">
                     <row  value="${each}">
@@ -60,25 +58,28 @@
                             <label value="${forEachStatus.index+1}" />
                         </cell>
                         <cell>
-                            <textbox value="${each.customerCode}" tooltiptext="${each.customerCode}" hflex="1" inplace="true" readonly="true"/>
+                            <textbox value="${each.constructionCode}" tooltiptext="${each.constructionCode}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
-                            <textbox value="${each.customerName}" tooltiptext="${each.customerName}" hflex="1" inplace="true" readonly="true"/>
+                            <textbox value="${each.constructionName}" tooltiptext="${each.constructionName}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
-                            <textbox value="${each.customerPhone}" tooltiptext="${each.customerPhone}" hflex="1" inplace="true" readonly="true"/>
+                            <combobox id="cbxContract"  value="${each.contractId == 0 ? c:l('option') : each.contractName}" tooltiptext="${each.contractId == 0 ? c:l('option') : each.contractName}" hflex="1"  
+                            buttonVisible="false" inplace="true"  readonly="true">
+                                <template name="model">
+                                    <comboitem value="${each.contractId}" label="${each.contractName}" />
+                                </template>
+                            </combobox>
                         </cell>
                         <cell>
-                            <textbox value="${each.taxCode}" tooltiptext="${each.taxCode}" hflex="1" inplace="true" readonly="true"/>
+                            <combobox value="${each.constructionFar == 0 ? c:l('no') : c:l('yes')}" tooltiptext="${each.constructionFar == 0 ? c:l('no') : c:l('yes')}" hflex="1" 
+                                      buttonVisible="false" inplace="true" readonly="true">
+                                <comboitem value="1" label="${c:l('yes')}" />
+                                <comboitem value="0" label="${c:l('no')}" />
+                            </combobox>
                         </cell>
                         <cell>
-                            <textbox value="${each.customerAddress}" tooltiptext="${each.customerAddress}" hflex="1" inplace="true" readonly="true"/>
-                        </cell>
-                        <cell>
-                            <textbox value="${each.accountNumber}" tooltiptext="${each.accountNumber}" hflex="1" inplace="true" readonly="true"/>
-                        </cell>
-                        <cell>
-                            <textbox value="${each.bankName}" tooltiptext="${each.bankName}" hflex="1" inplace="true" readonly="true"/>
+                            <textbox value="${each.constructionConvert}" tooltiptext="${each.constructionConvert}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
                             <combobox value="${each.status == 0 ? c:l('inactive') : c:l('active')}" tooltiptext="${each.status == 0 ? c:l('inactive') : c:l('active')}" hflex="1" 

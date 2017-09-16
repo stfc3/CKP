@@ -5,17 +5,17 @@
  */
 package com.dvd.ckp.business.dao;
 
-import com.dvd.ckp.domain.Customers;
+import com.dvd.ckp.domain.Construction;
 import java.util.List;
 
 /**
  *
  * @author dmin
  */
-public interface CustomerDAO {
+public interface ConstructionDAO {
 
-    List<Customers> getAllCustomer();
+    List<Construction> getAllConstruction();
 
-    void insertOrUpdateCustomer(Customers customer);
+    void insertOrUpdateConstruction(Construction construction);
 
 }

@@ -162,6 +162,7 @@ CREATE TABLE IF NOT EXISTS users
 (
     user_id BIGINT NOT NULL AUTO_INCREMENT,
     user_name VARCHAR(100),
+    full_name VARCHAR(200),
     password VARCHAR(100),
     email VARCHAR(100),
     phone VARCHAR(20) comment 'Số điện thoai',

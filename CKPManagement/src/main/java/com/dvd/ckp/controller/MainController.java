@@ -55,6 +55,8 @@ public class MainController extends SelectorComposer<Component> {
     @Wire
     Treeitem itemContract;
     @Wire
+    Treeitem itemConstruction;
+    @Wire
     West westMenu;
     @Wire
     Div showHideMenue;
@@ -72,7 +74,7 @@ public class MainController extends SelectorComposer<Component> {
             Executions.sendRedirect(Constants.PAGE_LOGIN);
         }
         Users users=(Users) session.getAttribute(Constants.SESSION_USER);
-        userName.appendChild(new Label(users.getUserName()));
+        userName.appendChild(new Label(users.getFullName()));
         lstTabs = new ArrayList<Tab>();
     }
 
@@ -101,16 +103,21 @@ public class MainController extends SelectorComposer<Component> {
         String vstrTitle = itemContract.getLabel();
         addTab(vstrURL, vstrId, vstrTitle);
     }
+    @Listen("onClick = #itemConstruction")
+    public void itemConstruction() throws IOException {
+        String vstrURL = itemConstruction.getValue();
+        String vstrId = "tab" + itemConstruction.getId();
+        String vstrTitle = itemConstruction.getLabel();
+        addTab(vstrURL, vstrId, vstrTitle);
+    }
 
     private void addTab(String pstrURL, final String pstrId, String pstrTilte) {
-//        pstrTilte = Labels.getLabel(pstrTilte);
         Include contentTabMenu;
         if (lstTabs.size() < limitTabs) {
             Tab newTab = getExistTab(pstrId, lstTabs);
             if (newTab == null) {
                 newTab = new Tab(pstrTilte);
                 newTab.setTooltiptext(pstrTilte);
-//                    newTab.setWidth(Constants.WIDTH_TAB);
                 newTab.setId(pstrId);
                 newTab.setClosable(true);
                 newTab.setSelected(true);

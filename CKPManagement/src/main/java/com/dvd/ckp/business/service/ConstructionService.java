@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dvd.ckp.business.dao;
+package com.dvd.ckp.business.service;
 
-import com.dvd.ckp.domain.Customers;
+import com.dvd.ckp.domain.Construction;
 import java.util.List;
 
 /**
  *
  * @author dmin
  */
-public interface CustomerDAO {
+public interface ConstructionService {
 
-    List<Customers> getAllCustomer();
+    List<Construction> getAllConstruction();
 
-    void insertOrUpdateCustomer(Customers customer);
-
+    void insertOrUpdateConstruction(Construction construction);
 }

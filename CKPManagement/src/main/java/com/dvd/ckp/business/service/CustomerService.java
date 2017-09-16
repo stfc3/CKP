@@ -16,7 +16,5 @@ public interface CustomerService {
 
     List<Customers> getAllCustomer();
 
-    List<Customers> getCustomer(Customers customer);
-
     void insertOrUpdateCustomer(Customers customer);
 }

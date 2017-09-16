@@ -5,7 +5,9 @@
  */
 package com.dvd.ckp.business.service;
 
+import com.dvd.ckp.business.dao.ConstructionDAO;
 import com.dvd.ckp.business.dao.CustomerDAO;
+import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Customers;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +19,22 @@ import org.springframework.transaction.annotation.Transactional;
  * @author dmin
  */
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class ConstructionServiceImpl implements ConstructionService {
 
     @Autowired
-    private CustomerDAO CustomerDAO;
+    private ConstructionDAO ConstructionDAO;
 
 
     @Transactional(readOnly = true)
     @Override
-    public List<Customers> getAllCustomer() {
-        return CustomerDAO.getAllCustomer();
+    public List<Construction> getAllConstruction() {
+        return ConstructionDAO.getAllConstruction();
     }
     
     @Transactional
     @Override
-    public void insertOrUpdateCustomer(Customers customer) {
-        CustomerDAO.insertOrUpdateCustomer(customer);
+    public void insertOrUpdateConstruction(Construction construction) {
+        ConstructionDAO.insertOrUpdateConstruction(construction);
     }
 
 }
