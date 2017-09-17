@@ -28,6 +28,11 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customers> getAllCustomer() {
         return CustomerDAO.getAllCustomer();
     }
+    @Transactional(readOnly = true)
+    @Override
+    public List<Customers> getCustomerActive() {
+        return CustomerDAO.getCustomerActive();
+    }
     
     @Transactional
     @Override

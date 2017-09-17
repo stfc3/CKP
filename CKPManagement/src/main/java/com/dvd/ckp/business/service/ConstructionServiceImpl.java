@@ -28,6 +28,11 @@ public class ConstructionServiceImpl implements ConstructionService {
     public List<Construction> getAllConstruction() {
         return ConstructionDAO.getAllConstruction();
     }
+    @Transactional(readOnly = true)
+    @Override
+    public List<Construction> getConstructionActive() {
+        return ConstructionDAO.getConstructionActive();
+    }
     
     @Transactional
     @Override

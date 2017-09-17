@@ -16,5 +16,7 @@ public interface ContractService {
 
     List<Contract> getAllContract();
 
+    List<Contract> getContractActive();
+
     void insertOrUpdateContract(Contract contract);
 }

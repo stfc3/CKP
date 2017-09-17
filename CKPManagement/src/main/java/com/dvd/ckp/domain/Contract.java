@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,7 +22,11 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "contracts")
-@NamedQuery(name = "Contract.fillAllContract", query = "FROM Contract c")
+@NamedQueries({
+    @NamedQuery(name = "Contract.fillAllContract", query = "FROM Contract c")
+    ,
+    @NamedQuery(name = "Contract.fillContractActive", query = "FROM Contract c WHERE c.expirationDate >= now()")
+})
 public class Contract {
 
     private Long contractId;

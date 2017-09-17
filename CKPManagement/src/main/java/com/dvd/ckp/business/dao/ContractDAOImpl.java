@@ -5,7 +5,6 @@
  */
 package com.dvd.ckp.business.dao;
 
-import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Contract;
 import java.util.List;
 import org.hibernate.Query;
@@ -33,6 +32,13 @@ public class ContractDAOImpl implements ContractDAO {
     public List<Contract> getAllContract() {
 
         Query query = getCurrentSession().getNamedQuery("Contract.fillAllContract");
+        return (List<Contract>) query.list();
+    }
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Contract> getContractActive() {
+
+        Query query = getCurrentSession().getNamedQuery("Contract.fillContractActive");
         return (List<Contract>) query.list();
     }
 

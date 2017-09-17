@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -19,7 +20,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "construction")
-@NamedQuery(name = "Construction.fillAllConstruction", query = "FROM Construction c WHERE status = 1")
+@NamedQueries({
+    @NamedQuery(name = "Construction.fillAllConstruction", query = "FROM Construction")
+    ,
+    @NamedQuery(name = "Construction.fillConstructionActive", query = "FROM Construction c WHERE c.status=1")
+})
 public class Construction {
 
     private Long constructionId;

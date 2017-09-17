@@ -5,11 +5,13 @@
  */
 package com.dvd.ckp.domain;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -19,8 +21,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "customers")
-@NamedQuery(name = "Customers.fillAllCustomer", query = "FROM Customers c WHERE status = 1")
-public class Customers {
+@NamedQueries({
+    @NamedQuery(name = "Customers.fillAllCustomer", query = "FROM Customers c")
+    ,
+    @NamedQuery(name = "Customers.fillCustomerActive", query = "FROM Customers c WHERE c.status=1")
+})
+public class Customers implements Serializable {
+
     private Long customerId;
     private String customerCode;
     private String customerName;
@@ -113,5 +120,5 @@ public class Customers {
     public void setStatus(Integer status) {
         this.status = status;
     }
-    
+
 }

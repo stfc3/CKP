@@ -16,6 +16,8 @@ public interface ConstructionDAO {
 
     List<Construction> getAllConstruction();
 
+    List<Construction> getConstructionActive();
+
     void insertOrUpdateConstruction(Construction construction);
 
 }

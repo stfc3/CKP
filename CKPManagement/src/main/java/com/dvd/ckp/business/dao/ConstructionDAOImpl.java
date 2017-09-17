@@ -34,6 +34,13 @@ public class ConstructionDAOImpl implements ConstructionDAO {
         Query query = getCurrentSession().getNamedQuery("Construction.fillAllConstruction");
         return (List<Construction>) query.list();
     }
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Construction> getConstructionActive() {
+
+        Query query = getCurrentSession().getNamedQuery("Construction.fillConstructionActive");
+        return (List<Construction>) query.list();
+    }
 
     @SuppressWarnings("unchecked")
     @Override

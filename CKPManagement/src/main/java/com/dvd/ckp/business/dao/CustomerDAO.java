@@ -16,6 +16,8 @@ public interface CustomerDAO {
 
     List<Customers> getAllCustomer();
 
+    List<Customers> getCustomerActive();
+
     void insertOrUpdateCustomer(Customers customer);
 
 }

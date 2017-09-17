@@ -34,6 +34,14 @@ public class CustomerDAOImpl implements CustomerDAO {
         Query query = getCurrentSession().getNamedQuery("Customers.fillAllCustomer");
         return (List<Customers>) query.list();
     }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Customers> getCustomerActive() {
+
+        Query query = getCurrentSession().getNamedQuery("Customers.fillCustomerActive");
+        return (List<Customers>) query.list();
+    }
 
     @SuppressWarnings("unchecked")
     @Override

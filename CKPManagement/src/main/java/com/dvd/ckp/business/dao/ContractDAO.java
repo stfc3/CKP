@@ -16,6 +16,8 @@ public interface ContractDAO {
 
     List<Contract> getAllContract();
 
+    List<Contract> getContractActive();
+
     void insertOrUpdateContract(Contract contract);
 
 }

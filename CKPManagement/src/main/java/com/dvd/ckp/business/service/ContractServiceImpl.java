@@ -28,6 +28,11 @@ public class ContractServiceImpl implements ContractService {
     public List<Contract> getAllContract() {
         return ContractDAO.getAllContract();
     }
+    @Transactional(readOnly = true)
+    @Override
+    public List<Contract> getContractActive() {
+        return ContractDAO.getContractActive();
+    }
     
     @Transactional
     @Override

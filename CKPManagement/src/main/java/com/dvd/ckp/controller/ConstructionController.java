@@ -65,7 +65,7 @@ public class ConstructionController extends GenericForwardComposer {
         listDataModel = new ListModelList(lstConstructions);
         lstConstruction.setModel(listDataModel);
 
-        lstContract = contractService.getAllContract();
+        lstContract = contractService.getContractActive();
         defaultContract = new Contract();
         defaultContract.setContractId(0l);
         defaultContract.setContractName(Labels.getLabel("option"));
@@ -253,7 +253,7 @@ public class ConstructionController extends GenericForwardComposer {
         List<Contract> contractSelected = new ArrayList<>();
         if (contractId != null && lstContract != null && !lstContract.isEmpty()) {
             for (Contract contract : lstContract) {
-                if (contract.getContractId() == contractId) {
+                if (contractId.equals(contract.getContractId())) {
                     contractSelected.add(contract);
                     break;
                 }

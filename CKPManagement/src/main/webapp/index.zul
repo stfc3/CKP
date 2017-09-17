@@ -10,7 +10,7 @@
     <script type="text/javascript" src="js/myjs.js"></script>
     
     <borderlayout apply="com.dvd.ckp.controller.MainController" class="main-index">
-        <west id="westMenu" size="20%"  maxsize="250" splittable="false" collapsible="true" open="true" class="menu-index-background">
+        <west id="westMenu" size="20%" autoscroll="true" maxsize="250" splittable="false" collapsible="true" open="true" class="menu-index-background">
             <borderlayout class="menu-index-background">
                 <north size="60px" class="title-menu menu-index-background">
                     CKP Management
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </north>
-                <center>
+                <center autoscroll="true">
                     <tabbox id="tabContent">
                         <tabs id="tabs" class="index-tabsheet">
                             <tab label="Home"></tab>

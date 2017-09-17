@@ -16,5 +16,7 @@ public interface ConstructionService {
 
     List<Construction> getAllConstruction();
 
+    List<Construction> getConstructionActive();
+
     void insertOrUpdateConstruction(Construction construction);
 }

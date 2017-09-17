@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS bill_detail
 
 
 #### Luong ######
-DROP TABLE IF EXISTS staff;
+DROP TABLE IF EXISTS bill_detail;
 CREATE TABLE IF NOT EXISTS staff
 (
     staff_id BIGINT NOT NULL AUTO_INCREMENT,
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS staff
     PRIMARY KEY(staff_id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng nhân viên';
 
-DROP TABLE IF EXISTS quantity_staff;
+DROP TABLE IF EXISTS bill_detail;
 CREATE TABLE IF NOT EXISTS quantity_staff
 (
     id BIGINT NOT NULL AUTO_INCREMENT,
