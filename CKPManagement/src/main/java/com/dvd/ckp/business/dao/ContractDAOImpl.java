@@ -6,6 +6,7 @@
 package com.dvd.ckp.business.dao;
 
 import com.dvd.ckp.domain.Construction;
+import com.dvd.ckp.domain.Contract;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * @author dmin
  */
 @Repository
-public class ConstructionDAOImpl implements ConstructionDAO {
+public class ContractDAOImpl implements ContractDAO {
 
     @Autowired
     SessionFactory sessionFactory;
@@ -29,16 +30,16 @@ public class ConstructionDAOImpl implements ConstructionDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Construction> getAllConstruction() {
+    public List<Contract> getAllContract() {
 
-        Query query = getCurrentSession().getNamedQuery("Construction.fillAllConstruction");
-        return (List<Construction>) query.list();
+        Query query = getCurrentSession().getNamedQuery("Contract.fillAllContract");
+        return (List<Contract>) query.list();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void insertOrUpdateConstruction(Construction construction) {
-        getCurrentSession().saveOrUpdate(construction);
+    public void insertOrUpdateContract(Contract contract) {
+        getCurrentSession().saveOrUpdate(contract);
     }
 
 }

@@ -9,6 +9,7 @@ import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.domain.Customers;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
+import com.dvd.ckp.utils.StyleUtils;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -18,8 +19,6 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
-import org.zkoss.zul.A;
-import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
@@ -43,16 +42,21 @@ public class CustomerController extends GenericForwardComposer {
     private Textbox txtFilterName;
     ListModelList<Customers> listDataModel;
     private List<Customers> lstCustomers;
+    
+    private final int codeIndex=1;
+    private final int nameIndex=2;
+    private final int phoneIndex=3;
+    private final int taxIndex=4;
+    private final int addressIndex=5;
+    private final int accountIndex=6;
+    private final int bankIndex=7;
+    private final int statusIndex=8;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
-        lstCustomers = new ArrayList<>();
-        List<Customers> vlstCustomer = customerService.getAllCustomer();
-        if (vlstCustomer != null) {
-            lstCustomers.addAll(vlstCustomer);
-        }
+        lstCustomers = customerService.getAllCustomer();
         listDataModel = new ListModelList(lstCustomers);
         lstCustomer.setModel(listDataModel);
     }
@@ -66,65 +70,7 @@ public class CustomerController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        setEnableComponent(lstCell);
-    }
-
-    /**
-     * Set style enable edit
-     *
-     * @param lstCell
-     */
-    private void setEnableComponent(List<Component> lstCell) {
-        if (lstCell != null && !lstCell.isEmpty()) {
-            for (Component c : lstCell) {
-                if (c instanceof Cell) {
-                    Component child = c.getChildren().get(0);
-                    if (child instanceof Combobox) {
-                        ((Combobox) child).setButtonVisible(true);
-                        ((Combobox) child).setInplace(false);
-                    } else if (child instanceof Textbox) {
-                        ((Textbox) child).setReadonly(false);
-                        ((Textbox) child).setInplace(false);
-                    } else if (child instanceof A) {
-                        A edit = (A) child;
-                        edit.setVisible(false);
-                        A save = (A) c.getChildren().get(1);
-                        A cancel = (A) c.getChildren().get(2);
-                        save.setVisible(true);
-                        cancel.setVisible(true);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Set style disable edit
-     *
-     * @param lstCell
-     */
-    private void setDisableComponent(List<Component> lstCell) {
-        if (lstCell != null && !lstCell.isEmpty()) {
-            for (Component c : lstCell) {
-                if (c instanceof Cell) {
-                    Component child = c.getChildren().get(0);
-                    if (child instanceof Combobox) {
-                        ((Combobox) child).setButtonVisible(false);
-                        ((Combobox) child).setInplace(true);
-                    } else if (child instanceof Textbox) {
-                        ((Textbox) child).setReadonly(true);
-                        ((Textbox) child).setInplace(true);
-                    } else if (child instanceof A) {
-                        A edit = (A) child;
-                        edit.setVisible(true);
-                        A save = (A) c.getChildren().get(1);
-                        A cancel = (A) c.getChildren().get(2);
-                        save.setVisible(false);
-                        cancel.setVisible(false);
-                    }
-                }
-            }
-        }
+        StyleUtils.setEnableComponent(lstCell);
     }
 
     /**
@@ -136,7 +82,7 @@ public class CustomerController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell);
         reloadGrid();
 
     }
@@ -153,7 +99,7 @@ public class CustomerController extends GenericForwardComposer {
         Customers customer = getDataInRow(lstCell);
         customer.setCustomerId(c.getCustomerId());
         customerService.insertOrUpdateCustomer(customer);
-        setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell);
         reloadGrid();
     }
 
@@ -166,7 +112,7 @@ public class CustomerController extends GenericForwardComposer {
         lstCustomer.setModel(listDataModel);
         lstCustomer.renderAll();
         List<Component> lstCell = lstCustomer.getRows().getChildren().get(0).getChildren();
-        setEnableComponent(lstCell);
+        StyleUtils.setEnableComponent(lstCell);
     }
 
     /**
@@ -177,14 +123,14 @@ public class CustomerController extends GenericForwardComposer {
      */
     private Customers getDataInRow(List<Component> lstCell) {
         Customers customer = new Customers();
-        Textbox txtCustomerCode = (Textbox) lstCell.get(1).getFirstChild();
-        Textbox txtCustomerName = (Textbox) lstCell.get(2).getFirstChild();
-        Textbox txtCustomerPhone = (Textbox) lstCell.get(3).getFirstChild();
-        Textbox txtTaxCode = (Textbox) lstCell.get(4).getFirstChild();
-        Textbox txtCustomerAddress = (Textbox) lstCell.get(5).getFirstChild();
-        Textbox txtAccountNumber = (Textbox) lstCell.get(6).getFirstChild();
-        Textbox txtBankName = (Textbox) lstCell.get(7).getFirstChild();
-        Combobox cbxStatus = (Combobox) lstCell.get(8).getFirstChild();
+        Textbox txtCustomerCode = (Textbox) lstCell.get(codeIndex).getFirstChild();
+        Textbox txtCustomerName = (Textbox) lstCell.get(nameIndex).getFirstChild();
+        Textbox txtCustomerPhone = (Textbox) lstCell.get(phoneIndex).getFirstChild();
+        Textbox txtTaxCode = (Textbox) lstCell.get(taxIndex).getFirstChild();
+        Textbox txtCustomerAddress = (Textbox) lstCell.get(addressIndex).getFirstChild();
+        Textbox txtAccountNumber = (Textbox) lstCell.get(accountIndex).getFirstChild();
+        Textbox txtBankName = (Textbox) lstCell.get(bankIndex).getFirstChild();
+        Combobox cbxStatus = (Combobox) lstCell.get(statusIndex).getFirstChild();
         customer.setCustomerCode(txtCustomerCode.getValue());
         customer.setCustomerName(txtCustomerName.getValue());
         customer.setCustomerPhone(txtCustomerPhone.getValue());
@@ -200,8 +146,8 @@ public class CustomerController extends GenericForwardComposer {
      * Reload grid
      */
     private void reloadGrid() {
-        List<Customers> vlstCustomer = customerService.getAllCustomer();
-        listDataModel = new ListModelList(vlstCustomer);
+        lstCustomers = customerService.getAllCustomer();
+        listDataModel = new ListModelList(lstCustomers);
         lstCustomer.setModel(listDataModel);
     }
 

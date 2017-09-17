@@ -508,3 +508,32 @@ h1#logo a span {display:block;position:absolute;width:100%;height:100%;backgroun
 
 /*End Tabsheets*/
 /*--------------------End Index--------------------*/
+/*dongdv*/
+/*set style text in grid*/
+.z-textbox[readonly]{
+    border: none;
+    background: 0;
+}
+/*set style text in grid*/
+/*set style control in grid*/
+.z-a{
+    color: green;
+    cursor: auto;
+    text-decoration: none;
+    margin-right: 5px;
+}
+.z-auxheader-content{
+    line-height: 14px;
+    text-align:right;
+}
+a [class^="z-icon-"]{
+    margin-right: 5px;
+}
+.z-icon-pencil{
+    color: #efa21c;
+}
+.z-icon-ban{
+    color: red;
+}
+/*set style control in grid*/
+/*dongdv*/

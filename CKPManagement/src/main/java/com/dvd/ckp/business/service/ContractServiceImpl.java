@@ -5,8 +5,8 @@
  */
 package com.dvd.ckp.business.service;
 
-import com.dvd.ckp.business.dao.ConstructionDAO;
-import com.dvd.ckp.domain.Construction;
+import com.dvd.ckp.business.dao.ContractDAO;
+import com.dvd.ckp.domain.Contract;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,22 +17,22 @@ import org.springframework.transaction.annotation.Transactional;
  * @author dmin
  */
 @Service
-public class ConstructionServiceImpl implements ConstructionService {
+public class ContractServiceImpl implements ContractService {
 
     @Autowired
-    private ConstructionDAO ConstructionDAO;
+    private ContractDAO ContractDAO;
 
 
     @Transactional(readOnly = true)
     @Override
-    public List<Construction> getAllConstruction() {
-        return ConstructionDAO.getAllConstruction();
+    public List<Contract> getAllContract() {
+        return ContractDAO.getAllContract();
     }
     
     @Transactional
     @Override
-    public void insertOrUpdateConstruction(Construction construction) {
-        ConstructionDAO.insertOrUpdateConstruction(construction);
+    public void insertOrUpdateContract(Contract contract) {
+        ContractDAO.insertOrUpdateContract(contract);
     }
 
 }

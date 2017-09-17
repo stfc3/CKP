@@ -2,7 +2,7 @@
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <!--<zk xmlns:n="native">-->
-    <style>
+<!--    <style>
         .z-a{
         color: green;
         cursor: auto;
@@ -16,13 +16,13 @@
         a [class^="z-icon-"]{
         margin-right: 5px;
         }
-    </style>
+    </style>-->
     <window  id="mainConstruction" apply="com.dvd.ckp.controller.ConstructionController">
         <groupbox >
             <caption label="${c:l('construction.category')}" />
-            <grid id="lstConstruction" >
+            <grid id="lstConstruction" mold="paging" pageSize="5" pagingPosition="both">
                 <auxhead sclass="category-center" >
-                    <auxheader colspan="10">
+                    <auxheader colspan="8">
                         <a id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <space width="10px"/>
                         <a iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
@@ -64,7 +64,8 @@
                             <textbox value="${each.constructionName}" tooltiptext="${each.constructionName}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
-                            <combobox id="cbxContract"  value="${each.contractId == 0 ? c:l('option') : each.contractName}" tooltiptext="${each.contractId == 0 ? c:l('option') : each.contractName}" hflex="1"  
+                            <!--<combobox model="${listContract}" value="${each.contractId == 0 ? c:l('option') : each.contractName}" tooltiptext="${each.contractId == 0 ? c:l('option') : each.contractName}" hflex="1"-->  
+                            <combobox model="${listContract}"  hflex="1"  
                             buttonVisible="false" inplace="true"  readonly="true">
                                 <template name="model">
                                     <comboitem value="${each.contractId}" label="${each.contractName}" />

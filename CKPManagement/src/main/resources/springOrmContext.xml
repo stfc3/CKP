@@ -41,4 +41,5 @@
     <bean id="UserService" class="com.dvd.ckp.business.service.UserServiceImpl" />
     <bean id="CustomerService" class="com.dvd.ckp.business.service.CustomerServiceImpl" />
     <bean id="ConstructionService" class="com.dvd.ckp.business.service.ConstructionServiceImpl" />
+    <bean id="ContractService" class="com.dvd.ckp.business.service.ContractServiceImpl" />
 </beans>

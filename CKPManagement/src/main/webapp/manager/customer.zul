@@ -2,7 +2,7 @@
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <!--<zk xmlns:n="native">-->
-    <style>
+<!--    <style>
         .z-a{
         color: green;
         cursor: auto;
@@ -16,7 +16,7 @@
         a [class^="z-icon-"]{
         margin-right: 5px;
         }
-    </style>
+    </style>-->
     <window  id="mainContract" apply="com.dvd.ckp.controller.CustomerController">
         <groupbox>
             <caption label="${c:l('customer.category')}" />

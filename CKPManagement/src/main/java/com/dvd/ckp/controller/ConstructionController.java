@@ -6,22 +6,22 @@
 package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.ConstructionService;
-import com.dvd.ckp.business.service.CustomerService;
+import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.domain.Construction;
-import com.dvd.ckp.domain.Customers;
+import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
+import com.dvd.ckp.utils.StyleUtils;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
-import org.zkoss.zul.A;
-import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
@@ -37,6 +37,8 @@ public class ConstructionController extends GenericForwardComposer {
     private static final Logger logger = Logger.getLogger(ConstructionController.class);
     @WireVariable
     protected ConstructionService constructionService;
+    @WireVariable
+    protected ContractService contractService;
     @Wire
     private Grid lstConstruction;
     @Wire
@@ -44,19 +46,31 @@ public class ConstructionController extends GenericForwardComposer {
     @Wire
     private Textbox txtFilterName;
     ListModelList<Construction> listDataModel;
+    List<Contract> lstContract;
     private List<Construction> lstConstructions;
+    Contract defaultContract;
+    private final int codeIndex = 1;
+    private final int nameIndex = 2;
+    private final int contractIndex = 3;
+    private final int farIndex = 4;
+    private final int convertIndex = 5;
+    private final int statusIndex = 6;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
-        lstConstructions = new ArrayList<>();
-        List<Construction> vlstConstructions = constructionService.getAllConstruction();
-        if (vlstConstructions != null) {
-            lstConstructions.addAll(vlstConstructions);
-        }
+        contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
+        lstConstructions = constructionService.getAllConstruction();
         listDataModel = new ListModelList(lstConstructions);
         lstConstruction.setModel(listDataModel);
+
+        lstContract = contractService.getAllContract();
+        defaultContract = new Contract();
+        defaultContract.setContractId(0l);
+        defaultContract.setContractName(Labels.getLabel("option"));
+        lstContract.add(0, defaultContract);
+        setDataDefaultInGrid();
     }
 
     /**
@@ -65,68 +79,11 @@ public class ConstructionController extends GenericForwardComposer {
      * @param event
      */
     public void onEdit(ForwardEvent event) {
-
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        setEnableComponent(lstCell);
-    }
-
-    /**
-     * Set style enable edit
-     *
-     * @param lstCell
-     */
-    private void setEnableComponent(List<Component> lstCell) {
-        if (lstCell != null && !lstCell.isEmpty()) {
-            for (Component c : lstCell) {
-                if (c instanceof Cell) {
-                    Component child = c.getChildren().get(0);
-                    if (child instanceof Combobox) {
-                        ((Combobox) child).setButtonVisible(true);
-                        ((Combobox) child).setInplace(false);
-                    } else if (child instanceof Textbox) {
-                        ((Textbox) child).setReadonly(false);
-                        ((Textbox) child).setInplace(false);
-                    } else if (child instanceof A) {
-                        A edit = (A) child;
-                        edit.setVisible(false);
-                        A save = (A) c.getChildren().get(1);
-                        A cancel = (A) c.getChildren().get(2);
-                        save.setVisible(true);
-                        cancel.setVisible(true);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Set style disable edit
-     *
-     * @param lstCell
-     */
-    private void setDisableComponent(List<Component> lstCell) {
-        if (lstCell != null && !lstCell.isEmpty()) {
-            for (Component c : lstCell) {
-                if (c instanceof Cell) {
-                    Component child = c.getChildren().get(0);
-                    if (child instanceof Combobox) {
-                        ((Combobox) child).setButtonVisible(false);
-                        ((Combobox) child).setInplace(true);
-                    } else if (child instanceof Textbox) {
-                        ((Textbox) child).setReadonly(true);
-                        ((Textbox) child).setInplace(true);
-                    } else if (child instanceof A) {
-                        A edit = (A) child;
-                        edit.setVisible(true);
-                        A save = (A) c.getChildren().get(1);
-                        A cancel = (A) c.getChildren().get(2);
-                        save.setVisible(false);
-                        cancel.setVisible(false);
-                    }
-                }
-            }
-        }
+        Construction c = rowSelected.getValue();
+        setDataCombobox(lstCell, getContractDefault(c.getContractId()), contractIndex);
+        StyleUtils.setEnableComponent(lstCell);
     }
 
     /**
@@ -138,7 +95,7 @@ public class ConstructionController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell);
         reloadGrid();
 
     }
@@ -155,7 +112,7 @@ public class ConstructionController extends GenericForwardComposer {
         Construction construction = getDataInRow(lstCell);
         construction.setConstructionId(c.getConstructionId());
         constructionService.insertOrUpdateConstruction(construction);
-        setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell);
         reloadGrid();
     }
 
@@ -164,11 +121,12 @@ public class ConstructionController extends GenericForwardComposer {
      */
     public void onClick$add() {
         Construction construction = new Construction();
-        listDataModel.add(0,construction);
+        listDataModel.add(0, construction);
         lstConstruction.setModel(listDataModel);
         lstConstruction.renderAll();
         List<Component> lstCell = lstConstruction.getRows().getChildren().get(0).getChildren();
-        setEnableComponent(lstCell);
+        setDataDefaultInGrid();
+        StyleUtils.setEnableComponent(lstCell);
     }
 
     /**
@@ -179,18 +137,43 @@ public class ConstructionController extends GenericForwardComposer {
      */
     private Construction getDataInRow(List<Component> lstCell) {
         Construction construction = new Construction();
-        Textbox txtConstructionCode = (Textbox) lstCell.get(1).getFirstChild();
-        Textbox txtConstructionName = (Textbox) lstCell.get(2).getFirstChild();
-        Combobox cbxContract = (Combobox) lstCell.get(3).getFirstChild();
-        Combobox cbxConstructionFar = (Combobox) lstCell.get(4).getFirstChild();
-        Textbox txtConstructionConvert = (Textbox) lstCell.get(5).getFirstChild();
-        Combobox cbxStatus = (Combobox) lstCell.get(6).getFirstChild();
-        construction.setConstructionCode(txtConstructionCode.getValue());
-        construction.setConstructionName(txtConstructionName.getValue());
-        construction.setContractId(Long.valueOf(cbxContract.getSelectedItem().getValue()));
-        construction.setConstructionFar(Integer.valueOf(cbxConstructionFar.getSelectedItem().getValue()));
-        construction.setConstructionConvert(Double.valueOf(txtConstructionConvert.getValue()));
-        construction.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
+        Component component;
+        Textbox txtConstructionCode = null;
+        Textbox txtConstructionName = null;
+        Combobox cbxContract = null;
+        Combobox cbxConstructionFar = null;
+        Textbox txtConstructionConvert = null;
+        Combobox cbxStatus = null;
+        component = lstCell.get(codeIndex).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtConstructionCode = (Textbox) component;
+            construction.setConstructionCode(txtConstructionCode.getValue());
+        }
+        component = lstCell.get(nameIndex).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtConstructionName = (Textbox) component;
+            construction.setConstructionName(txtConstructionName.getValue());
+        }
+        component = lstCell.get(contractIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxContract = (Combobox) component;
+            construction.setContractId(cbxContract.getSelectedItem().getValue());
+        }
+        component = lstCell.get(farIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxConstructionFar = (Combobox) component;
+            construction.setConstructionFar(Integer.valueOf(cbxConstructionFar.getSelectedItem().getValue()));
+        }
+        component = lstCell.get(convertIndex).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtConstructionConvert = (Textbox) component;
+            construction.setConstructionConvert(Double.valueOf(txtConstructionConvert.getValue()));
+        }
+        component = lstCell.get(statusIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxStatus = (Combobox) component;
+            construction.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
+        }
         return construction;
     }
 
@@ -198,12 +181,13 @@ public class ConstructionController extends GenericForwardComposer {
      * Reload grid
      */
     private void reloadGrid() {
-        List<Construction> vlstConstruction = constructionService.getAllConstruction();
-        listDataModel = new ListModelList(vlstConstruction);
+        lstConstructions = constructionService.getAllConstruction();
+        listDataModel = new ListModelList(lstConstructions);
         lstConstruction.setModel(listDataModel);
+        setDataDefaultInGrid();
     }
 
-    public void onChange$txtFilterCode() {
+    public void onOK$txtFilterCode() {
         Construction construction = new Construction();
         String vstrConstructionCode = txtFilterCode.getValue();
         construction.setConstructionCode(vstrConstructionCode);
@@ -212,7 +196,7 @@ public class ConstructionController extends GenericForwardComposer {
         filter(construction);
     }
 
-    public void onChange$txtFilterName() {
+    public void onOK$txtFilterName() {
         Construction construction = new Construction();
         String vstrConstructionCode = txtFilterCode.getValue();
         construction.setConstructionCode(vstrConstructionCode);
@@ -251,5 +235,46 @@ public class ConstructionController extends GenericForwardComposer {
         listDataModel = new ListModelList(vlstConstruction);
         lstConstruction.setModel(listDataModel);
 
+    }
+
+    private void setDataCombobox(List<Component> lstCell, List<Contract> selectedIndex, int columnIndex) {
+        Combobox cbxContract = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxContract = (Combobox) component;
+            ListModelList listDataModelContract = new ListModelList(lstContract);
+            listDataModelContract.setSelection(selectedIndex);
+            cbxContract.setModel(listDataModelContract);
+        }
+
+    }
+
+    private List<Contract> getContractDefault(Long contractId) {
+        List<Contract> contractSelected = new ArrayList<>();
+        if (contractId != null && lstContract != null && !lstContract.isEmpty()) {
+            for (Contract contract : lstContract) {
+                if (contract.getContractId() == contractId) {
+                    contractSelected.add(contract);
+                    break;
+                }
+            }
+        }
+        if (contractSelected.isEmpty()) {
+            contractSelected.add(defaultContract);
+        }
+        return contractSelected;
+    }
+
+    private void setDataDefaultInGrid() {
+        lstConstruction.renderAll();
+        List<Component> lstRows = lstConstruction.getRows().getChildren();
+        if (lstRows != null && !lstRows.isEmpty()) {
+            for (int i = 0; i < lstRows.size(); i++) {
+                Construction construction = listDataModel.get(i);
+                Component row = lstRows.get(i);
+                List<Component> lstCell = row.getChildren();
+                setDataCombobox(lstCell, getContractDefault(construction.getContractId()), contractIndex);
+            }
+        }
     }
 }

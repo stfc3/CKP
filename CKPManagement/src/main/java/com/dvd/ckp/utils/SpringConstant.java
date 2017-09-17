@@ -14,5 +14,6 @@ public interface SpringConstant {
     String USER_SERVICES="UserService";
     String CUSTOMER_SERVICES="CustomerService";
     String CONSTRUCTION_SERVICES="ConstructionService";
+    String CONTRACT_SERVICES="ContractService";
     
 }

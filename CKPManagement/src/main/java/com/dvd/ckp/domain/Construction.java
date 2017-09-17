@@ -22,49 +22,49 @@ import javax.persistence.Table;
 @NamedQuery(name = "Construction.fillAllConstruction", query = "FROM Construction c WHERE status = 1")
 public class Construction {
 
-    private long constructionId;
-    private long contractId;
-    private int constructionFar;
-    private double constructionConvert;
+    private Long constructionId;
+    private Long contractId;
+    private Integer constructionFar;
+    private Double constructionConvert;
     private String constructionCode;
     private String constructionName;
-    private int status;
+    private Integer status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "construction_id")
-    public long getConstructionId() {
+    public Long getConstructionId() {
         return constructionId;
     }
 
-    public void setConstructionId(long constructionId) {
+    public void setConstructionId(Long constructionId) {
         this.constructionId = constructionId;
     }
 
     @Column(name = "contract_id")
-    public long getContractId() {
+    public Long getContractId() {
         return contractId;
     }
 
-    public void setContractId(long contractId) {
+    public void setContractId(Long contractId) {
         this.contractId = contractId;
     }
 
     @Column(name = "is_far")
-    public int getConstructionFar() {
+    public Integer getConstructionFar() {
         return constructionFar;
     }
 
-    public void setConstructionFar(int constructionFar) {
+    public void setConstructionFar(Integer constructionFar) {
         this.constructionFar = constructionFar;
     }
 
     @Column(name = "convert_value")
-    public double getConstructionConvert() {
+    public Double getConstructionConvert() {
         return constructionConvert;
     }
 
-    public void setConstructionConvert(double constructionConvert) {
+    public void setConstructionConvert(Double constructionConvert) {
         this.constructionConvert = constructionConvert;
     }
 
@@ -87,11 +87,11 @@ public class Construction {
     }
 
     @Column(name = "status")
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

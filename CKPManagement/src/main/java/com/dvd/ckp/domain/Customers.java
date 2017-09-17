@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "customers")
 @NamedQuery(name = "Customers.fillAllCustomer", query = "FROM Customers c WHERE status = 1")
 public class Customers {
-    private long customerId;
+    private Long customerId;
     private String customerCode;
     private String customerName;
     private String customerPhone;
@@ -29,16 +29,16 @@ public class Customers {
     private String taxCode;
     private String accountNumber;
     private String bankName;
-    private int status;
+    private Integer status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
-    public long getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(long customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 
@@ -106,11 +106,11 @@ public class Customers {
     }
 
     @Column(name = "status")
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
     
