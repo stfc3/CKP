@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:n="native">
+	<window id="uploadPump"
+		apply="com.dvd.ckp.controller.PumpsController"
+		position="center,center" closable="true"
+		action="show: slideDown;hide: slideUp" title="${pump.upload}"
+		border="normal" width="50%" height="50%" maximizable="false"
+		onCancel="uploadPump.detach();">
+
+		<style src="/css/theme.css" />
+		<groupbox>
+			<caption label="${c:l('pump.upload')}" />
+			<label width="300px" style="color:red" id="msgErr" />
+			<textbox id="hiddenFileName" visible="false" /><!--bien an luu ten duong dan file da upload-->
+			<textbox id="hdFileName" visible="false" /><!--bien an luu ten file da upload-->
+			<hlayout spacing="10px" id="rowupload">
+				<hbox hflex="2" />
+				<hbox hflex="1">
+					<div style="color:red; text-align:left">
+						<label style="color:black"
+							value="${c:l('pump.file.name')}" />
+						(*)
+					</div>
+				</hbox>
+				<hbox hflex="4">
+					<div hflex="1">
+						<a id="downloadFilePop" hflex="1">
+							<label id="linkFileName" style="color:blue"
+								hflex="1" />
+						</a>
+					</div>
+				</hbox>
+
+				<button upload="true" iconSclass="z-icon-paperclip"
+					id="uploadbtn" label="${c:l('upload')}" hflex="1" />
+				<hbox hflex="2" />
+			</hlayout>
+			<hlayout spacing="10px">
+				<hbox hflex="3" />
+				<hbox hflex="1" />
+
+				<a forward="onClick=onDownloadFile" hflex="4">
+					<label style="color:blue"
+						value="${c:l('dowload.template')}" />
+				</a>
+				<hbox hflex="1" />
+				<hbox hflex="2" />
+			</hlayout>
+			<hlayout id="totalRow">
+				<hbox hflex="2" />
+				<hbox>
+					<div style="color:red; text-align:left">
+						<label style="color:black"
+							value="${c:l('pump.total')}" />
+					</div>
+				</hbox>
+				<hbox>
+					<div hflex="1">
+						<textbox id="txtTotalRow" value="0" />
+					</div>
+				</hbox>
+				<hbox hflex="2" />
+			</hlayout>
+			<hlayout id="totalRowSuccess">
+				<hbox hflex="2" />
+				<hbox>
+					<div style="color:red; text-align:left">
+						<label style="color:black"
+							value="${c:l('pump.total.success')}" />
+					</div>
+				</hbox>
+				<hbox>
+					<div hflex="1">
+						<textbox id="txtTotalRowSucces" value="0" />
+					</div>
+				</hbox>
+				<hbox hflex="2" />
+			</hlayout>
+			<hlayout id="totalError">
+				<hbox hflex="2" />
+				<hbox>
+					<div style="color:red; text-align:left">
+						<label style="color:black"
+							value="${c:l('pump.total.error')}" />
+					</div>
+				</hbox>
+				<hbox>
+					<div>
+						<textbox id="txtTotalRowError" value="0" />
+					</div>
+				</hbox>
+				<hbox>
+					<div>
+						<button forward="onClick=onDownloadFileError"
+							visible="false" id="errorList" hflex="4"
+							label="${c:l('dowload.error.list')}"
+							style="border: none;color: green;font-weight: bold;color:blue; " />
+
+					</div>
+				</hbox>
+				<hbox hflex="2" />
+			</hlayout>
+
+
+			<div style="text-align:center">
+				<button mold="trendy" id="btnSave"
+					label="${c:l('pump.button.upload')}" tooltiptext=""
+					forward="form.onOK" focus="true" iconSclass="z-icon-upload" />
+				<button mold="trendy" id="btnCancel" onClick="uploadPump.detach();"
+					iconSclass="z-icon-times" label="${c:l('cancel')}" tooltiptext="" />
+			</div>
+		</groupbox>
+	</window>
+</zk>

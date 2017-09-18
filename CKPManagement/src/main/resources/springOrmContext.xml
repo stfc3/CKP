@@ -40,4 +40,6 @@
  
     <bean id="UserService" class="com.dvd.ckp.business.service.UserServiceImpl" />
     <bean id="CustomerService" class="com.dvd.ckp.business.service.CustomerServiceImpl" />
+    <bean id="PumpsService" class="com.dvd.ckp.business.service.PumpSeviceImpl" />
+    <bean id="LocationService" class="com.dvd.ckp.business.service.LocationSeviceImpl" />
 </beans>
