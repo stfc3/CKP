@@ -30,8 +30,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
     @Transactional(readOnly = true)
     @Override
-    public List<Customers> getCustomer(Customers customer) {
-        return CustomerDAO.getCustomer(customer);
+    public List<Customers> getCustomerActive() {
+        return CustomerDAO.getCustomerActive();
     }
     
     @Transactional

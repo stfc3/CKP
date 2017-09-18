@@ -5,11 +5,13 @@
  */
 package com.dvd.ckp.domain;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -19,9 +21,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "customers")
-@NamedQuery(name = "Customers.fillAllCustomer", query = "FROM Customers c WHERE status = 1")
-public class Customers {
-    private long customerId;
+@NamedQueries({
+    @NamedQuery(name = "Customers.fillAllCustomer", query = "FROM Customers c")
+    ,
+    @NamedQuery(name = "Customers.fillCustomerActive", query = "FROM Customers c WHERE c.status=1")
+})
+public class Customers implements Serializable {
+
+    private Long customerId;
     private String customerCode;
     private String customerName;
     private String customerPhone;
@@ -29,16 +36,16 @@ public class Customers {
     private String taxCode;
     private String accountNumber;
     private String bankName;
-    private int status;
+    private Integer status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
-    public long getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(long customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 
@@ -106,12 +113,12 @@ public class Customers {
     }
 
     @Column(name = "status")
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
-    
+
 }

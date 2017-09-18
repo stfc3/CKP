@@ -34,23 +34,12 @@ public class CustomerDAOImpl implements CustomerDAO {
         Query query = getCurrentSession().getNamedQuery("Customers.fillAllCustomer");
         return (List<Customers>) query.list();
     }
-
+    
     @SuppressWarnings("unchecked")
     @Override
-    public List<Customers> getCustomer(Customers customer) {
+    public List<Customers> getCustomerActive() {
 
-        StringBuilder vstrSql=new StringBuilder("FROM Customers c WHERE c.status=1 ");
-        if(customer!=null){
-            if(customer.getCustomerCode()!=null && !"".equals(customer.getCustomerCode())){
-                vstrSql.append("AND c.customerCode = :customerCode");
-            }
-        }
-        Query query = getCurrentSession().createQuery(vstrSql.toString());
-        if(customer!=null){
-            if(customer.getCustomerCode()!=null && !"".equals(customer.getCustomerCode())){
-                query.setParameter("customerCode", customer.getCustomerCode());
-            }
-        }
+        Query query = getCurrentSession().getNamedQuery("Customers.fillCustomerActive");
         return (List<Customers>) query.list();
     }
 

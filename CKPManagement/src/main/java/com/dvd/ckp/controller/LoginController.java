@@ -63,6 +63,7 @@ public class LoginController extends SelectorComposer<Component> {
             mesg.setValue(Labels.getLabel("login.error"));
         } else {
             session.setAttribute(Constants.TOKEN, new String(Base64.encodeBase64(vstrUserName.getBytes())));
+            session.setAttribute(Constants.SESSION_USER, vuser);
             Executions.sendRedirect(Constants.PAGE_HOME);
         }
     }

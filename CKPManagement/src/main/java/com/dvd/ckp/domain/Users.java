@@ -25,6 +25,7 @@ public class Users implements Serializable {
 
     private long userId;
     private String userName;
+    private String fullName;
     private String password;
     private String email;
     private String phone;
@@ -50,6 +51,14 @@ public class Users implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+    @Column(name = "full_name")
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     @Column(name = "password")
