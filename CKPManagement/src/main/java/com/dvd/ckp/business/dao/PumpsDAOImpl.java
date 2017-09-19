@@ -1,6 +1,5 @@
 package com.dvd.ckp.business.dao;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dvd.ckp.domain.Pumps;
-import com.dvd.ckp.utils.StringUtils;
 
 @Repository
 public class PumpsDAOImpl implements PumpsDAO {

@@ -13,12 +13,9 @@ public interface SpringConstant {
     
     String USER_SERVICES="UserService";
     String CUSTOMER_SERVICES="CustomerService";
-<<<<<<< HEAD
-    public static final String PUMPS_SERVICES="PumpsService";
-    public static final String LOCATION_SERVICES="LocationService";
-=======
+    String PUMPS_SERVICES="PumpsService";
+    String LOCATION_SERVICES="LocationService";
     String CONSTRUCTION_SERVICES="ConstructionService";
     String CONTRACT_SERVICES="ContractService";
->>>>>>> f04f0d2861183e11618b721dc13ce2daaca925d1
     
 }

@@ -40,11 +40,8 @@
  
     <bean id="UserService" class="com.dvd.ckp.business.service.UserServiceImpl" />
     <bean id="CustomerService" class="com.dvd.ckp.business.service.CustomerServiceImpl" />
-<<<<<<< HEAD
     <bean id="PumpsService" class="com.dvd.ckp.business.service.PumpSeviceImpl" />
     <bean id="LocationService" class="com.dvd.ckp.business.service.LocationSeviceImpl" />
-=======
     <bean id="ConstructionService" class="com.dvd.ckp.business.service.ConstructionServiceImpl" />
     <bean id="ContractService" class="com.dvd.ckp.business.service.ContractServiceImpl" />
->>>>>>> f04f0d2861183e11618b721dc13ce2daaca925d1
 </beans>

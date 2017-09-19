@@ -6,7 +6,7 @@
 package com.dvd.ckp.business.service;
 
 import com.dvd.ckp.business.dao.CustomerDAO;
-import com.dvd.ckp.domain.Customers;
+import com.dvd.ckp.domain.Customer;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,18 +25,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Customers> getAllCustomer() {
+    public List<Customer> getAllCustomer() {
         return CustomerDAO.getAllCustomer();
     }
     @Transactional(readOnly = true)
     @Override
-    public List<Customers> getCustomerActive() {
+    public List<Customer> getCustomerActive() {
         return CustomerDAO.getCustomerActive();
     }
     
     @Transactional
     @Override
-    public void insertOrUpdateCustomer(Customers customer) {
+    public void insertOrUpdateCustomer(Customer customer) {
         CustomerDAO.insertOrUpdateCustomer(customer);
     }
 

@@ -5,7 +5,7 @@
  */
 package com.dvd.ckp.business.dao;
 
-import com.dvd.ckp.domain.Customers;
+import com.dvd.ckp.domain.Customer;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -29,23 +29,23 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Customers> getAllCustomer() {
+    public List<Customer> getAllCustomer() {
 
-        Query query = getCurrentSession().getNamedQuery("Customers.fillAllCustomer");
-        return (List<Customers>) query.list();
+        Query query = getCurrentSession().getNamedQuery("Customer.fillAllCustomer");
+        return (List<Customer>) query.list();
     }
     
     @SuppressWarnings("unchecked")
     @Override
-    public List<Customers> getCustomerActive() {
+    public List<Customer> getCustomerActive() {
 
-        Query query = getCurrentSession().getNamedQuery("Customers.fillCustomerActive");
-        return (List<Customers>) query.list();
+        Query query = getCurrentSession().getNamedQuery("Customer.fillCustomerActive");
+        return (List<Customer>) query.list();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void insertOrUpdateCustomer(Customers customer) {
+    public void insertOrUpdateCustomer(Customer customer) {
         getCurrentSession().saveOrUpdate(customer);
     }
 

@@ -8,15 +8,18 @@ package com.dvd.ckp.controller;
 import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.domain.Contract;
-import com.dvd.ckp.domain.Customers;
+import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
@@ -29,6 +32,7 @@ import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 /**
  *
@@ -37,7 +41,7 @@ import org.zkoss.zul.Textbox;
 public class ContractController extends GenericForwardComposer {
 
     private static final Logger logger = Logger.getLogger(ContractController.class);
-    
+
     @WireVariable
     protected ContractService contractService;
     @WireVariable
@@ -48,10 +52,12 @@ public class ContractController extends GenericForwardComposer {
     private Textbox txtFilterCode;
     @Wire
     private Textbox txtFilterName;
+    @Wire
+    private Window mainContract;
     ListModelList<Contract> listDataModel;
-    List<Customers> lstCustomers;
+    List<Customer> lstCustomers;
     private List<Contract> lstContracts;
-    Customers defaultCustomer;
+    Customer defaultCustomer;
     private final int codeIndex = 1;
     private final int nameIndex = 2;
     private final int customerIndex = 3;
@@ -73,7 +79,7 @@ public class ContractController extends GenericForwardComposer {
         lstContract.setModel(listDataModel);
 
         lstCustomers = customerService.getCustomerActive();
-        defaultCustomer = new Customers();
+        defaultCustomer = new Customer();
         defaultCustomer.setCustomerId(0l);
         defaultCustomer.setCustomerName(Labels.getLabel("option"));
         lstCustomers.add(0, defaultCustomer);
@@ -232,7 +238,7 @@ public class ContractController extends GenericForwardComposer {
 
     private void filter(Contract contract) {
         List<Contract> vlstContracts = new ArrayList<>();
-        if (lstContracts!= null && !lstContracts.isEmpty() && contract != null) {
+        if (lstContracts != null && !lstContracts.isEmpty() && contract != null) {
             if (!StringUtils.isValidString(contract.getContractCode()) && !StringUtils.isValidString(contract.getContractName())) {
                 vlstContracts.addAll(lstContracts);
             } else {
@@ -262,7 +268,7 @@ public class ContractController extends GenericForwardComposer {
 
     }
 
-    private void setDataCombobox(List<Component> lstCell, List<Customers> selectedIndex, int columnIndex) {
+    private void setDataCombobox(List<Component> lstCell, List<Customer> selectedIndex, int columnIndex) {
         Combobox cbxCustomer = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
@@ -270,14 +276,15 @@ public class ContractController extends GenericForwardComposer {
             ListModelList listDataModelCustomer = new ListModelList(lstCustomers);
             listDataModelCustomer.setSelection(selectedIndex);
             cbxCustomer.setModel(listDataModelCustomer);
+            cbxCustomer.setTooltiptext(selectedIndex.get(0).getCustomerName());
         }
 
     }
 
-    private List<Customers> getCustomerDefault(Long customerId) {
-        List<Customers> customerSelected = new ArrayList<>();
+    private List<Customer> getCustomerDefault(Long customerId) {
+        List<Customer> customerSelected = new ArrayList<>();
         if (customerId != null && lstCustomers != null && !lstCustomers.isEmpty()) {
-            for (Customers customer : lstCustomers) {
+            for (Customer customer : lstCustomers) {
                 if (customerId.equals(customer.getCustomerId())) {
                     customerSelected.add(customer);
                     break;
@@ -301,5 +308,18 @@ public class ContractController extends GenericForwardComposer {
                 setDataCombobox(lstCell, getCustomerDefault(contract.getCustomerId()), customerIndex);
             }
         }
+    }
+
+    public void onPrice(ForwardEvent event) {
+        Map<String, Object> arguments = new HashMap<>();
+
+        Window winAddUser = (Window) Executions.createComponents(
+                "/manager/include/price.zul", mainContract, arguments);
+
+        winAddUser.setBorder(true);
+        winAddUser.setBorder("normal");
+        winAddUser.setClosable(true);
+
+        winAddUser.doModal();
     }
 }

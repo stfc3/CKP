@@ -6,7 +6,7 @@
 package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.CustomerService;
-import com.dvd.ckp.domain.Customers;
+import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
@@ -40,8 +40,8 @@ public class CustomerController extends GenericForwardComposer {
     private Textbox txtFilterCode;
     @Wire
     private Textbox txtFilterName;
-    ListModelList<Customers> listDataModel;
-    private List<Customers> lstCustomers;
+    ListModelList<Customer> listDataModel;
+    private List<Customer> lstCustomers;
     
     private final int codeIndex=1;
     private final int nameIndex=2;
@@ -95,8 +95,8 @@ public class CustomerController extends GenericForwardComposer {
     public void onSave(ForwardEvent event) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        Customers c = rowSelected.getValue();
-        Customers customer = getDataInRow(lstCell);
+        Customer c = rowSelected.getValue();
+        Customer customer = getDataInRow(lstCell);
         customer.setCustomerId(c.getCustomerId());
         customerService.insertOrUpdateCustomer(customer);
         StyleUtils.setDisableComponent(lstCell);
@@ -107,7 +107,7 @@ public class CustomerController extends GenericForwardComposer {
      * Add row
      */
     public void onClick$add() {
-        Customers customer = new Customers();
+        Customer customer = new Customer();
         listDataModel.add(0,customer);
         lstCustomer.setModel(listDataModel);
         lstCustomer.renderAll();
@@ -121,8 +121,8 @@ public class CustomerController extends GenericForwardComposer {
      * @param lstCell
      * @return
      */
-    private Customers getDataInRow(List<Component> lstCell) {
-        Customers customer = new Customers();
+    private Customer getDataInRow(List<Component> lstCell) {
+        Customer customer = new Customer();
         Textbox txtCustomerCode = (Textbox) lstCell.get(codeIndex).getFirstChild();
         Textbox txtCustomerName = (Textbox) lstCell.get(nameIndex).getFirstChild();
         Textbox txtCustomerPhone = (Textbox) lstCell.get(phoneIndex).getFirstChild();
@@ -152,7 +152,7 @@ public class CustomerController extends GenericForwardComposer {
     }
 
     public void onOK$txtFilterCode() {
-        Customers customer = new Customers();
+        Customer customer = new Customer();
         String vstrCustomerCode = txtFilterCode.getValue();
         customer.setCustomerCode(vstrCustomerCode);
         String vstrCustomerName = txtFilterName.getValue();
@@ -161,7 +161,7 @@ public class CustomerController extends GenericForwardComposer {
     }
 
     public void onOK$txtFilterName() {
-        Customers customer = new Customers();
+        Customer customer = new Customer();
         String vstrCustomerCode = txtFilterCode.getValue();
         customer.setCustomerCode(vstrCustomerCode);
         String vstrCustomerName = txtFilterName.getValue();
@@ -169,13 +169,13 @@ public class CustomerController extends GenericForwardComposer {
         filter(customer);
     }
 
-    private void filter(Customers customer) {
-        List<Customers> vlstCustomer = new ArrayList<>();
+    private void filter(Customer customer) {
+        List<Customer> vlstCustomer = new ArrayList<>();
         if (lstCustomers != null && !lstCustomers.isEmpty() && customer != null) {
             if (!StringUtils.isValidString(customer.getCustomerCode()) && !StringUtils.isValidString(customer.getCustomerName())) {
                 vlstCustomer.addAll(lstCustomers);
             } else {
-                for (Customers c : lstCustomers) {
+                for (Customer c : lstCustomers) {
                     //tim theo ma va ten
                     if (StringUtils.isValidString(customer.getCustomerCode()) && StringUtils.isValidString(customer.getCustomerName())) {
                         if ((StringUtils.isValidString(c.getCustomerCode()) && c.getCustomerCode().toLowerCase().contains(customer.getCustomerCode().toLowerCase()))

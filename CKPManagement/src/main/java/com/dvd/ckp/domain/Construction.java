@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.domain;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ import javax.persistence.Table;
     ,
     @NamedQuery(name = "Construction.fillConstructionActive", query = "FROM Construction c WHERE c.status=1")
 })
-public class Construction {
+public class Construction implements Serializable {
 
     private Long constructionId;
     private Long contractId;

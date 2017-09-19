@@ -1,5 +1,6 @@
 package com.dvd.ckp.domain;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "location")
 @NamedQuery(name = "Location.getAll", query = "FROM Location u WHERE status = 1")
-public class Location {
+public class Location implements Serializable {
 	private int locationID;
 	private String locationCode;
 	private String locationName;
