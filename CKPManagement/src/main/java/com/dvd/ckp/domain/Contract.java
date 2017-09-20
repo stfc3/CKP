@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ import javax.persistence.Temporal;
     ,
     @NamedQuery(name = "Contract.fillContractActive", query = "FROM Contract c WHERE c.expirationDate >= now()")
 })
-public class Contract {
+public class Contract implements Serializable {
 
     private Long contractId;
     private Long customerId;

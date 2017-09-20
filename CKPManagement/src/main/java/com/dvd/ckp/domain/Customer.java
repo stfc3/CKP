@@ -22,11 +22,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "customers")
 @NamedQueries({
-    @NamedQuery(name = "Customers.fillAllCustomer", query = "FROM Customers c")
+    @NamedQuery(name = "Customer.fillAllCustomer", query = "FROM Customer c")
     ,
-    @NamedQuery(name = "Customers.fillCustomerActive", query = "FROM Customers c WHERE c.status=1")
+    @NamedQuery(name = "Customer.fillCustomerActive", query = "FROM Customer c WHERE c.status=1")
 })
-public class Customers implements Serializable {
+public class Customer implements Serializable {
 
     private Long customerId;
     private String customerCode;

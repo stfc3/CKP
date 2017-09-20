@@ -11,6 +11,7 @@ package com.dvd.ckp.utils;
  */
 public interface SpringConstant {
 
+
 	String USER_SERVICES = "UserService";
 	String CUSTOMER_SERVICES = "CustomerService";
 
@@ -20,5 +21,6 @@ public interface SpringConstant {
 
 	String CONSTRUCTION_SERVICES = "ConstructionService";
 	String CONTRACT_SERVICES = "ContractService";
+
 
 }
