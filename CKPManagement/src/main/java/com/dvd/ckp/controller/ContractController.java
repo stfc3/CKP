@@ -5,17 +5,11 @@
  */
 package com.dvd.ckp.controller;
 
-import com.dvd.ckp.business.service.ContractService;
-import com.dvd.ckp.business.service.CustomerService;
-import com.dvd.ckp.domain.Contract;
-import com.dvd.ckp.domain.Customer;
-import com.dvd.ckp.utils.SpringConstant;
-import com.dvd.ckp.utils.StringUtils;
-import com.dvd.ckp.utils.StyleUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
@@ -33,6 +27,14 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
+
+import com.dvd.ckp.business.service.ContractService;
+import com.dvd.ckp.business.service.CustomerService;
+import com.dvd.ckp.domain.Contract;
+import com.dvd.ckp.domain.Customer;
+import com.dvd.ckp.utils.SpringConstant;
+import com.dvd.ckp.utils.StringUtils;
+import com.dvd.ckp.utils.StyleUtils;
 
 /**
  *

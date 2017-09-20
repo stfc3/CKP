@@ -124,7 +124,7 @@ public class LocationController extends GenericForwardComposer {
 		Location location = getDataInRow(lstCell);
 		location.setLocationID(c.getLocationID());
 		location.setStatus(3);
-		lstError.remove(location);
+		lstFilter.remove(location);
 		locationServices.detele(location);
 		setDisableComponent(lstCell);
 		reloadGrid();
@@ -220,6 +220,7 @@ public class LocationController extends GenericForwardComposer {
 		Location location = getDataInRow(lstCell);
 		location.setLocationID(c.getLocationID());
 		if (insertOrUpdate == 1) {
+			lstFilter.add(location);
 			locationServices.save(location);
 		} else {
 			locationServices.update(location);

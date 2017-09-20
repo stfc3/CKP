@@ -123,7 +123,7 @@ public class PumpsController extends GenericForwardComposer {
 		Pumps pumps = getDataInRow(lstCell);
 		pumps.setPumpsID(c.getPumpsID());
 		pumps.setStatus(3);
-		lstError.remove(pumps);
+		lstPumpsFilter.remove(pumps);
 		pumpsService.detele(pumps);
 		setDisableComponent(lstCell);
 		reloadGrid();
@@ -219,6 +219,7 @@ public class PumpsController extends GenericForwardComposer {
 		Pumps pumps = getDataInRow(lstCell);
 		pumps.setPumpsID(c.getPumpsID());
 		if (insertOrUpdate == 1) {
+			lstPumpsFilter.add(pumps);
 			pumpsService.savePumps(pumps);
 		} else {
 			pumpsService.update(pumps);
@@ -465,6 +466,5 @@ public class PumpsController extends GenericForwardComposer {
 			logger.error(e.getMessage(), e);
 		}
 	}
-
 
 }

@@ -135,7 +135,7 @@ public class StaffController extends GenericForwardComposer {
 		Staff staff = getDataInRow(lstCell);
 		staff.setStaffId(c.getStaffId());
 		staff.setStatus(3);
-		lstError.remove(staff);
+		lstStaffFilter.remove(staff);
 		staffService.detele(staff);
 		setDisableComponent(lstCell);
 		reloadGrid();
@@ -231,6 +231,7 @@ public class StaffController extends GenericForwardComposer {
 		Staff staff = getDataInRow(lstCell);
 		staff.setStaffId(c.getStaffId());
 		if (insertOrUpdate == 1) {
+			lstStaffFilter.add(staff);
 			staffService.save(staff);
 		} else {
 			staffService.update(staff);
