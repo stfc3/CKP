@@ -19,6 +19,29 @@ public class LocationSeviceImpl implements LocationServices {
 		return locationDAO.getListLocation();
 	}
 
-	
+	@Override
+	public void save(Location location) {
+		// TODO Auto-generated method stub
+		locationDAO.saveLocation(location);
+
+	}
+
+	@Override
+	public int update(Location location) {
+		// TODO Auto-generated method stub
+		return locationDAO.update(location);
+	}
+
+	@Override
+	public int detele(Location location) {
+		// TODO Auto-generated method stub
+		return locationDAO.delete(location);
+	}
+
+	@Override
+	public void importData(List<Location> lstLocation) {
+		// TODO Auto-generated method stub
+		locationDAO.importData(lstLocation);
+	}
 
 }

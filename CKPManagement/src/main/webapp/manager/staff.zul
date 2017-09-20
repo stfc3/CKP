@@ -7,11 +7,11 @@
 		margin-right: 5px; } .z-auxheader-content{ line-height: 14px;
 		text-align:right; } a [class^="z-icon-"]{ margin-right: 5px; }
 	</style>
-	<window id="pumps" apply="com.dvd.ckp.controller.PumpsController">
+	<window id="staff" apply="com.dvd.ckp.controller.StaffController">
 		<style src="/css/theme.css" />
 		<groupbox>
-			<caption label="${c:l('pump')}" />
-			<grid id="gridPumps">
+			<caption label="${c:l('staff')}" />
+			<grid id="gridStaff">
 				<auxhead sclass="category-center">
 					<auxheader colspan="10">
 						<button id="add" iconSclass="z-icon-plus-circle"
@@ -38,13 +38,12 @@
 				</auxhead>
 				<columns style="text-align:center; ">
 					<column hflex="1">${c:l('pump.index')}</column>
-					<column hflex="2">${c:l('pump.code')}</column>
-					<column hflex="6">${c:l('pump.name')}</column>
-					<column hflex="3">
-						${c:l('pump.capacity')}(m3)
-					</column>
-					<column hflex="2">${c:l('pump.hight')}(m)</column>
-					<column hflex="2">${c:l('pump.far')}(m)</column>
+					<column hflex="2">${c:l('staff.code')}</column>
+					<column hflex="6">${c:l('staff.name')}</column>
+					<column hflex="3">${c:l('staff.birthday')}</column>
+					<column hflex="2">${c:l('staff.phone')}</column>
+					<column hflex="2">${c:l('staff.email')}</column>
+					<column hflex="2">${c:l('staff.address')}</column>
 					<column hflex="3">${c:l('pump.status')}</column>
 					<column hflex="2">${c:l('pump.action')}</column>
 				</columns>
@@ -54,30 +53,34 @@
 							<label value="${forEachStatus.index+1}" />
 						</cell>
 						<cell>
-							<textbox value="${each.pumpsCode}"
-								tooltiptext="${each.pumpsCode}" hflex="1" inplace="true"
+							<textbox value="${each.staffCode}"
+								tooltiptext="${each.staffCode}" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
 						<cell>
-							<textbox value="${each.pumpsName}"
-								tooltiptext="${each.pumpsName}" hflex="1" inplace="true"
+							<textbox value="${each.staffName}"
+								tooltiptext="${each.staffName}" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
 						<cell>
-							<textbox value="${each.pumpsCapacity}"
-								style="text-align: right;"
-								tooltiptext="${each.pumpsCapacity}(m3)" hflex="1" inplace="true"
+							<datebox value="${each.birthday}"
+								style="text-align: right;" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
 						<cell>
-							<textbox value="${each.pumpsHight}"
-								style="text-align: right;" tooltiptext="${each.pumpsHight}(m)"
-								hflex="1" inplace="true" readonly="true" />
+							<textbox value="${each.phone}"
+								style="text-align: right;" tooltiptext="${each.phone}" hflex="1"
+								inplace="true" readonly="true" />
 						</cell>
 						<cell>
 							<textbox style="text-align: right;"
-								value="${each.pumpsFar}" tooltiptext="${each.pumpsFar}(m)"
-								hflex="1" inplace="true" readonly="true" />
+								value="${each.email}" tooltiptext="${each.email}" hflex="1"
+								inplace="true" readonly="true" />
+						</cell>
+						<cell>
+							<textbox style="text-align: right;"
+								value="${each.address}" tooltiptext="${each.address}" hflex="1"
+								inplace="true" readonly="true" />
 						</cell>
 						<cell style="text-align: center;">
 							<combobox class="combox-status"

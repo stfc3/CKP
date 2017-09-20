@@ -7,9 +7,7 @@ package com.dvd.ckp.controller;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.zkoss.util.media.Media;
@@ -17,6 +15,7 @@ import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
@@ -38,12 +37,11 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.LocationServices;
-import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.domain.Location;
-import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
+import com.dvd.ckp.excel.domain.LocationExcel;
 import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.NumberUtils;
 import com.dvd.ckp.utils.SpringConstant;
@@ -55,6 +53,10 @@ import com.dvd.ckp.utils.StringUtils;
  */
 public class LocationController extends GenericForwardComposer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(LocationController.class);
 	@WireVariable
 	protected LocationServices locationServices;
@@ -71,9 +73,10 @@ public class LocationController extends GenericForwardComposer {
 	public Button btnImport;
 	private int insertOrUpdate = 0;
 
-	private Window pumps;
+	@Wire
+	private Window location;
 
-	private static final String SAVE_PATH = "/Pumps/";
+	private static final String SAVE_PATH = "/Location/";
 
 	private Label linkFileName;
 	private Textbox hiddenFileName;
@@ -83,8 +86,9 @@ public class LocationController extends GenericForwardComposer {
 	public Textbox txtTotalRowSucces;
 	public Textbox txtTotalRowError;
 
-	public Button btnCancel;
-	// public Window uploadPump;
+	private List<LocationExcel> lstError = new ArrayList<LocationExcel>();
+
+	public Button errorList;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -110,21 +114,20 @@ public class LocationController extends GenericForwardComposer {
 	public void onEdit(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		insertOrUpdate = 0;
 		setEnableComponent(lstCell);
 	}
 
 	public void onDelete(ForwardEvent event) {
-		// Row rowSelected = (Row)
-		// event.getOrigin().getTarget().getParent().getParent();
-		// List<Component> lstCell = rowSelected.getChildren();
-		// Pumps c = rowSelected.getValue();
-		// Pumps pumps = getDataInRow(lstCell);
-		// pumps.setPumpsID(c.getPumpsID());
-		// pumps.setStatus(3);
-		// pumpsService.detele(pumps);
-		// setDisableComponent(lstCell);
-		// reloadGrid();
+		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+		List<Component> lstCell = rowSelected.getChildren();
+		Location c = rowSelected.getValue();
+		Location location = getDataInRow(lstCell);
+		location.setLocationID(c.getLocationID());
+		location.setStatus(3);
+		lstError.remove(location);
+		locationServices.detele(location);
+		setDisableComponent(lstCell);
+		reloadGrid();
 	}
 
 	/**
@@ -211,34 +214,33 @@ public class LocationController extends GenericForwardComposer {
 	 * @param event
 	 */
 	public void onSave(ForwardEvent event) {
-		// Row rowSelected = (Row)
-		// event.getOrigin().getTarget().getParent().getParent();
-		// List<Component> lstCell = rowSelected.getChildren();
-		// Pumps c = rowSelected.getValue();
-		// Pumps pumps = getDataInRow(lstCell);
-		// pumps.setPumpsID(c.getPumpsID());
-		// if (insertOrUpdate == 1) {
-		// pumpsService.savePumps(pumps);
-		// } else {
-		// pumpsService.update(pumps);
-		// }
-		// setDisableComponent(lstCell);
-		// reloadGrid();
+		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+		List<Component> lstCell = rowSelected.getChildren();
+		Location c = rowSelected.getValue();
+		Location location = getDataInRow(lstCell);
+		location.setLocationID(c.getLocationID());
+		if (insertOrUpdate == 1) {
+			locationServices.save(location);
+		} else {
+			locationServices.update(location);
+		}
+		setDisableComponent(lstCell);
+		reloadGrid();
+		insertOrUpdate = 0;
 	}
 
 	/**
 	 * Add row
 	 */
 	public void onClick$add() {
-		// Pumps pumpAddItem = new Pumps();
-		// pumpAddItem.setStatus(1);
-		// listDataModel.add(0, pumpAddItem);
-		// gridLocation.setModel(listDataModel);
-		// // lstCustomer.renderAll();
-		// List<Component> lstCell =
-		// gridLocation.getRows().getChildren().get(0).getChildren();
-		// setEnableComponent(lstCell);
-		// insertOrUpdate = 1;
+		Location locationAddItem = new Location();
+		locationAddItem.setStatus(1);
+		listDataModel.add(0, locationAddItem);
+		gridLocation.setModel(listDataModel);
+		gridLocation.renderAll();
+		List<Component> lstCell = gridLocation.getRows().getChildren().get(0).getChildren();
+		setEnableComponent(lstCell);
+		insertOrUpdate = 1;
 	}
 
 	/**
@@ -247,21 +249,17 @@ public class LocationController extends GenericForwardComposer {
 	 * @param lstCell
 	 * @return
 	 */
-	private Pumps getDataInRow(List<Component> lstCell) {
-		Pumps pump = new Pumps();
-		Textbox txtPumpsCode = (Textbox) lstCell.get(1).getFirstChild();
-		Textbox txtPumpsName = (Textbox) lstCell.get(2).getFirstChild();
-		Textbox txtPumpsCapacity = (Textbox) lstCell.get(3).getFirstChild();
-		Textbox txtPumpsHight = (Textbox) lstCell.get(4).getFirstChild();
-		Textbox txtPumpsFar = (Textbox) lstCell.get(5).getFirstChild();
-		Combobox cbxStatus = (Combobox) lstCell.get(6).getFirstChild();
-		pump.setPumpsCode(txtPumpsCode.getValue());
-		pump.setPumpsName(txtPumpsName.getValue());
-		pump.setPumpsCapacity(Integer.valueOf(txtPumpsCapacity.getValue()));
-		pump.setPumpsHight(Integer.valueOf(txtPumpsFar.getValue()));
-		pump.setPumpsFar(Integer.valueOf(txtPumpsHight.getValue()));
-		pump.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
-		return pump;
+	private Location getDataInRow(List<Component> lstCell) {
+		Location location = new Location();
+		Textbox txtLocationCode = (Textbox) lstCell.get(1).getFirstChild();
+		Textbox txtLocationName = (Textbox) lstCell.get(2).getFirstChild();
+		Textbox txtLocationType = (Textbox) lstCell.get(3).getFirstChild();
+		Combobox cbxStatus = (Combobox) lstCell.get(4).getFirstChild();
+		location.setLocationCode(txtLocationCode.getValue());
+		location.setLocationName(txtLocationName.getValue());
+		location.setLocationType(Integer.valueOf(txtLocationType.getValue()));
+		location.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
+		return location;
 	}
 
 	/**
@@ -277,58 +275,59 @@ public class LocationController extends GenericForwardComposer {
 	}
 
 	public void onChange$txtFilterCode() {
-		Pumps pumps = new Pumps();
-		String vstrPumpsCode = txtFilterCode.getValue();
-		pumps.setPumpsCode(vstrPumpsCode);
-		String vstrPumpsName = txtFilterName.getValue();
-		pumps.setPumpsName(vstrPumpsName);
-		filter(pumps);
+		Location location = new Location();
+		String vstrLocationCode = txtFilterCode.getValue();
+		location.setLocationCode(vstrLocationCode);
+		String vstrLocationName = txtFilterName.getValue();
+		location.setLocationName(vstrLocationName);
+		filter(location);
 	}
 
 	public void onChange$txtFilterName() {
-		Pumps pumps = new Pumps();
-		String vstrPumpsCode = txtFilterCode.getValue();
-		pumps.setPumpsCode(vstrPumpsCode);
-		String vstrPumpsName = txtFilterName.getValue();
-		pumps.setPumpsName(vstrPumpsName);
-		filter(pumps);
+		Location location = new Location();
+		String vstrLocationCode = txtFilterCode.getValue();
+		location.setLocationCode(vstrLocationCode);
+		String vstrLocationName = txtFilterName.getValue();
+		location.setLocationName(vstrLocationName);
+		filter(location);
 	}
 
-	private void filter(Pumps pumps) {
-//		int index = 0;
-//		List<Pumps> vlstData = new ArrayList<>();
-//		if (lstLocation != null && !lstLocation.isEmpty()) {
-//			for (Pumps item : lstLocation) {
-//				index++;
-//				pumps.setIndex(index);
-//				if (StringUtils.isValidString(pumps.getPumpsCode())
-//						&& item.getPumpsCode().toLowerCase().contains(pumps.getPumpsCode().toLowerCase())) {
-//					vlstData.add(item);
-//					lstFilter.clear();
-//					lstFilter.add(item);
-//				} else if (StringUtils.isValidString(pumps.getPumpsName())
-//						&& item.getPumpsName().toLowerCase().contains(pumps.getPumpsName().toLowerCase())) {
-//					vlstData.add(item);
-//					lstFilter.clear();
-//					lstFilter.add(item);
-//				}
-//			}
-//		}
-//		if (!StringUtils.isValidString(pumps.getPumpsCode()) && !StringUtils.isValidString(pumps.getPumpsName())) {
-//			vlstData.addAll(lstLocation);
-//			lstFilter.clear();
-//			lstFilter.addAll(lstLocation);
-//		}
-//		listDataModel = new ListModelList<Pumps>(vlstData);
-//		gridLocation.setModel(listDataModel);
+	private void filter(Location location) {
+		int index = 0;
+		List<Location> vlstData = new ArrayList<>();
+		if (lstLocation != null && !lstLocation.isEmpty()) {
+			for (Location item : lstLocation) {
+				index++;
+				item.setIndex(index);
+				if (StringUtils.isValidString(location.getLocationCode())
+						&& item.getLocationCode().toLowerCase().contains(location.getLocationCode().toLowerCase())) {
+					vlstData.add(item);
+					lstFilter.clear();
+					lstFilter.add(item);
+				} else if (StringUtils.isValidString(location.getLocationName())
+						&& item.getLocationName().toLowerCase().contains(location.getLocationName().toLowerCase())) {
+					vlstData.add(item);
+					lstFilter.clear();
+					lstFilter.add(item);
+				}
+			}
+		}
+		if (!StringUtils.isValidString(location.getLocationCode())
+				&& !StringUtils.isValidString(location.getLocationName())) {
+			vlstData.addAll(lstLocation);
+			lstFilter.clear();
+			lstFilter.addAll(lstLocation);
+		}
+		listDataModel = new ListModelList<Location>(vlstData);
+		gridLocation.setModel(listDataModel);
 	}
 
 	public void onClick$btnExport(Event event) {
 		ExcelWriter<Location> excelWriter = new ExcelWriter<Location>();
 		try {
 
-			String pathFileInput = Constants.PATH_FILE + "file/template/export/pumps_data_export.xlsx";
-			String pathFileOut = Constants.PATH_FILE + "file/export/pumps_data_export.xlsx";
+			String pathFileInput = Constants.PATH_FILE + "file/template/export/location_data_export.xlsx";
+			String pathFileOut = Constants.PATH_FILE + "file/export/location_data_export.xlsx";
 
 			excelWriter.write(lstFilter, pathFileInput, pathFileOut);
 			File file = new File(pathFileOut);
@@ -340,17 +339,19 @@ public class LocationController extends GenericForwardComposer {
 
 	}
 
-	public void onClick$btnImport(Event event) {
-		Map<String, Object> arguments = new HashMap<>();
-		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadPumps.zul", pumps, arguments);
+	public void onImport(ForwardEvent event) {
+		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadLocation.zul", location,
+				null);
 		windownUpload.doModal();
 		windownUpload.setBorder(true);
 		windownUpload.setBorder("normal");
-		windownUpload.addEventListener(Events.ON_CLOSE, new org.zkoss.zk.ui.event.EventListener() {
+		windownUpload.setClosable(true);
+		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
 			@Override
 			public void onEvent(Event event) throws Exception {
-				windownUpload.detach();
 				reloadGrid();
+
 			}
 		});
 	}
@@ -376,41 +377,53 @@ public class LocationController extends GenericForwardComposer {
 
 	public void onClick$btnSave() {
 		int numberSucces = 0;
-		List<com.dvd.ckp.excel.domain.Pumps> lstError = new ArrayList<com.dvd.ckp.excel.domain.Pumps>();
+		int numberError = 0;
+		lstError.clear();
 		try {
-			ExcelReader<com.dvd.ckp.excel.domain.Pumps> reader = new ExcelReader<>();
+			ExcelReader<LocationExcel> reader = new ExcelReader<>();
 			String filePath = hiddenFileName.getValue();
-			List<com.dvd.ckp.excel.domain.Pumps> listData = reader.read(filePath, com.dvd.ckp.excel.domain.Pumps.class);
-			List<Pumps> vlstData = new ArrayList<>();
+			List<LocationExcel> listData = reader.read(filePath, LocationExcel.class);
+			List<Location> vlstData = new ArrayList<>();
 			if (listData != null && !listData.isEmpty()) {
-				for (com.dvd.ckp.excel.domain.Pumps pumps : listData) {
+				for (LocationExcel locationExcel : listData) {
 
-					if (!NumberUtils.isNumber(pumps.getPumpsCapacity())) {
-						pumps.setDescription(
-								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.capacity") }));
-						lstError.add(pumps);
+					if (!StringUtils.isValidString(locationExcel.getLocationCode())) {
+						numberError++;
+						locationExcel.setIndex(numberError);
+						locationExcel.setDescription(
+								Labels.getLabel("pump.not.empty", new String[] { Labels.getLabel("location.code") }));
+						lstError.add(locationExcel);
 						continue;
 					}
 
-					if (!NumberUtils.isNumber(pumps.getPumpsHight())) {
-						pumps.setDescription(
-								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.hight") }));
-						lstError.add(pumps);
+					if (!StringUtils.isValidString(locationExcel.getLocationName())) {
+						numberError++;
+						locationExcel.setIndex(numberError);
+						locationExcel.setDescription(
+								Labels.getLabel("pump.not.empty", new String[] { Labels.getLabel("location.name") }));
+						lstError.add(locationExcel);
 						continue;
 					}
 
-					if (!NumberUtils.isNumber(pumps.getPumpsFar())) {
-						pumps.setDescription(
-								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.far") }));
-						lstError.add(pumps);
+					if (!StringUtils.isValidString(locationExcel.getLocationType())) {
+						numberError++;
+						locationExcel.setIndex(numberError);
+						locationExcel.setDescription(
+								Labels.getLabel("pump.not.empty", new String[] { Labels.getLabel("location.value") }));
+						lstError.add(locationExcel);
 						continue;
 					}
-					Pumps item = new Pumps();
-					item.setPumpsCode(pumps.getPumpsCode());
-					item.setPumpsName(pumps.getPumpsName());
-					item.setPumpsCapacity(Integer.valueOf(pumps.getPumpsCapacity()));
-					item.setPumpsHight(Integer.valueOf(pumps.getPumpsHight()));
-					item.setPumpsFar(Integer.valueOf(pumps.getPumpsFar()));
+					if (!NumberUtils.isNumber(locationExcel.getLocationType())) {
+						locationExcel.setIndex(numberError);
+						locationExcel.setDescription(
+								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("location.value") }));
+						lstError.add(locationExcel);
+						continue;
+					}
+					Location item = new Location();
+					item.setLocationCode(locationExcel.getLocationCode());
+					item.setLocationName(locationExcel.getLocationName());
+					item.setLocationType(Integer.valueOf(locationExcel.getLocationType()));
 					item.setStatus(1);
 					vlstData.add(item);
 					numberSucces++;
@@ -418,12 +431,41 @@ public class LocationController extends GenericForwardComposer {
 			}
 			txtTotalRow.setValue(String.valueOf(vlstData.size()));
 			txtTotalRowSucces.setValue(String.valueOf(numberSucces));
-			txtTotalRowError.setValue(String.valueOf(lstError.size()));
-//			pumpsService.importData(vlstData);
+			if (lstError != null && !lstError.isEmpty()) {
+				errorList.setVisible(true);
+				txtTotalRowError.setValue(String.valueOf(lstError.size()));
+			}
+			locationServices.importData(vlstData);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
 	}
 
+	public void onDownloadFile(ForwardEvent event) {
+		try {
+			String pathFileInput = Constants.PATH_FILE + "file/template/import/import_location_data.xlsx";
+
+			File file = new File(pathFileInput);
+			Filedownload.save(file, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage(), e);
+		}
+	}
+
+	public void onDownloadFileError(ForwardEvent event) {
+		ExcelWriter<LocationExcel> writer = new ExcelWriter<>();
+		try {
+			String pathFileOutput = Constants.PATH_FILE + "file/export/error/error_location_data.xlsx";
+			String pathFileInput = Constants.PATH_FILE + "file/template/error/error_location_data.xlsx";
+
+			writer.write(lstError, pathFileInput, pathFileOutput);
+			File file = new File(pathFileOutput);
+			Filedownload.save(file, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage(), e);
+		}
+	}
 }

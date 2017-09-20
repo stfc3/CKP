@@ -17,7 +17,7 @@
 					<auxheader colspan="10">
 						<button id="add" iconSclass="z-icon-plus-circle"
 							label="${c:l('add')}" style="border: none;color: green;font-weight: bold;"/>
-						<button id="btnImport" class="btn"
+						<button id="btnImport" class="btn" forward="onClick=onImport"
 							iconSclass="z-icon-file-excel-o" label="${c:l('import')}"
 							style="border: none;color: green;font-weight: bold;" />
 						<button id="btnExport" class="btn"

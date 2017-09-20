@@ -7,16 +7,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "location")
-@NamedQuery(name = "Location.getAll", query = "FROM Location u WHERE status = 1")
+@NamedQuery(name = "Location.getAll", query = "select t FROM Location t WHERE status = 1")
 public class Location {
+	private int index;
 	private int locationID;
 	private String locationCode;
 	private String locationName;
 	private int locationType;
 	private int status;
+
+	@Transient
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

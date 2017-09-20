@@ -8,9 +8,9 @@ package com.dvd.ckp.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.zkoss.util.media.Media;
@@ -30,6 +30,7 @@ import org.zkoss.zul.A;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Label;
@@ -40,10 +41,14 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.PumpServices;
+import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.domain.Pumps;
+import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
+import com.dvd.ckp.excel.domain.StaffExcel;
+import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.NumberUtils;
 import com.dvd.ckp.utils.SpringConstant;
@@ -53,27 +58,34 @@ import com.dvd.ckp.utils.StringUtils;
  *
  * @author viettx
  */
-public class PumpsController extends GenericForwardComposer {
+public class StaffController extends GenericForwardComposer {
 
-	private static final Logger logger = Logger.getLogger(PumpsController.class);
+	private static final Logger logger = Logger.getLogger(StaffController.class);
 	@WireVariable
-	protected PumpServices pumpsService;
+	protected StaffServices staffService;
 	@Wire
-	private Grid gridPumps;
+	private Grid gridStaff;
 	@Wire
 	private Textbox txtFilterCode;
 	@Wire
 	private Textbox txtFilterName;
-	ListModelList<Pumps> listDataModel;
-	private List<Pumps> lstPumps;
-	private List<Pumps> lstPumpsFilter;
+
+	@Wire
+	private Textbox txtFilterPhone;
+
+	@Wire
+	private Textbox txtFilterEmail;
+
+	private ListModelList<Staff> listDataModel;
+	private List<Staff> lstStaff;
+	private List<Staff> lstStaffFilter;
 	public Button btnExport;
 	public Button btnImport;
 	private int insertOrUpdate = 0;
 
-	private Window pumps;
+	private Window staff;
 
-	private static final String SAVE_PATH = "/Pumps/";
+	private static final String SAVE_PATH = "/Staff/";
 
 	private Label linkFileName;
 	private Textbox hiddenFileName;
@@ -87,22 +99,22 @@ public class PumpsController extends GenericForwardComposer {
 	public Button errorList;
 	// public Window uploadPump;
 
-	List<com.dvd.ckp.excel.domain.Pumps> lstError = new ArrayList<com.dvd.ckp.excel.domain.Pumps>();
+	List<StaffExcel> lstError = new ArrayList<StaffExcel>();
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
-		lstPumpsFilter = new ArrayList<Pumps>();
-		pumpsService = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
+		lstStaffFilter = new ArrayList<Staff>();
+		staffService = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
 
-		lstPumps = new ArrayList<>();
-		List<Pumps> vlstPumps = pumpsService.getAllListData();
-		if (vlstPumps != null) {
-			lstPumps.addAll(vlstPumps);
-			lstPumpsFilter.addAll(vlstPumps);
+		lstStaff = new ArrayList<Staff>();
+		List<Staff> vlstStaff = staffService.getAllData();
+		if (vlstStaff != null) {
+			lstStaff.addAll(vlstStaff);
+			lstStaffFilter.addAll(vlstStaff);
 		}
-		listDataModel = new ListModelList<Pumps>(lstPumps);
-		gridPumps.setModel(listDataModel);
+		listDataModel = new ListModelList<Staff>(lstStaff);
+		gridStaff.setModel(listDataModel);
 	}
 
 	/**
@@ -119,12 +131,12 @@ public class PumpsController extends GenericForwardComposer {
 	public void onDelete(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		Pumps c = rowSelected.getValue();
-		Pumps pumps = getDataInRow(lstCell);
-		pumps.setPumpsID(c.getPumpsID());
-		pumps.setStatus(3);
-		lstError.remove(pumps);
-		pumpsService.detele(pumps);
+		Staff c = rowSelected.getValue();
+		Staff staff = getDataInRow(lstCell);
+		staff.setStaffId(c.getStaffId());
+		staff.setStatus(3);
+		lstError.remove(staff);
+		staffService.detele(staff);
 		setDisableComponent(lstCell);
 		reloadGrid();
 	}
@@ -215,13 +227,13 @@ public class PumpsController extends GenericForwardComposer {
 	public void onSave(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		Pumps c = rowSelected.getValue();
-		Pumps pumps = getDataInRow(lstCell);
-		pumps.setPumpsID(c.getPumpsID());
+		Staff c = rowSelected.getValue();
+		Staff staff = getDataInRow(lstCell);
+		staff.setStaffId(c.getStaffId());
 		if (insertOrUpdate == 1) {
-			pumpsService.savePumps(pumps);
+			staffService.save(staff);
 		} else {
-			pumpsService.update(pumps);
+			staffService.update(staff);
 		}
 		setDisableComponent(lstCell);
 		reloadGrid();
@@ -232,12 +244,12 @@ public class PumpsController extends GenericForwardComposer {
 	 * Add row
 	 */
 	public void onClick$add() {
-		Pumps pumpAddItem = new Pumps();
-		pumpAddItem.setStatus(1);
-		listDataModel.add(0, pumpAddItem);
-		gridPumps.setModel(listDataModel);
-		gridPumps.renderAll();
-		List<Component> lstCell = gridPumps.getRows().getChildren().get(0).getChildren();
+		Staff newItem = new Staff();
+		newItem.setStatus(1);
+		listDataModel.add(0, newItem);
+		gridStaff.setModel(listDataModel);
+		gridStaff.renderAll();
+		List<Component> lstCell = gridStaff.getRows().getChildren().get(0).getChildren();
 		setEnableComponent(lstCell);
 		insertOrUpdate = 1;
 	}
@@ -248,90 +260,112 @@ public class PumpsController extends GenericForwardComposer {
 	 * @param lstCell
 	 * @return
 	 */
-	private Pumps getDataInRow(List<Component> lstCell) {
-		Pumps pump = new Pumps();
-		Textbox txtPumpsCode = (Textbox) lstCell.get(1).getFirstChild();
-		Textbox txtPumpsName = (Textbox) lstCell.get(2).getFirstChild();
-		Textbox txtPumpsCapacity = (Textbox) lstCell.get(3).getFirstChild();
-		Textbox txtPumpsHight = (Textbox) lstCell.get(4).getFirstChild();
-		Textbox txtPumpsFar = (Textbox) lstCell.get(5).getFirstChild();
-		Combobox cbxStatus = (Combobox) lstCell.get(6).getFirstChild();
-		pump.setPumpsCode(txtPumpsCode.getValue());
-		pump.setPumpsName(txtPumpsName.getValue());
-		pump.setPumpsCapacity(Integer.valueOf(txtPumpsCapacity.getValue()));
-		pump.setPumpsHight(Integer.valueOf(txtPumpsFar.getValue()));
-		pump.setPumpsFar(Integer.valueOf(txtPumpsHight.getValue()));
-		pump.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
-		return pump;
+	private Staff getDataInRow(List<Component> lstCell) {
+		Staff staff = new Staff();
+		Textbox txtStaffCode = (Textbox) lstCell.get(1).getFirstChild();
+		Textbox txtStaffName = (Textbox) lstCell.get(2).getFirstChild();
+		Textbox txtPhone = (Textbox) lstCell.get(4).getFirstChild();
+		Textbox txtEmail = (Textbox) lstCell.get(5).getFirstChild();
+		Textbox txtAddress = (Textbox) lstCell.get(6).getFirstChild();
+		Datebox dateBirthday = (Datebox) lstCell.get(3).getFirstChild();
+		Combobox cbxStatus = (Combobox) lstCell.get(7).getFirstChild();
+		staff.setStaffCode(txtStaffCode.getValue());
+		staff.setStaffName(txtStaffName.getValue());
+		staff.setPhone(txtPhone.getValue());
+		staff.setAddress(txtAddress.getValue());
+		staff.setEmail(txtEmail.getValue());
+		staff.setBirthday(dateBirthday.getValue());
+		staff.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
+		return staff;
 	}
 
 	/**
 	 * Reload grid
 	 */
 	private void reloadGrid() {
-		List<Pumps> vlstData = new ArrayList<Pumps>();
-		if (pumpsService.getAllListData() != null && !pumpsService.getAllListData().isEmpty()) {
-			vlstData.addAll(pumpsService.getAllListData());
+		List<Staff> vlstData = new ArrayList<Staff>();
+		List<Staff> list = staffService.getAllData();
+		if (list != null && !list.isEmpty()) {
+			vlstData.addAll(list);
 		}
-		listDataModel = new ListModelList<Pumps>(vlstData);
-		gridPumps.setModel(listDataModel);
+		listDataModel = new ListModelList<Staff>(vlstData);
+		gridStaff.setModel(listDataModel);
 	}
 
 	public void onChange$txtFilterCode() {
-		Pumps pumps = new Pumps();
-		String vstrPumpsCode = txtFilterCode.getValue();
-		pumps.setPumpsCode(vstrPumpsCode);
-		String vstrPumpsName = txtFilterName.getValue();
-		pumps.setPumpsName(vstrPumpsName);
-		filter(pumps);
+		Staff staff = new Staff();
+
+		String vstrStaffCode = txtFilterCode.getValue();
+		staff.setStaffCode(vstrStaffCode);
+
+		String vstrStaffName = txtFilterName.getValue();
+		staff.setStaffName(vstrStaffName);
+
+		filter(staff);
 	}
 
 	public void onChange$txtFilterName() {
-		Pumps pumps = new Pumps();
-		String vstrPumpsCode = txtFilterCode.getValue();
-		pumps.setPumpsCode(vstrPumpsCode);
-		String vstrPumpsName = txtFilterName.getValue();
-		pumps.setPumpsName(vstrPumpsName);
-		filter(pumps);
+		Staff staff = new Staff();
+
+		String vstrStaffCode = txtFilterCode.getValue();
+		staff.setStaffCode(vstrStaffCode);
+
+		String vstrStaffName = txtFilterName.getValue();
+		staff.setStaffName(vstrStaffName);
+
+		filter(staff);
 	}
 
-	private void filter(Pumps pumps) {
-		int index = 0;
-		List<Pumps> vlstData = new ArrayList<>();
-		if (lstPumps != null && !lstPumps.isEmpty()) {
-			for (Pumps item : lstPumps) {
-				index++;
-				pumps.setIndex(index);
-				if (StringUtils.isValidString(pumps.getPumpsCode())
-						&& item.getPumpsCode().toLowerCase().contains(pumps.getPumpsCode().toLowerCase())) {
-					vlstData.add(item);
-					lstPumpsFilter.clear();
-					lstPumpsFilter.add(item);
-				} else if (StringUtils.isValidString(pumps.getPumpsName())
-						&& item.getPumpsName().toLowerCase().contains(pumps.getPumpsName().toLowerCase())) {
-					vlstData.add(item);
-					lstPumpsFilter.clear();
-					lstPumpsFilter.add(item);
+	private void filter(Staff staff) {
+		List<Staff> vlstData = new ArrayList<>();
+		if (!StringUtils.isValidString(staff.getStaffCode()) && !StringUtils.isValidString(staff.getStaffName())) {
+			vlstData.addAll(lstStaff);
+			lstStaffFilter.clear();
+			lstStaffFilter.addAll(lstStaff);
+		} else {
+			if (lstStaff != null && !lstStaff.isEmpty()) {
+				for (Staff item : lstStaff) {
+					if (StringUtils.isValidString(staff.getStaffCode())
+							&& item.getStaffCode().toLowerCase().contains(staff.getStaffCode().toLowerCase())
+							&& StringUtils.isValidString(staff.getStaffName())
+							&& item.getStaffName().toLowerCase().contains(staff.getStaffName().toLowerCase())) {
+						vlstData.add(item);
+						lstStaffFilter.clear();
+						lstStaffFilter.add(item);
+					} else if (!StringUtils.isValidString(staff.getStaffCode())
+							&& StringUtils.isValidString(staff.getStaffName())
+							&& item.getStaffName().toLowerCase().contains(staff.getStaffName().toLowerCase())) {
+						vlstData.add(item);
+						lstStaffFilter.clear();
+						lstStaffFilter.add(item);
+					} else if (StringUtils.isValidString(staff.getStaffCode())
+							&& item.getStaffCode().toLowerCase().contains(staff.getStaffCode().toLowerCase())
+							&& !StringUtils.isValidString(staff.getStaffName())) {
+						vlstData.add(item);
+						lstStaffFilter.clear();
+						lstStaffFilter.add(item);
+					}
 				}
 			}
 		}
-		if (!StringUtils.isValidString(pumps.getPumpsCode()) && !StringUtils.isValidString(pumps.getPumpsName())) {
-			vlstData.addAll(lstPumps);
-			lstPumpsFilter.clear();
-			lstPumpsFilter.addAll(lstPumps);
-		}
-		listDataModel = new ListModelList<Pumps>(vlstData);
-		gridPumps.setModel(listDataModel);
+		listDataModel = new ListModelList<Staff>(vlstData);
+		gridStaff.setModel(listDataModel);
 	}
 
 	public void onClick$btnExport(Event event) {
-		ExcelWriter<Pumps> excelWriter = new ExcelWriter<Pumps>();
+		ExcelWriter<Staff> excelWriter = new ExcelWriter<Staff>();
 		try {
+			int index = 0;
+			for (Staff staff : lstStaffFilter) {
+				index++;
+				staff.setIndex(index);
+				staff.setBirthdayString(
+						DateTimeUtils.convertDateToString(staff.getBirthday(), Constants.FORMAT_DATE_DD_MM_YYY));
+			}
+			String pathFileInput = Constants.PATH_FILE + "file/template/export/staff_data_export.xlsx";
+			String pathFileOut = Constants.PATH_FILE + "file/export/staff_data_export.xlsx";
 
-			String pathFileInput = Constants.PATH_FILE + "file/template/export/pumps_data_export.xlsx";
-			String pathFileOut = Constants.PATH_FILE + "file/export/pumps_data_export.xlsx";
-
-			excelWriter.write(lstPumpsFilter, pathFileInput, pathFileOut);
+			excelWriter.write(lstStaffFilter, pathFileInput, pathFileOut);
 			File file = new File(pathFileOut);
 			Filedownload.save(file, null);
 		} catch (Exception e) {
@@ -342,7 +376,7 @@ public class PumpsController extends GenericForwardComposer {
 	}
 
 	public void onImport(ForwardEvent event) {
-		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadPumps.zul", pumps, null);
+		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadStaff.zul", staff, null);
 		windownUpload.doModal();
 		windownUpload.setBorder(true);
 		windownUpload.setBorder("normal");
@@ -379,47 +413,57 @@ public class PumpsController extends GenericForwardComposer {
 	public void onClick$btnSave() {
 		int numberSucces = 0;
 		int numberRowError = 1;
-		lstError.clear();
 		try {
-			ExcelReader<com.dvd.ckp.excel.domain.Pumps> reader = new ExcelReader<>();
+			ExcelReader<StaffExcel> reader = new ExcelReader<>();
 			String filePath = hiddenFileName.getValue();
-			List<com.dvd.ckp.excel.domain.Pumps> listData = reader.read(filePath, com.dvd.ckp.excel.domain.Pumps.class);
-			List<Pumps> vlstData = new ArrayList<>();
+			List<StaffExcel> listData = reader.read(filePath, StaffExcel.class);
+			List<Staff> vlstData = new ArrayList<>();
 			if (listData != null && !listData.isEmpty()) {
-				for (com.dvd.ckp.excel.domain.Pumps pumps : listData) {
+				for (StaffExcel staff : listData) {
 
-					if (!NumberUtils.isNumber(pumps.getPumpsCapacity())) {
-						pumps.setDescription(
+					if (!StringUtils.isValidString(staff.getStaffCode())) {
+						staff.setDescription(
 								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.capacity") }));
-						pumps.setIndex(numberRowError);
-						lstError.add(pumps);
+						staff.setIndex(numberRowError);
+						lstError.add(staff);
 						numberRowError++;
 						continue;
 					}
 
-					if (!NumberUtils.isNumber(pumps.getPumpsHight())) {
-						pumps.setDescription(
-								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.hight") }));
-						pumps.setIndex(numberRowError);
-						lstError.add(pumps);
+					if (!StringUtils.isValidString(staff.getStaffName())) {
+						staff.setDescription(
+								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.capacity") }));
+						staff.setIndex(numberRowError);
+						lstError.add(staff);
 						numberRowError++;
 						continue;
 					}
 
-					if (!NumberUtils.isNumber(pumps.getPumpsFar())) {
-						pumps.setDescription(
-								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.far") }));
-						pumps.setIndex(numberRowError);
-						lstError.add(pumps);
+					if (!StringUtils.isValidString(staff.getPhone())) {
+						staff.setDescription(
+								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.capacity") }));
+						staff.setIndex(numberRowError);
+						lstError.add(staff);
 						numberRowError++;
 						continue;
 					}
-					Pumps item = new Pumps();
-					item.setPumpsCode(pumps.getPumpsCode());
-					item.setPumpsName(pumps.getPumpsName());
-					item.setPumpsCapacity(Integer.valueOf(pumps.getPumpsCapacity()));
-					item.setPumpsHight(Integer.valueOf(pumps.getPumpsHight()));
-					item.setPumpsFar(Integer.valueOf(pumps.getPumpsFar()));
+
+					if (!StringUtils.isValidString(staff.getEmail())) {
+						staff.setDescription(
+								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.capacity") }));
+						staff.setIndex(numberRowError);
+						lstError.add(staff);
+						numberRowError++;
+						continue;
+					}
+					Staff item = new Staff();
+					item.setStaffCode(staff.getStaffCode());
+					item.setStaffName(staff.getStaffName());
+					item.setPhone(staff.getPhone());
+					item.setEmail(staff.getEmail());
+					item.setBirthday(DateTimeUtils.convertStringToTime(replateBirthDay(staff.getBirthday()),
+							Constants.FORMAT_DATE_DDMMYYYY));
+					item.setAddress(staff.getAddress());
 					item.setStatus(1);
 					vlstData.add(item);
 					numberSucces++;
@@ -432,7 +476,7 @@ public class PumpsController extends GenericForwardComposer {
 				errorList.setVisible(true);
 				txtTotalRowError.setValue(String.valueOf(lstError.size()));
 			}
-			pumpsService.importData(vlstData);
+			staffService.importData(vlstData);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -441,7 +485,7 @@ public class PumpsController extends GenericForwardComposer {
 
 	public void onDownloadFile(ForwardEvent event) {
 		try {
-			String pathFileInput = Constants.PATH_FILE + "file/template/import/import_pump_data.xlsx";
+			String pathFileInput = Constants.PATH_FILE + "file/template/import/import_staff_data.xlsx";
 
 			File file = new File(pathFileInput);
 			Filedownload.save(file, null);
@@ -452,10 +496,10 @@ public class PumpsController extends GenericForwardComposer {
 	}
 
 	public void onDownloadFileError(ForwardEvent event) {
-		ExcelWriter<com.dvd.ckp.excel.domain.Pumps> writer = new ExcelWriter<>();
+		ExcelWriter<StaffExcel> writer = new ExcelWriter<>();
 		try {
-			String pathFileOutput = Constants.PATH_FILE + "file/export/error/error_pumps_data.xlsx";
-			String pathFileInput = Constants.PATH_FILE + "file/template/error/error_pumps_data.xlsx";
+			String pathFileOutput = Constants.PATH_FILE + "file/export/error/error_staff_data.xlsx";
+			String pathFileInput = Constants.PATH_FILE + "file/template/error/error_staff_data.xlsx";
 
 			writer.write(lstError, pathFileInput, pathFileOutput);
 			File file = new File(pathFileOutput);
@@ -464,6 +508,10 @@ public class PumpsController extends GenericForwardComposer {
 			// TODO Auto-generated catch block
 			logger.error(e.getMessage(), e);
 		}
+	}
+
+	private String replateBirthDay(String value) {
+		return value.replace("/", "");
 	}
 
 }
