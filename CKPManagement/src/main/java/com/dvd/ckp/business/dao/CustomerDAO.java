@@ -5,7 +5,7 @@
  */
 package com.dvd.ckp.business.dao;
 
-import com.dvd.ckp.domain.Customers;
+import com.dvd.ckp.domain.Customer;
 import java.util.List;
 
 /**
@@ -14,9 +14,10 @@ import java.util.List;
  */
 public interface CustomerDAO {
 
-    List<Customers> getAllCustomer();
+    List<Customer> getAllCustomer();
 
-    void insertOrUpdateCustomer(Customers customer);
+    List<Customer> getCustomerActive();
 
-    List<Customers> getCustomer(Customers customer);
+    void insertOrUpdateCustomer(Customer customer);
+
 }

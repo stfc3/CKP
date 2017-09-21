@@ -5,7 +5,7 @@
  */
 package com.dvd.ckp.business.service;
 
-import com.dvd.ckp.domain.Customers;
+import com.dvd.ckp.domain.Customer;
 import java.util.List;
 
 /**
@@ -14,9 +14,9 @@ import java.util.List;
  */
 public interface CustomerService {
 
-    List<Customers> getAllCustomer();
+    List<Customer> getAllCustomer();
 
-    List<Customers> getCustomer(Customers customer);
+    List<Customer> getCustomerActive();
 
-    void insertOrUpdateCustomer(Customers customer);
+    void insertOrUpdateCustomer(Customer customer);
 }

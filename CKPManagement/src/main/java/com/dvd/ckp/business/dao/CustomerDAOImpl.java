@@ -5,7 +5,7 @@
  */
 package com.dvd.ckp.business.dao;
 
-import com.dvd.ckp.domain.Customers;
+import com.dvd.ckp.domain.Customer;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,44 +20,33 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
 
-    @Autowired
-    SessionFactory sessionFactory;
+	@Autowired
+	SessionFactory sessionFactory;
 
-    protected final Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
+	protected final Session getCurrentSession() {
+		return sessionFactory.getCurrentSession();
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Customers> getAllCustomer() {
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Customer> getAllCustomer() {
 
-        Query query = getCurrentSession().getNamedQuery("Customers.fillAllCustomer");
-        return (List<Customers>) query.list();
-    }
+		Query query = getCurrentSession().getNamedQuery("Customers.fillAllCustomer");
+		return (List<Customer>) query.list();
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Customers> getCustomer(Customers customer) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Customer> getCustomerActive() {
 
-        StringBuilder vstrSql=new StringBuilder("FROM Customers c WHERE c.status=1 ");
-        if(customer!=null){
-            if(customer.getCustomerCode()!=null && !"".equals(customer.getCustomerCode())){
-                vstrSql.append("AND c.customerCode = :customerCode");
-            }
-        }
-        Query query = getCurrentSession().createQuery(vstrSql.toString());
-        if(customer!=null){
-            if(customer.getCustomerCode()!=null && !"".equals(customer.getCustomerCode())){
-                query.setParameter("customerCode", customer.getCustomerCode());
-            }
-        }
-        return (List<Customers>) query.list();
-    }
+		Query query = getCurrentSession().getNamedQuery("Customers.fillCustomerActive");
+		return (List<Customer>) query.list();
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void insertOrUpdateCustomer(Customers customer) {
-        getCurrentSession().saveOrUpdate(customer);
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public void insertOrUpdateCustomer(Customer customer) {
+		getCurrentSession().saveOrUpdate(customer);
+	}
 
 }

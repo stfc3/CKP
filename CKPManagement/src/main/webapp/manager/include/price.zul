@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <!--<zk xmlns:n="native">-->
+    <window  id="mainPrice" apply="com.dvd.ckp.controller.ContractController"
+             position="center,center" closable="true"  
+             action="show: slideDown;hide: slideUp"   title="ABC"
+             border="normal"  maximizable="false">
+        <groupbox>
+            <caption label="${c:l('price.category')}" />
+            <grid id="lstPrice" mold="paging" pageSize="20" pagingPosition="both">
+                <auxhead sclass="category-center" >
+                    <auxheader colspan="8">
+                        <a id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
+                        <space width="10px"/>
+                        <a iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
+                        <space width="10px"/>
+                        <a iconSclass="z-icon-file-excel-o" label="${c:l('export')}"/>
+                    </auxheader>
+                </auxhead>
+                <columns style="text-align:center; ">
+                    <column hflex="1">${c:l('price.index')}</column>
+                    <column hflex="3">${c:l('price.pumpType')}</column>
+                    <column hflex="6">${c:l('price.pump')}</column>
+                    <column hflex="2">${c:l('price.m3')}</column>
+                    <column hflex="2">${c:l('price.shift')}</column>
+                    <column hflex="2">${c:l('price.wait')}</column>
+                    <column hflex="6">${c:l('price.locationType')}</column>
+                    <column hflex="2">${c:l('price.locationMin')}</column>
+                    <column hflex="3">${c:l('price.locationMax')}</column>
+                    <column hflex="3">${c:l('price.location')}</column>
+                    <column hflex="3">${c:l('price.convertType')}</column>
+                    <column hflex="3">${c:l('price.convertValue')}</column>
+                    <column hflex="2">${c:l('contract.action')}</column>
+                </columns>
+                <!--                <template name="model">
+                    <row  value="${each}">
+                        <cell>
+                            <label value="${forEachStatus.index+1}" />
+                        </cell>
+                        <cell>
+                            <textbox value="${each.contractCode}" tooltiptext="${each.contractCode}" hflex="1" inplace="true" readonly="true"/>
+                        </cell>
+                        <cell>
+                            <textbox value="${each.contractName}" tooltiptext="${each.contractName}" hflex="1" inplace="true" readonly="true"/>
+                        </cell>
+                        <cell>
+                            <combobox  hflex="1"  
+                                       buttonVisible="false" inplace="true"  readonly="true">
+                                <template name="model">
+                                    <comboitem value="${each.customerId}" label="${each.customerName}" />
+                                </template>
+                            </combobox>
+                        </cell>
+                        <cell>
+                            <textbox value="${each.vat}" tooltiptext="${each.vat}" hflex="1" inplace="true" readonly="true"/>
+                        </cell>
+                        <cell>
+                            <textbox value="${each.discount}" tooltiptext="${each.discount}" hflex="1" inplace="true" readonly="true"/>
+                        </cell>
+                        <cell>
+                            <textbox value="${each.billMoney}" tooltiptext="${each.billMoney}" hflex="1" inplace="true" readonly="true"/>
+                        </cell>
+                        <cell>
+                            <a iconSclass="z-icon-paperclip" label="${each.filePath}" forward="onClick=onUpload" tooltiptext="${each.filePath == null ? c:l('file') : each.filePath}"/>
+                        </cell>
+                        <cell>
+                            <a iconSclass="z-icon-money" forward="onClick=onPrice" tooltiptext="${c:l('price')}"/>
+                        </cell>
+                        <cell>
+                            <datebox cols="12" format="dd/MM/yyyy" value="${each.effectiveDate}" tooltiptext="${each.effectiveDate}" hflex="1" inplace="true" readonly="true"/>
+                        </cell>
+                        <cell>
+                            <datebox cols="12" format="dd/MM/yyyy" value="${each.expirationDate}" tooltiptext="${each.expirationDate}" hflex="1" inplace="true" readonly="true"/>
+                        </cell>
+                        <cell style="text-align:center">
+                            <a iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
+                            <a iconSclass="z-icon-check" forward="onClick=onSave" visible="false" tooltiptext="${c:l('save')}" />
+                            <a iconSclass="z-icon-ban" forward="onClick=onCancel" visible="false" tooltiptext="${c:l('cancel')}"/>
+                        </cell>
+                    </row>
+                </template>-->
+            </grid>
+        </groupbox>
+    </window>  
+</zk>

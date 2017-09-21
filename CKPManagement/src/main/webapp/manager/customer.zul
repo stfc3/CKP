@@ -2,25 +2,10 @@
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <!--<zk xmlns:n="native">-->
-    <style>
-        .z-a{
-        color: green;
-        cursor: auto;
-        text-decoration: none;
-        margin-right: 5px;
-        }
-        .z-auxheader-content{
-        line-height: 14px;
-        text-align:right;
-        }
-        a [class^="z-icon-"]{
-        margin-right: 5px;
-        }
-    </style>
     <window  id="mainContract" apply="com.dvd.ckp.controller.CustomerController">
         <groupbox>
             <caption label="${c:l('customer.category')}" />
-            <grid id="lstCustomer">
+            <grid id="lstCustomer"  mold="paging" pageSize="20" pagingPosition="bottom">
                 <auxhead sclass="category-center">
                     <auxheader colspan="10">
                         <a id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
@@ -42,7 +27,10 @@
                         <textbox id="txtFilterName" hflex="1"/>
                     </auxheader>
                 </auxhead>
-                <columns style="text-align:center; ">
+                <frozen style="background: #DFDED8" columns="1">
+                    <div style="padding: 0 10px;" />
+                </frozen>
+                <columns style="text-align:center;">
                     <column hflex="1">${c:l('customer.index')}</column>
                     <column hflex="2">${c:l('customer.code')}</column>
                     <column hflex="6">${c:l('customer.name')}</column>
