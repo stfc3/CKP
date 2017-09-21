@@ -60,6 +60,7 @@ public class Users implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
     @Column(name = "full_name")
     public String getFullName() {
         return fullName;
