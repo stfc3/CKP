@@ -69,15 +69,6 @@ public class Users implements Serializable {
         this.fullName = fullName;
     }
 
-    @Column(name = "full_name")
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     @Column(name = "password")
     public String getPassword() {
         return password;
