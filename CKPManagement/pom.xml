@@ -39,13 +39,13 @@
         </pluginRepository>
     </pluginRepositories>
     <dependencies>
-        <!--log4j-->
+        <!--log4j -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-        <!--log4j-->
+        <!--log4j -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -57,11 +57,8 @@
             <artifactId>zss</artifactId>
             <version>${zss.version}</version>
         </dependency>
-        <!--        <dependency>
-            <groupId>org.zkoss.zss</groupId>
-            <artifactId>zssex</artifactId>
-            <version>${zss.version}</version>
-        </dependency>-->
+        <!-- <dependency> <groupId>org.zkoss.zss</groupId> <artifactId>zssex</artifactId> 
+        <version>${zss.version}</version> </dependency> -->
         <dependency>
             <groupId>org.zkoss.common</groupId>
             <artifactId>zcommon</artifactId>
@@ -87,75 +84,96 @@
             <artifactId>zhtml</artifactId>
             <version>${zk.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io}</version>
         </dependency>
- 
+
         <!-- Hibernate -->
- 
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>4.3.5.Final</version>
         </dependency>
- 
+
         <!-- MySQL database driver -->
- 
+
         <dependency> <!-- MySQL database driver -->
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.24</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
         </dependency>
- 
+
         <dependency> <!-- Apache BasicDataSource -->
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
             <version>1.2.2</version>
         </dependency>
- 
+
         <dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
             <version>0.9.1.2</version>
         </dependency>
- 
- 
+
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
- 
- 
+
+
         <!-- Spring framework -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
- 
+
+
         <dependency> <!-- Used for Hibernate4 LocalSessionFactoryBean -->
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
+        <!-- https://mvnrepository.com/artifact/net.sf.jxls/jxls-core -->
+        <dependency>
+            <groupId>net.sf.jxls</groupId>
+            <artifactId>jxls-core</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.eclipse.persistence/javax.persistence -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+        </dependency>
+
         <!--lib Captcha-->
         <dependency> <!-- Used for Hibernate4 LocalSessionFactoryBean -->
             <groupId>org.zkoss.zkforge</groupId>
@@ -169,9 +187,9 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
         </dependency>
- 
+
         <!-- ZK 5 breeze theme <dependency> <groupId>org.zkoss.theme</groupId> 
-           <artifactId>breeze</artifactId> <version>${zk.version}</version> <optional>true</optional> 
+        <artifactId>breeze</artifactId> <version>${zk.version}</version> <optional>true</optional> 
         </dependency> -->
     </dependencies>
 
