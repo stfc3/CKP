@@ -71,6 +71,9 @@ public class MainController extends SelectorComposer<Component> {
     @Wire
     Treeitem itemUser;
 
+    @Wire
+    Treeitem itemRole;
+
 //	@Wire
 //	Treeitem itemStaffQuantity;
     @Wire
@@ -162,6 +165,14 @@ public class MainController extends SelectorComposer<Component> {
         String vstrURL = itemUser.getValue();
         String vstrId = "tab" + itemUser.getId();
         String vstrTitle = itemUser.getLabel();
+        addTab(vstrURL, vstrId, vstrTitle);
+    }
+
+    @Listen("onClick = #itemRole")
+    public void itemRole() throws IOException {
+        String vstrURL = itemRole.getValue();
+        String vstrId = "tab" + itemRole.getId();
+        String vstrTitle = itemRole.getLabel();
         addTab(vstrURL, vstrId, vstrTitle);
     }
 

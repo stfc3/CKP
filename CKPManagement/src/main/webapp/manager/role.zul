@@ -20,7 +20,7 @@
     <window  id="mainContract" apply="com.dvd.ckp.controller.RoleController">
         <groupbox>
             <caption label="${c:l('role.category')}" />
-            <grid id="lstUser">
+            <grid id="lstRole">
                 <auxhead sclass="category-center">
                     <auxheader colspan="10">
                         <a id="add" class="btn-cursor" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
