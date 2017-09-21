@@ -14,6 +14,9 @@ import java.util.List;
  */
 public interface UserDAO {
 
-    <T> List<T> getAll(Class<T> klass);
     Users getUserByName(String pstrUserName);
+    
+    List<Users> getAllUser();
+    
+    void insertOrUpdateUser(Users user);
 }

@@ -3,16 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dvd.ckp.utils;
+package com.dvd.ckp.business.dao;
+
+import com.dvd.ckp.domain.Role;
+import java.util.List;
 
 /**
  *
- * @author dmin
+ * @author daond
  */
-public interface SpringConstant {
+public interface RoleDAO {
+
+    List<Role> getAllRole();
     
-    String USER_SERVICES="UserService";
-    String CUSTOMER_SERVICES="CustomerService";
-    String ROLE_SERVICES="RoleService";
+    void insertOrUpdateRole(Role role);
     
 }

@@ -6,13 +6,16 @@
 package com.dvd.ckp.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -20,17 +23,23 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-@NamedQuery(name = "Users.getUserByName", query = "FROM Users u WHERE userName = :userName")
+@NamedQueries({
+    @NamedQuery(name = "Users.getUserByName", query = "FROM Users u WHERE userName = :userName")
+    ,
+    @NamedQuery(name = "Users.getAllUser", query = "SELECT u FROM Users u ORDER BY createDate")
+})
 public class Users implements Serializable {
 
     private long userId;
     private String userName;
+    private String fullName;
     private String password;
     private String email;
     private String phone;
     private String address;
     private String card;
     private int status;
+    private Date createDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +59,15 @@ public class Users implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    @Column(name = "full_name")
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     @Column(name = "password")
@@ -105,6 +123,15 @@ public class Users implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
-    
+
+    @Column(name = "create_date")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
 }

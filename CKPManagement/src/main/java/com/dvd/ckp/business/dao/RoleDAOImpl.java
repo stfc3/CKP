@@ -5,7 +5,7 @@
  */
 package com.dvd.ckp.business.dao;
 
-import com.dvd.ckp.domain.Users;
+import com.dvd.ckp.domain.Role;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -15,10 +15,10 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author dmin
+ * @author daond
  */
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class RoleDAOImpl implements RoleDAO {
 
     @Autowired
     SessionFactory sessionFactory;
@@ -26,24 +26,11 @@ public class UserDAOImpl implements UserDAO {
     protected final Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
-    
-    @SuppressWarnings("unchecked")
-    @Override
-    public Users getUserByName(String pstrUserName) {
-
-        Query query = getCurrentSession().getNamedQuery("Users.getUserByName");
-        query.setParameter("userName", pstrUserName);
-        List lstUsers = query.list();
-        if (lstUsers != null && !lstUsers.isEmpty()) {
-            return (Users) lstUsers.get(0);
-        }
-        return null;
-    }
 
     @Override
-    public List<Users> getAllUser() {
-        Query query = getCurrentSession().getNamedQuery("Users.getAllUser");
-        List<Users> lstUsers = query.list();
+    public List<Role> getAllRole() {
+        Query query = getCurrentSession().getNamedQuery("Role.getAllRole");
+        List<Role> lstUsers = query.list();
         if (lstUsers != null && !lstUsers.isEmpty()) {
             return lstUsers;
         }
@@ -51,8 +38,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void insertOrUpdateUser(Users user) {
-        getCurrentSession().saveOrUpdate(user);
+    public void insertOrUpdateRole(Role role) {
+        getCurrentSession().saveOrUpdate(role);
     }
 
 }

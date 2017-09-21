@@ -24,9 +24,9 @@
                                     <treeitem id="itemContract" label="${c:l('revenue.contract')}" value="/manager/contract.zul"/>
                                 </treechildren>
                             </treeitem>
-                            <treeitem label="${c:l('revenue')}">
+                            <treeitem label="${c:l('administrator')}">
                                 <treechildren>
-                                    <treeitem id="itemCustomer1" label="${c:l('revenue.customer')}" value="/manager/customer.zul"/>
+                                    <treeitem id="itemUser" label="${c:l('administrator.user')}" value="/manager/user.zul"/>
                                     <treeitem id="itemContract1" label="${c:l('revenue.contract')}" value="/manager/contract.zul"/>
                                 </treechildren>
                             </treeitem>

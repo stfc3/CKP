@@ -57,7 +57,7 @@
             <artifactId>zss</artifactId>
             <version>${zss.version}</version>
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>org.zkoss.zss</groupId>
             <artifactId>zssex</artifactId>
             <version>${zss.version}</version>
@@ -156,6 +156,19 @@
             <version>${spring.version}</version>
         </dependency>
  
+        <!--lib Captcha-->
+        <dependency> <!-- Used for Hibernate4 LocalSessionFactoryBean -->
+            <groupId>org.zkoss.zkforge</groupId>
+            <artifactId>bwcaptcha</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--End lib Captcha-->
+        
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
  
         <!-- ZK 5 breeze theme <dependency> <groupId>org.zkoss.theme</groupId> 
            <artifactId>breeze</artifactId> <version>${zk.version}</version> <optional>true</optional> 
