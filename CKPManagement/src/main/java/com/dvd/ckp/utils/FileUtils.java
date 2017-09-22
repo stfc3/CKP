@@ -107,11 +107,12 @@ public class FileUtils {
 						Messagebox.ERROR);
 				return;
 			}
-			if (!validateFile(vstrfileName)) {
-				Messagebox.show(Labels.getLabel("uploadExcel.format"), Labels.getLabel("ERROR"), Messagebox.OK,
-						Messagebox.ERROR);
-				return;
-			}
+			// if (!validateFile(vstrfileName)) {
+			// Messagebox.show(Labels.getLabel("uploadExcel.format"),
+			// Labels.getLabel("ERROR"), Messagebox.OK,
+			// Messagebox.ERROR);
+			// return;
+			// }
 			nowDate = new Date();
 			dateFormat = new SimpleDateFormat(DATE_FORMAT);
 			dateFullFormat = new SimpleDateFormat(DATE_FULL_FORMAT);

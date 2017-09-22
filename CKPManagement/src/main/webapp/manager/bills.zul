@@ -108,6 +108,7 @@
 								upload="true" forward="onUpload=onUpload"
 								label="${each.fileName}" tooltiptext="${c:l('view')}"
 								iconSclass="z-icon-paperclip" />
+							<textbox value="${each.filePath}" visible="false"></textbox>
 						</cell>
 						<!--thanh tien -->
 						<cell style="text-align: right;">

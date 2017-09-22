@@ -83,12 +83,15 @@
 
 .title {
 	width: 100%;
+	border: 1px solid red;
 }
 
 .icon {
-	width: 20%;
+	width: 50%;
+	border: 1px solid black;
 }
 
 .information {
-	width: 60%;
+	width: 50%;
+	border: 1px solid black;
 }

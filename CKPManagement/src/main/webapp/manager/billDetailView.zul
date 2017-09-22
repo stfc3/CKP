@@ -7,43 +7,58 @@
 		action="show: slideDown;hide: slideUp" border="normal" width="90%"
 		height="90%" maximizable="false"
 		onCancel="uploadLocation.detach();">
-		<style src="/css/style.css" />
-		<style src="/css/theme.css" />
+		<style src="/css/style.css" />		
 		<div class="title">
 			<div class="icon">
 				<image id="image" src="images/logo-slogan.png"
 					width="213px" height="30px" />
 			</div>
 			<div class="information">
-				<label>
+				<div>
 					Ngõ 2, Chu Văn An, Yết Kiêu - Hà Đông - Hà Nội
-				</label>
-				<label>
+				</div>
+				<div>
 					Điện thoại: 04 22 450 159 - Fax: 04 22 253 243
-				</label>
-				<label>
-					Hotline: 0988 757 50(Mr.Nam) * 0983 288
-					455(Mr.Khang))
-				</label>
+				</div>
+				<div>
+					Hotline: 0988 757 50(Mr.Nam) * 0983 288 455(Mr.Khang))
+				</div>
 			</div>
 		</div>
 
 		<div>
-			<div>Ngày bơm:</div>
-			<div>22/09/2017</div>
-			<div>Mã phiếu bơm:</div>
-			<div>HD006</div>
+			<div class="date_pumps">
+				Ngày bơm:
+				<div>
+					<label id="date_pumps" value="${arg.bill.}"></label>
+				</div>
+			</div>
+
+			<div class="bills_code">
+				Mã phiếu bơm:
+				<div>
+					<label id="bills_code" value="B001"></label>
+				</div>
+			</div>
+
 		</div>
 
 		<div>
 			<div>Tên khách hàng:</div>
-			<div>Trần Xuân Việt</div>
+			<div>
+				<label id="customer_name" value="Trần Xuân Việt">
+				</label>
+			</div>
 			<div>Bơm sử dụng:</div>
-			<div>Bơm đài móng</div>
+			<div>
+				<label id="pumps_name" value="Bơm đài móng"></label>
+			</div>
 		</div>
 		<div>
 			<div>Công trình:</div>
-			<div>Lotte</div>
+			<div>
+				<label id="contruction_name" value="Số 20"></label>
+			</div>
 		</div>
 		<div>
 			<div>Địa chỉ công trình:</div>
