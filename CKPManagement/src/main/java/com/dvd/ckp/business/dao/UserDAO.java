@@ -5,7 +5,7 @@
  */
 package com.dvd.ckp.business.dao;
 
-import com.dvd.ckp.domain.Users;
+import com.dvd.ckp.domain.User;
 import java.util.List;
 
 /**
@@ -14,9 +14,9 @@ import java.util.List;
  */
 public interface UserDAO {
 
-    Users getUserByName(String pstrUserName);
+    User getUserByName(String pstrUserName);
     
-    List<Users> getAllUser();
+    List<User> getAllUser();
     
-    void insertOrUpdateUser(Users user);
+    void insertOrUpdateUser(User user);
 }
