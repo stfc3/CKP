@@ -47,8 +47,8 @@
 				</columns>
 				<template name="model">
 					<row value="${each}">
-						<cell>
-							<label style="text-align: center;" value="${forEachStatus.index+1}" />
+						<cell style="text-align: center;">
+							<label  value="${forEachStatus.index+1}" />
 						</cell>
 						<cell>
 							<textbox value="${each.locationCode}"
@@ -60,9 +60,9 @@
 								tooltiptext="${each.locationName}" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
-						<cell>
+						<cell style="text-align: right;">
 							<textbox value="${each.locationType}"
-								tooltiptext="${each.locationType}(m3)" hflex="1" inplace="true"
+								tooltiptext="${each.locationType}" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
 						<cell>

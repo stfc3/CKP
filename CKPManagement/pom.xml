@@ -112,6 +112,14 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
         </dependency>
+                
+        <!--lib Captcha-->
+        <dependency> <!-- Used for Hibernate4 LocalSessionFactoryBean -->
+            <groupId>org.zkoss.zkforge</groupId>
+            <artifactId>bwcaptcha</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--End lib Captcha-->
 
         <dependency> <!-- Apache BasicDataSource -->
             <groupId>commons-dbcp</groupId>
@@ -174,16 +182,6 @@
             <version>1.0.0.Final</version>
         </dependency>
 
-        <!--lib Captcha-->
-        <dependency> <!-- Used for Hibernate4 LocalSessionFactoryBean -->
-            <groupId>org.zkoss.zkforge</groupId>
-            <artifactId>bwcaptcha</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <!--End lib Captcha-->
-        <!-- ZK 5 breeze theme <dependency> <groupId>org.zkoss.theme</groupId> 
-        <artifactId>breeze</artifactId> <version>${zk.version}</version> <optional>true</optional> 
-        </dependency> -->
     </dependencies>
 
     <build>

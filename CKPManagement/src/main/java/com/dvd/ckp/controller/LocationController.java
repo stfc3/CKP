@@ -324,37 +324,43 @@ public class LocationController extends GenericForwardComposer {
 	}
 
 	public void onClick$btnExport(Event event) {
-		ExcelWriter<Location> excelWriter = new ExcelWriter<Location>();
-		try {
-
-			String pathFileInput = Constants.PATH_FILE + "file/template/export/location_data_export.xlsx";
-			String pathFileOut = Constants.PATH_FILE + "file/export/location_data_export.xlsx";
-
-			excelWriter.write(lstFilter, pathFileInput, pathFileOut);
-			File file = new File(pathFileOut);
-			Filedownload.save(file, null);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error(e.getMessage(), e);
-		}
+		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
+				Messagebox.INFORMATION);
+//		ExcelWriter<Location> excelWriter = new ExcelWriter<Location>();
+//		try {
+//
+//			String pathFileInput = Constants.PATH_FILE + "file/template/export/location_data_export.xlsx";
+//			String pathFileOut = Constants.PATH_FILE + "file/export/location_data_export.xlsx";
+//
+//			excelWriter.write(lstFilter, pathFileInput, pathFileOut);
+//			File file = new File(pathFileOut);
+//			Filedownload.save(file, null);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			logger.error(e.getMessage(), e);
+//		}
 
 	}
 
 	public void onImport(ForwardEvent event) {
-		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadLocation.zul", location,
-				null);
-		windownUpload.doModal();
-		windownUpload.setBorder(true);
-		windownUpload.setBorder("normal");
-		windownUpload.setClosable(true);
-		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
-
-			@Override
-			public void onEvent(Event event) throws Exception {
-				reloadGrid();
-
-			}
-		});
+		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
+				Messagebox.INFORMATION);
+		// final Window windownUpload = (Window)
+		// Executions.createComponents("/manager/uploadLocation.zul", location,
+		// null);
+		// windownUpload.doModal();
+		// windownUpload.setBorder(true);
+		// windownUpload.setBorder("normal");
+		// windownUpload.setClosable(true);
+		// windownUpload.addEventListener(Events.ON_CLOSE, new
+		// EventListener<Event>() {
+		//
+		// @Override
+		// public void onEvent(Event event) throws Exception {
+		// reloadGrid();
+		//
+		// }
+		// });
 	}
 
 	public void onUpload$uploadbtn(UploadEvent evt) {

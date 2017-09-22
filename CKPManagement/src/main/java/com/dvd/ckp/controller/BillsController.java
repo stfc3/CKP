@@ -234,9 +234,9 @@ public class BillsController extends GenericForwardComposer {
 	 * Add row
 	 */
 	public void onClick$add() {
-		Bills construction = new Bills();
-		construction.setStatus(1);
-		listDataModel.add(0, construction);
+		Bills bill = new Bills();
+		bill.setStatus(1);
+		listDataModel.add(0, bill);
 		gridBills.setModel(listDataModel);
 		gridBills.renderAll();
 		List<Component> lstCell = gridBills.getRows().getChildren().get(0).getChildren();
@@ -675,23 +675,27 @@ public class BillsController extends GenericForwardComposer {
 	}
 
 	public void onClick$btnExport(Event event) {
-		ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
-		try {
-			int index = 0;
-			for (Bills staff : lstBillsFilter) {
-				index++;
-				staff.setIndex(index);
-			}
-			String pathFileInput = Constants.PATH_FILE + "file/template/export/bills_data_export.xlsx";
-			String pathFileOut = Constants.PATH_FILE + "file/export/bills_data_export.xlsx";
-
-			excelWriter.write(lstBillsFilter, pathFileInput, pathFileOut);
-			File file = new File(pathFileOut);
-			Filedownload.save(file, null);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error(e.getMessage(), e);
-		}
+		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
+				Messagebox.INFORMATION);
+		// ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
+		// try {
+		// int index = 0;
+		// for (Bills staff : lstBillsFilter) {
+		// index++;
+		// staff.setIndex(index);
+		// }
+		// String pathFileInput = Constants.PATH_FILE +
+		// "file/template/export/bills_data_export.xlsx";
+		// String pathFileOut = Constants.PATH_FILE +
+		// "file/export/bills_data_export.xlsx";
+		//
+		// excelWriter.write(lstBillsFilter, pathFileInput, pathFileOut);
+		// File file = new File(pathFileOut);
+		// Filedownload.save(file, null);
+		// } catch (Exception e) {
+		// // TODO Auto-generated catch block
+		// logger.error(e.getMessage(), e);
+		// }
 
 	}
 
@@ -784,46 +788,55 @@ public class BillsController extends GenericForwardComposer {
 	}
 
 	public void onView(ForwardEvent event) {
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		Bills c = rowSelected.getValue();
-		Map<String, Object> arguments = new HashMap();
-		BillsDetail billsDetail = getBillsDetail(c.getBillID());
-		if (billsDetail != null) {
-			arguments.put("detail", billsDetail);
-		} else {
-			arguments.put("detail", new BillsDetail());
-		}
-		arguments.put("bill", c);
-		final Window windownUpload = (Window) Executions.createComponents("/manager/billDetailView.zul", bills,
-				arguments);
-		windownUpload.doModal();
-		windownUpload.setBorder(true);
-		windownUpload.setBorder("normal");
-		windownUpload.setClosable(true);
-		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
-
-			@Override
-			public void onEvent(Event event) throws Exception {
-				windownUpload.detach();
-
-			}
-		});
+		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
+				Messagebox.INFORMATION);
+		// Row rowSelected = (Row)
+		// event.getOrigin().getTarget().getParent().getParent();
+		// Bills c = rowSelected.getValue();
+		// Map<String, Object> arguments = new HashMap();
+		// BillsDetail billsDetail = getBillsDetail(c.getBillID());
+		// if (billsDetail != null) {
+		// arguments.put("detail", billsDetail);
+		// } else {
+		// arguments.put("detail", new BillsDetail());
+		// }
+		// arguments.put("bill", c);
+		// final Window windownUpload = (Window)
+		// Executions.createComponents("/manager/billDetailView.zul", bills,
+		// arguments);
+		// windownUpload.doModal();
+		// windownUpload.setBorder(true);
+		// windownUpload.setBorder("normal");
+		// windownUpload.setClosable(true);
+		// windownUpload.addEventListener(Events.ON_CLOSE, new
+		// EventListener<Event>() {
+		//
+		// @Override
+		// public void onEvent(Event event) throws Exception {
+		// windownUpload.detach();
+		//
+		// }
+		// });
 	}
 
 	public void onAddDetail(ForwardEvent event) {
-		final Window windownUpload = (Window) Executions.createComponents("/manager/billDetail.zul", bills, null);
-		windownUpload.doModal();
-		windownUpload.setBorder(true);
-		windownUpload.setBorder("normal");
-		windownUpload.setClosable(true);
-		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
-
-			@Override
-			public void onEvent(Event event) throws Exception {
-				windownUpload.detach();
-
-			}
-		});
+		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
+				Messagebox.INFORMATION);
+		// final Window windownUpload = (Window)
+		// Executions.createComponents("/manager/billDetail.zul", bills, null);
+		// windownUpload.doModal();
+		// windownUpload.setBorder(true);
+		// windownUpload.setBorder("normal");
+		// windownUpload.setClosable(true);
+		// windownUpload.addEventListener(Events.ON_CLOSE, new
+		// EventListener<Event>() {
+		//
+		// @Override
+		// public void onEvent(Event event) throws Exception {
+		// windownUpload.detach();
+		//
+		// }
+		// });
 	}
 
 	public BillsDetail getBillsDetail(Long billID) {
