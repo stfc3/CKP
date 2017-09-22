@@ -25,9 +25,9 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-    @NamedQuery(name = "Users.getUserByName", query = "FROM Users u WHERE userName = :userName")
+    @NamedQuery(name = "User.getUserByName", query = "FROM User u WHERE userName = :userName")
     ,
-    @NamedQuery(name = "Users.getAllUser", query = "SELECT u FROM Users u ORDER BY createDate")
+    @NamedQuery(name = "User.getAllUser", query = "FROM User u ORDER BY createDate")
 })
 public class User implements Serializable {
 

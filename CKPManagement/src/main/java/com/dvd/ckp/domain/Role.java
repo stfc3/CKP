@@ -23,7 +23,7 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "roles")
 @NamedQueries({
-    @NamedQuery(name = "Role.getAllRole", query = "SELECT r FROM Role r ORDER BY createDate")
+    @NamedQuery(name = "Role.getAllRole", query = "FROM Role r ORDER BY createDate")
 })
 public class Role {
 

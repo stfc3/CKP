@@ -67,7 +67,7 @@ public class UserController extends GenericForwardComposer {
     ListModelList<User> listDataModel;
     private List<User> lstUsers;
     private Window user;
-    List<com.dvd.ckp.excel.domain> lstError = new ArrayList<com.dvd.ckp.excel.domain.Pumps>();
+//    List<com.dvd.ckp.excel.domain> lstError = new ArrayList<com.dvd.ckp.excel.domain.Pumps>();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -406,100 +406,100 @@ public class UserController extends GenericForwardComposer {
         }
     }
 
-    public void onDownloadFileError(ForwardEvent event) {
-        ExcelWriter<com.dvd.ckp.excel.domain.Pumps> writer = new ExcelWriter<>();
-        try {
-            String pathFileOutput = com.dvd.ckp.common.Constants.PATH_FILE + "file/export/error/error_pumps_data.xlsx";
-            String pathFileInput = com.dvd.ckp.common.Constants.PATH_FILE + "file/template/error/error_pumps_data.xlsx";
+//    public void onDownloadFileError(ForwardEvent event) {
+//        ExcelWriter<com.dvd.ckp.excel.domain.Pumps> writer = new ExcelWriter<>();
+//        try {
+//            String pathFileOutput = com.dvd.ckp.common.Constants.PATH_FILE + "file/export/error/error_pumps_data.xlsx";
+//            String pathFileInput = com.dvd.ckp.common.Constants.PATH_FILE + "file/template/error/error_pumps_data.xlsx";
+//
+//            writer.write(lstError, pathFileInput, pathFileOutput);
+//            File file = new File(pathFileOutput);
+//            Filedownload.save(file, null);
+//        } catch (Exception e) {
+//            // TODO Auto-generated catch block
+//            logger.error(e.getMessage(), e);
+//        }
+//    }
 
-            writer.write(lstError, pathFileInput, pathFileOutput);
-            File file = new File(pathFileOutput);
-            Filedownload.save(file, null);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            logger.error(e.getMessage(), e);
-        }
-    }
+//    public void onUpload$uploadbtn(UploadEvent evt) {
+//        Media media = evt.getMedia();
+//
+//        if (media == null) {
+//            Messagebox.show(Labels.getLabel("uploadExcel.selectFile"), Labels.getLabel("ERROR"), Messagebox.OK,
+//                    Messagebox.ERROR);
+//            return;
+//        }
+//        final String vstrFileName = media.getName();
+//
+//        hdFileName.setValue(vstrFileName);
+//        linkFileName.setValue(vstrFileName);
+//        FileUtils fileUtils = new FileUtils();
+//        fileUtils.setSaveFilePath(SAVE_PATH);
+//        fileUtils.saveFile(media);
+//        hdFileName.setValue(fileUtils.getFileName());
+//        hiddenFileName.setValue(fileUtils.getFilePath());
+//    }
 
-    public void onUpload$uploadbtn(UploadEvent evt) {
-        Media media = evt.getMedia();
-
-        if (media == null) {
-            Messagebox.show(Labels.getLabel("uploadExcel.selectFile"), Labels.getLabel("ERROR"), Messagebox.OK,
-                    Messagebox.ERROR);
-            return;
-        }
-        final String vstrFileName = media.getName();
-
-        hdFileName.setValue(vstrFileName);
-        linkFileName.setValue(vstrFileName);
-        FileUtils fileUtils = new FileUtils();
-        fileUtils.setSaveFilePath(SAVE_PATH);
-        fileUtils.saveFile(media);
-        hdFileName.setValue(fileUtils.getFileName());
-        hiddenFileName.setValue(fileUtils.getFilePath());
-    }
-
-    public void onClick$btnSave() {
-        int numberSucces = 0;
-        int numberRowError = 1;
-        lstError.clear();
-        try {
-            ExcelReader<com.dvd.ckp.excel.domain.Pumps> reader = new ExcelReader<>();
-            String filePath = hiddenFileName.getValue();
-            List<com.dvd.ckp.excel.domain.Pumps> listData = reader.read(filePath, com.dvd.ckp.excel.domain.Pumps.class);
-            List<Pumps> vlstData = new ArrayList<>();
-            if (listData != null && !listData.isEmpty()) {
-                for (com.dvd.ckp.excel.domain.Pumps pumps : listData) {
-
-                    if (!NumberUtils.isNumber(pumps.getPumpsCapacity())) {
-                        pumps.setDescription(
-                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.capacity")}));
-                        pumps.setIndex(numberRowError);
-                        lstError.add(pumps);
-                        numberRowError++;
-                        continue;
-                    }
-
-                    if (!NumberUtils.isNumber(pumps.getPumpsHight())) {
-                        pumps.setDescription(
-                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.hight")}));
-                        pumps.setIndex(numberRowError);
-                        lstError.add(pumps);
-                        numberRowError++;
-                        continue;
-                    }
-
-                    if (!NumberUtils.isNumber(pumps.getPumpsFar())) {
-                        pumps.setDescription(
-                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.far")}));
-                        pumps.setIndex(numberRowError);
-                        lstError.add(pumps);
-                        numberRowError++;
-                        continue;
-                    }
-                    Pumps item = new Pumps();
-                    item.setPumpsCode(pumps.getPumpsCode());
-                    item.setPumpsName(pumps.getPumpsName());
-                    item.setPumpsCapacity(Integer.valueOf(pumps.getPumpsCapacity()));
-                    item.setPumpsHight(Integer.valueOf(pumps.getPumpsHight()));
-                    item.setPumpsFar(Integer.valueOf(pumps.getPumpsFar()));
-                    item.setStatus(1);
-                    vlstData.add(item);
-                    numberSucces++;
-                }
-            }
-            txtTotalRow.setValue(String.valueOf(vlstData.size()));
-            txtTotalRowSucces.setValue(String.valueOf(numberSucces));
-
-            if (lstError != null && !lstError.isEmpty()) {
-                errorList.setVisible(true);
-                txtTotalRowError.setValue(String.valueOf(lstError.size()));
-            }
-            pumpsService.importData(vlstData);
-
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
+//    public void onClick$btnSave() {
+//        int numberSucces = 0;
+//        int numberRowError = 1;
+//        lstError.clear();
+//        try {
+//            ExcelReader<com.dvd.ckp.excel.domain.Pumps> reader = new ExcelReader<>();
+//            String filePath = hiddenFileName.getValue();
+//            List<com.dvd.ckp.excel.domain.Pumps> listData = reader.read(filePath, com.dvd.ckp.excel.domain.Pumps.class);
+//            List<Pumps> vlstData = new ArrayList<>();
+//            if (listData != null && !listData.isEmpty()) {
+//                for (com.dvd.ckp.excel.domain.Pumps pumps : listData) {
+//
+//                    if (!NumberUtils.isNumber(pumps.getPumpsCapacity())) {
+//                        pumps.setDescription(
+//                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.capacity")}));
+//                        pumps.setIndex(numberRowError);
+//                        lstError.add(pumps);
+//                        numberRowError++;
+//                        continue;
+//                    }
+//
+//                    if (!NumberUtils.isNumber(pumps.getPumpsHight())) {
+//                        pumps.setDescription(
+//                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.hight")}));
+//                        pumps.setIndex(numberRowError);
+//                        lstError.add(pumps);
+//                        numberRowError++;
+//                        continue;
+//                    }
+//
+//                    if (!NumberUtils.isNumber(pumps.getPumpsFar())) {
+//                        pumps.setDescription(
+//                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.far")}));
+//                        pumps.setIndex(numberRowError);
+//                        lstError.add(pumps);
+//                        numberRowError++;
+//                        continue;
+//                    }
+//                    Pumps item = new Pumps();
+//                    item.setPumpsCode(pumps.getPumpsCode());
+//                    item.setPumpsName(pumps.getPumpsName());
+//                    item.setPumpsCapacity(Integer.valueOf(pumps.getPumpsCapacity()));
+//                    item.setPumpsHight(Integer.valueOf(pumps.getPumpsHight()));
+//                    item.setPumpsFar(Integer.valueOf(pumps.getPumpsFar()));
+//                    item.setStatus(1);
+//                    vlstData.add(item);
+//                    numberSucces++;
+//                }
+//            }
+//            txtTotalRow.setValue(String.valueOf(vlstData.size()));
+//            txtTotalRowSucces.setValue(String.valueOf(numberSucces));
+//
+//            if (lstError != null && !lstError.isEmpty()) {
+//                errorList.setVisible(true);
+//                txtTotalRowError.setValue(String.valueOf(lstError.size()));
+//            }
+//            pumpsService.importData(vlstData);
+//
+//        } catch (Exception e) {
+//            logger.error(e.getMessage(), e);
+//        }
+//    }
 }

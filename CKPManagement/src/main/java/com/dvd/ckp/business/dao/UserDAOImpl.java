@@ -31,7 +31,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserByName(String pstrUserName) {
 
-        Query query = getCurrentSession().getNamedQuery("Users.getUserByName");
+        Query query = getCurrentSession().getNamedQuery("User.getUserByName");
         query.setParameter("userName", pstrUserName);
         List lstUsers = query.list();
         if (lstUsers != null && !lstUsers.isEmpty()) {
@@ -42,7 +42,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> getAllUser() {
-        Query query = getCurrentSession().getNamedQuery("Users.getAllUser");
+        Query query = getCurrentSession().getNamedQuery("User.getAllUser");
         List<User> lstUsers = query.list();
         if (lstUsers != null && !lstUsers.isEmpty()) {
             return lstUsers;
