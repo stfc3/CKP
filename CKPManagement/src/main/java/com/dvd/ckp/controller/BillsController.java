@@ -181,9 +181,9 @@ public class BillsController extends GenericForwardComposer {
 		Bills c = rowSelected.getValue();
 		setDataConstruction(lstCell, getConstructionDefault(c.getConstructionID()), constructionID);
 		setDataCustomer(lstCell, getCustomerDefault(c.getCustomerID()), customerID);
-		setEnableComponent(lstCell);
+		setEnableComponent(lstCell, false);
 	}
-
+	
 	/**
 	 * Cancel
 	 *
@@ -241,7 +241,7 @@ public class BillsController extends GenericForwardComposer {
 		gridBills.renderAll();
 		List<Component> lstCell = gridBills.getRows().getChildren().get(0).getChildren();
 		setDataDefaultInGrid();
-		setEnableComponent(lstCell);
+		setEnableComponent(lstCell, true);
 		insertOrUpdate = 1;
 	}
 
@@ -283,9 +283,12 @@ public class BillsController extends GenericForwardComposer {
 			cbxConstruction = (Combobox) component;
 			bills.setConstructionID(cbxConstruction.getSelectedItem().getValue());
 		}
+		component = lstCell.get(intfilePath).getFirstChild();
+		if (component != null && component instanceof Button) {
+			Button upload = (Button) component;
+			bills.setFileName(upload.getLabel());
+		}
 
-		bills.setFileName(fileName);
-		bills.setFilePath(filePathBill);
 		// Ngay bom
 		component = lstCell.get(prd).getFirstChild();
 		if (component != null && component instanceof Datebox) {
@@ -328,7 +331,7 @@ public class BillsController extends GenericForwardComposer {
 		component = lstCell.get(statusIndex).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			cbxStatus = (Combobox) component;
-			bills.setConstructionID(Long.valueOf(cbxStatus.getSelectedItem().getValue()));
+			bills.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
 		}
 		logger.info(bills.toString());
 		return bills;
@@ -704,7 +707,7 @@ public class BillsController extends GenericForwardComposer {
 				Messagebox.INFORMATION);
 	}
 
-	public static void setEnableComponent(List<Component> lstCell) {
+	public static void setEnableComponent(List<Component> lstCell, boolean isAdd) {
 		if (lstCell != null && !lstCell.isEmpty()) {
 			for (Component c : lstCell) {
 				if (c instanceof Cell) {
@@ -727,6 +730,12 @@ public class BillsController extends GenericForwardComposer {
 						cancel.setVisible(true);
 						A addDetail = (A) c.getChildren().get(3);
 						addDetail.setVisible(true);
+						A view = (A) c.getChildren().get(4);
+						if (isAdd) {
+							view.setVisible(false);
+						} else {
+							view.setVisible(true);
+						}
 					}
 
 				}
