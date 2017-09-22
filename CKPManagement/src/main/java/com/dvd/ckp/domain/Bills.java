@@ -20,7 +20,7 @@ import com.dvd.ckp.utils.DateTimeUtils;
 
 @Entity
 @Table(name = "bills")
-@NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u")
+@NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u where status not in (3)")
 public class Bills {
 	private static final Logger LOGGER = Logger.getLogger(Bills.class);
 	private int index;
@@ -152,7 +152,7 @@ public class Bills {
 		this.constructionID = constructionID;
 	}
 
-	@Column(name = "bills_code")
+	@Column(name = "bill_code")
 	public String getBillCode() {
 		return billCode;
 	}

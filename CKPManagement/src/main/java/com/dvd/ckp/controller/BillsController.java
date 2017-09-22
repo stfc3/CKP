@@ -7,7 +7,9 @@ package com.dvd.ckp.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.zkoss.util.media.Media;
@@ -233,6 +235,7 @@ public class BillsController extends GenericForwardComposer {
 	 */
 	public void onClick$add() {
 		Bills construction = new Bills();
+		construction.setStatus(1);
 		listDataModel.add(0, construction);
 		gridBills.setModel(listDataModel);
 		gridBills.renderAll();
@@ -280,6 +283,7 @@ public class BillsController extends GenericForwardComposer {
 			cbxConstruction = (Combobox) component;
 			bills.setConstructionID(cbxConstruction.getSelectedItem().getValue());
 		}
+
 		bills.setFileName(fileName);
 		bills.setFilePath(filePathBill);
 		// Ngay bom
@@ -302,13 +306,13 @@ public class BillsController extends GenericForwardComposer {
 		}
 		// Thoi gian bat dau
 		component = lstCell.get(intStartDate).getFirstChild();
-		if (component != null && component instanceof Timebox) {
+		if (component != null && component instanceof Datebox) {
 			startDate = (Datebox) component;
 			bills.setStartTime(startDate.getValue());
 		}
 		// Thoi gian bom xong
 		component = lstCell.get(intEndDate).getFirstChild();
-		if (component != null && component instanceof Timebox) {
+		if (component != null && component instanceof Datebox) {
 			endDate = (Datebox) component;
 			bills.setEndTime(endDate.getValue());
 		}
@@ -335,7 +339,6 @@ public class BillsController extends GenericForwardComposer {
 	 */
 	private void reloadGrid() {
 		lstBills.clear();
-		;
 		List<Bills> lstData = billsServices.getAllData();
 		if (lstData != null && !lstData.isEmpty()) {
 			for (Bills bills : lstData) {
@@ -781,7 +784,18 @@ public class BillsController extends GenericForwardComposer {
 	}
 
 	public void onView(ForwardEvent event) {
-		final Window windownUpload = (Window) Executions.createComponents("/manager/billDetailView.zul", bills, null);
+		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+		Bills c = rowSelected.getValue();
+		Map<String, Object> arguments = new HashMap();
+		BillsDetail billsDetail = getBillsDetail(c.getBillID());
+		if (billsDetail != null) {
+			arguments.put("detail", billsDetail);
+		} else {
+			arguments.put("detail", new BillsDetail());
+		}
+		arguments.put("bill", c);
+		final Window windownUpload = (Window) Executions.createComponents("/manager/billDetailView.zul", bills,
+				arguments);
 		windownUpload.doModal();
 		windownUpload.setBorder(true);
 		windownUpload.setBorder("normal");
@@ -810,5 +824,17 @@ public class BillsController extends GenericForwardComposer {
 
 			}
 		});
+	}
+
+	public BillsDetail getBillsDetail(Long billID) {
+		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
+			for (BillsDetail detail : lstBillDetail) {
+				if (billID != null && billID.equals(detail.getBillId())) {
+					return detail;
+				}
+			}
+		}
+		return null;
+
 	}
 }

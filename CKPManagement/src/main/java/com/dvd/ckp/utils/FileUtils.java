@@ -209,7 +209,6 @@ public class FileUtils {
                 return;
             }
 
-            // Can them userName de tao thu muc duy nhat.
             File baseDir = new File(pstrPath);
             if (!baseDir.exists()) {
                 baseDir.mkdirs();
@@ -269,9 +268,6 @@ public class FileUtils {
 
     }
 
-    /*
-	 * Ham copy file
-     */
     private void copyCompletely(Reader input, Writer output) throws IOException {
         char[] buf = new char[8192];
         while (true) {
