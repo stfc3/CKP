@@ -35,6 +35,9 @@ import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
+import org.zkoss.util.media.Media;
+import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zul.Button;
 
 /**
  *
@@ -323,5 +326,14 @@ public class ContractController extends GenericForwardComposer {
         winAddUser.setClosable(true);
 
         winAddUser.doModal();
+    }
+
+    public void onUploadFile(ForwardEvent event) {
+        if (event.getOrigin() instanceof UploadEvent) {
+            UploadEvent uploadEvent = (UploadEvent) event.getOrigin();
+            Media media = uploadEvent.getMedia();
+            Button b=(Button) uploadEvent.getTarget();
+            b.setLabel(media.getName());
+        }
     }
 }
