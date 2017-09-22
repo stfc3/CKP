@@ -1,9 +1,13 @@
 package com.dvd.ckp.utils;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+
+import bsh.ParseException;
 
 public class DateTimeUtils {
 	private static final Logger logger = Logger.getLogger(DateTimeUtils.class);
@@ -44,7 +48,14 @@ public class DateTimeUtils {
 			return null;
 		}
 	}
+
 	public static void main(String[] arg) {
-		System.out.println(convertStringToTime("06051992", "ddMMyyyy"));
+		try {
+			System.out.println(convertDateToString(new Date(), "dd/MM/yyyy HH:MM:ss"));
+			System.out.println(convertStringToTime("20170922110926", "HH:MM:ss"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

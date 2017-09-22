@@ -42,11 +42,6 @@
                                 <treechildren>
                                     <treeitem id="itemStaff" label="${c:l('staff')}" value="/manager/staff.zul" />
                                 </treechildren>
-
-                                <!-- 								<treechildren> -->
-                                <!-- 									<treeitem id="itemStaffQuantity" -->
-                                <!-- 										label="${c:l('staff.quantity')}" value="/manager/staffQuantity.zul" /> -->
-                                <!-- 								</treechildren> -->
                             </treeitem>
                         </treechildren>
                     </tree>
@@ -69,6 +64,25 @@
                             <span class="fa fa-user"></span>
                             <span id="userName" class="user-login"></span>
 
+							</treeitem>
+							<treeitem label="${c:l('bills')}">
+								<treechildren>
+									<treeitem id="itemBills"
+										label="${c:l('bills')}" value="/manager/bills.zul" />
+								</treechildren>
+							</treeitem>
+						</treechildren>
+					</tree>
+				</center>
+			</borderlayout>
+		</west>
+		<center border="none">
+			<borderlayout>
+				<north size="60px" class="index-layout-banner">
+					<div>
+						<div id="showHideMenue"
+							class="toggle-btn fa fa-outdent">
+						</div>
                             <div id="logout"
                                  class="fa fa-power-off user-logout">
                             </div>
@@ -98,6 +112,5 @@
                 </south>
             </borderlayout>
         </center>
-
     </borderlayout>
 </zk>
