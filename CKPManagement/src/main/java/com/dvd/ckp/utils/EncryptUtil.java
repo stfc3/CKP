@@ -52,7 +52,7 @@ public class EncryptUtil {
 
     public static void main(String[] args) {
 
-//        System.out.println("En:  "+encrypt("654321a@"));
+        System.out.println("En:  "+encrypt("654321a@"));
 //        System.out.println(decrypt("E3GheFvuOgnDoWcJeA3gZg=="));
 //        System.out.println(new String(Base64.encodeBase64("654321a@".getBytes())));
 //        System.out.println(new String(Base64.decodeBase64("NjU0MzIxYUA=")));

@@ -6,13 +6,17 @@
 package com.dvd.ckp.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -20,8 +24,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-@NamedQuery(name = "Users.getUserByName", query = "FROM Users u WHERE userName = :userName")
-public class Users implements Serializable {
+@NamedQueries({
+    @NamedQuery(name = "Users.getUserByName", query = "FROM Users u WHERE userName = :userName")
+    ,
+    @NamedQuery(name = "Users.getAllUser", query = "SELECT u FROM Users u ORDER BY createDate")
+})
+public class User implements Serializable {
 
     private long userId;
     private String userName;
@@ -32,6 +40,8 @@ public class Users implements Serializable {
     private String address;
     private String card;
     private int status;
+    private Date createDate;
+    private int index;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +62,7 @@ public class Users implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
     @Column(name = "full_name")
     public String getFullName() {
         return fullName;
@@ -114,6 +125,23 @@ public class Users implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
-    
 
+    @Column(name = "create_date")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    @Transient
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 }

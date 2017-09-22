@@ -33,7 +33,7 @@ import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.West;
 
 import com.dvd.ckp.business.service.UserService;
-import com.dvd.ckp.domain.Users;
+import com.dvd.ckp.domain.User;
 import com.dvd.ckp.utils.Constants;
 
 /**
@@ -69,6 +69,12 @@ public class MainController extends SelectorComposer<Component> {
 	Treeitem itemStaff;
 
 	@Wire
+	Treeitem itemUser;
+
+	@Wire
+	Treeitem itemRole;
+
+	@Wire
 	Treeitem itemBills;
 	@Wire
 	West westMenu;
@@ -87,7 +93,7 @@ public class MainController extends SelectorComposer<Component> {
 		if (session.getAttribute(Constants.TOKEN) == null) {
 			Executions.sendRedirect(Constants.PAGE_LOGIN);
 		}
-		Users users = (Users) session.getAttribute(Constants.SESSION_USER);
+		User users = (User) session.getAttribute(Constants.SESSION_USER);
 		userName.appendChild(new Label(users.getFullName()));
 		lstTabs = new ArrayList<Tab>();
 	}
@@ -163,6 +169,22 @@ public class MainController extends SelectorComposer<Component> {
 		addTab(vstrURL, vstrId, vstrTitle);
 	}
 
+	@Listen("onClick = #itemUser")
+	public void itemUser() throws IOException {
+		String vstrURL = itemUser.getValue();
+		String vstrId = "tab" + itemUser.getId();
+		String vstrTitle = itemUser.getLabel();
+		addTab(vstrURL, vstrId, vstrTitle);
+	}
+
+	@Listen("onClick = #itemRole")
+	public void itemRole() throws IOException {
+		String vstrURL = itemRole.getValue();
+		String vstrId = "tab" + itemRole.getId();
+		String vstrTitle = itemRole.getLabel();
+		addTab(vstrURL, vstrId, vstrTitle);
+	}
+
 	private void addTab(String pstrURL, final String pstrId, String pstrTilte) {
 		Include contentTabMenu;
 		if (lstTabs.size() < limitTabs) {
@@ -218,4 +240,5 @@ public class MainController extends SelectorComposer<Component> {
 
 		}
 	}
+
 }

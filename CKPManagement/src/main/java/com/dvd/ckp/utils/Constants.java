@@ -10,12 +10,15 @@ package com.dvd.ckp.utils;
  * @author dmin
  */
 public interface Constants {
-    
+
     //Session
-    String TOKEN="token"; 
-    String SESSION_USER="user"; 
-    
+    String TOKEN = "token";
+    String SESSION_USER = "user";
+
     //Page
-    String PAGE_HOME="/index.zul";
-    String PAGE_LOGIN="/login.zul";
+    String PAGE_HOME = "/index.zul";
+    String PAGE_LOGIN = "/login.zul";
+    String PAGE_CHANGE_PASSWORD = "/changepassword.zul";
+    String PASSWORD_PATTERN = "(?=.*[0-9])([a-z])([A-Z])(?=\\S+$).{8,}";
+    String RESET_RANDOM_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 }

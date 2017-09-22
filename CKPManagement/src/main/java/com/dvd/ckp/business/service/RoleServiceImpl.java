@@ -5,8 +5,8 @@
  */
 package com.dvd.ckp.business.service;
 
-import com.dvd.ckp.business.dao.UserDAO;
-import com.dvd.ckp.domain.User;
+import com.dvd.ckp.business.dao.RoleDAO;
+import com.dvd.ckp.domain.Role;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,30 +14,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author dmin
+ * @author daond
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class RoleServiceImpl implements RoleService {
 
     @Autowired
-    private UserDAO userDAO;
+    private RoleDAO roleDAO;
 
     @Transactional(readOnly = true)
     @Override
-    public User getUserByName(String pstrUserName) {
-        return userDAO.getUserByName(pstrUserName);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<User> getAllUser() {
-        return userDAO.getAllUser();
+    public List<Role> getAllRole() {
+        return roleDAO.getAllRole();
     }
 
     @Transactional
     @Override
-    public void insertOrUpdateUser(User user) {
-        userDAO.insertOrUpdateUser(user);
+    public void insertOrUpdateRole(Role role) {
+        roleDAO.insertOrUpdateRole(role);
     }
 
 }

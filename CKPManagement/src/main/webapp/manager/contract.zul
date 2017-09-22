@@ -70,7 +70,9 @@
                             <textbox value="${each.billMoney}" tooltiptext="${each.billMoney}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
-                            <a iconSclass="z-icon-paperclip" label="${each.filePath}" forward="onClick=onUpload" tooltiptext="${each.filePath == null ? c:l('file') : each.filePath}"/>
+                            <button style="border: none;color: green;font-weight: bold;" iconSclass="z-icon-paperclip" upload="true"
+                            forward="onUpload=onUploadFile"
+                                    label="${each.filePath}" tooltiptext="${each.filePath == null ? c:l('file') : each.filePath}"/>
                         </cell>
                         <cell>
                             <a iconSclass="z-icon-money" forward="onClick=onPrice" tooltiptext="${c:l('price')}"/>
