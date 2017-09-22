@@ -172,7 +172,7 @@
 							<!-- 							<a iconSclass="z-icon-trash-o" -->
 							<!-- 								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" /> -->
 
-							<a iconSclass="z-icon-eye"
+							<a iconSclass="z-icon-newspaper-o"
 								forward="onClick=onView" tooltiptext="${c:l('view')}" />
 						</cell>
 					</row>

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -276,5 +277,12 @@ public class ConstructionController extends GenericForwardComposer {
                 setDataCombobox(lstCell, getContractDefault(construction.getContractId()), contractIndex);
             }
         }
+    }
+    public void onImport(ForwardEvent event) {
+        Messagebox.show("Chức năng chưa được hỗ trợ", "Thông báo", Messagebox.OK, Messagebox.INFORMATION);
+    }
+
+    public void onExport(ForwardEvent event) {
+        Messagebox.show("Chức năng chưa được hỗ trợ", "Thông báo", Messagebox.OK, Messagebox.INFORMATION);
     }
 }

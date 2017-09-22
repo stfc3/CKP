@@ -5,21 +5,15 @@
  */
 package com.dvd.ckp.controller;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.zkoss.util.media.Media;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -31,13 +25,11 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
-import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Textbox;
-import org.zkoss.zul.Timebox;
 import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
@@ -48,12 +40,10 @@ import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Customer;
-import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
-import com.dvd.ckp.utils.StyleUtils;
 
 /**
  *

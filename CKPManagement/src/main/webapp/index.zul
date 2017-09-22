@@ -16,7 +16,7 @@
                        class="title-menu menu-index-background">
                     CKP Management
                 </north>
-                <center class="menu-index-background">
+                <center class="menu-index-background" autoscroll="true">
                     <tree id="tree" class="menu-index-background">
                         <treechildren>
                             <treeitem label="${c:l('revenue')}">
@@ -24,29 +24,20 @@
                                     <treeitem id="itemCustomer" label="${c:l('revenue.customer')}" value="/manager/customer.zul" />
                                     <treeitem id="itemContract" label="${c:l('revenue.contract')}" value="/manager/contract.zul" />
                                     <treeitem id="itemConstruction" label="${c:l('revenue.construction')}" value="/manager/construction.zul" />
+                                    <treeitem id="itemPumps" label="${c:l('pump')}" value="/manager/pumps.zul" />
+                                    <treeitem id="itemLocation" label="${c:l('location')}" value="/manager/location.zul" />
+                                    <treeitem id="itemBills" label="${c:l('bills')}" value="/manager/bills.zul" />
                                 </treechildren>
                             </treeitem>
                             <treeitem label="${c:l('administrator')}">
                                 <treechildren>
                                     <treeitem id="itemUser" label="${c:l('administrator.user')}" value="/manager/user.zul"/>
-                                    <treeitem id="itemRole" label="${c:l('administrator.role')}" value="/manager/role.zul"/>
-                                </treechildren>
-                            </treeitem>
-                            <treeitem label="${c:l('pump')}">
-                                <treechildren>
-                                    <treeitem id="itemPumps" label="${c:l('pump')}" value="/manager/pumps.zul" />
-                                    <treeitem id="itemLocation" label="${c:l('location')}" value="/manager/location.zul" />
+                                    <!--<treeitem id="itemRole" label="${c:l('administrator.role')}" value="/manager/role.zul"/>-->
                                 </treechildren>
                             </treeitem>
                             <treeitem label="${c:l('staff')}">
                                 <treechildren>
                                     <treeitem id="itemStaff" label="${c:l('staff')}" value="/manager/staff.zul" />
-                                </treechildren>
-                            </treeitem>
-                            <treeitem label="${c:l('bills')}">
-                                <treechildren>
-                                    <treeitem id="itemBills"
-                                              label="${c:l('bills')}" value="/manager/bills.zul" />
                                 </treechildren>
                             </treeitem>
                         </treechildren>

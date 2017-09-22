@@ -13,6 +13,7 @@ import com.dvd.ckp.utils.StyleUtils;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -199,5 +200,13 @@ public class CustomerController extends GenericForwardComposer {
         listDataModel = new ListModelList(vlstCustomer);
         lstCustomer.setModel(listDataModel);
 
+    }
+    
+    public void onImport(ForwardEvent event) {
+        Messagebox.show("Chức năng chưa được hỗ trợ", "Thông báo", Messagebox.OK, Messagebox.INFORMATION);
+    }
+
+    public void onExport(ForwardEvent event) {
+        Messagebox.show("Chức năng chưa được hỗ trợ", "Thông báo", Messagebox.OK, Messagebox.INFORMATION);
     }
 }

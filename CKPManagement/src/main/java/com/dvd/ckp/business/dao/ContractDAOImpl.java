@@ -6,6 +6,7 @@
 package com.dvd.ckp.business.dao;
 
 import com.dvd.ckp.domain.Contract;
+import com.dvd.ckp.domain.Price;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -34,6 +35,7 @@ public class ContractDAOImpl implements ContractDAO {
         Query query = getCurrentSession().getNamedQuery("Contract.fillAllContract");
         return (List<Contract>) query.list();
     }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<Contract> getContractActive() {
@@ -46,6 +48,20 @@ public class ContractDAOImpl implements ContractDAO {
     @Override
     public void insertOrUpdateContract(Contract contract) {
         getCurrentSession().saveOrUpdate(contract);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Price> getAllPrice() {
+
+        Query query = getCurrentSession().getNamedQuery("Price.fillAllPrice");
+        return (List<Price>) query.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void insertOrUpdatePrice(Price price) {
+        getCurrentSession().saveOrUpdate(price);
     }
 
 }

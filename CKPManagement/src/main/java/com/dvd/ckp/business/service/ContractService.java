@@ -6,6 +6,7 @@
 package com.dvd.ckp.business.service;
 
 import com.dvd.ckp.domain.Contract;
+import com.dvd.ckp.domain.Price;
 import java.util.List;
 
 /**
@@ -19,4 +20,8 @@ public interface ContractService {
     List<Contract> getContractActive();
 
     void insertOrUpdateContract(Contract contract);
+
+    List<Price> getAllPrice();
+
+    void insertOrUpdatePrice(Price price);
 }
