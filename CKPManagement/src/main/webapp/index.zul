@@ -7,13 +7,13 @@
     <script type="text/javascript" src="js/myjs.js"></script>
 
     <borderlayout apply="com.dvd.ckp.controller.MainController"
-                      class="main-index">
+                  class="main-index">
         <west id="westMenu" size="20%" autoscroll="true" maxsize="250"
-                      splittable="false" collapsible="true" open="true"
-                      class="menu-index-background">
+              splittable="false" collapsible="true" open="true"
+              class="menu-index-background">
             <borderlayout class="menu-index-background">
                 <north size="60px"
-                                       class="title-menu menu-index-background">
+                       class="title-menu menu-index-background">
                     CKP Management
                 </north>
                 <center class="menu-index-background">
@@ -43,6 +43,12 @@
                                     <treeitem id="itemStaff" label="${c:l('staff')}" value="/manager/staff.zul" />
                                 </treechildren>
                             </treeitem>
+                            <treeitem label="${c:l('bills')}">
+                                <treechildren>
+                                    <treeitem id="itemBills"
+                                              label="${c:l('bills')}" value="/manager/bills.zul" />
+                                </treechildren>
+                            </treeitem>
                         </treechildren>
                     </tree>
                 </center>
@@ -63,29 +69,9 @@
                         <div class="index-user">
                             <span class="fa fa-user"></span>
                             <span id="userName" class="user-login"></span>
-
-							</treeitem>
-							<treeitem label="${c:l('bills')}">
-								<treechildren>
-									<treeitem id="itemBills"
-										label="${c:l('bills')}" value="/manager/bills.zul" />
-								</treechildren>
-							</treeitem>
-						</treechildren>
-					</tree>
-				</center>
-			</borderlayout>
-		</west>
-		<center border="none">
-			<borderlayout>
-				<north size="60px" class="index-layout-banner">
-					<div>
-						<div id="showHideMenue"
-							class="toggle-btn fa fa-outdent">
-						</div>
-                            <div id="logout"
-                                 class="fa fa-power-off user-logout">
-                            </div>
+                        </div>
+                        <div id="logout"
+                             class="fa fa-power-off user-logout">
                         </div>
                     </div>
                 </north>
