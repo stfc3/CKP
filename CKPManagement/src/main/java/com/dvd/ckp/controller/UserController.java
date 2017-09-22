@@ -181,7 +181,7 @@ public class UserController extends GenericForwardComposer {
         User c = rowSelected.getValue();
         User user = getDataInRow(lstCell);
         user.setUserId(c.getUserId());
-        user.setPassword(EncryptUtil.encrypt(c.getPassword()));
+        user.setPassword(EncryptUtil.encrypt(user.getPassword()));
         userService.insertOrUpdateUser(user);
         setDisableComponent(lstCell);
         reloadGrid();
