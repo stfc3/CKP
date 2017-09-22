@@ -133,26 +133,29 @@ public class FileUtils {
 					vbaseDirReport.mkdirs();
 				}
 			}
-			if (vfile.exists()) {
-				String file_Name = vstrfileName.substring(0, vstrfileName.length() - 5);
-				String name = vstrfileName.substring(vstrfileName.length() - 5);
-				fileName = file_Name + "_" + dateFullFormat.format(nowDate) + name;
-				filePath = baseDir + File.separator + fileName;
-				vfile = new File(filePath);
-				if (getOutFilePath() != null && !"".equals(getOutFilePath())) {
-					File vfileOutReport = new File(vbaseDirReport + File.separator + fileName);
-					fileNameOutput = vfileOutReport.toString();
-					filePathOutput = vbaseDirReport + File.separator + fileName;
-				}
-			} else {
-				fileName = vstrfileName;
-				filePath = baseDir + File.separator + vstrfileName;
-				if (getOutFilePath() != null && !"".equals(getOutFilePath())) {
-					File vfileOutReport = new File(vbaseDirReport + File.separator + vstrfileName);
-					fileNameOutput = vfileOutReport.toString();
-					filePathOutput = vbaseDirReport + File.separator + vstrfileName;
-				}
+			// if (vfile.exists()) {
+			// String file_Name = vstrfileName.substring(0,
+			// vstrfileName.length() - 5);
+			// String name = vstrfileName.substring(vstrfileName.length() - 5);
+			// fileName = file_Name + "_" + dateFullFormat.format(nowDate) +
+			// name;
+			// filePath = baseDir + File.separator + fileName;
+			// vfile = new File(filePath);
+			// if (getOutFilePath() != null && !"".equals(getOutFilePath())) {
+			// File vfileOutReport = new File(vbaseDirReport + File.separator +
+			// fileName);
+			// fileNameOutput = vfileOutReport.toString();
+			// filePathOutput = vbaseDirReport + File.separator + fileName;
+			// }
+			// } else {
+			fileName = vstrfileName;
+			filePath = baseDir + File.separator + vstrfileName;
+			if (getOutFilePath() != null && !"".equals(getOutFilePath())) {
+				File vfileOutReport = new File(vbaseDirReport + File.separator + vstrfileName);
+				fileNameOutput = vfileOutReport.toString();
+				filePathOutput = vbaseDirReport + File.separator + vstrfileName;
 			}
+			// }
 
 			if (!media.isBinary()) {
 				Reader reader = media.getReaderData();

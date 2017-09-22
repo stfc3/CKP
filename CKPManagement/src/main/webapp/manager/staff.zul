@@ -103,8 +103,8 @@
 							<a iconSclass="z-icon-ban"
 								forward="onClick=onCancel" visible="false"
 								tooltiptext="${c:l('cancel')}" />
-							<a iconSclass="z-icon-trash-o"
-								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />
+<!-- 							<a iconSclass="z-icon-trash-o" -->
+							<!-- 								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" /> -->
 						</cell>
 					</row>
 				</template>

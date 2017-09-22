@@ -55,7 +55,7 @@ public class BillsDAOImpl implements BillDAO {
 		Session session = getCurrentSession();
 		try {
 			StringBuilder builder = new StringBuilder("update bills set ");
-			builder.append("bills_code = :billCode, ");
+			builder.append("bill_code = :billCode, ");
 			builder.append("customer_id = :customerID, ");
 			builder.append("prd_id = :prdID, ");
 			builder.append("from_time = :fromDate, ");
