@@ -5,7 +5,7 @@
  */
 package com.dvd.ckp.business.dao;
 
-import com.dvd.ckp.domain.Users;
+import com.dvd.ckp.domain.User;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -29,21 +29,21 @@ public class UserDAOImpl implements UserDAO {
     
     @SuppressWarnings("unchecked")
     @Override
-    public Users getUserByName(String pstrUserName) {
+    public User getUserByName(String pstrUserName) {
 
         Query query = getCurrentSession().getNamedQuery("Users.getUserByName");
         query.setParameter("userName", pstrUserName);
         List lstUsers = query.list();
         if (lstUsers != null && !lstUsers.isEmpty()) {
-            return (Users) lstUsers.get(0);
+            return (User) lstUsers.get(0);
         }
         return null;
     }
 
     @Override
-    public List<Users> getAllUser() {
+    public List<User> getAllUser() {
         Query query = getCurrentSession().getNamedQuery("Users.getAllUser");
-        List<Users> lstUsers = query.list();
+        List<User> lstUsers = query.list();
         if (lstUsers != null && !lstUsers.isEmpty()) {
             return lstUsers;
         }
@@ -51,7 +51,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void insertOrUpdateUser(Users user) {
+    public void insertOrUpdateUser(User user) {
         getCurrentSession().saveOrUpdate(user);
     }
 

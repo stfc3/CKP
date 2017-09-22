@@ -6,7 +6,7 @@
 package com.dvd.ckp.business.service;
 
 import com.dvd.ckp.business.dao.UserDAO;
-import com.dvd.ckp.domain.Users;
+import com.dvd.ckp.domain.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,19 +24,19 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public Users getUserByName(String pstrUserName) {
+    public User getUserByName(String pstrUserName) {
         return userDAO.getUserByName(pstrUserName);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Users> getAllUser() {
+    public List<User> getAllUser() {
         return userDAO.getAllUser();
     }
 
     @Transactional
     @Override
-    public void insertOrUpdateUser(Users user) {
+    public void insertOrUpdateUser(User user) {
         userDAO.insertOrUpdateUser(user);
     }
 

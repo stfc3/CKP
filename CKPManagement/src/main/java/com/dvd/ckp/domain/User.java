@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -28,7 +29,7 @@ import javax.persistence.Temporal;
     ,
     @NamedQuery(name = "Users.getAllUser", query = "SELECT u FROM Users u ORDER BY createDate")
 })
-public class Users implements Serializable {
+public class User implements Serializable {
 
     private long userId;
     private String userName;
@@ -40,6 +41,7 @@ public class Users implements Serializable {
     private String card;
     private int status;
     private Date createDate;
+    private int index;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -134,4 +136,12 @@ public class Users implements Serializable {
         this.createDate = createDate;
     }
 
+    @Transient
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 }

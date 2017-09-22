@@ -33,7 +33,7 @@ import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.West;
 
 import com.dvd.ckp.business.service.UserService;
-import com.dvd.ckp.domain.Users;
+import com.dvd.ckp.domain.User;
 import com.dvd.ckp.utils.Constants;
 
 /**
@@ -93,7 +93,7 @@ public class MainController extends SelectorComposer<Component> {
         if (session.getAttribute(Constants.TOKEN) == null) {
             Executions.sendRedirect(Constants.PAGE_LOGIN);
         }
-        Users users = (Users) session.getAttribute(Constants.SESSION_USER);
+        User users = (User) session.getAttribute(Constants.SESSION_USER);
         userName.appendChild(new Label(users.getFullName()));
         lstTabs = new ArrayList<Tab>();
     }

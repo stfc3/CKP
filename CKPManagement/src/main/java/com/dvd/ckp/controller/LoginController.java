@@ -6,7 +6,7 @@
 package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.UserService;
-import com.dvd.ckp.domain.Users;
+import com.dvd.ckp.domain.User;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.EncryptUtil;
 import com.dvd.ckp.utils.SpringConstant;
@@ -72,7 +72,7 @@ public class LoginController extends SelectorComposer<Component> {
     public void login() {
         String vstrUserName = txtUserName.getValue();
         String vstrPassword = txtPassword.getValue();
-        Users vuser = userService.getUserByName(vstrUserName);
+        User vuser = userService.getUserByName(vstrUserName);
         if (vuser == null) {
             mesg.setValue(Labels.getLabel("login.error"));
         } else if (!vstrPassword.equals(EncryptUtil.decrypt(vuser.getPassword()))) {
@@ -95,7 +95,7 @@ public class LoginController extends SelectorComposer<Component> {
         String vstrOldPassword = txtOldPassword.getValue();
         String vstrNewPassword = txtNewPassword.getValue();
         String vstrConfirmPassword = txtConfirmPassword.getValue();
-        Users vuser = userService.getUserByName(vstrUserName);
+        User vuser = userService.getUserByName(vstrUserName);
 
         if (captcha.getValue() == null || "".equals(captcha.getValue())) {
             mesg.setValue(Labels.getLabel("login.change.password.captcha.empty"));

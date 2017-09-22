@@ -180,7 +180,7 @@ public class RoleController extends GenericForwardComposer {
         Textbox txtRoleCode = (Textbox) lstCell.get(1).getFirstChild();
         Textbox txtRoleName = (Textbox) lstCell.get(2).getFirstChild();
         Textbox txtDes = (Textbox) lstCell.get(3).getFirstChild();
-        Combobox cbxStatus = (Combobox) lstCell.get(8).getFirstChild();
+        Combobox cbxStatus = (Combobox) lstCell.get(4).getFirstChild();
 
         role.setRoleCode(txtRoleCode.getValue());
         role.setRoleName(txtRoleName.getValue());
