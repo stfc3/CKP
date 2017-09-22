@@ -68,6 +68,12 @@
 <!-- 										label="${c:l('staff.quantity')}" value="/manager/staffQuantity.zul" /> -->
 <!-- 								</treechildren> -->
 							</treeitem>
+							<treeitem label="${c:l('bills')}">
+								<treechildren>
+									<treeitem id="itemBills"
+										label="${c:l('bills')}" value="/manager/bills.zul" />
+								</treechildren>
+							</treeitem>
 						</treechildren>
 					</tree>
 				</center>

@@ -47,6 +47,7 @@
 	<bean id="LocationService" class="com.dvd.ckp.business.service.LocationSeviceImpl" />
 
 	<bean id="StaffService" class="com.dvd.ckp.business.service.StaffSeviceImpl" />
+	<bean id="BillService" class="com.dvd.ckp.business.service.BillSeviceImpl" />
 
 	<bean id="ConstructionService" class="com.dvd.ckp.business.service.ConstructionServiceImpl" />
 	<bean id="ContractService" class="com.dvd.ckp.business.service.ContractServiceImpl" />

@@ -7,6 +7,8 @@ public class Constants {
 	public static final String FILE_EXTENSION_XLSX = "xlsx";
 	
 	public static final String FORMAT_DATE = "yyyyMMdd";
+	public static final String FORMAT_HOUR = "HH:MM:ss";
 	public static final String FORMAT_DATE_DDMMYYYY = "ddMMyyyy";
 	public static final String FORMAT_DATE_DD_MM_YYY = "dd/MM/yyyy";
+	
 }

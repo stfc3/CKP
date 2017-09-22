@@ -80,3 +80,15 @@
 	font-style: italic;
 	font-size: 20px;
 }
+
+.title {
+	width: 100%;
+}
+
+.icon {
+	width: 20%;
+}
+
+.information {
+	width: 60%;
+}

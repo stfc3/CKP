@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+	<!--<zk xmlns:n="native">-->
+	<style>
+		.z-a{ color: green; cursor: auto; text-decoration: none;
+		margin-right: 5px; } .z-auxheader-content{ line-height: 14px;
+		text-align:right; } a [class^="z-icon-"]{ margin-right: 5px; }
+	</style>
+	<window id="bills" apply="com.dvd.ckp.controller.BillsController">
+		<style src="/css/theme.css" />
+		<groupbox>
+			<caption label="${c:l('bills')}" />
+			<grid id="gridBills">
+				<auxhead sclass="category-center">
+					<auxheader colspan="20">
+						<button id="add" iconSclass="z-icon-plus-circle"
+							label="${c:l('add')}"
+							style="border: none;color: green;font-weight: bold;" />
+						<button id="btnImport" class="btn"
+							forward="onClick=onImport" iconSclass="z-icon-file-excel-o"
+							label="${c:l('import')}"
+							style="border: none;color: green;font-weight: bold;" />
+						<button id="btnExport" class="btn"
+							iconSclass="z-icon-file-excel-o" label="${c:l('export')}"
+							style="border: none;color: green;font-weight: bold;" />
+					</auxheader>
+				</auxhead>
+				<auxhead sclass="category-center">
+					<auxheader colspan="1"></auxheader>
+					<auxheader colspan="1"></auxheader>
+					<auxheader colspan="1">
+						<a iconSclass="z-icon-filter" />
+						<textbox id="txtFilterCustomer" hflex="1" />
+					</auxheader>
+					<auxheader colspan="1">
+						<a iconSclass="z-icon-filter" />
+						<textbox id="txtFilterConstruction" hflex="1" />
+					</auxheader>
+					<auxheader colspan="1">
+						<a iconSclass="z-icon-filter" />
+						<datebox id="dtFilterDate" hflex="1" />
+					</auxheader>
+
+				</auxhead>
+				<columns style="text-align:center; ">
+					<column hflex="1">${c:l('pump.index')}</column>
+					<column hflex="1">${c:l('bills.code')}</column>
+					<column hflex="2">${c:l('bills.customer')}</column>
+					<column hflex="2">
+						${c:l('bills.construction.name')}
+					</column>
+					<column hflex="2">${c:l('bills.prd.id')}</column>
+					<column hflex="2">${c:l('bills.file')}</column>
+					<column hflex="1">${c:l('bills.cost')}</column>
+					<column hflex="2">${c:l('bills.from.date')}</column>
+					<column hflex="2">
+						${c:l('bills.start.time')}
+					</column>
+					<column hflex="2">${c:l('bills.end.time')}</column>
+					<column hflex="2">${c:l('bills.to.date')}</column>
+					<column hflex="1">${c:l('pump.status')}</column>
+					<column hflex="3">${c:l('pump.action')}</column>
+				</columns>
+				<template name="model">
+					<row value="${each}">
+						<cell style="text-align: center;">
+							<label value="${forEachStatus.index+1}" />
+						</cell>
+						<!--ma phieu bom -->
+						<cell>
+							<textbox value="${each.billCode}"
+								tooltiptext="${each.billCode}" hflex="1" inplace="true"
+								readonly="true" />
+						</cell>
+						<!--khach hang -->
+						<cell>
+							<combobox hflex="1" buttonVisible="false"
+								inplace="true" readonly="true">
+								<template name="model">
+									<comboitem
+										value="${each.customerId}" label="${each.customerName}" />
+								</template>
+							</combobox>
+						</cell>
+						<!--cong trinh -->
+						<cell>
+							<combobox hflex="1" buttonVisible="false"
+								inplace="true" readonly="true">
+								<template name="model">
+									<comboitem
+										value="${each.constructionId}"
+										label="${each.constructionName}" />
+								</template>
+							</combobox>
+						</cell>
+						<!--ngay bom -->
+						<cell>
+							<datebox value="${each.dateInput}"
+								style="text-align: right;" hflex="1" inplace="true"
+								readonly="true" />
+						</cell>
+
+						<!--file dinh kem -->
+						<cell>
+							<button
+								style="text-align: right;width: 40px;	border: none;	background: none;	color: blue;	text-decoration: underline;	font-style: italic;	font-size: 12px;"
+								upload="true" forward="onUpload=onUpload"
+								label="${each.fileName}" tooltiptext="${c:l('view')}"
+								iconSclass="z-icon-paperclip" />
+						</cell>
+						<!--thanh tien -->
+						<cell style="text-align: right;">
+							<label style="text-align: right;"
+								value="${each.cost}" tooltiptext="${each.cost}" />
+						</cell>
+						<!--thoi gian den cong trinh -->
+						<cell style="text-align: right;">
+							<datebox value="${each.fromDate}"
+								style="text-align: right;" hflex="1" inplace="true"
+								readonly="true" />
+						</cell>
+						<!--thoi gian bat dau bom -->
+						<cell>
+							<datebox value="${each.startTime}" cols="12"
+								format="kk:mm:ss" hflex="1" inplace="true" readonly="true" />
+						</cell>
+						<!--thoi gian bom xong-->
+						<cell style="text-align: right;">
+							<datebox value="${each.endTime}" cols="12"
+								format="kk:mm:ss" hflex="1" inplace="true" readonly="true" />
+						</cell>
+						<!--thoi gian roi cong trinh -->
+						<cell style="text-align: right;">
+							<datebox value="${each.endTime}"
+								style="text-align: right;" hflex="1" inplace="true"
+								readonly="true" />
+						</cell>
+						<cell style="text-align: center;">
+							<combobox class="combox-status"
+								value="${each.status == 0 ? c:l('inactive') : c:l('active')}"
+								tooltiptext="${each.status == 0 ? c:l('inactive') : c:l('active')}"
+								hflex="1" buttonVisible="false" inplace="true"
+								readonly="true">
+								<comboitem value="1"
+									label="${c:l('active')}" />
+								<comboitem value="0"
+									label="${c:l('inactive')}" />
+							</combobox>
+						</cell>
+						<cell style="text-align:center">
+
+
+							<a iconSclass="z-icon-pencil"
+								forward="onClick=onEdit" tooltiptext="${c:l('edit')}" />
+
+							<a iconSclass="z-icon-check"
+								forward="onClick=onSave" visible="false"
+								tooltiptext="${c:l('save')}" />
+
+							<a iconSclass="z-icon-ban"
+								forward="onClick=onCancel" visible="false"
+								tooltiptext="${c:l('cancel')}" />
+								
+							<a iconSclass="z-icon-plus-circle"
+								forward="onClick=onAddDetail" visible="false"
+								tooltiptext="${c:l('add.detail')}" />								
+
+							<a iconSclass="z-icon-trash-o"
+								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />
+
+							<a iconSclass="z-icon-eye"
+								forward="onClick=onView" tooltiptext="${c:l('view')}" />
+						</cell>
+					</row>
+				</template>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

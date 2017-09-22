@@ -68,8 +68,8 @@ public class MainController extends SelectorComposer<Component> {
 	@Wire
 	Treeitem itemStaff;
 
-//	@Wire
-//	Treeitem itemStaffQuantity;
+	@Wire
+	Treeitem itemBills;
 	@Wire
 	West westMenu;
 	@Wire
@@ -155,13 +155,13 @@ public class MainController extends SelectorComposer<Component> {
 	}
 
 	// staff
-	// @Listen("onClick = #itemStaffQuantity")
-	// public void itemStaffQuantity() throws IOException {
-	// String vstrURL = itemStaffQuantity.getValue();
-	// String vstrId = "tab" + itemStaffQuantity.getId();
-	// String vstrTitle = itemStaffQuantity.getLabel();
-	// addTab(vstrURL, vstrId, vstrTitle);
-	// }
+	@Listen("onClick = #itemBills")
+	public void itemStaffQuantity() throws IOException {
+		String vstrURL = itemBills.getValue();
+		String vstrId = "tab" + itemBills.getId();
+		String vstrTitle = itemBills.getLabel();
+		addTab(vstrURL, vstrId, vstrTitle);
+	}
 
 	private void addTab(String pstrURL, final String pstrId, String pstrTilte) {
 		Include contentTabMenu;
