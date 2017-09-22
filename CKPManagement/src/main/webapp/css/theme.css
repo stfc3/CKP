@@ -324,7 +324,21 @@ h1#logo a span {display:block;position:absolute;width:100%;height:100%;backgroun
 .support-phone span{
     font-size: 13px;
 }
-
+/*--------------------Change Password--------------------*/
+.input-captcha{
+    height: 30px;
+}
+.refresh-captcha{
+    color: #f15a29;
+    margin: 0 5px;
+    font-size: 16px;
+}
+.change-password {
+    float: right;
+    color: #008242;
+    text-decoration: underline;
+}
+/*--------------------End Change Password--------------------*/
 /*--------------------End login--------------------*/
 /*--------------------Index--------------------*/
 .title-menu span{
@@ -505,7 +519,13 @@ h1#logo a span {display:block;position:absolute;width:100%;height:100%;backgroun
 .z-west-collapsed{
     display: none !important;
 }
-
+.btn-cursor:hover{
+    cursor: pointer;
+}
+.txt-center{
+    text-align: center;
+    line-height: 23px !important;
+}
 /*End Tabsheets*/
 /*--------------------End Index--------------------*/
 /*dongdv*/

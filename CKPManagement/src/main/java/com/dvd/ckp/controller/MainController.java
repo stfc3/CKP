@@ -42,180 +42,201 @@ import com.dvd.ckp.utils.Constants;
  */
 public class MainController extends SelectorComposer<Component> {
 
-	@WireVariable
-	protected UserService userService;
-	@Wire
-	Spreadsheet ss;
-	@Wire
-	Tabbox tabContent;
-	@Wire
-	Tabs tabs;
-	@Wire
-	Tabpanels tabpanels;
-	@Wire
-	Treeitem itemCustomer;
-	@Wire
-	Treeitem itemContract;
-	@Wire
-	Treeitem itemConstruction;
+    @WireVariable
+    protected UserService userService;
+    @Wire
+    Spreadsheet ss;
+    @Wire
+    Tabbox tabContent;
+    @Wire
+    Tabs tabs;
+    @Wire
+    Tabpanels tabpanels;
+    @Wire
+    Treeitem itemCustomer;
+    @Wire
+    Treeitem itemContract;
+    @Wire
+    Treeitem itemConstruction;
 
-	@Wire
-	Treeitem itemPumps;
+    @Wire
+    Treeitem itemPumps;
 
-	@Wire
-	Treeitem itemLocation;
+    @Wire
+    Treeitem itemLocation;
 
-	@Wire
-	Treeitem itemStaff;
+    @Wire
+    Treeitem itemStaff;
+
+    @Wire
+    Treeitem itemUser;
+
+    @Wire
+    Treeitem itemRole;
 
 //	@Wire
 //	Treeitem itemStaffQuantity;
-	@Wire
-	West westMenu;
-	@Wire
-	Div showHideMenue;
-	@Wire
-	Span userName;
-	private Session session;
-	private List<Tab> lstTabs;
-	private int limitTabs = 100;
+    @Wire
+    West westMenu;
+    @Wire
+    Div showHideMenue;
+    @Wire
+    Span userName;
+    private Session session;
+    private List<Tab> lstTabs;
+    private int limitTabs = 100;
 
-	@Override
-	public void doAfterCompose(Component comp) throws Exception {
-		super.doAfterCompose(comp);
-		session = Sessions.getCurrent();
-		if (session.getAttribute(Constants.TOKEN) == null) {
-			Executions.sendRedirect(Constants.PAGE_LOGIN);
-		}
-		Users users = (Users) session.getAttribute(Constants.SESSION_USER);
-		userName.appendChild(new Label(users.getFullName()));
-		lstTabs = new ArrayList<Tab>();
-	}
+    @Override
+    public void doAfterCompose(Component comp) throws Exception {
+        super.doAfterCompose(comp);
+        session = Sessions.getCurrent();
+        if (session.getAttribute(Constants.TOKEN) == null) {
+            Executions.sendRedirect(Constants.PAGE_LOGIN);
+        }
+        Users users = (Users) session.getAttribute(Constants.SESSION_USER);
+        userName.appendChild(new Label(users.getFullName()));
+        lstTabs = new ArrayList<Tab>();
+    }
 
-	@Listen("onClick = #logout")
-	public void logout() throws IOException {
-		session.invalidate();
-		Executions.sendRedirect(Constants.PAGE_LOGIN);
-	}
+    @Listen("onClick = #logout")
+    public void logout() throws IOException {
+        session.invalidate();
+        Executions.sendRedirect(Constants.PAGE_LOGIN);
+    }
 
-	@Listen("onClick = #showHideMenue")
-	public void showHideMenue() throws IOException {
-		westMenu.setOpen(!westMenu.isOpen());
-	}
+    @Listen("onClick = #showHideMenue")
+    public void showHideMenue() throws IOException {
+        westMenu.setOpen(!westMenu.isOpen());
+    }
 
-	@Listen("onClick = #itemCustomer")
-	public void itemCustomer() throws IOException {
-		String vstrURL = itemCustomer.getValue();
-		String vstrId = "tab" + itemCustomer.getId();
-		String vstrTitle = itemCustomer.getLabel();
-		addTab(vstrURL, vstrId, vstrTitle);
-	}
+    @Listen("onClick = #itemCustomer")
+    public void itemCustomer() throws IOException {
+        String vstrURL = itemCustomer.getValue();
+        String vstrId = "tab" + itemCustomer.getId();
+        String vstrTitle = itemCustomer.getLabel();
+        addTab(vstrURL, vstrId, vstrTitle);
+    }
 
-	@Listen("onClick = #itemContract")
-	public void itemContract() throws IOException {
-		String vstrURL = itemContract.getValue();
-		String vstrId = "tab" + itemContract.getId();
-		String vstrTitle = itemContract.getLabel();
-		addTab(vstrURL, vstrId, vstrTitle);
-	}
+    @Listen("onClick = #itemContract")
+    public void itemContract() throws IOException {
+        String vstrURL = itemContract.getValue();
+        String vstrId = "tab" + itemContract.getId();
+        String vstrTitle = itemContract.getLabel();
+        addTab(vstrURL, vstrId, vstrTitle);
+    }
 
-	@Listen("onClick = #itemConstruction")
-	public void itemConstruction() throws IOException {
-		String vstrURL = itemConstruction.getValue();
-		String vstrId = "tab" + itemConstruction.getId();
-		String vstrTitle = itemConstruction.getLabel();
-		addTab(vstrURL, vstrId, vstrTitle);
-	}
+    @Listen("onClick = #itemConstruction")
+    public void itemConstruction() throws IOException {
+        String vstrURL = itemConstruction.getValue();
+        String vstrId = "tab" + itemConstruction.getId();
+        String vstrTitle = itemConstruction.getLabel();
+        addTab(vstrURL, vstrId, vstrTitle);
+    }
 
-	// Pumps
-	@Listen("onClick = #itemPumps")
-	public void itemPumps() throws IOException {
-		String vstrURL = itemPumps.getValue();
-		String vstrId = "tab" + itemPumps.getId();
-		String vstrTitle = itemPumps.getLabel();
-		addTab(vstrURL, vstrId, vstrTitle);
-	}
+    // Pumps
+    @Listen("onClick = #itemPumps")
+    public void itemPumps() throws IOException {
+        String vstrURL = itemPumps.getValue();
+        String vstrId = "tab" + itemPumps.getId();
+        String vstrTitle = itemPumps.getLabel();
+        addTab(vstrURL, vstrId, vstrTitle);
+    }
 
-	// location
-	@Listen("onClick = #itemLocation")
-	public void itemLocation() throws IOException {
-		String vstrURL = itemLocation.getValue();
-		String vstrId = "tab" + itemLocation.getId();
-		String vstrTitle = itemLocation.getLabel();
-		addTab(vstrURL, vstrId, vstrTitle);
-	}
+    // location
+    @Listen("onClick = #itemLocation")
+    public void itemLocation() throws IOException {
+        String vstrURL = itemLocation.getValue();
+        String vstrId = "tab" + itemLocation.getId();
+        String vstrTitle = itemLocation.getLabel();
+        addTab(vstrURL, vstrId, vstrTitle);
+    }
 
-	// staff
-	@Listen("onClick = #itemStaff")
-	public void itemStaff() throws IOException {
-		String vstrURL = itemStaff.getValue();
-		String vstrId = "tab" + itemStaff.getId();
-		String vstrTitle = itemStaff.getLabel();
-		addTab(vstrURL, vstrId, vstrTitle);
-	}
+    // staff
+    @Listen("onClick = #itemStaff")
+    public void itemStaff() throws IOException {
+        String vstrURL = itemStaff.getValue();
+        String vstrId = "tab" + itemStaff.getId();
+        String vstrTitle = itemStaff.getLabel();
+        addTab(vstrURL, vstrId, vstrTitle);
+    }
 
-	// staff
-	// @Listen("onClick = #itemStaffQuantity")
-	// public void itemStaffQuantity() throws IOException {
-	// String vstrURL = itemStaffQuantity.getValue();
-	// String vstrId = "tab" + itemStaffQuantity.getId();
-	// String vstrTitle = itemStaffQuantity.getLabel();
-	// addTab(vstrURL, vstrId, vstrTitle);
-	// }
+    @Listen("onClick = #itemUser")
+    public void itemUser() throws IOException {
+        String vstrURL = itemUser.getValue();
+        String vstrId = "tab" + itemUser.getId();
+        String vstrTitle = itemUser.getLabel();
+        addTab(vstrURL, vstrId, vstrTitle);
+    }
 
-	private void addTab(String pstrURL, final String pstrId, String pstrTilte) {
-		Include contentTabMenu;
-		if (lstTabs.size() < limitTabs) {
-			Tab newTab = getExistTab(pstrId, lstTabs);
-			if (newTab == null) {
-				newTab = new Tab(pstrTilte);
-				newTab.setTooltiptext(pstrTilte);
-				newTab.setId(pstrId);
-				newTab.setClosable(true);
-				newTab.setSelected(true);
-				newTab.setParent(tabs);
-				newTab.addEventListener("onClose", new EventListener() {
-					@Override
-					public void onEvent(Event event) throws Exception {
-						removeTab(pstrId);
-					}
-				});
-				lstTabs.add(newTab);
-				Tabpanel tp = new Tabpanel();
-				contentTabMenu = new Include();
-				contentTabMenu.setSrc(pstrURL);
-				contentTabMenu.setParent(tp);
-				tp.setParent(tabpanels);
-			}
-			newTab.setSelected(true);
-		}
-	}
+    @Listen("onClick = #itemRole")
+    public void itemRole() throws IOException {
+        String vstrURL = itemRole.getValue();
+        String vstrId = "tab" + itemRole.getId();
+        String vstrTitle = itemRole.getLabel();
+        addTab(vstrURL, vstrId, vstrTitle);
+    }
 
-	private Tab getExistTab(String idNewTab, List<Tab> tabs) {
+    // staff
+    // @Listen("onClick = #itemStaffQuantity")
+    // public void itemStaffQuantity() throws IOException {
+    // String vstrURL = itemStaffQuantity.getValue();
+    // String vstrId = "tab" + itemStaffQuantity.getId();
+    // String vstrTitle = itemStaffQuantity.getLabel();
+    // addTab(vstrURL, vstrId, vstrTitle);
+    // }
+    private void addTab(String pstrURL, final String pstrId, String pstrTilte) {
+        Include contentTabMenu;
+        if (lstTabs.size() < limitTabs) {
+            Tab newTab = getExistTab(pstrId, lstTabs);
+            if (newTab == null) {
+                newTab = new Tab(pstrTilte);
+                newTab.setTooltiptext(pstrTilte);
+                newTab.setId(pstrId);
+                newTab.setClosable(true);
+                newTab.setSelected(true);
+                newTab.setParent(tabs);
+                newTab.addEventListener("onClose", new EventListener() {
+                    @Override
+                    public void onEvent(Event event) throws Exception {
+                        removeTab(pstrId);
+                    }
+                });
+                lstTabs.add(newTab);
+                Tabpanel tp = new Tabpanel();
+                contentTabMenu = new Include();
+                contentTabMenu.setSrc(pstrURL);
+                contentTabMenu.setParent(tp);
+                tp.setParent(tabpanels);
+            }
+            newTab.setSelected(true);
+        }
+    }
 
-		if (tabs != null && tabs.size() > 0) {
-			for (int i = 0; i < tabs.size(); i++) {
-				String idTabi = tabs.get(i).getId();
-				if (idNewTab.equalsIgnoreCase(idTabi)) {
-					return tabs.get(i);
-				}
-			}
+    private Tab getExistTab(String idNewTab, List<Tab> tabs) {
 
-		}
+        if (tabs != null && tabs.size() > 0) {
+            for (int i = 0; i < tabs.size(); i++) {
+                String idTabi = tabs.get(i).getId();
+                if (idNewTab.equalsIgnoreCase(idTabi)) {
+                    return tabs.get(i);
+                }
+            }
 
-		return null;
+        }
 
-	}
+        return null;
 
-	private void removeTab(String closeId) {
-		if (lstTabs != null && lstTabs.size() > 0) {
-			for (int i = 0; i < lstTabs.size(); i++) {
-				String idTabi = lstTabs.get(i).getId();
-				if (closeId.equalsIgnoreCase(idTabi)) {
-					lstTabs.remove(lstTabs.get(i));
-				}
-			}
+    }
 
-		}
-	}
+    private void removeTab(String closeId) {
+        if (lstTabs != null && lstTabs.size() > 0) {
+            for (int i = 0; i < lstTabs.size(); i++) {
+                String idTabi = lstTabs.get(i).getId();
+                if (closeId.equalsIgnoreCase(idTabi)) {
+                    lstTabs.remove(lstTabs.get(i));
+                }
+            }
+
+        }
+    }
 }

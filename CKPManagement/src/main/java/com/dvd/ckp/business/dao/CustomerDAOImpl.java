@@ -31,7 +31,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	@Override
 	public List<Customer> getAllCustomer() {
 
-		Query query = getCurrentSession().getNamedQuery("Customers.fillAllCustomer");
+		Query query = getCurrentSession().getNamedQuery("Customer.fillAllCustomer");
 		return (List<Customer>) query.list();
 	}
 
@@ -39,7 +39,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	@Override
 	public List<Customer> getCustomerActive() {
 
-		Query query = getCurrentSession().getNamedQuery("Customers.fillCustomerActive");
+		Query query = getCurrentSession().getNamedQuery("Customer.fillCustomerActive");
 		return (List<Customer>) query.list();
 	}
 

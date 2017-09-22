@@ -5,18 +5,17 @@
  */
 package com.dvd.ckp.business.dao;
 
-import com.dvd.ckp.domain.Users;
+import com.dvd.ckp.domain.Role;
 import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author daond
  */
-public interface UserDAO {
+public interface RoleDAO {
 
-    Users getUserByName(String pstrUserName);
+    List<Role> getAllRole();
     
-    List<Users> getAllUser();
+    void insertOrUpdateRole(Role role);
     
-    void insertOrUpdateUser(Users user);
 }

@@ -5,18 +5,17 @@
  */
 package com.dvd.ckp.business.service;
 
-import com.dvd.ckp.domain.Users;
+import com.dvd.ckp.domain.Role;
 import java.util.List;
 
 /**
  *
- * @author dmin
+ * @author daond
  */
-public interface UserService {
+public interface RoleService {
 
-     Users getUserByName(String pstrUserName);
-     
-     List<Users> getAllUser();
-     
-     void insertOrUpdateUser(Users user);
+    List<Role> getAllRole();
+    
+    void insertOrUpdateRole(Role role);
+
 }
