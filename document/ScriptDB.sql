@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS prices
     price_location DOUBLE comment 'Đơn giá theo vị trí',
     convert_type INT comment 'Loại chuyển đổi. 1: m3 sang m3; 2: m3 sang ca',
     convert_value DOUBLE comment 'Giá trị tính chuyển đổi',
+	status INT DEFAULT 1 comment '1: Hoạt động; 0: Không hoạt động',
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(price_id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng giá';
@@ -87,6 +88,7 @@ CREATE TABLE IF NOT EXISTS location
     location_id BIGINT NOT NULL AUTO_INCREMENT,
     location_code VARCHAR(50),
     location_name VARCHAR(200),
+    location_value int,
     location_type INT comment 'Loại vị trí 1: tầng, 0 các loại khác',
     status INT default 1,
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -97,6 +99,7 @@ DROP TABLE IF EXISTS bills;
 CREATE TABLE IF NOT EXISTS bills
 (
     bill_id BIGINT NOT NULL AUTO_INCREMENT,
+    bill_code VARCHAR(50),
     customer_id BIGINT,
     prd_id INT comment 'Ngày nhập phiếu bơm',
     from_time DATETIME comment 'Thời gian đến công trình',
@@ -115,6 +118,7 @@ CREATE TABLE IF NOT EXISTS bill_detail
     bill_detail_id BIGINT NOT NULL AUTO_INCREMENT,
     bill_id BIGINT,
     pump_id BIGINT,
+    pump_type INT comment 'Loại máy bơm: bơm tĩnh, bơm qua cần phân phối,...',
     location_id BIGINT,
     price_type INT comment 'Loại giá là m3, ca, ca chờ',
     quantity DOUBLE comment 'Khối lượng bơm',
@@ -127,7 +131,7 @@ CREATE TABLE IF NOT EXISTS bill_detail
 
 
 #### Luong ######
-DROP TABLE IF EXISTS bill_detail;
+DROP TABLE IF EXISTS staff;
 CREATE TABLE IF NOT EXISTS staff
 (
     staff_id BIGINT NOT NULL AUTO_INCREMENT,
@@ -142,7 +146,7 @@ CREATE TABLE IF NOT EXISTS staff
     PRIMARY KEY(staff_id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng nhân viên';
 
-DROP TABLE IF EXISTS bill_detail;
+DROP TABLE IF EXISTS quantity_staff;
 CREATE TABLE IF NOT EXISTS quantity_staff
 (
     id BIGINT NOT NULL AUTO_INCREMENT,
@@ -221,3 +225,16 @@ CREATE TABLE IF NOT EXISTS user_role
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(user_role_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng map user với vai trò';
+
+
+DROP TABLE IF EXISTS params;
+CREATE TABLE IF NOT EXISTS params
+(
+    param_id BIGINT NOT NULL AUTO_INCREMENT,
+    param_key VARCHAR(50),
+    param_value BIGINT,
+    param_name VARCHAR(50),
+    status INT DEFAULT 1,
+    create_date timestamp DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(param_id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Danh mục các tham số cấu hình';
