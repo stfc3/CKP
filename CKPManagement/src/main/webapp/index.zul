@@ -69,10 +69,11 @@
                         <div class="index-user">
                             <span class="fa fa-user"></span>
                             <span id="userName" class="user-login"></span>
+                            <div id="logout"
+                                 class="fa fa-power-off user-logout">
+                            </div>
                         </div>
-                        <div id="logout"
-                             class="fa fa-power-off user-logout">
-                        </div>
+                        
                     </div>
                 </north>
                 <center autoscroll="true">
