@@ -6,14 +6,11 @@
 package com.dvd.ckp.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
@@ -30,7 +27,6 @@ import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.CustomerService;
-import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Price;
@@ -40,13 +36,13 @@ import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.logging.Level;
 import javax.servlet.ServletContext;
 import org.zkoss.util.media.Media;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zul.Cell;
+import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Filedownload;
 
 /**
@@ -117,7 +113,7 @@ public class ContractController extends GenericForwardComposer {
         List<Component> lstCell = rowSelected.getChildren();
         Contract c = rowSelected.getValue();
         setDataCombobox(lstCell, getCustomerDefault(c.getContractId()), customerIndex);
-        StyleUtils.setEnableComponent(lstCell);
+        StyleUtils.setEnableComponent(lstCell, 4);
     }
 
     /**
@@ -129,7 +125,7 @@ public class ContractController extends GenericForwardComposer {
         
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        StyleUtils.setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
         
     }
@@ -146,7 +142,7 @@ public class ContractController extends GenericForwardComposer {
         Contract contract = getDataInRow(lstCell);
         contract.setContractId(c.getContractId());
         contractService.insertOrUpdateContract(contract);
-        StyleUtils.setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
     }
 
@@ -160,7 +156,7 @@ public class ContractController extends GenericForwardComposer {
         lstContract.renderAll();
         List<Component> lstCell = lstContract.getRows().getChildren().get(0).getChildren();
         setDataDefaultInGrid();
-        StyleUtils.setEnableComponent(lstCell);
+        StyleUtils.setEnableComponent(lstCell, 4);
     }
 
     /**
@@ -175,9 +171,9 @@ public class ContractController extends GenericForwardComposer {
         Textbox txtContractCode = null;
         Textbox txtContractName = null;
         Combobox cbxCustomer = null;
-        Textbox txtVat = null;
-        Textbox txtDiscount = null;
-        Textbox txtBillMoney = null;
+        Doublebox dbbVat = null;
+        Doublebox dbbDiscount = null;
+        Doublebox dbbBillMoney = null;
         A aFileName = null;
         Datebox dteEffective = null;
         Datebox dteExpiration = null;
@@ -197,19 +193,19 @@ public class ContractController extends GenericForwardComposer {
             contract.setCustomerId(cbxCustomer.getSelectedItem().getValue());
         }
         component = lstCell.get(vatIndex).getFirstChild();
-        if (component != null && component instanceof Textbox) {
-            txtVat = (Textbox) component;
-            contract.setVat(Integer.valueOf(txtVat.getValue()));
+        if (component != null && component instanceof Doublebox) {
+            dbbVat = (Doublebox) component;
+            contract.setVat(dbbVat.getValue());
         }
         component = lstCell.get(discountIndex).getFirstChild();
-        if (component != null && component instanceof Textbox) {
-            txtDiscount = (Textbox) component;
-            contract.setDiscount(Integer.valueOf(txtDiscount.getValue()));
+        if (component != null && component instanceof Doublebox) {
+            dbbDiscount = (Doublebox) component;
+            contract.setDiscount(dbbDiscount.getValue());
         }
         component = lstCell.get(billIndex).getFirstChild();
-        if (component != null && component instanceof Textbox) {
-            txtBillMoney = (Textbox) component;
-            contract.setBillMoney(Integer.valueOf(txtBillMoney.getValue()));
+        if (component != null && component instanceof Doublebox) {
+            dbbBillMoney = (Doublebox) component;
+            contract.setBillMoney(dbbBillMoney.getValue());
         }
         component = lstCell.get(fileIndex).getFirstChild();
         if (component != null && component instanceof A) {

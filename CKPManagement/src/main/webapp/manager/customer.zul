@@ -39,7 +39,7 @@
                     <column hflex="3">${c:l('customer.address')}</column>
                     <column hflex="3">${c:l('customer.accountnumber')}</column>
                     <column hflex="3">${c:l('customer.bankname')}</column>
-                    <column hflex="2">${c:l('customer.status')}</column>
+                    <!--<column hflex="2">${c:l('customer.status')}</column>-->
                     <column hflex="2">${c:l('customer.action')}</column>
                 </columns>
                 <template name="model">
@@ -68,15 +68,16 @@
                         <cell>
                             <textbox value="${each.bankName}" tooltiptext="${each.bankName}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
-                        <cell>
+<!--                        <cell>
                             <combobox value="${each.status == 0 ? c:l('inactive') : c:l('active')}" tooltiptext="${each.status == 0 ? c:l('inactive') : c:l('active')}" hflex="1" 
                                       buttonVisible="false" inplace="true" readonly="true">
                                 <comboitem value="1" label="${c:l('active')}" />
                                 <comboitem value="0" label="${c:l('inactive')}" />
                             </combobox>
-                        </cell>
+                        </cell>-->
                         <cell style="text-align:center">
                             <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
+                            <a class="btn-cursor" iconSclass="z-icon-trash-o" forward="onClick=onDelete" tooltiptext="${c:l('delete')}"/>
                             <a class="btn-cursor" iconSclass="z-icon-check" forward="onClick=onSave" visible="false" tooltiptext="${c:l('save')}" />
                             <a class="btn-cursor" iconSclass="z-icon-ban" forward="onClick=onCancel" visible="false" tooltiptext="${c:l('cancel')}"/>
                         </cell>

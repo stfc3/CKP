@@ -51,7 +51,7 @@ public class CustomerController extends GenericForwardComposer {
     private final int addressIndex=5;
     private final int accountIndex=6;
     private final int bankIndex=7;
-    private final int statusIndex=8;
+//    private final int statusIndex=8;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -71,7 +71,7 @@ public class CustomerController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        StyleUtils.setEnableComponent(lstCell);
+        StyleUtils.setEnableComponent(lstCell, 4);
     }
 
     /**
@@ -83,7 +83,7 @@ public class CustomerController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        StyleUtils.setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
 
     }
@@ -100,7 +100,7 @@ public class CustomerController extends GenericForwardComposer {
         Customer customer = getDataInRow(lstCell);
         customer.setCustomerId(c.getCustomerId());
         customerService.insertOrUpdateCustomer(customer);
-        StyleUtils.setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
     }
 
@@ -113,7 +113,7 @@ public class CustomerController extends GenericForwardComposer {
         lstCustomer.setModel(listDataModel);
         lstCustomer.renderAll();
         List<Component> lstCell = lstCustomer.getRows().getChildren().get(0).getChildren();
-        StyleUtils.setEnableComponent(lstCell);
+        StyleUtils.setEnableComponent(lstCell, 4);
     }
 
     /**
@@ -124,22 +124,49 @@ public class CustomerController extends GenericForwardComposer {
      */
     private Customer getDataInRow(List<Component> lstCell) {
         Customer customer = new Customer();
-        Textbox txtCustomerCode = (Textbox) lstCell.get(codeIndex).getFirstChild();
-        Textbox txtCustomerName = (Textbox) lstCell.get(nameIndex).getFirstChild();
-        Textbox txtCustomerPhone = (Textbox) lstCell.get(phoneIndex).getFirstChild();
-        Textbox txtTaxCode = (Textbox) lstCell.get(taxIndex).getFirstChild();
-        Textbox txtCustomerAddress = (Textbox) lstCell.get(addressIndex).getFirstChild();
-        Textbox txtAccountNumber = (Textbox) lstCell.get(accountIndex).getFirstChild();
-        Textbox txtBankName = (Textbox) lstCell.get(bankIndex).getFirstChild();
-        Combobox cbxStatus = (Combobox) lstCell.get(statusIndex).getFirstChild();
-        customer.setCustomerCode(txtCustomerCode.getValue());
-        customer.setCustomerName(txtCustomerName.getValue());
-        customer.setCustomerPhone(txtCustomerPhone.getValue());
-        customer.setCustomerAddress(txtCustomerAddress.getValue());
-        customer.setTaxCode(txtTaxCode.getValue());
-        customer.setAccountNumber(txtAccountNumber.getValue());
-        customer.setBankName(txtBankName.getValue());
-        customer.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
+        Component component;
+        Textbox txtCustomerCode=null;
+        Textbox txtCustomerName=null;
+        Textbox txtCustomerPhone=null;
+        Textbox txtTaxCode=null;
+        Textbox txtCustomerAddress=null;
+        Textbox txtAccountNumber=null;
+        Textbox txtBankName=null;
+        component = lstCell.get(codeIndex).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtCustomerCode = (Textbox) component;
+            customer.setCustomerCode(txtCustomerCode.getValue());
+        }
+        component = lstCell.get(nameIndex).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtCustomerName = (Textbox) component;
+            customer.setCustomerName(txtCustomerName.getValue());
+        }
+        component = lstCell.get(phoneIndex).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtCustomerPhone = (Textbox) component;
+            customer.setCustomerPhone(txtCustomerPhone.getValue());
+        }
+        component = lstCell.get(taxIndex).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtTaxCode = (Textbox) component;
+            customer.setTaxCode(txtTaxCode.getValue());
+        }
+        component = lstCell.get(addressIndex).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtCustomerAddress = (Textbox) component;
+            customer.setCustomerAddress(txtCustomerAddress.getValue());
+        }
+        component = lstCell.get(accountIndex).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtAccountNumber = (Textbox) component;
+            customer.setAccountNumber(txtAccountNumber.getValue());
+        }
+        component = lstCell.get(bankIndex).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtBankName = (Textbox) component;
+            customer.setBankName(txtBankName.getValue());
+        }
         return customer;
     }
 

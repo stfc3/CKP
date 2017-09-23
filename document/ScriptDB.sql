@@ -44,12 +44,13 @@ CREATE TABLE IF NOT EXISTS contracts
     contract_code VARCHAR(50),
     contract_name VARCHAR(200),
     file_path VARCHAR(100),
-    VAT INT comment 'Thuế VAT, có giá trị thì là loại hợp đồng đã bao gồm thuế VAT',
+    VAT DOUBLE comment 'Thuế VAT, có giá trị thì là loại hợp đồng đã bao gồm thuế VAT',
     effective_date DATE comment 'Ngày hợp đồng có hiệu lực',
     expiration_date DATE comment 'Ngày hợp đồng hết hiệu lực',
     customer_id BIGINT ,
-    discount INT comment '% chiết khâu khách hàng',
+    discount DOUBLE comment '% chiết khâu khách hàng',
     bill_money DOUBLE comment '% làm hóa đơn',
+    status INT DEFAULT 1 comment '1: Hoạt động; 0: Không hoạt động',
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(contract_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng hợp đồng';
@@ -62,8 +63,8 @@ CREATE TABLE IF NOT EXISTS construction
     construction_code VARCHAR(50),
     construction_name VARCHAR(100),
     status INT default 1,
-    is_far INT default 0 comment 'Công trình có được coi là xa không. Mặc định là 0; 1 là xa',
-    convert_value DOUBLE comment 'Giá trị tính chuyển đổi sản lượng cho công nhân',
+    #is_far INT default 0 comment 'Công trình có được coi là xa không. Mặc định là 0; 1 là xa',
+    #convert_value DOUBLE comment 'Giá trị tính chuyển đổi sản lượng cho công nhân',
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(construction_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng công trình';
@@ -74,9 +75,9 @@ CREATE TABLE IF NOT EXISTS pumps
     pump_id BIGINT NOT NULL AUTO_INCREMENT,
     pump_code VARCHAR(50),
     pump_name VARCHAR(200),
-    pump_capacity INT comment 'Hiệu suất bơm',
-    pump_high INT comment 'Khả năng bơm cao',
-    pump_far INT comment 'Khả năng bơm xa',
+    pump_capacity VARCHAR(50) comment 'Hiệu suất bơm',
+    pump_high VARCHAR(50) comment 'Khả năng bơm cao',
+    pump_far VARCHAR(50) comment 'Khả năng bơm xa',
     status INT DEFAULT 1,
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(pump_id)

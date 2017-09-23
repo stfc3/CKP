@@ -53,9 +53,9 @@ public class ConstructionController extends GenericForwardComposer {
     private final int codeIndex = 1;
     private final int nameIndex = 2;
     private final int contractIndex = 3;
-    private final int farIndex = 4;
-    private final int convertIndex = 5;
-    private final int statusIndex = 6;
+//    private final int farIndex = 4;
+//    private final int convertIndex = 5;
+//    private final int statusIndex = 6;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -84,7 +84,7 @@ public class ConstructionController extends GenericForwardComposer {
         List<Component> lstCell = rowSelected.getChildren();
         Construction c = rowSelected.getValue();
         setDataCombobox(lstCell, getContractDefault(c.getContractId()), contractIndex);
-        StyleUtils.setEnableComponent(lstCell);
+        StyleUtils.setEnableComponent(lstCell, 4);
     }
 
     /**
@@ -96,7 +96,7 @@ public class ConstructionController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        StyleUtils.setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell,4);
         reloadGrid();
 
     }
@@ -113,7 +113,7 @@ public class ConstructionController extends GenericForwardComposer {
         Construction construction = getDataInRow(lstCell);
         construction.setConstructionId(c.getConstructionId());
         constructionService.insertOrUpdateConstruction(construction);
-        StyleUtils.setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell,4);
         reloadGrid();
     }
 
@@ -127,7 +127,7 @@ public class ConstructionController extends GenericForwardComposer {
         lstConstruction.renderAll();
         List<Component> lstCell = lstConstruction.getRows().getChildren().get(0).getChildren();
         setDataDefaultInGrid();
-        StyleUtils.setEnableComponent(lstCell);
+        StyleUtils.setEnableComponent(lstCell, 4);
     }
 
     /**
@@ -142,9 +142,9 @@ public class ConstructionController extends GenericForwardComposer {
         Textbox txtConstructionCode = null;
         Textbox txtConstructionName = null;
         Combobox cbxContract = null;
-        Combobox cbxConstructionFar = null;
-        Textbox txtConstructionConvert = null;
-        Combobox cbxStatus = null;
+//        Combobox cbxConstructionFar = null;
+//        Textbox txtConstructionConvert = null;
+//        Combobox cbxStatus = null;
         component = lstCell.get(codeIndex).getFirstChild();
         if (component != null && component instanceof Textbox) {
             txtConstructionCode = (Textbox) component;
@@ -160,21 +160,21 @@ public class ConstructionController extends GenericForwardComposer {
             cbxContract = (Combobox) component;
             construction.setContractId(cbxContract.getSelectedItem().getValue());
         }
-        component = lstCell.get(farIndex).getFirstChild();
-        if (component != null && component instanceof Combobox) {
-            cbxConstructionFar = (Combobox) component;
-            construction.setConstructionFar(Integer.valueOf(cbxConstructionFar.getSelectedItem().getValue()));
-        }
-        component = lstCell.get(convertIndex).getFirstChild();
-        if (component != null && component instanceof Textbox) {
-            txtConstructionConvert = (Textbox) component;
-            construction.setConstructionConvert(Double.valueOf(txtConstructionConvert.getValue()));
-        }
-        component = lstCell.get(statusIndex).getFirstChild();
-        if (component != null && component instanceof Combobox) {
-            cbxStatus = (Combobox) component;
-            construction.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
-        }
+//        component = lstCell.get(farIndex).getFirstChild();
+//        if (component != null && component instanceof Combobox) {
+//            cbxConstructionFar = (Combobox) component;
+//            construction.setConstructionFar(Integer.valueOf(cbxConstructionFar.getSelectedItem().getValue()));
+//        }
+//        component = lstCell.get(convertIndex).getFirstChild();
+//        if (component != null && component instanceof Textbox) {
+//            txtConstructionConvert = (Textbox) component;
+//            construction.setConstructionConvert(Double.valueOf(txtConstructionConvert.getValue()));
+//        }
+//        component = lstCell.get(statusIndex).getFirstChild();
+//        if (component != null && component instanceof Combobox) {
+//            cbxStatus = (Combobox) component;
+//            construction.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
+//        }
         return construction;
     }
 

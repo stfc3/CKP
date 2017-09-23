@@ -35,9 +35,9 @@ public class Contract implements Serializable {
     private String contractCode;
     private String contractName;
     private String filePath;
-    private Integer vat;
-    private Integer discount;
-    private Integer billMoney;
+    private Double vat;
+    private Double discount;
+    private Double billMoney;
     private Date effectiveDate;
     private Date expirationDate;
 
@@ -89,29 +89,29 @@ public class Contract implements Serializable {
     }
 
     @Column(name = "VAT")
-    public Integer getVat() {
+    public Double getVat() {
         return vat;
     }
 
-    public void setVat(Integer vat) {
+    public void setVat(Double vat) {
         this.vat = vat;
     }
 
     @Column(name = "discount")
-    public Integer getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 
     @Column(name = "bill_money")
-    public Integer getBillMoney() {
+    public Double getBillMoney() {
         return billMoney;
     }
 
-    public void setBillMoney(Integer billMoney) {
+    public void setBillMoney(Double billMoney) {
         this.billMoney = billMoney;
     }
 
