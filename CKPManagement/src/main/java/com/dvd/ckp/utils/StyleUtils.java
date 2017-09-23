@@ -8,6 +8,7 @@ package com.dvd.ckp.utils;
 import java.util.List;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.A;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
@@ -38,7 +39,10 @@ public class StyleUtils {
                     } else if (child instanceof Textbox) {
                         ((Textbox) child).setReadonly(false);
                         ((Textbox) child).setInplace(false);
-                    } else if (child instanceof A && c.getChildren().size()>1) {
+                    }else if (child instanceof A && c.getChildren().size()==2) {
+                        Button btn = (Button) c.getChildren().get(1);
+                        btn.setDisabled(false);
+                    } else if (child instanceof A && c.getChildren().size()>2) {
                         A edit = (A) child;
                         edit.setVisible(false);
                         A save = (A) c.getChildren().get(1);
@@ -70,7 +74,10 @@ public class StyleUtils {
                     } else if (child instanceof Textbox) {
                         ((Textbox) child).setReadonly(true);
                         ((Textbox) child).setInplace(true);
-                    } else if (child instanceof A && c.getChildren().size()>1) {
+                    }else if (child instanceof A && c.getChildren().size()==2) {
+                        Button btn = (Button) c.getChildren().get(1);
+                        btn.setDisabled(true);
+                    } else if (child instanceof A && c.getChildren().size()>2) {
                         A edit = (A) child;
                         edit.setVisible(true);
                         A save = (A) c.getChildren().get(1);
