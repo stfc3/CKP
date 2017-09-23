@@ -60,7 +60,7 @@
 					<column hflex="2">${c:l('bills.end.time')}</column>
 					<column hflex="2">${c:l('bills.to.date')}</column>
 					<column hflex="1">${c:l('pump.status')}</column>
-					<column hflex="3">${c:l('pump.action')}</column>
+					<column hflex="2">${c:l('pump.action')}</column>
 				</columns>
 				<template name="model">
 					<row value="${each}">
