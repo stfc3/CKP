@@ -61,13 +61,13 @@
                             </combobox>
                         </cell>
                         <cell>
-                            <textbox value="${each.vat}" tooltiptext="${each.vat}" hflex="1" inplace="true" readonly="true"/>
+                            <doublebox value="${each.vat}" tooltiptext="${each.vat}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
-                            <textbox value="${each.discount}" tooltiptext="${each.discount}" hflex="1" inplace="true" readonly="true"/>
+                            <doublebox value="${each.discount}" tooltiptext="${each.discount}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
-                            <textbox value="${each.billMoney}" tooltiptext="${each.billMoney}" hflex="1" inplace="true" readonly="true"/>
+                            <doublebox value="${each.billMoney}" tooltiptext="${each.billMoney}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
                             <a class="btn-cursor" forward="onClick=onDownloadFile" label="${each.filePath}" tooltiptext="${each.filePath}"/>
@@ -85,6 +85,7 @@
                         </cell>
                         <cell style="text-align:center">
                             <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
+                            <a class="btn-cursor" iconSclass="z-icon-trash-o" forward="onClick=onDelete" tooltiptext="${c:l('delete')}"/>
                             <a class="btn-cursor" iconSclass="z-icon-check" forward="onClick=onSave" visible="false" tooltiptext="${c:l('save')}" />
                             <a class="btn-cursor" iconSclass="z-icon-ban" forward="onClick=onCancel" visible="false" tooltiptext="${c:l('cancel')}"/>
                         </cell>

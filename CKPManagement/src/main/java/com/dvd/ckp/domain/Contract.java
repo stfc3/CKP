@@ -26,7 +26,7 @@ import javax.persistence.Temporal;
 @NamedQueries({
     @NamedQuery(name = "Contract.fillAllContract", query = "FROM Contract c")
     ,
-    @NamedQuery(name = "Contract.fillContractActive", query = "FROM Contract c WHERE c.expirationDate >= now()")
+    @NamedQuery(name = "Contract.fillContractActive", query = "FROM Contract c WHERE c.status = 1")
 })
 public class Contract implements Serializable {
 
@@ -35,11 +35,13 @@ public class Contract implements Serializable {
     private String contractCode;
     private String contractName;
     private String filePath;
-    private Integer vat;
-    private Integer discount;
-    private Integer billMoney;
+    private Double vat;
+    private Double discount;
+    private Double billMoney;
     private Date effectiveDate;
     private Date expirationDate;
+    private Date createDate;
+    private Integer status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,29 +91,29 @@ public class Contract implements Serializable {
     }
 
     @Column(name = "VAT")
-    public Integer getVat() {
+    public Double getVat() {
         return vat;
     }
 
-    public void setVat(Integer vat) {
+    public void setVat(Double vat) {
         this.vat = vat;
     }
 
     @Column(name = "discount")
-    public Integer getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 
     @Column(name = "bill_money")
-    public Integer getBillMoney() {
+    public Double getBillMoney() {
         return billMoney;
     }
 
-    public void setBillMoney(Integer billMoney) {
+    public void setBillMoney(Double billMoney) {
         this.billMoney = billMoney;
     }
 
@@ -133,6 +135,25 @@ public class Contract implements Serializable {
 
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    @Column(name = "status")
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Column(name = "create_date")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
 }

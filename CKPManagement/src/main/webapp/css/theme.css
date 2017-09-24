@@ -530,7 +530,7 @@ h1#logo a span {display:block;position:absolute;width:100%;height:100%;backgroun
 /*--------------------End Index--------------------*/
 /*dongdv*/
 /*set style component in grid*/
-.z-textbox[readonly], .z-combobox-input[readonly], .z-datebox-input[readonly]{
+.z-textbox[readonly], .z-combobox-input[readonly], .z-datebox-input[readonly], .z-intbox[readonly], .z-doublebox[readonly], .z-longbox[readonly]{
     border: none;
     background: 0;
 }

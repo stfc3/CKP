@@ -6,6 +6,7 @@
 package com.dvd.ckp.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -24,7 +26,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Customer.fillAllCustomer", query = "FROM Customer c")
     ,
-    @NamedQuery(name = "Customer.fillCustomerActive", query = "FROM Customer c WHERE c.status=1")
+    @NamedQuery(name = "Customer.fillCustomerActive", query = "FROM Customer c WHERE c.status=1 ORDER BY c.createDate DESC")
 })
 public class Customer implements Serializable {
 
@@ -37,6 +39,7 @@ public class Customer implements Serializable {
     private String accountNumber;
     private String bankName;
     private Integer status;
+    private Date createDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -119,6 +122,16 @@ public class Customer implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+    
+    @Column(name = "create_date")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
 }
