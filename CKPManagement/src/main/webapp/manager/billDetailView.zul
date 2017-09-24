@@ -1,122 +1,283 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk xmlns:n="native">
-	<window id="uploadLocation"
+	<window id="viewBillDetail"
 		apply="com.dvd.ckp.controller.BillsController"
 		position="center,center" closable="true"
 		action="show: slideDown;hide: slideUp" border="normal" width="90%"
-		height="90%" maximizable="false"
-		onCancel="uploadLocation.detach();">
+		height="90%" maximizable="false" title="${c:l('bills.view.detail')}"
+		onCancel="viewBillDetail.detach();">
 		<style src="/css/style.css" />
-		<div class="title">
-			<div class="icon">
+
+		<hlayout>
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="2">
 				<image id="image" src="images/logo-slogan.png"
-					width="213px" height="30px" />
-			</div>
-			<div class="information">
-				<div>
-					Ngõ 2, Chu Văn An, Yết Kiêu - Hà Đông - Hà Nội
-				</div>
-				<div>
-					Điện thoại: 04 22 450 159 - Fax: 04 22 253 243
-				</div>
-				<div>
-					Hotline: 0988 757 50(Mr.Nam) * 0983 288
-					455(Mr.Khang))
-				</div>
-			</div>
-		</div>
-
-		<div>
-			<div class="date_pumps">
-				Ngày bơm:
-				<div>
-					<label id="date_pumps"
-						value="${arg.bill.strDateInput}">
+					width="100%" height="100%" />
+			</hbox>
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;text-align: right;">
+						Ngõ 2, Chu Văn An, Yết Kiêu - Hà Đông - Hà Nội
 					</label>
-				</div>
-			</div>
 
-			<div class="bills_code">
-				Mã phiếu bơm:
-				<div>
-					<label id="bills_code"
-						value="${arg.bill.billCode}">
+					<label
+						style="font-weight: bold;text-align: right;">
+						Điện thoại: 04 22 450 159 - Fax: 04 22 253 243
 					</label>
-				</div>
-			</div>
 
-		</div>
+					<label
+						style="font-weight: bold;text-align: right;">
+						Hotline: 0988 757 50(Mr.Nam) * 0983 288
+						455(Mr.Khang)
+					</label>
+				</vbox>
+			</hbox>
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+		</hlayout>
+		<hlayout spacing="10px">
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+			<label class="lb-title-bill-detail">
+				PHIẾU BƠM BÊ TÔNG/CONCRETE PUMP DOCKET
+			</label>
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="1" />
+		</hlayout>
 
-		<div>
-			<div>Tên khách hàng:</div>
-			<div>
-				<label id="customer_name"
-					value="${arg.bill.customerName}">
+		<hlayout spacing="10px">
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="2" style="text-align: right;">
+				<label style="font-weight: bold;text-align: right;">
+					Ngày/Date:
 				</label>
-			</div>
-			<div>Bơm sử dụng:</div>
-			<div>
-				<label id="pumps_name" value="Bơm đài móng"></label>
-			</div>
-		</div>
-		<div>
-			<div>Công trình:</div>
-			<div>
-				<label id="contruction_name"
-					value="${arg.bill.constructionName}">
+			</hbox>
+			<hbox hflex="2">
+				<label value="${arg.bill.strDateInput}"></label>
+			</hbox>
+			<hbox hflex="2" style="text-align: right;">
+				<label style="font-weight: bold; text-align: right;">
+					Số phiếu/Docket No:
 				</label>
-			</div>
-		</div>
-		<div>
-			<div>Địa chỉ công trình:</div>
-			<div>
+			</hbox>
+			<hbox hflex="2">
+				<label value="${arg.bill.billCode}"></label>
+			</hbox>
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+		</hlayout>
+
+		<hlayout spacing="10px">
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="2">
+				<label style="font-weight: bold;">
+					Khách hàng/Customer:
+				</label>
+			</hbox>
+			<hbox hflex="2">
+				<label value="${arg.bill.customerName}"></label>
+			</hbox>
+			<hbox hflex="2">
+				<label style="font-weight: bold;">
+					Bơm sử dụng/Pumpused:
+				</label>
+			</hbox>
+			<hbox hflex="2">
+				<label value="Bơm đài móng"></label>
+			</hbox>
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="1" />
+		</hlayout>
+
+		<hlayout spacing="10px">
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="2">
+				<label style="font-weight: bold;">
+					Tên công trình/Project name:
+				</label>
+			</hbox>
+			<hbox hflex="2">
 				<label value="${arg.bill.constructionName}"></label>
-			</div>
-		</div>
+			</hbox>
+			<hbox hflex="2">
+				<label style="font-weight: bold;">
+					Địa chỉ công trình/Project address:
+				</label>
+			</hbox>
+			<hbox hflex="2">
+				<label value="${arg.bill.constructionName}"></label>
+			</hbox>
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="1" />
+		</hlayout>
 
-		<!-- 		bang thong tin -->
-		<div>
-			<div>
-				<div>Địa chỉ công trình:</div>
-				<div>Số 22 - Phạm Hùng - Từ Liêm - Hà Nội</div>
-			</div>
-			<div>
-				<div>Thời gian đến công trình</div>
-				<div>Thời gian bắt đầu bơm</div>
-				<div>Thời gian bơm xong</div>
-				<div>Thời gian rời khỏi công trình</div>
-			</div>
-			<div>
-				<div>
-					<label value="${arg.bill.constructionName}"></label>
-				</div>
-				<div>13:00</div>
-				<div>16:00</div>
-				<div>23/09/2017</div>
-			</div>
-			<div>
-				<div>Khối lượng đã bơm</div>
-				<div>Vị trí bơm</div>
-				<div>Ghi chú</div>
-			</div>
-			<div>
-				<div>50</div>
-				<div>Tầng 3</div>
-				<div></div>
-			</div>
-		</div>
-		<div>
-			<div>Đại diện khách hàng (Họ tên và chữ ký)</div>
-			<div>Đại diện đội bơm (Họ tên và chữ ký)</div>
-		</div>
-		<div>
-			<div>
 
-			</div>
-			<div>
+		<hlayout style="border: 1px solid silver !important;">
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 16px;color:black"
+						value="${c:l('bills.from.date')}">
+					</label>
+					<label
+						style="font-style: italic;color:black;text-align: center;"
+						value="Time arrive project">
+					</label>
 
-			</div>
-		</div>
+					<label
+						style="font-style: italic;color:black;text-align: center;"
+						value="${arg.bill.strFromDate}">
+					</label>
+				</vbox>
+			</hbox>
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 14px;color:black"
+						value="${c:l('bills.start.time')}">
+					</label>
+					<label
+						style="font-style: italic;color:black;text-align: center;"
+						value="Time start pumping">
+					</label>
+					<label
+						style="font-style: italic;color:black;text-align: center;"
+						value="${arg.bill.strStartTime}">
+					</label>
+				</vbox>
+			</hbox>
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 14px;color:black"
+						value="${c:l('bills.end.time')}">
+					</label>
+					<label
+						style="font-style: italic;color:black;text-align: center;"
+						value="Time finish pumping">
+					</label>
+					<label
+						style="font-style: italic;color:black;text-align: center;"
+						value="${arg.bill.strEndTime}">
+					</label>
+				</vbox>
+			</hbox>
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 14px;color:black"
+						value="${c:l('bills.to.date')}">
+					</label>
+					<label
+						style="font-style: italic;color:black;text-align: center;"
+						value="Time leave project">
+					</label>
+					<label
+						style="font-style: italic;color:black;text-align: center;"
+						value="${arg.bill.strToDate}">
+					</label>
+				</vbox>
+			</hbox>
+			<hbox hflex="1" />
+		</hlayout>
+
+
+
+		<hlayout style="border: 1px solid silver !important;">
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 16px;color:black"
+						value="${c:l('bills.detail.volume')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="Volume pumped">
+					</label>
+				</vbox>
+			</hbox>
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 14px;color:black"
+						value="${c:l('bills.detail.place')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="Pumping place">
+					</label>
+				</vbox>
+			</hbox>
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 14px;color:black"
+						value="${c:l('bills.detail.note')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="Remark">
+					</label>
+				</vbox>
+			</hbox>
+
+			<hbox hflex="1" />
+		</hlayout>
+
+		<hlayout
+			style="border: 1px solid silver !important;text-align: center;">
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 16px;color:black"
+						value="${c:l('bills.detail.customer')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="Customer">
+					</label>
+
+					<label
+						style="font-weight: bold;font-size: 16px;color:black"
+						value="${c:l('bills.detail.pumps.signature.name')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="Signature and name">
+					</label>
+				</vbox>
+			</hbox>
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 14px;color:black ;text-align: center;"
+						value="${c:l('bills.detail.pumps.operator')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="Pum Operator">
+					</label>
+					<label
+						style="font-weight: bold;font-size: 16px;color:black"
+						value="${c:l('bills.detail.pumps.signature.name')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="Signature and name">
+					</label>
+				</vbox>
+			</hbox>
+
+			<hbox hflex="1" />
+		</hlayout>
+
 	</window>
 </zk>

@@ -59,7 +59,7 @@
 					</column>
 					<column hflex="2">${c:l('bills.end.time')}</column>
 					<column hflex="2">${c:l('bills.to.date')}</column>
-					<column hflex="1">${c:l('pump.status')}</column>
+					<!-- 					<column hflex="1">${c:l('pump.status')}</column> -->
 					<column hflex="2">${c:l('pump.action')}</column>
 				</columns>
 				<template name="model">
@@ -126,12 +126,14 @@
 						<!--thoi gian bat dau bom -->
 						<cell>
 							<datebox value="${each.startTime}" cols="12"
-								format="dd/MM/yyyy hh:mm" hflex="1" inplace="true" readonly="true" />
+								format="dd/MM/yyyy hh:mm" hflex="1" inplace="true"
+								readonly="true" />
 						</cell>
 						<!--thoi gian bom xong-->
 						<cell style="text-align: right;">
 							<datebox value="${each.endTime}" cols="12"
-								format="dd/MM/yyyy hh:mm" hflex="1" inplace="true" readonly="true" />
+								format="dd/MM/yyyy hh:mm" hflex="1" inplace="true"
+								readonly="true" />
 						</cell>
 						<!--thoi gian roi cong trinh -->
 						<cell style="text-align: right;">
@@ -139,18 +141,18 @@
 								style="text-align: right;" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
-						<cell style="text-align: center;">
-							<combobox class="combox-status"
-								value="${each.status == 0 ? c:l('inactive') : c:l('active')}"
-								tooltiptext="${each.status == 0 ? c:l('inactive') : c:l('active')}"
-								hflex="1" buttonVisible="false" inplace="true"
-								readonly="true">
-								<comboitem value="1"
-									label="${c:l('active')}" />
-								<comboitem value="0"
-									label="${c:l('inactive')}" />
-							</combobox>
-						</cell>
+						<!-- 						<cell style="text-align: center;"> -->
+						<!-- 							<combobox class="combox-status" -->
+						<!-- 								value="${each.status == 0 ? c:l('inactive') : c:l('active')}" -->
+						<!-- 								tooltiptext="${each.status == 0 ? c:l('inactive') : c:l('active')}" -->
+						<!-- 								hflex="1" buttonVisible="false" inplace="true" -->
+						<!-- 								readonly="true"> -->
+						<!-- 								<comboitem value="1" -->
+						<!-- 									label="${c:l('active')}" /> -->
+						<!-- 								<comboitem value="0" -->
+						<!-- 									label="${c:l('inactive')}" /> -->
+						<!-- 							</combobox> -->
+						<!-- 						</cell> -->
 						<cell style="text-align:center">
 
 
@@ -169,8 +171,8 @@
 								forward="onClick=onAddDetail" visible="false"
 								tooltiptext="${c:l('add.detail')}" />
 
-							<!-- 							<a iconSclass="z-icon-trash-o" -->
-							<!-- 								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" /> -->
+							<a iconSclass="z-icon-trash-o"
+								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />
 
 							<a iconSclass="z-icon-newspaper-o"
 								forward="onClick=onView" tooltiptext="${c:l('view')}" />

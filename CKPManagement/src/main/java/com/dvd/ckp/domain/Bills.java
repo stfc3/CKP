@@ -20,7 +20,7 @@ import com.dvd.ckp.utils.DateTimeUtils;
 
 @Entity
 @Table(name = "bills")
-@NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u where status not in (3)")
+@NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u where status in (1) order by create_date desc")
 public class Bills {
 	private static final Logger LOGGER = Logger.getLogger(Bills.class);
 	private int index;

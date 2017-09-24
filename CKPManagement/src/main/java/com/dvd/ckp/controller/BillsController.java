@@ -6,14 +6,19 @@
 package com.dvd.ckp.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.zkoss.util.media.Media;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -34,11 +39,13 @@ import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
 import com.dvd.ckp.business.service.ConstructionService;
+import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Construction;
+import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.FileUtils;
@@ -58,6 +65,9 @@ public class BillsController extends GenericForwardComposer {
 	protected CustomerService customerService;
 	@WireVariable
 	protected BillsServices billsServices;
+	@WireVariable
+	protected ContractService contractService;
+
 	@Wire
 	private Grid gridBills;
 	@Wire
@@ -69,17 +79,28 @@ public class BillsController extends GenericForwardComposer {
 
 	ListModelList<Bills> listDataModel;
 
+	// danh sach hoa don
 	private List<Bills> lstBills;
+	// danh sach du lieu theo dieu kien filter
 	private List<Bills> lstBillsFilter;
 
+	// danh sach cong trinh
 	private List<Construction> lstConstructions;
+
+	// danh sach khach hang
 	private List<Customer> lstCustomer;
 
+	// them gia tri chon cho combobox con trinh
 	private Construction defaultConstruction;
 	private Customer defaultCustomer;
 
+	// Danh sach hop dong
+	private List<Contract> listContact;
+
+	// Danh sach hoa don chi tiet
 	private List<BillsDetail> lstBillDetail;
 
+	// Vi tri cac column trong grid
 	private final int billsCode = 1;
 	private final int customerID = 2;
 	private final int constructionID = 3;
@@ -107,6 +128,7 @@ public class BillsController extends GenericForwardComposer {
 		constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
 		customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
 		billsServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
+		contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
 
 		// list danh sach cong trinh
 		lstConstructions = new ArrayList<>();
@@ -173,7 +195,7 @@ public class BillsController extends GenericForwardComposer {
 		setDataCustomer(lstCell, getCustomerDefault(c.getCustomerID()), customerID);
 		setEnableComponent(lstCell, false);
 	}
-	
+
 	/**
 	 * Cancel
 	 *
@@ -787,58 +809,51 @@ public class BillsController extends GenericForwardComposer {
 	}
 
 	public void onView(ForwardEvent event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		// Row rowSelected = (Row)
-		// event.getOrigin().getTarget().getParent().getParent();
-		// Bills c = rowSelected.getValue();
-		// Map<String, Object> arguments = new HashMap();
-		// BillsDetail billsDetail = getBillsDetail(c.getBillID());
-		// if (billsDetail != null) {
-		// arguments.put("detail", billsDetail);
-		// } else {
-		// arguments.put("detail", new BillsDetail());
-		// }
-		// arguments.put("bill", c);
-		// final Window windownUpload = (Window)
-		// Executions.createComponents("/manager/billDetailView.zul", bills,
-		// arguments);
-		// windownUpload.doModal();
-		// windownUpload.setBorder(true);
-		// windownUpload.setBorder("normal");
-		// windownUpload.setClosable(true);
-		// windownUpload.addEventListener(Events.ON_CLOSE, new
-		// EventListener<Event>() {
-		//
-		// @Override
-		// public void onEvent(Event event) throws Exception {
-		// windownUpload.detach();
-		//
-		// }
-		// });
+		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+		Bills c = rowSelected.getValue();
+		Map<String, Object> arguments = new HashMap();
+		BillsDetail billsDetail = getBillsDetail(c.getBillID());
+		if (billsDetail != null) {
+			arguments.put("detail", billsDetail);
+		} else {
+			arguments.put("detail", new BillsDetail());
+		}
+		arguments.put("bill", c);
+		final Window windownUpload = (Window) Executions.createComponents("/manager/billDetailView.zul", bills,
+				arguments);
+		windownUpload.doModal();
+		windownUpload.setBorder(true);
+		windownUpload.setBorder("normal");
+		windownUpload.setClosable(true);
+		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				windownUpload.detach();
+
+			}
+		});
 	}
 
 	public void onAddDetail(ForwardEvent event) {
 		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
 				Messagebox.INFORMATION);
-		// final Window windownUpload = (Window)
-		// Executions.createComponents("/manager/billDetail.zul", bills, null);
-		// windownUpload.doModal();
-		// windownUpload.setBorder(true);
-		// windownUpload.setBorder("normal");
-		// windownUpload.setClosable(true);
-		// windownUpload.addEventListener(Events.ON_CLOSE, new
-		// EventListener<Event>() {
-		//
-		// @Override
-		// public void onEvent(Event event) throws Exception {
-		// windownUpload.detach();
-		//
-		// }
-		// });
+		final Window windownUpload = (Window) Executions.createComponents("/manager/billDetail.zul", bills, null);
+		windownUpload.doModal();
+		windownUpload.setBorder(true);
+		windownUpload.setBorder("normal");
+		windownUpload.setClosable(true);
+		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				windownUpload.detach();
+
+			}
+		});
 	}
 
-	public BillsDetail getBillsDetail(Long billID) {
+	private BillsDetail getBillsDetail(Long billID) {
 		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
 			for (BillsDetail detail : lstBillDetail) {
 				if (billID != null && billID.equals(detail.getBillId())) {
@@ -849,4 +864,21 @@ public class BillsController extends GenericForwardComposer {
 		return null;
 
 	}
+
+	private List<Contract> getContractByCustomer(Long customerID) {
+		List<Contract> lstReturn = new ArrayList<>();
+		if (listContact != null && !listContact.isEmpty()) {
+			for (Contract contract : listContact) {
+				if(customerID.equals(contract)){
+					lstReturn.add(contract);
+				}
+			}
+		}
+		return lstReturn;
+	}
+	
+//	private List<Construction> getConstructionByContract(Long customerID){
+//		
+//	}
+	
 }

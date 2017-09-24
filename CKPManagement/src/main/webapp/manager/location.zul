@@ -17,9 +17,11 @@
 				<auxhead sclass="category-center">
 					<auxheader colspan="10">
 						<button id="add" iconSclass="z-icon-plus-circle"
-							label="${c:l('add')}" style="border: none;color: green;font-weight: bold;"/>
-						<button id="btnImport" class="btn" forward="onClick=onImport"
-							iconSclass="z-icon-file-excel-o" label="${c:l('import')}"
+							label="${c:l('add')}"
+							style="border: none;color: green;font-weight: bold;" />
+						<button id="btnImport" class="btn"
+							forward="onClick=onImport" iconSclass="z-icon-file-excel-o"
+							label="${c:l('import')}"
 							style="border: none;color: green;font-weight: bold;" />
 						<button id="btnExport" class="btn"
 							iconSclass="z-icon-file-excel-o" label="${c:l('export')}"
@@ -42,13 +44,13 @@
 					<column hflex="2">${c:l('location.code')}</column>
 					<column hflex="6">${c:l('location.name')}</column>
 					<column hflex="3">${c:l('location.value')}</column>
-					<column hflex="3">${c:l('pump.status')}</column>
+					<!-- 					<column hflex="3">${c:l('pump.status')}</column> -->
 					<column hflex="2">${c:l('pump.action')}</column>
 				</columns>
 				<template name="model">
 					<row value="${each}">
 						<cell style="text-align: center;">
-							<label  value="${forEachStatus.index+1}" />
+							<label value="${forEachStatus.index+1}" />
 						</cell>
 						<cell>
 							<textbox value="${each.locationCode}"
@@ -65,18 +67,18 @@
 								tooltiptext="${each.locationType}" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
-						<cell>
-							<combobox
-								value="${each.status == 0 ? c:l('inactive') : c:l('active')}"
-								tooltiptext="${each.status == 0 ? c:l('inactive') : c:l('active')}"
-								hflex="1" buttonVisible="false" inplace="true"
-								readonly="true">
-								<comboitem value="1"
-									label="${c:l('active')}" />
-								<comboitem value="0"
-									label="${c:l('inactive')}" />
-							</combobox>
-						</cell>
+						<!-- 						<cell> -->
+						<!-- 							<combobox -->
+						<!-- 								value="${each.status == 0 ? c:l('inactive') : c:l('active')}" -->
+						<!-- 								tooltiptext="${each.status == 0 ? c:l('inactive') : c:l('active')}" -->
+						<!-- 								hflex="1" buttonVisible="false" inplace="true" -->
+						<!-- 								readonly="true"> -->
+						<!-- 								<comboitem value="1" -->
+						<!-- 									label="${c:l('active')}" /> -->
+						<!-- 								<comboitem value="0" -->
+						<!-- 									label="${c:l('inactive')}" /> -->
+						<!-- 							</combobox> -->
+						<!-- 						</cell> -->
 						<cell style="text-align:center">
 							<a iconSclass="z-icon-pencil"
 								forward="onClick=onEdit" tooltiptext="${c:l('edit')}" />
@@ -86,8 +88,8 @@
 							<a iconSclass="z-icon-ban"
 								forward="onClick=onCancel" visible="false"
 								tooltiptext="${c:l('cancel')}" />
-<!--							<a iconSclass="z-icon-trash-o"
-								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />-->
+							<a iconSclass="z-icon-trash-o"
+								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />
 						</cell>
 					</row>
 				</template>
