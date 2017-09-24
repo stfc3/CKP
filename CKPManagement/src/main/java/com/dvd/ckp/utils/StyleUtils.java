@@ -22,7 +22,7 @@ import org.zkoss.zul.Textbox;
  * @author dmin
  */
 public class StyleUtils {
-    
+
     /**
      * Set style enable edit
      *
@@ -45,19 +45,21 @@ public class StyleUtils {
                     } else if (child instanceof Doublebox) {
                         ((Doublebox) child).setReadonly(false);
                         ((Doublebox) child).setInplace(false);
-                    }else if (child instanceof Intbox) {
+                    } else if (child instanceof Intbox) {
                         ((Intbox) child).setReadonly(false);
                         ((Intbox) child).setInplace(false);
-                    }else if (child instanceof Longbox) {
+                    } else if (child instanceof Longbox) {
                         ((Longbox) child).setReadonly(false);
                         ((Longbox) child).setInplace(false);
-                    }else if (child instanceof Textbox) {
+                    } else if (child instanceof Textbox) {
                         ((Textbox) child).setReadonly(false);
                         ((Textbox) child).setInplace(false);
-                    }else if (child instanceof A && c.getChildren().size()==2) {
+                    } else if (child instanceof A && c.getChildren().size() == 1) {
+                        ((A) child).setDisabled(false);
+                    } else if (child instanceof A && c.getChildren().size() == 2) {
                         Button btn = (Button) c.getChildren().get(1);
                         btn.setDisabled(false);
-                    } else if (child instanceof A && c.getChildren().size()>=4) {
+                    } else if (child instanceof A && c.getChildren().size() >= 4) {
                         A edit;
                         A delete;
                         A save;
@@ -72,10 +74,10 @@ public class StyleUtils {
                                 delete = (A) c.getChildren().get(1);
                                 save = (A) c.getChildren().get(2);
                                 cancel = (A) c.getChildren().get(3);
-                                
+
                                 edit.setVisible(false);
                                 delete.setVisible(false);
-                                
+
                                 save.setVisible(true);
                                 cancel.setVisible(true);
                                 break;
@@ -85,11 +87,11 @@ public class StyleUtils {
                                 save = (A) c.getChildren().get(2);
                                 cancel = (A) c.getChildren().get(3);
                                 reset = (A) c.getChildren().get(4);
-                                
+
                                 edit.setVisible(false);
                                 delete.setVisible(false);
                                 reset.setVisible(false);
-                                
+
                                 save.setVisible(true);
                                 cancel.setVisible(true);
                                 break;
@@ -100,11 +102,11 @@ public class StyleUtils {
                                 cancel = (A) c.getChildren().get(3);
                                 detail = (A) c.getChildren().get(4);
                                 view = (A) c.getChildren().get(5);
-                                
+
                                 edit.setVisible(false);
                                 delete.setVisible(false);
                                 view.setVisible(false);
-                                
+
                                 save.setVisible(true);
                                 cancel.setVisible(true);
                                 detail.setVisible(true);
@@ -137,22 +139,24 @@ public class StyleUtils {
                         ((Datebox) child).setButtonVisible(false);
                         ((Datebox) child).setInplace(true);
                         ((Datebox) child).setReadonly(true);
-                    }else if (child instanceof Doublebox) {
+                    } else if (child instanceof Doublebox) {
                         ((Doublebox) child).setReadonly(true);
                         ((Doublebox) child).setInplace(true);
-                    }else if (child instanceof Intbox) {
+                    } else if (child instanceof Intbox) {
                         ((Intbox) child).setReadonly(true);
                         ((Intbox) child).setInplace(true);
-                    }else if (child instanceof Longbox) {
+                    } else if (child instanceof Longbox) {
                         ((Longbox) child).setReadonly(true);
                         ((Longbox) child).setInplace(true);
                     } else if (child instanceof Textbox) {
                         ((Textbox) child).setReadonly(true);
                         ((Textbox) child).setInplace(true);
-                    }else if (child instanceof A && c.getChildren().size()==2) {
+                    } else if (child instanceof A && c.getChildren().size() == 1) {
+                        ((A) child).setDisabled(true);
+                    } else if (child instanceof A && c.getChildren().size() == 2) {
                         Button btn = (Button) c.getChildren().get(1);
                         btn.setDisabled(true);
-                    } else if (child instanceof A && c.getChildren().size()>=4) {
+                    } else if (child instanceof A && c.getChildren().size() >= 4) {
                         A edit;
                         A delete;
                         A save;
@@ -167,10 +171,10 @@ public class StyleUtils {
                                 delete = (A) c.getChildren().get(1);
                                 save = (A) c.getChildren().get(2);
                                 cancel = (A) c.getChildren().get(3);
-                                
+
                                 edit.setVisible(false);
                                 delete.setVisible(false);
-                                
+
                                 save.setVisible(true);
                                 cancel.setVisible(true);
                                 break;
@@ -180,11 +184,11 @@ public class StyleUtils {
                                 save = (A) c.getChildren().get(2);
                                 cancel = (A) c.getChildren().get(3);
                                 reset = (A) c.getChildren().get(4);
-                                
+
                                 edit.setVisible(false);
                                 delete.setVisible(false);
                                 reset.setVisible(false);
-                                
+
                                 save.setVisible(true);
                                 cancel.setVisible(true);
                                 break;
@@ -195,11 +199,11 @@ public class StyleUtils {
                                 cancel = (A) c.getChildren().get(3);
                                 detail = (A) c.getChildren().get(4);
                                 view = (A) c.getChildren().get(5);
-                                
+
                                 edit.setVisible(false);
                                 delete.setVisible(false);
                                 view.setVisible(false);
-                                
+
                                 save.setVisible(true);
                                 cancel.setVisible(true);
                                 detail.setVisible(true);
@@ -212,5 +216,5 @@ public class StyleUtils {
             }
         }
     }
-    
+
 }

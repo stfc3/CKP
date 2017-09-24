@@ -26,7 +26,7 @@ import javax.persistence.Temporal;
 @NamedQueries({
     @NamedQuery(name = "Contract.fillAllContract", query = "FROM Contract c")
     ,
-    @NamedQuery(name = "Contract.fillContractActive", query = "FROM Contract c WHERE c.status = 1")
+    @NamedQuery(name = "Contract.fillContractActive", query = "FROM Contract c WHERE c.status = 1 ORDER BY c.createDate DESC")
 })
 public class Contract implements Serializable {
 

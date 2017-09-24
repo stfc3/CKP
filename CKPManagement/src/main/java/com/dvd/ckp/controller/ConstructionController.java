@@ -116,6 +116,7 @@ public class ConstructionController extends GenericForwardComposer {
         Construction c = rowSelected.getValue();
         Construction construction = getDataInRow(lstCell);
         construction.setConstructionId(c.getConstructionId());
+        construction.setStatus(Constants.STATUS_ACTIVE);
         construction.setCreateDate(new Date());
         constructionService.insertOrUpdateConstruction(construction);
         StyleUtils.setDisableComponent(lstCell, 4);
@@ -141,10 +142,7 @@ public class ConstructionController extends GenericForwardComposer {
             public void onEvent(Event e) {
                 if (Messagebox.ON_YES.equals(e.getName())) {
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-                    List<Component> lstCell = rowSelected.getChildren();
-                    Construction c = rowSelected.getValue();
-                    Construction construction = getDataInRow(lstCell);
-                    construction.setConstructionId(c.getConstructionId());
+                    Construction construction = rowSelected.getValue();
                     construction.setStatus(Constants.STATUS_INACTIVE);
                     construction.setCreateDate(new Date());
                     constructionService.insertOrUpdateConstruction(construction);

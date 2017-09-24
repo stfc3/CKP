@@ -27,22 +27,24 @@ import javax.persistence.Temporal;
     @NamedQuery(name = "Price.fillAllPrice", query = "FROM Price p")
     ,
     @NamedQuery(name = "Price.fillPriceActive", query = "FROM Price p WHERE p.status = 1 ORDER BY p.createDate DESC")
+    ,
+    @NamedQuery(name = "Price.fillPriceByContract", query = "FROM Price p WHERE p.status = 1 AND p.contractId = :contractId ORDER BY p.createDate DESC")
 })
 public class Price implements Serializable {
 
     private Long priceId;
     private Long contractId;
     private Long pumpId;
-    private Integer pumpType;
-    private Integer locationType;
+    private Long pumpType;
+    private Long locationType;
     private Long locationMin;
     private Long locationMax;
     private Double priceM3;
     private Double priceShift;
     private Double priceWait;
     private Double priceLocation;
-    private Integer convertType;
-    private Integer convertValue;
+    private Long convertType;
+    private Double convertValue;
     private Integer status;
     private Date createDate;
 
@@ -77,20 +79,20 @@ public class Price implements Serializable {
     }
 
     @Column(name = "pump_type")
-    public Integer getPumpType() {
+    public Long getPumpType() {
         return pumpType;
     }
 
-    public void setPumpType(Integer pumpType) {
+    public void setPumpType(Long pumpType) {
         this.pumpType = pumpType;
     }
 
     @Column(name = "location_type")
-    public Integer getLocationType() {
+    public Long getLocationType() {
         return locationType;
     }
 
-    public void setLocationType(Integer locationType) {
+    public void setLocationType(Long locationType) {
         this.locationType = locationType;
     }
 
@@ -149,20 +151,20 @@ public class Price implements Serializable {
     }
 
     @Column(name = "convert_type")
-    public Integer getConvertType() {
+    public Long getConvertType() {
         return convertType;
     }
 
-    public void setConvertType(Integer convertType) {
+    public void setConvertType(Long convertType) {
         this.convertType = convertType;
     }
 
     @Column(name = "convert_value")
-    public Integer getConvertValue() {
+    public Double getConvertValue() {
         return convertValue;
     }
 
-    public void setConvertValue(Integer convertValue) {
+    public void setConvertValue(Double convertValue) {
         this.convertValue = convertValue;
     }
 

@@ -2,15 +2,17 @@
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <!--<zk xmlns:n="native">-->
-    <window  id="mainPrice" apply="com.dvd.ckp.controller.ContractController"
+    <window  id="mainPrice" apply="com.dvd.ckp.controller.PriceController"
              position="center,center" closable="true"  
              action="show: slideDown;hide: slideUp"   title="${c:l('price')}"
-             border="normal" width="80%" maximizable="false">
+             border="normal" width="90%" height="90%" maximizable="false" contentStyle="overflow:auto">
         <groupbox>
+            <intbox id="intAdd" value="${arg.isAdd}" visible="false"/>
+            <longbox id="lgbContractId" value="${arg.contractId}" visible="false"/>
             <caption label="${c:l('price.category')}" />
             <grid id="lstPrice" mold="paging" pageSize="20" pagingPosition="both">
                 <auxhead sclass="category-center" >
-                    <auxheader colspan="8">
+                    <auxheader colspan="13">
                         <a id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <space width="10px"/>
                         <a iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
@@ -25,8 +27,8 @@
                     <column hflex="2">${c:l('price.m3')}</column>
                     <column hflex="2">${c:l('price.shift')}</column>
                     <column hflex="2">${c:l('price.wait')}</column>
-                    <column hflex="6">${c:l('price.locationType')}</column>
-                    <column hflex="2">${c:l('price.locationMin')}</column>
+                    <column hflex="3">${c:l('price.locationType')}</column>
+                    <column hflex="3">${c:l('price.locationMin')}</column>
                     <column hflex="3">${c:l('price.locationMax')}</column>
                     <column hflex="3">${c:l('price.location')}</column>
                     <column hflex="3">${c:l('price.convertType')}</column>
@@ -43,7 +45,7 @@
                             <combobox  hflex="1"  
                                        buttonVisible="false" inplace="true"  readonly="true">
                                 <template name="model">
-                                    <comboitem value="${each.id}" label="${each.name}" />
+                                    <comboitem value="${each.paramValue}" label="${each.paramName}" />
                                 </template>
                             </combobox>
                         </cell>
@@ -57,20 +59,20 @@
                             </combobox>
                         </cell>
                         <cell>
-                            <textbox value="${each.priceM3}" tooltiptext="${each.priceM3}" hflex="1" inplace="true" readonly="true"/>
+                            <doublebox value="${each.priceM3}" tooltiptext="${each.priceM3}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
-                            <textbox value="${each.priceShift}" tooltiptext="${each.priceShift}" hflex="1" inplace="true" readonly="true"/>
+                            <doublebox value="${each.priceShift}" tooltiptext="${each.priceShift}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
-                            <textbox value="${each.priceWait}" tooltiptext="${each.priceWait}" hflex="1" inplace="true" readonly="true"/>
+                            <doublebox value="${each.priceWait}" tooltiptext="${each.priceWait}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <!--Loai vi tri-->
                         <cell>
                             <combobox  hflex="1"  
                                        buttonVisible="false" inplace="true"  readonly="true">
                                 <template name="model">
-                                    <comboitem value="${each.id}" label="${each.name}" />
+                                    <comboitem value="${each.paramValue}" label="${each.paramName}" />
                                 </template>
                             </combobox>
                         </cell>
@@ -94,22 +96,23 @@
                             </combobox>
                         </cell>
                         <cell>
-                            <textbox value="${each.priceLocation}" tooltiptext="${each.priceLocation}" hflex="1" inplace="true" readonly="true"/>
+                            <doublebox value="${each.priceLocation}" tooltiptext="${each.priceLocation}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <!--Loai convert-->
                         <cell>
                             <combobox  hflex="1"  
                                        buttonVisible="false" inplace="true"  readonly="true">
                                 <template name="model">
-                                    <comboitem value="${each.id}" label="${each.name}" />
+                                    <comboitem value="${each.paramValue}" label="${each.paramName}" />
                                 </template>
                             </combobox>
                         </cell>
                         <cell>
-                            <textbox value="${each.convertValue}" tooltiptext="${each.convertValue}" hflex="1" inplace="true" readonly="true"/>
+                            <doublebox value="${each.convertValue}" tooltiptext="${each.convertValue}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell style="text-align:center">
                             <a iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
+                            <a class="btn-cursor" iconSclass="z-icon-trash-o" forward="onClick=onDelete" tooltiptext="${c:l('delete')}"/>
                             <a iconSclass="z-icon-check" forward="onClick=onSave" visible="false" tooltiptext="${c:l('save')}" />
                             <a iconSclass="z-icon-ban" forward="onClick=onCancel" visible="false" tooltiptext="${c:l('cancel')}"/>
                         </cell>

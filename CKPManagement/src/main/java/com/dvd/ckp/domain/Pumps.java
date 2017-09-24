@@ -19,7 +19,7 @@ public class Pumps 	{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int index;
-	private int pumpsID;
+	private Long pumpsID;
 	private String pumpsCode;
 	private String pumpsName;
 	private int pumpsCapacity;
@@ -31,11 +31,11 @@ public class Pumps 	{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pump_id")
-	public int getPumpsID() {
+	public Long getPumpsID() {
 		return pumpsID;
 	}
 
-	public void setPumpsID(int pumpsID) {
+	public void setPumpsID(Long pumpsID) {
 		this.pumpsID = pumpsID;
 	}
 
@@ -100,7 +100,7 @@ public class Pumps 	{
 				+ ", status=" + status + "]";
 	}
 
-	public Pumps(int pumpsID, String pumpsCode, String pumpsName, int pumpsCapacity, int pumpsHight, int pumpsFar,
+	public Pumps(Long pumpsID, String pumpsCode, String pumpsName, int pumpsCapacity, int pumpsHight, int pumpsFar,
 			int status) {
 		super();
 		this.pumpsID = pumpsID;

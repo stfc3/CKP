@@ -23,6 +23,14 @@ public interface Constants {
     String RESET_RANDOM_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     Integer STATUS_INACTIVE = 0;
+    Integer STATUS_ACTIVE = 1;
     Long DEFAULT_ID = 0l;
+    Long SPECIAL_ID = 9999l;
     Integer FIRST_INDEX = 0;
+
+    //Key param
+    String PRAM_BANK = "BANK";
+    String PRAM_PUMP_TYPE = "PUMP_TYPE";
+    String PRAM_LOCATION_TYPE = "LOCATION_TYPE";
+    String PRAM_CONVERT_TYPE = "CONVERT_TYPE";
 }

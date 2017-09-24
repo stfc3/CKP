@@ -3,7 +3,6 @@ package com.dvd.ckp.business.service;
 import java.util.List;
 
 import com.dvd.ckp.domain.Location;
-import com.dvd.ckp.domain.Pumps;
 
 public interface LocationServices {
 	public List<Location> getListLocation();

@@ -102,6 +102,7 @@ public class CustomerController extends GenericForwardComposer {
         Customer c = rowSelected.getValue();
         Customer customer = getDataInRow(lstCell);
         customer.setCustomerId(c.getCustomerId());
+        customer.setStatus(Constants.STATUS_ACTIVE);
         customer.setCreateDate(new Date());
         customerService.insertOrUpdateCustomer(customer);
         StyleUtils.setDisableComponent(lstCell, 4);
@@ -114,10 +115,7 @@ public class CustomerController extends GenericForwardComposer {
             public void onEvent(Event e) {
                 if (Messagebox.ON_YES.equals(e.getName())) {
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-                    List<Component> lstCell = rowSelected.getChildren();
-                    Customer c = rowSelected.getValue();
-                    Customer customer = getDataInRow(lstCell);
-                    customer.setCustomerId(c.getCustomerId());
+                    Customer customer = rowSelected.getValue();
                     customer.setStatus(Constants.STATUS_INACTIVE);
                     customer.setCreateDate(new Date());
                     customerService.insertOrUpdateCustomer(customer);
