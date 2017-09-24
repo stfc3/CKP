@@ -26,7 +26,7 @@ import javax.persistence.Temporal;
 @NamedQueries({
     @NamedQuery(name = "Contract.fillAllContract", query = "FROM Contract c")
     ,
-    @NamedQuery(name = "Contract.fillContractActive", query = "FROM Contract c WHERE c.expirationDate >= now()")
+    @NamedQuery(name = "Contract.fillContractActive", query = "FROM Contract c WHERE c.status = 1")
 })
 public class Contract implements Serializable {
 
@@ -40,6 +40,8 @@ public class Contract implements Serializable {
     private Double billMoney;
     private Date effectiveDate;
     private Date expirationDate;
+    private Date createDate;
+    private Integer status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -133,6 +135,25 @@ public class Contract implements Serializable {
 
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    @Column(name = "status")
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Column(name = "create_date")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
 }

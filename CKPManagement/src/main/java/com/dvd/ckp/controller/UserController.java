@@ -67,7 +67,7 @@ public class UserController extends GenericForwardComposer {
     ListModelList<User> listDataModel;
     private List<User> lstUsers;
     private Window user;
-//    List<com.dvd.ckp.excel.domain> lstError = new ArrayList<com.dvd.ckp.excel.domain.Pumps>();
+    private boolean blnAddOrEdit = false;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -88,7 +88,7 @@ public class UserController extends GenericForwardComposer {
      * @param event
      */
     public void onEdit(ForwardEvent event) {
-
+        blnAddOrEdit = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         setEnableComponent(lstCell);
@@ -113,10 +113,12 @@ public class UserController extends GenericForwardComposer {
                     } else if (child instanceof A) {
                         A edit = (A) child;
                         edit.setVisible(false);
-                        A resetPass = (A) c.getChildren().get(1);
+                        A delete = (A) c.getChildren().get(1);
+                        delete.setVisible(false);
+                        A resetPass = (A) c.getChildren().get(2);
                         resetPass.setVisible(false);
-                        A save = (A) c.getChildren().get(2);
-                        A cancel = (A) c.getChildren().get(3);
+                        A save = (A) c.getChildren().get(3);
+                        A cancel = (A) c.getChildren().get(4);
                         save.setVisible(true);
                         cancel.setVisible(true);
                     }
@@ -144,10 +146,12 @@ public class UserController extends GenericForwardComposer {
                     } else if (child instanceof A) {
                         A edit = (A) child;
                         edit.setVisible(true);
-                        A resetPass = (A) c.getChildren().get(1);
+                        A delete = (A) c.getChildren().get(1);
+                        delete.setVisible(true);
+                        A resetPass = (A) c.getChildren().get(2);
                         resetPass.setVisible(true);
-                        A save = (A) c.getChildren().get(2);
-                        A cancel = (A) c.getChildren().get(3);
+                        A save = (A) c.getChildren().get(3);
+                        A cancel = (A) c.getChildren().get(4);
                         save.setVisible(false);
                         cancel.setVisible(false);
                     }
@@ -162,7 +166,7 @@ public class UserController extends GenericForwardComposer {
      * @param event
      */
     public void onCancel(ForwardEvent event) {
-
+        blnAddOrEdit = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         setDisableComponent(lstCell);
@@ -181,16 +185,46 @@ public class UserController extends GenericForwardComposer {
         User c = rowSelected.getValue();
         User user = getDataInRow(lstCell);
         user.setUserId(c.getUserId());
-        user.setPassword(EncryptUtil.encrypt(user.getPassword()));
+        String vstrPassword = "";
+        if (blnAddOrEdit) {
+            vstrPassword = RandomStringUtils.random(8, Constants.RESET_RANDOM_PASSWORD);
+            user.setPassword(EncryptUtil.encrypt(vstrPassword));
+        }
         userService.insertOrUpdateUser(user);
         setDisableComponent(lstCell);
         reloadGrid();
+        if (blnAddOrEdit) {
+            Messagebox.show(Labels.getLabel("user.add.password.message", new String[]{vstrPassword}), Labels.getLabel("login.change.password.title.message"), Messagebox.OK, Messagebox.INFORMATION);
+        }
+    }
+
+    /**
+     * Delate
+     *
+     * @param event
+     */
+    public void onDelete(ForwardEvent event) {
+        Messagebox.show("Bạn có chắc chắn muốn xóa không?", "Xác nhận", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+            public void onEvent(Event e) {
+                if (Messagebox.ON_YES.equals(e.getName())) {
+                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    List<Component> lstCell = rowSelected.getChildren();
+                    User c = rowSelected.getValue();
+                    User user = getDataInRow(lstCell);
+                    user.setUserId(c.getUserId());
+                    user.setStatus(0);
+                    userService.insertOrUpdateUser(user);
+                    reloadGrid();
+                }
+            }
+        });
     }
 
     /**
      * Add row
      */
     public void onClick$add() {
+        blnAddOrEdit = true;
         User user = new User();
         listDataModel.add(0, user);
         lstUser.setModel(listDataModel);
@@ -211,20 +245,15 @@ public class UserController extends GenericForwardComposer {
         Textbox txtFullName = (Textbox) lstCell.get(2).getFirstChild();
         Textbox txtEmail = (Textbox) lstCell.get(3).getFirstChild();
         Textbox txtPhone = (Textbox) lstCell.get(4).getFirstChild();
-        Textbox txtPass = (Textbox) lstCell.get(5).getFirstChild();
-        Textbox txtAddress = (Textbox) lstCell.get(6).getFirstChild();
-        Textbox txtCard = (Textbox) lstCell.get(7).getFirstChild();
-        Combobox cbxStatus = (Combobox) lstCell.get(8).getFirstChild();
+        Textbox txtAddress = (Textbox) lstCell.get(5).getFirstChild();
+        Textbox txtCard = (Textbox) lstCell.get(6).getFirstChild();
 
         user.setUserName(txtUserName.getValue());
         user.setFullName(txtFullName.getValue());
         user.setEmail(txtEmail.getValue());
         user.setPhone(txtPhone.getValue());
-        user.setPassword(txtPass.getValue());
         user.setAddress(txtAddress.getValue());
         user.setCard(txtCard.getValue());
-
-        user.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
         return user;
     }
 
@@ -420,7 +449,6 @@ public class UserController extends GenericForwardComposer {
 //            logger.error(e.getMessage(), e);
 //        }
 //    }
-
 //    public void onUpload$uploadbtn(UploadEvent evt) {
 //        Media media = evt.getMedia();
 //
@@ -439,7 +467,6 @@ public class UserController extends GenericForwardComposer {
 //        hdFileName.setValue(fileUtils.getFileName());
 //        hiddenFileName.setValue(fileUtils.getFilePath());
 //    }
-
 //    public void onClick$btnSave() {
 //        int numberSucces = 0;
 //        int numberRowError = 1;

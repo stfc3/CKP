@@ -555,5 +555,12 @@ a [class^="z-icon-"]{
 .z-icon-ban{
     color: red;
 }
+.z-column {
+    white-space: inherit !important;
+}
+.z-column .z-column-content .z-label {
+    font-weight: bold !important;
+    color: #3c3939;
+}
 /*set style control in grid*/
 /*dongdv*/

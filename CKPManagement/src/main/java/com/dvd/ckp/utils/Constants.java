@@ -21,4 +21,8 @@ public interface Constants {
     String PAGE_CHANGE_PASSWORD = "/changepassword.zul";
     String PASSWORD_PATTERN = "(?=.*[0-9])([a-z])([A-Z])(?=\\S+$).{8,}";
     String RESET_RANDOM_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    Integer STATUS_INACTIVE = 0;
+    Long DEFAULT_ID = 0l;
+    Integer FIRST_INDEX = 0;
 }
