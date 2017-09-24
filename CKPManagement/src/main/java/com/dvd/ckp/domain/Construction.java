@@ -32,10 +32,9 @@ public class Construction implements Serializable {
 
     private Long constructionId;
     private Long contractId;
-//    private Integer constructionFar;
-//    private Double constructionConvert;
     private String constructionCode;
     private String constructionName;
+    private String constructionAddress;
     private Integer status;
     private Date createDate;
 
@@ -58,24 +57,6 @@ public class Construction implements Serializable {
     public void setContractId(Long contractId) {
         this.contractId = contractId;
     }
-
-//    @Column(name = "is_far")
-//    public Integer getConstructionFar() {
-//        return constructionFar;
-//    }
-//
-//    public void setConstructionFar(Integer constructionFar) {
-//        this.constructionFar = constructionFar;
-//    }
-//
-//    @Column(name = "convert_value")
-//    public Double getConstructionConvert() {
-//        return constructionConvert;
-//    }
-//
-//    public void setConstructionConvert(Double constructionConvert) {
-//        this.constructionConvert = constructionConvert;
-//    }
 
     @Column(name = "construction_code")
     public String getConstructionCode() {
@@ -112,6 +93,15 @@ public class Construction implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    @Column(name = "construction_address")
+    public String getConstructionAddress() {
+        return constructionAddress;
+    }
+
+    public void setConstructionAddress(String constructionAddress) {
+        this.constructionAddress = constructionAddress;
     }
     
     

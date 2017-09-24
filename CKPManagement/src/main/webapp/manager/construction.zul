@@ -32,9 +32,7 @@
                     <column hflex="2">${c:l('construction.code')}</column>
                     <column hflex="6">${c:l('construction.name')}</column>
                     <column hflex="6">${c:l('construction.contract')}</column>
-                    <!--<column hflex="2">${c:l('construction.far')}</column>-->
-                    <!--<column hflex="2">${c:l('construction.convert')}</column>-->
-                    <!--<column hflex="2">${c:l('construction.status')}</column>-->
+                    <column hflex="6">${c:l('construction.address')}</column>
                     <column hflex="2">${c:l('construction.action')}</column>
                 </columns>
                 <template name="model">
@@ -56,23 +54,9 @@
                                 </template>
                             </combobox>
                         </cell>
-<!--                        <cell>
-                            <combobox value="${each.constructionFar == 0 ? c:l('no') : c:l('yes')}" tooltiptext="${each.constructionFar == 0 ? c:l('no') : c:l('yes')}" hflex="1" 
-                                      buttonVisible="false" inplace="true" readonly="true">
-                                <comboitem value="1" label="${c:l('yes')}" />
-                                <comboitem value="0" label="${c:l('no')}" />
-                            </combobox>
-                        </cell>
                         <cell>
-                            <textbox value="${each.constructionConvert}" tooltiptext="${each.constructionConvert}" hflex="1" inplace="true" readonly="true"/>
+                            <textbox value="${each.constructionAddress}" tooltiptext="${each.constructionAddress}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
-                        <cell>
-                            <combobox value="${each.status == 0 ? c:l('inactive') : c:l('active')}" tooltiptext="${each.status == 0 ? c:l('inactive') : c:l('active')}" hflex="1" 
-                                      buttonVisible="false" inplace="true" readonly="true">
-                                <comboitem value="1" label="${c:l('active')}" />
-                                <comboitem value="0" label="${c:l('inactive')}" />
-                            </combobox>
-                        </cell>-->
                         <cell style="text-align:center">
                             <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
                             <a class="btn-cursor" iconSclass="z-icon-trash-o" forward="onClick=onDelete" tooltiptext="${c:l('delete')}"/>
