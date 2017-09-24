@@ -44,6 +44,11 @@ import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
+import java.util.HashMap;
+import java.util.Map;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 
 /**
  *
@@ -787,35 +792,33 @@ public class BillsController extends GenericForwardComposer {
 	}
 
 	public void onView(ForwardEvent event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		// Row rowSelected = (Row)
-		// event.getOrigin().getTarget().getParent().getParent();
-		// Bills c = rowSelected.getValue();
-		// Map<String, Object> arguments = new HashMap();
-		// BillsDetail billsDetail = getBillsDetail(c.getBillID());
-		// if (billsDetail != null) {
-		// arguments.put("detail", billsDetail);
-		// } else {
-		// arguments.put("detail", new BillsDetail());
-		// }
-		// arguments.put("bill", c);
-		// final Window windownUpload = (Window)
-		// Executions.createComponents("/manager/billDetailView.zul", bills,
-		// arguments);
-		// windownUpload.doModal();
-		// windownUpload.setBorder(true);
-		// windownUpload.setBorder("normal");
-		// windownUpload.setClosable(true);
-		// windownUpload.addEventListener(Events.ON_CLOSE, new
-		// EventListener<Event>() {
-		//
-		// @Override
-		// public void onEvent(Event event) throws Exception {
-		// windownUpload.detach();
-		//
-		// }
-		// });
+//		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
+//				Messagebox.INFORMATION);
+		 Row rowSelected = (Row)
+		 event.getOrigin().getTarget().getParent().getParent();
+            Bills c = rowSelected.getValue();
+            Map<String, Object> arguments = new HashMap<>();
+            BillsDetail billsDetail = getBillsDetail(c.getBillID());
+            if (billsDetail != null) {
+                arguments.put("detail", billsDetail);
+            } else {
+                arguments.put("detail", new BillsDetail());
+            }
+            arguments.put("bill", c);
+            final Window windownUpload = (Window) Executions.createComponents("/manager/billDetailView.zul", bills,
+                    arguments);
+            windownUpload.doModal();
+            windownUpload.setBorder(true);
+            windownUpload.setBorder("normal");
+            windownUpload.setClosable(true);
+            windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+                @Override
+                public void onEvent(Event event) throws Exception {
+                    windownUpload.detach();
+
+                }
+            });
 	}
 
 	public void onAddDetail(ForwardEvent event) {
