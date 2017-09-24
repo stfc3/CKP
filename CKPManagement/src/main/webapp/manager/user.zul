@@ -86,9 +86,9 @@
                         <cell style="text-align:center">
                             <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
                             <a class="btn-cursor" iconSclass="z-icon-trash-o" forward="onClick=onDelete" tooltiptext="${c:l('delete')}"/>
-                            <a class="btn-cursor" iconSclass="fa fa-undo" forward="onClick=onResetPassword" tooltiptext="${c:l('user.reset.password')}"/>
                             <a class="btn-cursor" iconSclass="z-icon-check" forward="onClick=onSave" visible="false" tooltiptext="${c:l('save')}" />
                             <a class="btn-cursor" iconSclass="z-icon-ban" forward="onClick=onCancel" visible="false" tooltiptext="${c:l('cancel')}"/>
+                            <a class="btn-cursor" iconSclass="fa fa-undo" forward="onClick=onResetPassword" tooltiptext="${c:l('user.reset.password')}"/>
                         </cell>
                     </row>
                 </template>

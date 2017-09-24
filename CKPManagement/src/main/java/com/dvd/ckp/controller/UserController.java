@@ -6,22 +6,19 @@
 package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.UserService;
-import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.domain.User;
-import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.EncryptUtil;
-import com.dvd.ckp.utils.FileUtils;
-import com.dvd.ckp.utils.NumberUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
+import com.dvd.ckp.utils.StyleUtils;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
-import org.zkoss.util.media.Media;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -29,14 +26,10 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.ForwardEvent;
-import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
-import org.zkoss.zul.A;
-import org.zkoss.zul.Cell;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
@@ -91,73 +84,7 @@ public class UserController extends GenericForwardComposer {
         blnAddOrEdit = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        setEnableComponent(lstCell);
-    }
-
-    /**
-     * Set style enable edit
-     *
-     * @param lstCell
-     */
-    private void setEnableComponent(List<Component> lstCell) {
-        if (lstCell != null && !lstCell.isEmpty()) {
-            for (Component c : lstCell) {
-                if (c instanceof Cell) {
-                    Component child = c.getChildren().get(0);
-                    if (child instanceof Combobox) {
-                        ((Combobox) child).setButtonVisible(true);
-                        ((Combobox) child).setInplace(false);
-                    } else if (child instanceof Textbox) {
-                        ((Textbox) child).setReadonly(false);
-                        ((Textbox) child).setInplace(false);
-                    } else if (child instanceof A) {
-                        A edit = (A) child;
-                        edit.setVisible(false);
-                        A delete = (A) c.getChildren().get(1);
-                        delete.setVisible(false);
-                        A resetPass = (A) c.getChildren().get(2);
-                        resetPass.setVisible(false);
-                        A save = (A) c.getChildren().get(3);
-                        A cancel = (A) c.getChildren().get(4);
-                        save.setVisible(true);
-                        cancel.setVisible(true);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Set style disable edit
-     *
-     * @param lstCell
-     */
-    private void setDisableComponent(List<Component> lstCell) {
-        if (lstCell != null && !lstCell.isEmpty()) {
-            for (Component c : lstCell) {
-                if (c instanceof Cell) {
-                    Component child = c.getChildren().get(0);
-                    if (child instanceof Combobox) {
-                        ((Combobox) child).setButtonVisible(false);
-                        ((Combobox) child).setInplace(true);
-                    } else if (child instanceof Textbox) {
-                        ((Textbox) child).setReadonly(true);
-                        ((Textbox) child).setInplace(true);
-                    } else if (child instanceof A) {
-                        A edit = (A) child;
-                        edit.setVisible(true);
-                        A delete = (A) c.getChildren().get(1);
-                        delete.setVisible(true);
-                        A resetPass = (A) c.getChildren().get(2);
-                        resetPass.setVisible(true);
-                        A save = (A) c.getChildren().get(3);
-                        A cancel = (A) c.getChildren().get(4);
-                        save.setVisible(false);
-                        cancel.setVisible(false);
-                    }
-                }
-            }
-        }
+        StyleUtils.setEnableComponent(lstCell, 5);
     }
 
     /**
@@ -169,7 +96,7 @@ public class UserController extends GenericForwardComposer {
         blnAddOrEdit = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell, 5);
         reloadGrid();
 
     }
@@ -179,7 +106,7 @@ public class UserController extends GenericForwardComposer {
      *
      * @param event
      */
-    public void onSave(ForwardEvent event) {
+    public boolean onSave(ForwardEvent event) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         User c = rowSelected.getValue();
@@ -189,13 +116,26 @@ public class UserController extends GenericForwardComposer {
         if (blnAddOrEdit) {
             vstrPassword = RandomStringUtils.random(8, Constants.RESET_RANDOM_PASSWORD);
             user.setPassword(EncryptUtil.encrypt(vstrPassword));
+        } else {
+            user.setPassword(c.getPassword());
         }
+        if (blnAddOrEdit) {
+            for (User u : lstUsers) {
+                if (u.getUserName().equalsIgnoreCase(user.getUserName())) {
+                    Messagebox.show(Labels.getLabel("user.username.message.error", new String[]{u.getUserName()}), Labels.getLabel("login.change.password.title.message"), Messagebox.OK, Messagebox.INFORMATION);
+                    return false;
+                }
+            }
+        }
+        user.setStatus(1);
+        user.setCreateDate(new Date());
         userService.insertOrUpdateUser(user);
-        setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell, 5);
         reloadGrid();
         if (blnAddOrEdit) {
             Messagebox.show(Labels.getLabel("user.add.password.message", new String[]{vstrPassword}), Labels.getLabel("login.change.password.title.message"), Messagebox.OK, Messagebox.INFORMATION);
         }
+        return true;
     }
 
     /**
@@ -208,12 +148,9 @@ public class UserController extends GenericForwardComposer {
             public void onEvent(Event e) {
                 if (Messagebox.ON_YES.equals(e.getName())) {
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-                    List<Component> lstCell = rowSelected.getChildren();
                     User c = rowSelected.getValue();
-                    User user = getDataInRow(lstCell);
-                    user.setUserId(c.getUserId());
-                    user.setStatus(0);
-                    userService.insertOrUpdateUser(user);
+                    c.setStatus(Constants.STATUS_INACTIVE);
+                    userService.insertOrUpdateUser(c);
                     reloadGrid();
                 }
             }
@@ -230,7 +167,7 @@ public class UserController extends GenericForwardComposer {
         lstUser.setModel(listDataModel);
         lstUser.renderAll();
         List<Component> lstCell = lstUser.getRows().getChildren().get(0).getChildren();
-        setEnableComponent(lstCell);
+        StyleUtils.setEnableComponent(lstCell, 5);
     }
 
     /**
