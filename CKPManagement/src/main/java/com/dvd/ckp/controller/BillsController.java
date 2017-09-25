@@ -5,10 +5,13 @@
  */
 package com.dvd.ckp.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.text.StyleConstants;
 
 import org.apache.log4j.Logger;
 import org.zkoss.util.media.Media;
@@ -30,6 +33,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
@@ -41,21 +45,22 @@ import com.dvd.ckp.business.service.BillsServices;
 import com.dvd.ckp.business.service.ConstructionService;
 import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.CustomerService;
+import com.dvd.ckp.business.service.LocationServices;
+import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
+import com.dvd.ckp.domain.Location;
+import com.dvd.ckp.domain.Pumps;
+import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
-import java.util.HashMap;
-import java.util.Map;
-import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.Events;
+import com.dvd.ckp.utils.StyleUtils;
 
 /**
  *
@@ -72,6 +77,10 @@ public class BillsController extends GenericForwardComposer {
 	protected BillsServices billsServices;
 	@WireVariable
 	protected ContractService contractService;
+	@WireVariable
+	protected PumpServices pumpServices;
+	@WireVariable
+	protected LocationServices locationServices;
 
 	@Wire
 	private Grid gridBills;
@@ -105,6 +114,10 @@ public class BillsController extends GenericForwardComposer {
 	// Danh sach hoa don chi tiet
 	private List<BillsDetail> lstBillDetail;
 
+	private List<Pumps> lstPumps;
+
+	private List<Location> lstLocation;
+
 	// Vi tri cac column trong grid
 	private final int billsCode = 1;
 	private final int customerID = 2;
@@ -134,6 +147,8 @@ public class BillsController extends GenericForwardComposer {
 		customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
 		billsServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
 		contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
+		locationServices = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
+		pumpServices = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
 
 		// list danh sach cong trinh
 		lstConstructions = new ArrayList<>();
@@ -145,6 +160,12 @@ public class BillsController extends GenericForwardComposer {
 
 		// list danh sach chi tiet hoa don
 		lstBillDetail = billsServices.getBillDetail();
+
+		// danh sach vi tri bom
+		lstLocation = locationServices.getListLocation();
+
+		// danh sach loai bom
+		lstPumps = pumpServices.getAllListData();
 
 		// list danh sach hoa don
 		lstBills = new ArrayList<>();
@@ -198,7 +219,7 @@ public class BillsController extends GenericForwardComposer {
 		Bills c = rowSelected.getValue();
 		setDataConstruction(lstCell, getConstructionDefault(c.getConstructionID()), constructionID);
 		setDataCustomer(lstCell, getCustomerDefault(c.getCustomerID()), customerID);
-		setEnableComponent(lstCell, false);
+		StyleUtils.setEnableComponent(lstCell, 6);
 	}
 
 	/**
@@ -209,7 +230,7 @@ public class BillsController extends GenericForwardComposer {
 	public void onCancel(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		setDisableComponent(lstCell);
+		StyleUtils.setDisableComponent(lstCell, 6);
 		reloadGrid();
 
 	}
@@ -230,18 +251,23 @@ public class BillsController extends GenericForwardComposer {
 		} else {
 			billsServices.update(bills);
 		}
-		setDisableComponent(lstCell);
+		StyleUtils.setDisableComponent(lstCell, 6);
 		reloadGrid();
 		insertOrUpdate = 0;
 	}
 
+	/**
+	 * delete
+	 *
+	 * @param event
+	 */
 	public void onDelete(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
 		Bills c = rowSelected.getValue();
 		Bills bills = getDataInRow(lstCell);
 		bills.setBillID(c.getBillID());
-		bills.setStatus(3);
+		bills.setStatus(com.dvd.ckp.utils.Constants.STATUS_INACTIVE);
 		billsServices.delete(bills);
 		reloadGrid();
 
@@ -258,7 +284,7 @@ public class BillsController extends GenericForwardComposer {
 		gridBills.renderAll();
 		List<Component> lstCell = gridBills.getRows().getChildren().get(0).getChildren();
 		setDataDefaultInGrid();
-		setEnableComponent(lstCell, true);
+		StyleUtils.setEnableComponent(lstCell, 6);
 		insertOrUpdate = 1;
 	}
 
@@ -531,6 +557,12 @@ public class BillsController extends GenericForwardComposer {
 
 	}
 
+	/**
+	 * lay danh sach thong tin khach hang theo ten
+	 *
+	 * @param customerName
+	 * @return
+	 */
 	private List<Long> getCustomerByName(String customerName) {
 		List<Long> lstDataReturn = new ArrayList<>();
 		if (lstCustomer != null && !lstCustomer.isEmpty()) {
@@ -544,8 +576,14 @@ public class BillsController extends GenericForwardComposer {
 		return lstDataReturn;
 	}
 
+	/**
+	 * lay danh sach ten khach khach hang theo id
+	 *
+	 * @param customerId
+	 * @return lstDataReturn
+	 */
 	private String getCustomerByID(Long customerId) {
-		List<String> lstDataReturn = new ArrayList<>();
+		// List<String> lstDataReturn = new ArrayList<>();
 		if (lstCustomer != null && !lstCustomer.isEmpty()) {
 			for (Customer customer : lstCustomer) {
 				if (customerId != null && customerId.equals(customer.getCustomerId())) {
@@ -603,6 +641,7 @@ public class BillsController extends GenericForwardComposer {
 			ListModelList listDataModel = new ListModelList(lstCustomer);
 			listDataModel.setSelection(selectedIndex);
 			combobox.setModel(listDataModel);
+
 		}
 
 	}
@@ -695,109 +734,29 @@ public class BillsController extends GenericForwardComposer {
 	}
 
 	public void onClick$btnExport(Event event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		// ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
-		// try {
-		// int index = 0;
-		// for (Bills staff : lstBillsFilter) {
-		// index++;
-		// staff.setIndex(index);
-		// }
-		// String pathFileInput = Constants.PATH_FILE +
-		// "file/template/export/bills_data_export.xlsx";
-		// String pathFileOut = Constants.PATH_FILE +
-		// "file/export/bills_data_export.xlsx";
-		//
-		// excelWriter.write(lstBillsFilter, pathFileInput, pathFileOut);
-		// File file = new File(pathFileOut);
-		// Filedownload.save(file, null);
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// logger.error(e.getMessage(), e);
-		// }
+		ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
+		try {
+			int index = 0;
+			for (Bills staff : lstBillsFilter) {
+				index++;
+				staff.setIndex(index);
+			}
+			String pathFileInput = Constants.PATH_FILE + "file/template/export/bills_data_export.xlsx";
+			String pathFileOut = Constants.PATH_FILE + "file/export/bills_data_export.xlsx";
+
+			excelWriter.write(lstBillsFilter, pathFileInput, pathFileOut);
+			File file = new File(pathFileOut);
+			Filedownload.save(file, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage(), e);
+		}
 
 	}
 
 	public void onImport(ForwardEvent event) {
 		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
 				Messagebox.INFORMATION);
-	}
-
-	public static void setEnableComponent(List<Component> lstCell, boolean isAdd) {
-		if (lstCell != null && !lstCell.isEmpty()) {
-			for (Component c : lstCell) {
-				if (c instanceof Cell) {
-					Component child = c.getFirstChild();
-					if (child instanceof Combobox) {
-						((Combobox) child).setButtonVisible(true);
-						((Combobox) child).setInplace(false);
-					} else if (child instanceof Datebox) {
-						((Datebox) child).setButtonVisible(true);
-						((Datebox) child).setInplace(false);
-					} else if (child instanceof Textbox) {
-						((Textbox) child).setReadonly(false);
-						((Textbox) child).setInplace(false);
-					} else if (child instanceof A && c.getChildren().size() > 1) {
-						A edit = (A) child;
-						edit.setVisible(false);
-						A save = (A) c.getChildren().get(1);
-						save.setVisible(true);
-						A cancel = (A) c.getChildren().get(2);
-						cancel.setVisible(true);
-						A addDetail = (A) c.getChildren().get(3);
-						addDetail.setVisible(true);
-						A view = (A) c.getChildren().get(4);
-						if (isAdd) {
-							view.setVisible(false);
-						} else {
-							view.setVisible(true);
-						}
-					}
-
-				}
-			}
-		}
-	}
-
-	/**
-	 * Set style disable edit
-	 *
-	 * @param lstCell
-	 */
-	public static void setDisableComponent(List<Component> lstCell) {
-		if (lstCell != null && !lstCell.isEmpty()) {
-			for (Component c : lstCell) {
-				if (c instanceof Cell) {
-					Component child = c.getFirstChild();
-					if (child instanceof Combobox) {
-						((Combobox) child).setButtonVisible(false);
-						((Combobox) child).setInplace(true);
-					} else if (child instanceof Datebox) {
-						((Datebox) child).setButtonVisible(false);
-						((Datebox) child).setInplace(true);
-					} else if (child instanceof Textbox) {
-						((Textbox) child).setReadonly(true);
-						((Textbox) child).setInplace(true);
-					} else if (child instanceof A && child instanceof Button && c.getChildren().size() > 1) {
-						A link = (A) child;
-						link.setVisible(true);
-						Button upload = (Button) c.getChildren().get(1);
-						upload.setVisible(true);
-					} else if (child instanceof A && c.getChildren().size() > 1) {
-
-						A edit = (A) child;
-						edit.setVisible(true);
-						A save = (A) c.getChildren().get(1);
-						save.setVisible(false);
-						A cancel = (A) c.getChildren().get(2);
-						cancel.setVisible(false);
-						A addDetail = (A) c.getChildren().get(3);
-						addDetail.setVisible(false);
-					}
-				}
-			}
-		}
 	}
 
 	private double getTotalPrice(Long billID) {
@@ -824,7 +783,15 @@ public class BillsController extends GenericForwardComposer {
 			arguments.put("detail", new BillsDetail());
 		}
 		arguments.put("bill", c);
-		final Window windownUpload = (Window) Executions.createComponents("/manager/billDetailView.zul", bills,
+		if (billsDetail != null) {
+			Pumps pumps = getPumps(billsDetail.getPumpID());
+			arguments.put("pumps", pumps);
+			Location location = getLocation(billsDetail.getLocationId());
+			arguments.put("location", location);
+		}
+		Construction construction = getConstruction(c.getConstructionID());
+		arguments.put("construction", construction);
+		final Window windownUpload = (Window) Executions.createComponents("/manager/include/billDetailView.zul", bills,
 				arguments);
 		windownUpload.doModal();
 		windownUpload.setBorder(true);
@@ -841,10 +808,39 @@ public class BillsController extends GenericForwardComposer {
 
 	}
 
+	private Construction getConstruction(Long constructionId) {
+		List<String> lstDataReturn = new ArrayList<>();
+		if (lstConstructions != null && !lstConstructions.isEmpty()) {
+			for (Construction construction : lstConstructions) {
+				if (constructionId != null && constructionId.equals(construction.getConstructionId())) {
+					return construction;
+				}
+			}
+		}
+		return null;
+	}
+
 	public void onAddDetail(ForwardEvent event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		final Window windownUpload = (Window) Executions.createComponents("/manager/billDetail.zul", bills, null);
+		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+		Bills c = rowSelected.getValue();
+		Map<String, Object> arguments = new HashMap();
+		BillsDetail billsDetail = getBillsDetail(c.getBillID());
+		if (billsDetail != null) {
+			arguments.put("detail", billsDetail);
+		} else {
+			arguments.put("detail", new BillsDetail());
+		}
+		arguments.put("bill", c);
+		if (billsDetail != null) {
+			Pumps pumps = getPumps(billsDetail.getPumpID());
+			arguments.put("pumps", pumps);
+			Location location = getLocation(billsDetail.getLocationId());
+			arguments.put("location", location);
+		}
+		Construction construction = getConstruction(c.getConstructionID());
+		arguments.put("construction", construction);
+		final Window windownUpload = (Window) Executions.createComponents("/manager/include/billDetail.zul", bills,
+				arguments);
 		windownUpload.doModal();
 		windownUpload.setBorder(true);
 		windownUpload.setBorder("normal");
@@ -871,20 +867,62 @@ public class BillsController extends GenericForwardComposer {
 
 	}
 
+	/*
+	 * lay danh sach hop dong theo khach hang
+	 */
 	private List<Contract> getContractByCustomer(Long customerID) {
 		List<Contract> lstReturn = new ArrayList<>();
 		if (listContact != null && !listContact.isEmpty()) {
 			for (Contract contract : listContact) {
-				if(customerID.equals(contract)){
+				if (customerID.equals(contract)) {
 					lstReturn.add(contract);
 				}
 			}
 		}
 		return lstReturn;
 	}
-	
-//	private List<Construction> getConstructionByContract(Long customerID){
-//		
-//	}
-	
+
+	/*
+	 * Lay danh sach cong trinh theo khach hang
+	 */
+	private List<Construction> getConstructionByContract(Long customerID) {
+		List<Contract> lstContract = getContractByCustomer(customerID);
+		List<Construction> lstConstruction = new ArrayList<>();
+		if (lstConstructions != null && !lstConstructions.isEmpty()) {
+			for (Construction construction : lstConstructions) {
+				if (lstContract != null && !lstContract.isEmpty()) {
+					for (Contract contract : lstContract) {
+
+						if (construction.getContractId().equals(contract.getContractId())) {
+							lstConstruction.add(construction);
+						}
+					}
+				}
+			}
+		}
+
+		return lstConstruction;
+	}
+
+	private Pumps getPumps(Long pumps) {
+		if (lstPumps != null && !lstPumps.isEmpty()) {
+			for (Pumps item : lstPumps) {
+				if (pumps != null && pumps.equals(item.getPumpsID())) {
+					return item;
+				}
+			}
+		}
+		return null;
+	}
+
+	private Location getLocation(Long locationId) {
+		if (lstLocation != null && !lstLocation.isEmpty()) {
+			for (Location item : lstLocation) {
+				if (locationId != null && locationId.equals(item.getLocationID())) {
+					return item;
+				}
+			}
+		}
+		return null;
+	}
 }

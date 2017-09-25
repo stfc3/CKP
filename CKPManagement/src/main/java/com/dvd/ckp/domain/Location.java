@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 @NamedQuery(name = "Location.getAll", query = "select t FROM Location t WHERE status = 1")
 public class Location {
 	private int index;
-	private int locationID;
+	private Long locationID;
 	private String locationCode;
 	private String locationName;
 	private int locationType;
@@ -33,11 +33,11 @@ public class Location {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "location_id")
-	public int getLocationID() {
+	public Long getLocationID() {
 		return locationID;
 	}
 
-	public void setLocationID(int locationID) {
+	public void setLocationID(Long locationID) {
 		this.locationID = locationID;
 	}
 

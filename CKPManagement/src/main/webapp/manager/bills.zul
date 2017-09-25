@@ -141,21 +141,8 @@
 								style="text-align: right;" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
-						<!-- 						<cell style="text-align: center;"> -->
-						<!-- 							<combobox class="combox-status" -->
-						<!-- 								value="${each.status == 0 ? c:l('inactive') : c:l('active')}" -->
-						<!-- 								tooltiptext="${each.status == 0 ? c:l('inactive') : c:l('active')}" -->
-						<!-- 								hflex="1" buttonVisible="false" inplace="true" -->
-						<!-- 								readonly="true"> -->
-						<!-- 								<comboitem value="1" -->
-						<!-- 									label="${c:l('active')}" /> -->
-						<!-- 								<comboitem value="0" -->
-						<!-- 									label="${c:l('inactive')}" /> -->
-						<!-- 							</combobox> -->
-						<!-- 						</cell> -->
+
 						<cell style="text-align:center">
-
-
 							<a iconSclass="z-icon-pencil"
 								forward="onClick=onEdit" tooltiptext="${c:l('edit')}" />
 

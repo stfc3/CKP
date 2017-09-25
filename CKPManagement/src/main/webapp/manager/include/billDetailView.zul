@@ -88,7 +88,7 @@
 				</label>
 			</hbox>
 			<hbox hflex="2">
-				<label value="Bơm đài móng"></label>
+				<label value="${arg.pumps.pumpsName}"></label>
 			</hbox>
 			<!-- 			<hbox hflex="1" /> -->
 			<hbox hflex="1" />
@@ -111,7 +111,9 @@
 				</label>
 			</hbox>
 			<hbox hflex="2">
-				<label value="${arg.bill.constructionName}"></label>
+				<label
+					value="${arg.construction.constructionAddress}">
+				</label>
 			</hbox>
 			<!-- 			<hbox hflex="1" /> -->
 			<hbox hflex="1" />
@@ -191,8 +193,6 @@
 			<hbox hflex="1" />
 		</hlayout>
 
-
-
 		<hlayout style="border: 1px solid silver !important;">
 			<hbox hflex="1" />
 			<hbox hflex="2">
@@ -203,6 +203,10 @@
 					</label>
 					<label style="font-style: italic;color:black"
 						value="Volume pumped">
+					</label>
+					<label
+						style="font-style: italic;color:black;text-align: center;"
+						value="${arg.detail.quantity}">
 					</label>
 				</vbox>
 			</hbox>
@@ -215,6 +219,11 @@
 					</label>
 					<label style="font-style: italic;color:black"
 						value="Pumping place">
+					</label>
+
+					<label
+						style="font-style: italic;color:black;text-align: center;"
+						value="${arg.location.locationName}">
 					</label>
 				</vbox>
 			</hbox>

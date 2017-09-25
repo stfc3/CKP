@@ -256,9 +256,9 @@ public class PumpsController extends GenericForwardComposer {
 		Combobox cbxStatus = (Combobox) lstCell.get(6).getFirstChild();
 		pump.setPumpsCode(txtPumpsCode.getValue());
 		pump.setPumpsName(txtPumpsName.getValue());
-		pump.setPumpsCapacity(Integer.valueOf(txtPumpsCapacity.getValue()));
-		pump.setPumpsHight(Integer.valueOf(txtPumpsFar.getValue()));
-		pump.setPumpsFar(Integer.valueOf(txtPumpsHight.getValue()));
+		pump.setPumpsCapacity(txtPumpsCapacity.getValue());
+		pump.setPumpsHight(txtPumpsFar.getValue());
+		pump.setPumpsFar(txtPumpsHight.getValue());
 		pump.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
 		return pump;
 	}
@@ -323,44 +323,37 @@ public class PumpsController extends GenericForwardComposer {
 	}
 
 	public void onClick$btnExport(Event event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		// ExcelWriter<Pumps> excelWriter = new ExcelWriter<Pumps>();
-		// try {
-		//
-		// String pathFileInput = Constants.PATH_FILE +
-		// "file/template/export/pumps_data_export.xlsx";
-		// String pathFileOut = Constants.PATH_FILE +
-		// "file/export/pumps_data_export.xlsx";
-		//
-		// excelWriter.write(lstPumpsFilter, pathFileInput, pathFileOut);
-		// File file = new File(pathFileOut);
-		// Filedownload.save(file, null);
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// logger.error(e.getMessage(), e);
-		// }
+
+		ExcelWriter<Pumps> excelWriter = new ExcelWriter<Pumps>();
+		try {
+
+			String pathFileInput = Constants.PATH_FILE + "file/template/export/pumps_data_export.xlsx";
+			String pathFileOut = Constants.PATH_FILE + "file/export/pumps_data_export.xlsx";
+
+			excelWriter.write(lstPumpsFilter, pathFileInput, pathFileOut);
+			File file = new File(pathFileOut);
+			Filedownload.save(file, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage(), e);
+		}
 
 	}
 
 	public void onImport(ForwardEvent event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		// final Window windownUpload = (Window)
-		// Executions.createComponents("/manager/uploadPumps.zul", pumps, null);
-		// windownUpload.doModal();
-		// windownUpload.setBorder(true);
-		// windownUpload.setBorder("normal");
-		// windownUpload.setClosable(true);
-		// windownUpload.addEventListener(Events.ON_CLOSE, new
-		// EventListener<Event>() {
-		//
-		// @Override
-		// public void onEvent(Event event) throws Exception {
-		// reloadGrid();
-		//
-		// }
-		// });
+		final Window windownUpload = (Window) Executions.createComponents("/manager/include/uploadPumps.zul", pumps, null);
+		windownUpload.doModal();
+		windownUpload.setBorder(true);
+		windownUpload.setBorder("normal");
+		windownUpload.setClosable(true);
+		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				reloadGrid();
+
+			}
+		});
 	}
 
 	public void onUpload$uploadbtn(UploadEvent evt) {
@@ -423,9 +416,9 @@ public class PumpsController extends GenericForwardComposer {
 					Pumps item = new Pumps();
 					item.setPumpsCode(pumps.getPumpsCode());
 					item.setPumpsName(pumps.getPumpsName());
-					item.setPumpsCapacity(Integer.valueOf(pumps.getPumpsCapacity()));
-					item.setPumpsHight(Integer.valueOf(pumps.getPumpsHight()));
-					item.setPumpsFar(Integer.valueOf(pumps.getPumpsFar()));
+					item.setPumpsCapacity(pumps.getPumpsCapacity());
+					item.setPumpsHight(pumps.getPumpsHight());
+					item.setPumpsFar(pumps.getPumpsFar());
 					item.setStatus(1);
 					vlstData.add(item);
 					numberSucces++;

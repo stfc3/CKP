@@ -19,23 +19,23 @@ public class Pumps 	{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int index;
-	private int pumpsID;
+	private Long pumpsID;
 	private String pumpsCode;
 	private String pumpsName;
-	private int pumpsCapacity;
-	private int pumpsHight;
-	private int pumpsFar;
+	private String pumpsCapacity;
+	private String pumpsHight;
+	private String pumpsFar;
 	private int status;
 	private String statusName;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pump_id")
-	public int getPumpsID() {
+	public Long getPumpsID() {
 		return pumpsID;
 	}
 
-	public void setPumpsID(int pumpsID) {
+	public void setPumpsID(Long pumpsID) {
 		this.pumpsID = pumpsID;
 	}
 
@@ -58,29 +58,29 @@ public class Pumps 	{
 	}
 
 	@Column(name = "pump_capacity")
-	public int getPumpsCapacity() {
+	public String getPumpsCapacity() {
 		return pumpsCapacity;
 	}
 
-	public void setPumpsCapacity(int pumpsCapacity) {
+	public void setPumpsCapacity(String pumpsCapacity) {
 		this.pumpsCapacity = pumpsCapacity;
 	}
 
 	@Column(name = "pump_high")
-	public int getPumpsHight() {
+	public String getPumpsHight() {
 		return pumpsHight;
 	}
 
-	public void setPumpsHight(int pumpsHight) {
+	public void setPumpsHight(String pumpsHight) {
 		this.pumpsHight = pumpsHight;
 	}
 
 	@Column(name = "pump_far")
-	public int getPumpsFar() {
+	public String getPumpsFar() {
 		return pumpsFar;
 	}
 
-	public void setPumpsFar(int pumpsFar) {
+	public void setPumpsFar(String pumpsFar) {
 		this.pumpsFar = pumpsFar;
 	}
 
@@ -100,7 +100,7 @@ public class Pumps 	{
 				+ ", status=" + status + "]";
 	}
 
-	public Pumps(int pumpsID, String pumpsCode, String pumpsName, int pumpsCapacity, int pumpsHight, int pumpsFar,
+	public Pumps(Long pumpsID, String pumpsCode, String pumpsName, String pumpsCapacity, String pumpsHight, String pumpsFar,
 			int status) {
 		super();
 		this.pumpsID = pumpsID;
