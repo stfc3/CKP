@@ -29,7 +29,6 @@ import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
-import com.dvd.ckp.domain.Price;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
@@ -38,9 +37,12 @@ import com.dvd.ckp.utils.StyleUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletContext;
 import org.zkoss.util.media.Media;
 import org.zkoss.zhtml.Messagebox;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -71,12 +73,12 @@ public class ContractController extends GenericForwardComposer {
     @Wire
     private Window mainContract;
     ListModelList<Contract> listDataModel;
-    ListModelList<Price> listDataModelPrice;
+    List<Contract> lstContracts;
+
     List<Customer> lstCustomers;
-    private List<Contract> lstContracts;
     Customer defaultCustomer;
 
-    ///
+    /// index contract
     private final int codeIndex = 1;
     private final int nameIndex = 2;
     private final int customerIndex = 3;
@@ -86,6 +88,8 @@ public class ContractController extends GenericForwardComposer {
     private final int fileIndex = 7;
     private final int effectiveIndex = 9;
     private final int expirationIndex = 10;
+
+    private boolean isAdd;
     ///
 
     @Override
@@ -94,6 +98,7 @@ public class ContractController extends GenericForwardComposer {
         context = Sessions.getCurrent().getWebApp().getServletContext();
         contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
         customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
+
         lstContracts = contractService.getContractActive();
         listDataModel = new ListModelList(lstContracts);
         lstContract.setModel(listDataModel);
@@ -104,7 +109,6 @@ public class ContractController extends GenericForwardComposer {
         defaultCustomer.setCustomerName(Labels.getLabel("option"));
         lstCustomers.add(Constants.FIRST_INDEX, defaultCustomer);
         setDataDefaultInGrid();
-
     }
 
     /**
@@ -113,10 +117,11 @@ public class ContractController extends GenericForwardComposer {
      * @param event
      */
     public void onEdit(ForwardEvent event) {
+        isAdd = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         Contract c = rowSelected.getValue();
-        setDataCombobox(lstCell, getCustomerDefault(c.getContractId()), customerIndex);
+        setComboboxCustomer(lstCell, getCustomerDefault(c.getContractId()), customerIndex);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 
@@ -126,7 +131,7 @@ public class ContractController extends GenericForwardComposer {
      * @param event
      */
     public void onCancel(ForwardEvent event) {
-
+        isAdd = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         StyleUtils.setDisableComponent(lstCell, 4);
@@ -140,11 +145,13 @@ public class ContractController extends GenericForwardComposer {
      * @param event
      */
     public void onSave(ForwardEvent event) {
+        isAdd = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         Contract c = rowSelected.getValue();
         Contract contract = getDataInRow(lstCell);
         contract.setContractId(c.getContractId());
+        contract.setStatus(Constants.STATUS_ACTIVE);
         contract.setCreateDate(new Date());
         contractService.insertOrUpdateContract(contract);
         StyleUtils.setDisableComponent(lstCell, 4);
@@ -157,10 +164,7 @@ public class ContractController extends GenericForwardComposer {
             public void onEvent(Event e) {
                 if (Messagebox.ON_YES.equals(e.getName())) {
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-                    List<Component> lstCell = rowSelected.getChildren();
-                    Contract c = rowSelected.getValue();
-                    Contract contract = getDataInRow(lstCell);
-                    contract.setContractId(c.getContractId());
+                    Contract contract = rowSelected.getValue();
                     contract.setStatus(Constants.STATUS_INACTIVE);
                     contract.setCreateDate(new Date());
                     contractService.insertOrUpdateContract(contract);
@@ -174,13 +178,16 @@ public class ContractController extends GenericForwardComposer {
      * Add row
      */
     public void onClick$add() {
-        Contract contract = new Contract();
-        listDataModel.add(Constants.FIRST_INDEX, contract);
-        lstContract.setModel(listDataModel);
-        lstContract.renderAll();
-        List<Component> lstCell = lstContract.getRows().getFirstChild().getChildren();
-        setDataDefaultInGrid();
-        StyleUtils.setEnableComponent(lstCell, 4);
+        if (!isAdd) {
+            isAdd = true;
+            Contract contract = new Contract();
+            listDataModel.add(Constants.FIRST_INDEX, contract);
+            lstContract.setModel(listDataModel);
+            lstContract.renderAll();
+            List<Component> lstCell = lstContract.getRows().getFirstChild().getChildren();
+            setDataDefaultInGrid();
+            StyleUtils.setEnableComponent(lstCell, 4);
+        }
     }
 
     /**
@@ -309,7 +316,7 @@ public class ContractController extends GenericForwardComposer {
 
     }
 
-    private void setDataCombobox(List<Component> lstCell, List<Customer> selectedIndex, int columnIndex) {
+    private void setComboboxCustomer(List<Component> lstCell, List<Customer> selectedIndex, int columnIndex) {
         Combobox cbxCustomer = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
@@ -346,24 +353,30 @@ public class ContractController extends GenericForwardComposer {
                 Contract contract = listDataModel.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setDataCombobox(lstCell, getCustomerDefault(contract.getCustomerId()), customerIndex);
+                setComboboxCustomer(lstCell, getCustomerDefault(contract.getCustomerId()), customerIndex);
             }
         }
     }
 
     public void onPrice(ForwardEvent event) {
-        Messagebox.show("Chức năng chưa được hỗ trợ", "Thông báo", Messagebox.OK, Messagebox.INFORMATION);
 
-//        Map<String, Object> arguments = new HashMap<>();
-//
-//        Window winAddUser = (Window) Executions.createComponents(
-//                "/manager/include/price.zul", mainContract, arguments);
-//
-//        winAddUser.setBorder(true);
-//        winAddUser.setBorder("normal");
-//        winAddUser.setClosable(true);
-//
-//        winAddUser.doModal();
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        Contract contract = rowSelected.getValue();
+        Map<String, Object> arguments = new HashMap<>();
+        if (isAdd) {
+            arguments.put("isAdd", 1);
+        } else {
+            arguments.put("isAdd", 0);
+            arguments.put("contractId", contract.getContractId());
+        }
+        Window winAddUser = (Window) Executions.createComponents(
+                "/manager/include/price.zul", mainContract, arguments);
+
+        winAddUser.setBorder(true);
+        winAddUser.setBorder("normal");
+        winAddUser.setClosable(true);
+
+        winAddUser.doModal();
     }
 
     public void onImport(ForwardEvent event) {

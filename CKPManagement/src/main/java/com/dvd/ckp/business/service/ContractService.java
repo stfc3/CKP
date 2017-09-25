@@ -22,6 +22,7 @@ public interface ContractService {
     void insertOrUpdateContract(Contract contract);
 
     List<Price> getAllPrice();
+    List<Price> getPriceByContract(Long contractId);
 
     void insertOrUpdatePrice(Price price);
 }

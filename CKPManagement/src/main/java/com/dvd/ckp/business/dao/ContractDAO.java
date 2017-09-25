@@ -23,5 +23,7 @@ public interface ContractDAO {
 
     List<Price> getAllPrice();
 
+    List<Price> getPriceByContract(Long contractId);
+
     void insertOrUpdatePrice(Price price);
 }

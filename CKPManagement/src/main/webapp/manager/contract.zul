@@ -7,7 +7,7 @@
             <caption label="${c:l('contract.category')}" />
             <grid id="lstContract" mold="paging" pageSize="20" pagingPosition="both">
                 <auxhead sclass="category-center" >
-                    <auxheader colspan="8">
+                    <auxheader colspan="12">
                         <a class="btn-cursor" id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <space width="10px"/>
                         <a class="btn-cursor" forward="onClick=onImport" iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
@@ -75,7 +75,7 @@
                             forward="onUpload=onUploadFile"/>
                         </cell>
                         <cell>
-                            <a class="btn-cursor" iconSclass="z-icon-money" forward="onClick=onPrice" tooltiptext="${c:l('price')}"/>
+                            <a class="btn-cursor" disabled="true" iconSclass="z-icon-money" forward="onClick=onPrice" tooltiptext="${c:l('price')}"/>
                         </cell>
                         <cell>
                             <datebox cols="12" format="dd/MM/yyyy" value="${each.effectiveDate}" tooltiptext="${each.effectiveDate}" hflex="1" inplace="true" readonly="true" buttonVisible="false" />

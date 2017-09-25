@@ -53,8 +53,14 @@ public class ContractDAOImpl implements ContractDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Price> getAllPrice() {
-
-        Query query = getCurrentSession().getNamedQuery("Price.fillAllPrice");
+        Query query = getCurrentSession().getNamedQuery("Price.fillPriceActive");
+        return (List<Price>) query.list();
+    }
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Price> getPriceByContract(Long contractId) {
+        Query query = getCurrentSession().getNamedQuery("Price.fillPriceByContract");
+        query.setParameter("contractId", contractId);
         return (List<Price>) query.list();
     }
 

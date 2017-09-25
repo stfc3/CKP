@@ -28,7 +28,7 @@ import javax.persistence.Temporal;
     ,
     @NamedQuery(name = "Param.fillParamActive", query = "FROM Param p WHERE p.status=1 ORDER BY p.createDate DESC")
     ,
-    @NamedQuery(name = "Param.fillParamByKey", query = "FROM Param p WHERE p.status=1 AND p.paramKey = :paramKey  ORDER BY p.createDate DESC")
+    @NamedQuery(name = "Param.fillParamByKey", query = "FROM Param p WHERE p.status=1 AND p.paramKey = :paramKey")
 })
 public class Param implements Serializable {
 

@@ -45,6 +45,11 @@ public class ContractServiceImpl implements ContractService {
     public List<Price> getAllPrice() {
         return ContractDAO.getAllPrice();
     }
+    @Transactional(readOnly = true)
+    @Override
+    public List<Price> getPriceByContract(Long contractId) {
+        return ContractDAO.getPriceByContract(contractId);
+    }
     
     @Transactional
     @Override

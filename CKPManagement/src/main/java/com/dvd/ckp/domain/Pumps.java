@@ -100,6 +100,7 @@ public class Pumps 	{
 				+ ", status=" + status + "]";
 	}
 
+
 	public Pumps(Long pumpsID, String pumpsCode, String pumpsName, String pumpsCapacity, String pumpsHight, String pumpsFar,
 			int status) {
 		super();
