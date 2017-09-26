@@ -8,6 +8,7 @@ package com.dvd.ckp.business.service;
 import com.dvd.ckp.business.dao.ContractDAO;
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Price;
+import com.dvd.ckp.domain.PriceLocation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,18 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void insertOrUpdatePrice(Price price) {
         ContractDAO.insertOrUpdatePrice(price);
+    }
+    
+    @Transactional(readOnly = true)
+    @Override
+    public List<PriceLocation> getPriceLocationByPrice(Long priceId) {
+        return ContractDAO.getPriceLocationByPrice(priceId);
+    }
+    
+    @Transactional
+    @Override
+    public void insertOrUpdatePriceLocation(PriceLocation priceLocation) {
+        ContractDAO.insertOrUpdatePriceLocation(priceLocation);
     }
 
 }

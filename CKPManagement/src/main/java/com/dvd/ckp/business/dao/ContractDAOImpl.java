@@ -7,6 +7,7 @@ package com.dvd.ckp.business.dao;
 
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Price;
+import com.dvd.ckp.domain.PriceLocation;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -68,6 +69,19 @@ public class ContractDAOImpl implements ContractDAO {
     @Override
     public void insertOrUpdatePrice(Price price) {
         getCurrentSession().saveOrUpdate(price);
+    }
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<PriceLocation> getPriceLocationByPrice(Long priceId) {
+        Query query = getCurrentSession().getNamedQuery("PriceLocation.fillPriceLocationByPrice");
+        query.setParameter("priceId", priceId);
+        return (List<PriceLocation>) query.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void insertOrUpdatePriceLocation(PriceLocation priceLocation) {
+        getCurrentSession().saveOrUpdate(priceLocation);
     }
 
 }
