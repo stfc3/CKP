@@ -72,7 +72,6 @@ CREATE TABLE IF NOT EXISTS construction
     contract_id BIGINT NOT NULL,
     construction_code VARCHAR(50),
     construction_name VARCHAR(100),
-    construction_address VARCHAR(200),
     status INT default 1,
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(construction_id)
