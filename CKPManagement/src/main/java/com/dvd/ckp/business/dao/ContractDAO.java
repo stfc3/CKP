@@ -7,6 +7,7 @@ package com.dvd.ckp.business.dao;
 
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Price;
+import com.dvd.ckp.domain.PriceLocation;
 import java.util.List;
 
 /**
@@ -26,4 +27,8 @@ public interface ContractDAO {
     List<Price> getPriceByContract(Long contractId);
 
     void insertOrUpdatePrice(Price price);
+    
+    List<PriceLocation> getPriceLocationByPrice(Long priceId);
+
+    void insertOrUpdatePriceLocation(PriceLocation priceLocation);
 }

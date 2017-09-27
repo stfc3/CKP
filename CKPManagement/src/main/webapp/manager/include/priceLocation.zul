@@ -2,16 +2,16 @@
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <!--<zk xmlns:n="native">-->
-    <window  id="mainPrice" apply="com.dvd.ckp.controller.PriceController"
+    <window  id="mainPriceLocation" apply="com.dvd.ckp.controller.PriceLocationController"
              position="center,center" closable="true"  
-             action="show: slideDown;hide: slideUp"   title="${c:l('price')}"
+             action="show: slideDown;hide: slideUp"   title="${c:l('pricelocation')}"
              border="normal" width="90%" height="90%" maximizable="false" contentStyle="overflow:auto">
         <groupbox>
-            <longbox id="lgbContractId" value="${arg.contractId}" visible="false"/>
-            <caption label="${c:l('price.category')}" />
-            <grid id="lstPrice" mold="paging" pageSize="20" pagingPosition="both">
+            <longbox id="lgbPriceId" value="${arg.priceId}" visible="false"/>
+            <caption label="${c:l('pricelocation.category')}" />
+            <grid id="lstPriceLocation" mold="paging" pageSize="20" pagingPosition="both">
                 <auxhead sclass="category-center" >
-                    <auxheader colspan="10">
+                    <auxheader colspan="6">
                         <a id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <space width="10px"/>
                         <a iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
@@ -20,23 +20,19 @@
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">
-                    <column hflex="1">${c:l('price.index')}</column>
-                    <column hflex="3">${c:l('price.pumpType')}</column>
-                    <column hflex="6">${c:l('price.pump')}</column>
-                    <column hflex="3">${c:l('price.m3')}</column>
-                    <column hflex="3">${c:l('price.shift')}</column>
-                    <column hflex="3">${c:l('price.wait')}</column>
-                    <column hflex="3">${c:l('price.convertType')}</column>
-                    <column hflex="3">${c:l('price.convertValue')}</column>
-                    <column hflex="2">${c:l('price.location')}</column>
-                    <column hflex="2">${c:l('price.action')}</column>
+                    <column hflex="1">${c:l('pricelocation.index')}</column>
+                    <column hflex="3">${c:l('pricelocation.type')}</column>
+                    <column hflex="3">${c:l('pricelocation.min')}</column>
+                    <column hflex="3">${c:l('pricelocation.max')}</column>
+                    <column hflex="3">${c:l('pricelocation.value')}</column>
+                    <column hflex="2">${c:l('pricelocation.action')}</column>
                 </columns>
                 <template name="model">
                     <row  value="${each}">
                         <cell>
                             <label value="${forEachStatus.index+1}" />
                         </cell>
-                        <!--Loai may bom-->
+                        <!--Loai vi tri-->
                         <cell>
                             <combobox  hflex="1"  
                                        buttonVisible="false" inplace="true"  readonly="true">
@@ -45,38 +41,27 @@
                                 </template>
                             </combobox>
                         </cell>
-                        <!--May bom-->
+                        
+                        <!--Vi tri bat dau-->
                         <cell>
                             <combobox  hflex="1"  
                                        buttonVisible="false" inplace="true"  readonly="true">
                                 <template name="model">
-                                    <comboitem value="${each.pumpsID}" label="${each.pumpsName}" />
+                                    <comboitem value="${each.locationID}" label="${each.locationName}" />
                                 </template>
                             </combobox>
                         </cell>
-                        <cell>
-                            <doublebox value="${each.priceM3}" tooltiptext="${each.priceM3}" hflex="1" inplace="true" readonly="true"/>
-                        </cell>
-                        <cell>
-                            <doublebox value="${each.priceShift}" tooltiptext="${each.priceShift}" hflex="1" inplace="true" readonly="true"/>
-                        </cell>
-                        <cell>
-                            <doublebox value="${each.priceWait}" tooltiptext="${each.priceWait}" hflex="1" inplace="true" readonly="true"/>
-                        </cell>
-                        <!--Loai convert-->
+                        <!--Vi tri ket thuc-->
                         <cell>
                             <combobox  hflex="1"  
                                        buttonVisible="false" inplace="true"  readonly="true">
                                 <template name="model">
-                                    <comboitem value="${each.paramValue}" label="${each.paramName}" />
+                                    <comboitem value="${each.locationID}" label="${each.locationName}" />
                                 </template>
                             </combobox>
                         </cell>
                         <cell>
-                            <doublebox value="${each.convertValue}" tooltiptext="${each.convertValue}" hflex="1" inplace="true" readonly="true"/>
-                        </cell>
-                        <cell>
-                            <a class="btn-cursor" disabled="true" iconSclass="z-icon-money" forward="onClick=onPriceLocation" tooltiptext="${c:l('pricelocation')}"/>
+                            <doublebox value="${each.priceLocation}" tooltiptext="${each.priceLocation}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell style="text-align:center">
                             <a iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>

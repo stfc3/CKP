@@ -14,6 +14,8 @@ public interface Constants {
     //Session
     String TOKEN = "token";
     String SESSION_USER = "user";
+    String SESSION_PRICE = "price";
+    String SESSION_PRICE_LOCATION = "price_location";
 
     //Page
     String PAGE_HOME = "/index.zul";

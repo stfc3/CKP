@@ -5,21 +5,18 @@
  */
 package com.dvd.ckp.controller;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.text.StyleConstants;
 
 import org.apache.log4j.Logger;
 import org.zkoss.util.media.Media;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -29,7 +26,6 @@ import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
-import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
@@ -52,12 +48,17 @@ import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Pumps;
-import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 
 /**
  *
@@ -98,25 +99,15 @@ public class BillsController extends GenericForwardComposer<Component> {
 	// Model grid in window bill
 	ListModelList<Bills> listDataModel;
 
-	// danh sach hoa don
 	private List<Bills> lstBills;
-	// danh sach du lieu theo dieu kien filter
 	private List<Bills> lstBillsFilter;
 
-	// danh sach cong trinh
 	private List<Construction> lstConstructions;
-
-	// danh sach khach hang
 	private List<Customer> lstCustomer;
 
-	// them gia tri chon cho combobox con trinh
 	private Construction defaultConstruction;
 	private Customer defaultCustomer;
 
-	// Danh sach hop dong
-	private List<Contract> listContact;
-
-	// Danh sach hoa don chi tiet
 	private List<BillsDetail> lstBillDetail;
 
 	// Danh sach bom
@@ -125,7 +116,10 @@ public class BillsController extends GenericForwardComposer<Component> {
 	// Danh sach vi tri bom
 	private List<Location> lstLocation;
 
+	private List<Contract> listContact;
+
 	// Vi tri cac column trong grid
+
 	private final int billsCode = 1;
 	private final int customerID = 2;
 	private final int constructionID = 3;
@@ -174,6 +168,8 @@ public class BillsController extends GenericForwardComposer<Component> {
 
 		// danh sach bom
 		lstPumps = pumpServices.getAllListData();
+
+		listContact = contractService.getAllContract();
 
 		// list danh sach hoa don
 		lstBills = new ArrayList<>();
@@ -267,21 +263,17 @@ public class BillsController extends GenericForwardComposer<Component> {
 		} else {
 			billsServices.update(bills);
 		}
+
 		insertOrUpdate = 0;
 	}
 
-	/**
-	 * delete
-	 *
-	 * @param event
-	 */
 	public void onDelete(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
 		Bills c = rowSelected.getValue();
 		Bills bills = getDataInRow(lstCell);
 		bills.setBillID(c.getBillID());
-		bills.setStatus(com.dvd.ckp.utils.Constants.STATUS_INACTIVE);
+		bills.setStatus(3);
 		billsServices.delete(bills);
 		reloadGrid();
 
@@ -571,12 +563,6 @@ public class BillsController extends GenericForwardComposer<Component> {
 
 	}
 
-	/**
-	 * lay danh sach thong tin khach hang theo ten
-	 *
-	 * @param customerName
-	 * @return
-	 */
 	private List<Long> getCustomerByName(String customerName) {
 		List<Long> lstDataReturn = new ArrayList<>();
 		if (lstCustomer != null && !lstCustomer.isEmpty()) {
@@ -590,14 +576,8 @@ public class BillsController extends GenericForwardComposer<Component> {
 		return lstDataReturn;
 	}
 
-	/**
-	 * lay danh sach ten khach khach hang theo id
-	 *
-	 * @param customerId
-	 * @return lstDataReturn
-	 */
 	private String getCustomerByID(Long customerId) {
-		// List<String> lstDataReturn = new ArrayList<>();
+		List<String> lstDataReturn = new ArrayList<>();
 		if (lstCustomer != null && !lstCustomer.isEmpty()) {
 			for (Customer customer : lstCustomer) {
 				if (customerId != null && customerId.equals(customer.getCustomerId())) {
@@ -655,7 +635,6 @@ public class BillsController extends GenericForwardComposer<Component> {
 			ListModelList listDataModel = new ListModelList(lstCustomer);
 			listDataModel.setSelection(selectedIndex);
 			combobox.setModel(listDataModel);
-
 		}
 
 	}
@@ -753,23 +732,27 @@ public class BillsController extends GenericForwardComposer<Component> {
 	 * @param event
 	 */
 	public void onClick$btnExport(Event event) {
-		ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
-		try {
-			int index = 0;
-			for (Bills staff : lstBillsFilter) {
-				index++;
-				staff.setIndex(index);
-			}
-			String pathFileInput = Constants.PATH_FILE + "file/template/export/bills_data_export.xlsx";
-			String pathFileOut = Constants.PATH_FILE + "file/export/bills_data_export.xlsx";
-
-			excelWriter.write(lstBillsFilter, pathFileInput, pathFileOut);
-			File file = new File(pathFileOut);
-			Filedownload.save(file, null);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error(e.getMessage(), e);
-		}
+		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
+				Messagebox.INFORMATION);
+		// ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
+		// try {
+		// int index = 0;
+		// for (Bills staff : lstBillsFilter) {
+		// index++;
+		// staff.setIndex(index);
+		// }
+		// String pathFileInput = Constants.PATH_FILE +
+		// "file/template/export/bills_data_export.xlsx";
+		// String pathFileOut = Constants.PATH_FILE +
+		// "file/export/bills_data_export.xlsx";
+		//
+		// excelWriter.write(lstBillsFilter, pathFileInput, pathFileOut);
+		// File file = new File(pathFileOut);
+		// Filedownload.save(file, null);
+		// } catch (Exception e) {
+		// // TODO Auto-generated catch block
+		// logger.error(e.getMessage(), e);
+		// }
 
 	}
 
@@ -781,19 +764,6 @@ public class BillsController extends GenericForwardComposer<Component> {
 	public void onImport(ForwardEvent event) {
 		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
 				Messagebox.INFORMATION);
-	}
-
-	private double getTotalPrice(Long billID) {
-		double totalPrice = 0;
-		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
-			for (BillsDetail detail : lstBillDetail) {
-				if (billID != null && billID.equals(detail.getBillId())) {
-					totalPrice += detail.getTotal();
-				}
-			}
-		}
-
-		return totalPrice;
 	}
 
 	/**
@@ -844,11 +814,12 @@ public class BillsController extends GenericForwardComposer<Component> {
 	 * @return
 	 */
 	private Construction getConstruction(Long constructionId) {
-		List<String> lstDataReturn = new ArrayList<>();
+
 		if (lstConstructions != null && !lstConstructions.isEmpty()) {
 			for (Construction construction : lstConstructions) {
 				if (constructionId != null && constructionId.equals(construction.getConstructionId())) {
 					return construction;
+
 				}
 			}
 		}
@@ -910,24 +881,6 @@ public class BillsController extends GenericForwardComposer<Component> {
 				});
 	}
 
-	/**
-	 * Lay thon tin bill detail
-	 * 
-	 * @param billID
-	 * @return
-	 */
-	private BillsDetail getBillsDetail(Long billID) {
-		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
-			for (BillsDetail detail : lstBillDetail) {
-				if (billID != null && billID.equals(detail.getBillId())) {
-					return detail;
-				}
-			}
-		}
-		return null;
-
-	}
-
 	private List<BillsDetail> getListBillsDetail(Long billID) {
 		List<BillsDetail> billsDetails = new ArrayList<>();
 		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
@@ -938,6 +891,20 @@ public class BillsController extends GenericForwardComposer<Component> {
 			}
 		}
 		return billsDetails;
+
+	}
+
+	private double getTotalPrice(Long billID) {
+		double totalPrice = 0;
+
+		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
+			for (BillsDetail detail : lstBillDetail) {
+				if (billID != null && billID.equals(detail.getBillId())) {
+					totalPrice += detail.getTotal();
+				}
+			}
+		}
+		return totalPrice;
 
 	}
 
@@ -993,6 +960,18 @@ public class BillsController extends GenericForwardComposer<Component> {
 			}
 		}
 		return null;
+	}
+
+	public BillsDetail getBillsDetail(Long billID) {
+		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
+			for (BillsDetail detail : lstBillDetail) {
+				if (billID != null && billID.equals(detail.getBillId())) {
+					return detail;
+				}
+			}
+		}
+		return null;
+
 	}
 
 	/**

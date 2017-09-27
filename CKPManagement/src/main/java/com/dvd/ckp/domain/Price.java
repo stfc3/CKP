@@ -36,13 +36,9 @@ public class Price implements Serializable {
     private Long contractId;
     private Long pumpId;
     private Long pumpType;
-    private Long locationType;
-    private Long locationMin;
-    private Long locationMax;
     private Double priceM3;
     private Double priceShift;
     private Double priceWait;
-    private Double priceLocation;
     private Long convertType;
     private Double convertValue;
     private Integer status;
@@ -87,33 +83,6 @@ public class Price implements Serializable {
         this.pumpType = pumpType;
     }
 
-    @Column(name = "location_type")
-    public Long getLocationType() {
-        return locationType;
-    }
-
-    public void setLocationType(Long locationType) {
-        this.locationType = locationType;
-    }
-
-    @Column(name = "location_min")
-    public Long getLocationMin() {
-        return locationMin;
-    }
-
-    public void setLocationMin(Long locationMin) {
-        this.locationMin = locationMin;
-    }
-
-    @Column(name = "location_max")
-    public Long getLocationMax() {
-        return locationMax;
-    }
-
-    public void setLocationMax(Long locationMax) {
-        this.locationMax = locationMax;
-    }
-
     @Column(name = "price_m3")
     public Double getPriceM3() {
         return priceM3;
@@ -139,15 +108,6 @@ public class Price implements Serializable {
 
     public void setPriceWait(Double priceWait) {
         this.priceWait = priceWait;
-    }
-
-    @Column(name = "price_location")
-    public Double getPriceLocation() {
-        return priceLocation;
-    }
-
-    public void setPriceLocation(Double priceLocation) {
-        this.priceLocation = priceLocation;
     }
 
     @Column(name = "convert_type")

@@ -23,19 +23,29 @@ CREATE TABLE IF NOT EXISTS prices
     contract_id BIGINT,
     pump_id BIGINT,
     pump_type INT comment 'Loại máy bơm: bơm tĩnh, bơm qua cần phân phối,...',
-    location_type INT comment 'Loại vị trí: 1 tầng; 0 các vị trí còn lại',
-    location_min BIGINT comment 'Từ tầng',
-    location_max BIGINT comment 'Đến tầng',
     price_m3 DOUBLE comment 'Đơn giá theo m3',
     price_shift DOUBLE comment 'Đơn giá theo ca',
     price_wait DOUBLE comment 'Đơn giá theo ca chờ',
-    price_location DOUBLE comment 'Đơn giá theo vị trí',
     convert_type INT comment 'Loại chuyển đổi. 1: m3 sang m3; 2: m3 sang ca',
     convert_value DOUBLE comment 'Giá trị tính chuyển đổi',
 	status INT DEFAULT 1 comment '1: Hoạt động; 0: Không hoạt động',
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(price_id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng giá';
+
+DROP TABLE IF EXISTS price_location;
+CREATE TABLE IF NOT EXISTS price_location
+(
+    price_location_id BIGINT NOT NULL AUTO_INCREMENT,
+    price_id BIGINT,
+    location_type INT comment 'Loại vị trí: 1 tầng; 2 các vị trí còn lại',
+    location_min BIGINT comment 'Từ tầng',
+    location_max BIGINT comment 'Đến tầng',
+    price_location DOUBLE comment 'Đơn giá theo vị trí',
+	status INT DEFAULT 1 comment '1: Hoạt động; 0: Không hoạt động',
+    create_date timestamp DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(price_location_id)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng giá theo vị trí';
 
 DROP TABLE IF EXISTS contracts;
 CREATE TABLE IF NOT EXISTS contracts
@@ -63,8 +73,6 @@ CREATE TABLE IF NOT EXISTS construction
     construction_code VARCHAR(50),
     construction_name VARCHAR(100),
     status INT default 1,
-    #is_far INT default 0 comment 'Công trình có được coi là xa không. Mặc định là 0; 1 là xa',
-    #convert_value DOUBLE comment 'Giá trị tính chuyển đổi sản lượng cho công nhân',
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(construction_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng công trình';
@@ -90,7 +98,7 @@ CREATE TABLE IF NOT EXISTS location
     location_code VARCHAR(50),
     location_name VARCHAR(200),
     location_value int,
-    location_type INT comment 'Loại vị trí 1: tầng, 0 các loại khác',
+    location_type INT comment 'Loại vị trí 1: tầng, n các loại khác',
     status INT default 1,
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(location_id)
@@ -121,11 +129,15 @@ CREATE TABLE IF NOT EXISTS bill_detail
     pump_id BIGINT,
     pump_type INT comment 'Loại máy bơm: bơm tĩnh, bơm qua cần phân phối,...',
     location_id BIGINT,
-    price_type INT comment 'Loại giá là m3, ca, ca chờ',
+    location_type INT comment 'Loại vị trí sàn, cột vách,...',
     quantity DOUBLE comment 'Khối lượng bơm',
+    quantity_approve DOUBLE comment 'Khối lượng bơm đã duyệt',
     shift INT comment 'Ca chờ',
     total DOUBLE comment 'Tổng tiền',
+    total_approve DOUBLE comment 'Tổng tiền đã duyệt',
     max_staff INT comment 'Số công nhân tối đa. Mặc định là 3 đối với bơm CPP, 5 đối với bơm tĩnh, Có thể hơn nếu được GĐ duyệt',
+	is_far INT DEFAULT 0 comment 'Công trình xa hay không: 1 Xa; 0: không xa',
+    quantity_convert DOUBLE comment 'Giới hạn quy đổi cho công nhân',
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(bill_detail_id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng phiếu bơm chi tiết';

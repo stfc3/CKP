@@ -5,8 +5,8 @@
  */
 package com.dvd.ckp.business.dao;
 
-import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Param;
+import java.math.BigInteger;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -33,6 +33,11 @@ public class UtilsDAOImpl implements UtilsDAO {
         Query query = getCurrentSession().getNamedQuery("Param.fillParamByKey");
         query.setParameter("paramKey", key);
         return (List<Param>) query.list();
+    }
+    @Override
+    public BigInteger getId() {
+        Query query = getCurrentSession().createSQLQuery("SELECT LAST_INSERT_ID()");
+        return (BigInteger) query.list().get(0);
     }
 
 }

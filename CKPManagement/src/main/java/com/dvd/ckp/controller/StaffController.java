@@ -348,44 +348,46 @@ public class StaffController extends GenericForwardComposer {
 	}
 
 	public void onClick$btnExport(Event event) {
-		ExcelWriter<Staff> excelWriter = new ExcelWriter<Staff>();
-		try {
-			int index = 0;
-			for (Staff staff : lstStaffFilter) {
-				index++;
-				staff.setIndex(index);
-				staff.setBirthdayString(
-						DateTimeUtils.convertDateToString(staff.getBirthday(), Constants.FORMAT_DATE_DD_MM_YYY));
-			}
-			String pathFileInput = Constants.PATH_FILE + "file/template/export/staff_data_export.xlsx";
-			String pathFileOut = Constants.PATH_FILE + "file/export/staff_data_export.xlsx";
-
-			excelWriter.write(lstStaffFilter, pathFileInput, pathFileOut);
-			File file = new File(pathFileOut);
-			Filedownload.save(file, null);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error(e.getMessage(), e);
-		}
+		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
+				Messagebox.INFORMATION);
+//		ExcelWriter<Staff> excelWriter = new ExcelWriter<Staff>();
+//		try {
+//			int index = 0;
+//			for (Staff staff : lstStaffFilter) {
+//				index++;
+//				staff.setIndex(index);
+//				staff.setBirthdayString(
+//						DateTimeUtils.convertDateToString(staff.getBirthday(), Constants.FORMAT_DATE_DD_MM_YYY));
+//			}
+//			String pathFileInput = Constants.PATH_FILE + "file/template/export/staff_data_export.xlsx";
+//			String pathFileOut = Constants.PATH_FILE + "file/export/staff_data_export.xlsx";
+//
+//			excelWriter.write(lstStaffFilter, pathFileInput, pathFileOut);
+//			File file = new File(pathFileOut);
+//			Filedownload.save(file, null);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			logger.error(e.getMessage(), e);
+//		}
 
 	}
 
 	public void onImport(ForwardEvent event) {
-
-		final Window windownUpload = (Window) Executions.createComponents("/manager/include/uploadStaff.zul", staff,
-				null);
-		windownUpload.doModal();
-		windownUpload.setBorder(true);
-		windownUpload.setBorder("normal");
-		windownUpload.setClosable(true);
-		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
-
-			@Override
-			public void onEvent(Event event) throws Exception {
-				reloadGrid();
-
-			}
-		});
+		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
+				Messagebox.INFORMATION);
+//		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadStaff.zul", staff, null);
+//		windownUpload.doModal();
+//		windownUpload.setBorder(true);
+//		windownUpload.setBorder("normal");
+//		windownUpload.setClosable(true);
+//		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+//
+//			@Override
+//			public void onEvent(Event event) throws Exception {
+//				reloadGrid();
+//
+//			}
+//		});
 	}
 
 	public void onUpload$uploadbtn(UploadEvent evt) {

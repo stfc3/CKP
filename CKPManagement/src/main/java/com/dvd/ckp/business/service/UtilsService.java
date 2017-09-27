@@ -6,6 +6,7 @@
 package com.dvd.ckp.business.service;
 
 import com.dvd.ckp.domain.Param;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -15,4 +16,6 @@ import java.util.List;
 public interface UtilsService {
 
     List<Param> getParamByKey(String key);
+    
+    BigInteger getId();
 }

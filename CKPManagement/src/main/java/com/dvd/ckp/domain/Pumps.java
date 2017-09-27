@@ -22,9 +22,9 @@ public class Pumps 	{
 	private Long pumpsID;
 	private String pumpsCode;
 	private String pumpsName;
-	private String pumpsCapacity;
-	private String pumpsHight;
-	private String pumpsFar;
+	private int pumpsCapacity;
+	private int pumpsHight;
+	private int pumpsFar;
 	private int status;
 	private String statusName;
 
@@ -58,29 +58,29 @@ public class Pumps 	{
 	}
 
 	@Column(name = "pump_capacity")
-	public String getPumpsCapacity() {
+	public int getPumpsCapacity() {
 		return pumpsCapacity;
 	}
 
-	public void setPumpsCapacity(String pumpsCapacity) {
+	public void setPumpsCapacity(int pumpsCapacity) {
 		this.pumpsCapacity = pumpsCapacity;
 	}
 
 	@Column(name = "pump_high")
-	public String getPumpsHight() {
+	public int getPumpsHight() {
 		return pumpsHight;
 	}
 
-	public void setPumpsHight(String pumpsHight) {
+	public void setPumpsHight(int pumpsHight) {
 		this.pumpsHight = pumpsHight;
 	}
 
 	@Column(name = "pump_far")
-	public String getPumpsFar() {
+	public int getPumpsFar() {
 		return pumpsFar;
 	}
 
-	public void setPumpsFar(String pumpsFar) {
+	public void setPumpsFar(int pumpsFar) {
 		this.pumpsFar = pumpsFar;
 	}
 
@@ -100,8 +100,7 @@ public class Pumps 	{
 				+ ", status=" + status + "]";
 	}
 
-
-	public Pumps(Long pumpsID, String pumpsCode, String pumpsName, String pumpsCapacity, String pumpsHight, String pumpsFar,
+	public Pumps(Long pumpsID, String pumpsCode, String pumpsName, int pumpsCapacity, int pumpsHight, int pumpsFar,
 			int status) {
 		super();
 		this.pumpsID = pumpsID;

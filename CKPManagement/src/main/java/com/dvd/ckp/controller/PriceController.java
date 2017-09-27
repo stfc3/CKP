@@ -25,7 +25,6 @@ import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
-import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.Price;
@@ -34,14 +33,18 @@ import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StyleUtils;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletContext;
 import org.zkoss.zhtml.Messagebox;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Longbox;
+import org.zkoss.zul.Window;
 
 /**
  *
@@ -64,9 +67,9 @@ public class PriceController extends GenericForwardComposer {
     @Wire
     private Grid lstPrice;
     @Wire
-    private Intbox intAdd;
-    @Wire
     private Longbox lgbContractId;
+    @Wire
+    private Window mainPrice;
 
     ListModelList<Price> listDataModelPrice;
 
@@ -91,15 +94,11 @@ public class PriceController extends GenericForwardComposer {
     private final int m3Index = 3;
     private final int shiftIndex = 4;
     private final int waitIndex = 5;
-    private final int locationTypeIndex = 6;
-    private final int locationMinIndex = 7;
-    private final int locationMaxIndex = 8;
-    private final int locationIndex = 9;
-    private final int convertTypeIndex = 10;
-    private final int convertValueIndex = 11;
-    
-    
+    private final int convertTypeIndex = 6;
+    private final int convertValueIndex = 7;
+
     private Long lngContractId;
+    private boolean isAdd;
     ///
 
     @Override
@@ -160,13 +159,11 @@ public class PriceController extends GenericForwardComposer {
         lstLocationMax = lstLocationMin;
 
         List<Price> vlstPrice = new ArrayList<>();
-        if (intAdd.getValue() == 1) {
-            listDataModelPrice = new ListModelList<>(vlstPrice);
-        } else {
-            lngContractId = lgbContractId.getValue();
+        lngContractId = lgbContractId.getValue();
+        if (lgbContractId != null) {
             vlstPrice = contractService.getPriceByContract(lngContractId);
-            listDataModelPrice = new ListModelList<>(vlstPrice);
         }
+        listDataModelPrice = new ListModelList<>(vlstPrice);
 
         lstPrice.setModel(listDataModelPrice);
         setDataDefaultInGrid();
@@ -179,14 +176,12 @@ public class PriceController extends GenericForwardComposer {
      * @param event
      */
     public void onEdit(ForwardEvent event) {
+        isAdd = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         Price price = rowSelected.getValue();
         setComboboxParam(lstCell, getParamDefault(price.getPumpType(), pumpTypeIndex), pumpTypeIndex);
-        setComboboxParam(lstCell, getParamDefault(price.getLocationType(), locationTypeIndex), locationTypeIndex);
         setComboboxParam(lstCell, getParamDefault(price.getConvertType(), convertTypeIndex), convertTypeIndex);
-        setComboboxLocation(lstCell, getLocatoionDefault(price.getLocationMin(), locationMinIndex), locationMinIndex);
-        setComboboxLocation(lstCell, getLocatoionDefault(price.getLocationMax(), locationMaxIndex), locationMaxIndex);
         setComboboxPump(lstCell, getPumpDefault(price.getPumpId()), pumpIndex);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
@@ -198,6 +193,7 @@ public class PriceController extends GenericForwardComposer {
      */
     public void onCancel(ForwardEvent event) {
 
+        isAdd = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         StyleUtils.setDisableComponent(lstCell, 4);
@@ -211,6 +207,7 @@ public class PriceController extends GenericForwardComposer {
      * @param event
      */
     public void onSave(ForwardEvent event) {
+        isAdd = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         Price p = rowSelected.getValue();
@@ -244,13 +241,16 @@ public class PriceController extends GenericForwardComposer {
      * Add row
      */
     public void onClick$add() {
-        Price price = new Price();
-        listDataModelPrice.add(Constants.FIRST_INDEX, price);
-        lstPrice.setModel(listDataModelPrice);
-        lstPrice.renderAll();
-        List<Component> lstCell = lstPrice.getRows().getFirstChild().getChildren();
-        setDataDefaultInGrid();
-        StyleUtils.setEnableComponent(lstCell, 4);
+        if (!isAdd) {
+            isAdd = true;
+            Price price = new Price();
+            listDataModelPrice.add(Constants.FIRST_INDEX, price);
+            lstPrice.setModel(listDataModelPrice);
+            lstPrice.renderAll();
+            List<Component> lstCell = lstPrice.getRows().getFirstChild().getChildren();
+            setDataDefaultInGrid();
+            StyleUtils.setEnableComponent(lstCell, 4);
+        }
     }
 
     /**
@@ -267,10 +267,6 @@ public class PriceController extends GenericForwardComposer {
         Doublebox dbbM3 = null;
         Doublebox dbbShift = null;
         Doublebox dbbWait = null;
-        Combobox cbxLocationType = null;
-        Combobox cbxLocationMin = null;
-        Combobox cbxLocationMax = null;
-        Doublebox dbbLocation = null;
         Combobox cbxConvertType = null;
         Doublebox dbbConvertValue = null;
         component = lstCell.get(pumpTypeIndex).getFirstChild();
@@ -297,26 +293,6 @@ public class PriceController extends GenericForwardComposer {
         if (component != null && component instanceof Doublebox) {
             dbbWait = (Doublebox) component;
             price.setPriceWait(dbbWait.getValue());
-        }
-        component = lstCell.get(locationTypeIndex).getFirstChild();
-        if (component != null && component instanceof Combobox) {
-            cbxLocationType = (Combobox) component;
-            price.setLocationType(cbxLocationType.getSelectedItem().getValue());
-        }
-        component = lstCell.get(locationMinIndex).getFirstChild();
-        if (component != null && component instanceof Combobox) {
-            cbxLocationMin = (Combobox) component;
-            price.setLocationMin(cbxLocationMin.getSelectedItem().getValue());
-        }
-        component = lstCell.get(locationMaxIndex).getFirstChild();
-        if (component != null && component instanceof Combobox) {
-            cbxLocationMax = (Combobox) component;
-            price.setLocationMax(cbxLocationMax.getSelectedItem().getValue());
-        }
-        component = lstCell.get(locationIndex).getFirstChild();
-        if (component != null && component instanceof Doublebox) {
-            dbbLocation = (Doublebox) component;
-            price.setPriceLocation(dbbLocation.getValue());
         }
         component = lstCell.get(convertTypeIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
@@ -349,10 +325,7 @@ public class PriceController extends GenericForwardComposer {
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
                 setComboboxParam(lstCell, getParamDefault(price.getPumpType(), pumpTypeIndex), pumpTypeIndex);
-                setComboboxParam(lstCell, getParamDefault(price.getLocationType(), locationTypeIndex), locationTypeIndex);
                 setComboboxParam(lstCell, getParamDefault(price.getConvertType(), convertTypeIndex), convertTypeIndex);
-                setComboboxLocation(lstCell, getLocatoionDefault(price.getLocationMin(), locationMinIndex), locationMinIndex);
-                setComboboxLocation(lstCell, getLocatoionDefault(price.getLocationMax(), locationMaxIndex), locationMaxIndex);
                 setComboboxPump(lstCell, getPumpDefault(price.getPumpId()), pumpIndex);
             }
         }
@@ -364,9 +337,6 @@ public class PriceController extends GenericForwardComposer {
         switch (type) {
             case pumpTypeIndex:
                 lstParam = lstPumpType;
-                break;
-            case locationTypeIndex:
-                lstParam = lstLocationType;
                 break;
             case convertTypeIndex:
                 lstParam = lstConvertType;
@@ -388,32 +358,6 @@ public class PriceController extends GenericForwardComposer {
         return paramSelected;
     }
 
-    private List<Location> getLocatoionDefault(Long locationId, int type) {
-        List<Location> locationSelected = new ArrayList<>();
-        List<Location> lstLocation = null;
-        switch (type) {
-            case locationMinIndex:
-                lstLocation = lstLocationMin;
-                break;
-            case locationMaxIndex:
-                lstLocation = lstLocationMax;
-                break;
-            default:
-                break;
-        }
-        if (locationId != null && lstLocation != null && !lstLocation.isEmpty()) {
-            for (Location vLocation : lstLocation) {
-                if (locationId.equals(vLocation.getLocationID())) {
-                    locationSelected.add(vLocation);
-                    break;
-                }
-            }
-        }
-        if (locationSelected.isEmpty()) {
-            locationSelected.add(defaultLocation);
-        }
-        return locationSelected;
-    }
     private List<Pumps> getPumpDefault(Long pumpId) {
         List<Pumps> pumpSelected = new ArrayList<>();
         if (pumpId != null && lstPumps != null && !lstPumps.isEmpty()) {
@@ -438,9 +382,6 @@ public class PriceController extends GenericForwardComposer {
             case pumpTypeIndex:
                 lstParam = lstPumpType;
                 break;
-            case locationTypeIndex:
-                lstParam = lstLocationType;
-                break;
             case convertTypeIndex:
                 lstParam = lstConvertType;
                 break;
@@ -456,29 +397,6 @@ public class PriceController extends GenericForwardComposer {
         }
     }
 
-    private void setComboboxLocation(List<Component> lstCell, List<Location> selectedIndex, int columnIndex) {
-        Combobox cbxLocation = null;
-        Component component = lstCell.get(columnIndex).getFirstChild();
-        List<Location> lstLocation = null;
-        switch (columnIndex) {
-            case locationMinIndex:
-                lstLocation = lstLocationMin;
-                break;
-            case locationMaxIndex:
-                lstLocation = lstLocationMax;
-                break;
-            default:
-                break;
-        }
-        if (component != null && component instanceof Combobox) {
-            cbxLocation = (Combobox) component;
-            ListModelList listDataModelParam = new ListModelList(lstLocation);
-            listDataModelParam.setSelection(selectedIndex);
-            cbxLocation.setModel(listDataModelParam);
-            cbxLocation.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getLocationName());
-        }
-    }
-
     private void setComboboxPump(List<Component> lstCell, List<Pumps> selectedIndex, int columnIndex) {
         Combobox cbxPump = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
@@ -489,5 +407,43 @@ public class PriceController extends GenericForwardComposer {
             cbxPump.setModel(listDataModelParam);
             cbxPump.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getPumpsName());
         }
+    }
+
+    public void onPriceLocation(ForwardEvent event) {
+        Messagebox.show(Labels.getLabel("message.confirm.save.content"), Labels.getLabel("message.confirm.save.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+            @Override
+            public void onEvent(Event e) {
+                if (Messagebox.ON_YES.equals(e.getName())) {
+                    Map<String, Object> arguments = new HashMap<>();
+                    Price price;
+                    Long vlngPriceId = null;
+                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    List<Component> lstCell = rowSelected.getChildren();
+                    if (isAdd) {
+                        price = getDataInRow(lstCell);
+                        price.setContractId(lngContractId);
+                        price.setStatus(Constants.STATUS_ACTIVE);
+                        price.setCreateDate(new Date());
+                        contractService.insertOrUpdatePrice(price);
+                        vlngPriceId = utilsService.getId().longValue();
+                    } else {
+                        price = rowSelected.getValue();
+                        vlngPriceId = price.getPriceId();
+
+                    }
+                    StyleUtils.setDisableComponent(lstCell, 4);
+                    reloadGrid();
+                    arguments.put("priceId", vlngPriceId);
+                    Window winAddUser = (Window) Executions.createComponents(
+                            "/manager/include/priceLocation.zul", mainPrice, arguments);
+
+                    winAddUser.setBorder(true);
+                    winAddUser.setBorder("normal");
+                    winAddUser.setClosable(true);
+
+                    winAddUser.doModal();
+                }
+            }
+        });
     }
 }

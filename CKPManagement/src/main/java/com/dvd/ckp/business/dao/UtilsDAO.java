@@ -6,6 +6,7 @@
 package com.dvd.ckp.business.dao;
 
 import com.dvd.ckp.domain.Param;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
 public interface UtilsDAO {
 
     List<Param> getParamByKey(String key);
+    BigInteger getId();
 
 
 }
