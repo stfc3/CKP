@@ -145,7 +145,10 @@
 						<cell style="text-align:center">
 							<a iconSclass="z-icon-pencil"
 								forward="onClick=onEdit" tooltiptext="${c:l('edit')}" />
-
+								
+							<a iconSclass="z-icon-trash-o"
+								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />
+								
 							<a iconSclass="z-icon-check"
 								forward="onClick=onSave" visible="false"
 								tooltiptext="${c:l('save')}" />
@@ -157,9 +160,6 @@
 							<a iconSclass="z-icon-plus-circle"
 								forward="onClick=onAddDetail" visible="false"
 								tooltiptext="${c:l('add.detail')}" />
-
-							<a iconSclass="z-icon-trash-o"
-								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />
 
 							<a iconSclass="z-icon-newspaper-o"
 								forward="onClick=onView" tooltiptext="${c:l('view')}" />

@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.text.StyleConstants;
-
 import org.apache.log4j.Logger;
 import org.zkoss.util.media.Media;
 import org.zkoss.util.resource.Labels;
@@ -28,9 +26,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
-import org.zkoss.zul.A;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Filedownload;
@@ -47,6 +43,7 @@ import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
+import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
@@ -66,8 +63,12 @@ import com.dvd.ckp.utils.StyleUtils;
  *
  * @author viettx
  */
-public class BillsController extends GenericForwardComposer {
+public class BillsController extends GenericForwardComposer<Component> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 457994854668836097L;
 	private static final Logger logger = Logger.getLogger(ConstructionController.class);
 	@WireVariable
 	protected ConstructionService constructionService;
@@ -81,9 +82,12 @@ public class BillsController extends GenericForwardComposer {
 	protected PumpServices pumpServices;
 	@WireVariable
 	protected LocationServices locationServices;
+	@WireVariable
+	protected UtilsService utilsService;
 
 	@Wire
 	private Grid gridBills;
+
 	@Wire
 	private Textbox txtFilterCustomer;
 	@Wire
@@ -91,6 +95,7 @@ public class BillsController extends GenericForwardComposer {
 	@Wire
 	private Datebox dtFilterDate;
 
+	// Model grid in window bill
 	ListModelList<Bills> listDataModel;
 
 	// danh sach hoa don
@@ -114,8 +119,10 @@ public class BillsController extends GenericForwardComposer {
 	// Danh sach hoa don chi tiet
 	private List<BillsDetail> lstBillDetail;
 
+	// Danh sach bom
 	private List<Pumps> lstPumps;
 
+	// Danh sach vi tri bom
 	private List<Location> lstLocation;
 
 	// Vi tri cac column trong grid
@@ -149,6 +156,7 @@ public class BillsController extends GenericForwardComposer {
 		contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
 		locationServices = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
 		pumpServices = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
+		utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
 
 		// list danh sach cong trinh
 		lstConstructions = new ArrayList<>();
@@ -164,7 +172,7 @@ public class BillsController extends GenericForwardComposer {
 		// danh sach vi tri bom
 		lstLocation = locationServices.getListLocation();
 
-		// danh sach loai bom
+		// danh sach bom
 		lstPumps = pumpServices.getAllListData();
 
 		// list danh sach hoa don
@@ -192,13 +200,13 @@ public class BillsController extends GenericForwardComposer {
 
 		// cong trinh default
 		defaultConstruction = new Construction();
-		defaultConstruction.setConstructionId(0l);
+		defaultConstruction.setConstructionId(-1l);
 		defaultConstruction.setConstructionName(Labels.getLabel("option"));
 		lstConstructions.add(0, defaultConstruction);
 
 		// khach hang default
 		defaultCustomer = new Customer();
-		defaultCustomer.setCustomerId(0l);
+		defaultCustomer.setCustomerId(-1l);
 		defaultCustomer.setCustomerName(Labels.getLabel("option"));
 		lstCustomer.add(0, defaultCustomer);
 
@@ -206,6 +214,7 @@ public class BillsController extends GenericForwardComposer {
 		listDataModel = new ListModelList(lstBills);
 		gridBills.setModel(listDataModel);
 		setDataDefaultInGrid();
+
 	}
 
 	/**
@@ -246,13 +255,18 @@ public class BillsController extends GenericForwardComposer {
 		Bills c = rowSelected.getValue();
 		Bills bills = getDataInRow(lstCell);
 		bills.setBillID(c.getBillID());
+		save(bills);
+		StyleUtils.setDisableComponent(lstCell, 6);
+		reloadGrid();
+
+	}
+
+	private void save(Bills bills) {
 		if (insertOrUpdate == 1) {
 			billsServices.save(bills);
 		} else {
 			billsServices.update(bills);
 		}
-		StyleUtils.setDisableComponent(lstCell, 6);
-		reloadGrid();
 		insertOrUpdate = 0;
 	}
 
@@ -733,6 +747,11 @@ public class BillsController extends GenericForwardComposer {
 		}
 	}
 
+	/**
+	 * Action export excel data
+	 * 
+	 * @param event
+	 */
 	public void onClick$btnExport(Event event) {
 		ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
 		try {
@@ -754,6 +773,11 @@ public class BillsController extends GenericForwardComposer {
 
 	}
 
+	/**
+	 * Action import excel for bills
+	 * 
+	 * @param event
+	 */
 	public void onImport(ForwardEvent event) {
 		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
 				Messagebox.INFORMATION);
@@ -772,6 +796,11 @@ public class BillsController extends GenericForwardComposer {
 		return totalPrice;
 	}
 
+	/**
+	 * Open widow bill detail view
+	 * 
+	 * @param event
+	 */
 	public void onView(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		Bills c = rowSelected.getValue();
@@ -808,6 +837,12 @@ public class BillsController extends GenericForwardComposer {
 
 	}
 
+	/**
+	 * Lay thon tin cong trinh
+	 * 
+	 * @param constructionId
+	 * @return
+	 */
 	private Construction getConstruction(Long constructionId) {
 		List<String> lstDataReturn = new ArrayList<>();
 		if (lstConstructions != null && !lstConstructions.isEmpty()) {
@@ -820,41 +855,67 @@ public class BillsController extends GenericForwardComposer {
 		return null;
 	}
 
+	/**
+	 * Open windown add bill detail
+	 * 
+	 * @param event
+	 */
 	public void onAddDetail(ForwardEvent event) {
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		Bills c = rowSelected.getValue();
-		Map<String, Object> arguments = new HashMap();
-		BillsDetail billsDetail = getBillsDetail(c.getBillID());
-		if (billsDetail != null) {
-			arguments.put("detail", billsDetail);
-		} else {
-			arguments.put("detail", new BillsDetail());
-		}
-		arguments.put("bill", c);
-		if (billsDetail != null) {
-			Pumps pumps = getPumps(billsDetail.getPumpID());
-			arguments.put("pumps", pumps);
-			Location location = getLocation(billsDetail.getLocationId());
-			arguments.put("location", location);
-		}
-		Construction construction = getConstruction(c.getConstructionID());
-		arguments.put("construction", construction);
-		final Window windownUpload = (Window) Executions.createComponents("/manager/include/billDetail.zul", bills,
-				arguments);
-		windownUpload.doModal();
-		windownUpload.setBorder(true);
-		windownUpload.setBorder("normal");
-		windownUpload.setClosable(true);
-		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+		Messagebox.show(Labels.getLabel("bills.comfirm"), Labels.getLabel("comfirm"), Messagebox.YES | Messagebox.NO,
+				Messagebox.QUESTION, new EventListener() {
 
-			@Override
-			public void onEvent(Event event) throws Exception {
-				windownUpload.detach();
+					@Override
+					public void onEvent(Event e) throws Exception {
+						if (Messagebox.ON_YES.equals(e.getName())) {
+							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+							Bills c = rowSelected.getValue();
+							save(c);
+							Map<String, Object> arguments = new HashMap();
+							BillsDetail billsDetail = getBillsDetail(c.getBillID());
+							if (billsDetail != null) {
+								arguments.put("detail", billsDetail);
+							} else {
+								arguments.put("detail", new BillsDetail());
+							}
+							arguments.put("bill", c);
+							if (billsDetail != null) {
+								Pumps pumps = getPumps(billsDetail.getPumpID());
+								arguments.put("pumps", pumps);
+								Location location = getLocation(billsDetail.getLocationId());
+								arguments.put("location", location);
+							}
+							Construction construction = getConstruction(c.getConstructionID());
+							arguments.put("construction", construction);
+							List<BillsDetail> lstData = new ArrayList<>();
 
-			}
-		});
+							lstData.addAll(getListBillsDetail(c.getBillID()));
+
+							final Window windownUpload = (Window) Executions
+									.createComponents("/manager/include/billDetail.zul", bills, arguments);
+							windownUpload.doModal();
+							windownUpload.setBorder(true);
+							windownUpload.setBorder("normal");
+							windownUpload.setClosable(true);
+							windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+								@Override
+								public void onEvent(Event event) throws Exception {
+									windownUpload.detach();
+
+								}
+							});
+						}
+
+					}
+				});
 	}
 
+	/**
+	 * Lay thon tin bill detail
+	 * 
+	 * @param billID
+	 * @return
+	 */
 	private BillsDetail getBillsDetail(Long billID) {
 		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
 			for (BillsDetail detail : lstBillDetail) {
@@ -867,7 +928,20 @@ public class BillsController extends GenericForwardComposer {
 
 	}
 
-	/*
+	private List<BillsDetail> getListBillsDetail(Long billID) {
+		List<BillsDetail> billsDetails = new ArrayList<>();
+		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
+			for (BillsDetail detail : lstBillDetail) {
+				if (billID != null && billID.equals(detail.getBillId())) {
+					billsDetails.add(detail);
+				}
+			}
+		}
+		return billsDetails;
+
+	}
+
+	/**
 	 * lay danh sach hop dong theo khach hang
 	 */
 	private List<Contract> getContractByCustomer(Long customerID) {
@@ -882,7 +956,7 @@ public class BillsController extends GenericForwardComposer {
 		return lstReturn;
 	}
 
-	/*
+	/**
 	 * Lay danh sach cong trinh theo khach hang
 	 */
 	private List<Construction> getConstructionByContract(Long customerID) {
@@ -904,6 +978,12 @@ public class BillsController extends GenericForwardComposer {
 		return lstConstruction;
 	}
 
+	/**
+	 * Lay thong tin may bom len man hinh view bill detail
+	 * 
+	 * @param pumps
+	 * @return
+	 */
 	private Pumps getPumps(Long pumps) {
 		if (lstPumps != null && !lstPumps.isEmpty()) {
 			for (Pumps item : lstPumps) {
@@ -915,6 +995,12 @@ public class BillsController extends GenericForwardComposer {
 		return null;
 	}
 
+	/**
+	 * lay vi tri bom len view bill detail
+	 * 
+	 * @param locationId
+	 * @return
+	 */
 	private Location getLocation(Long locationId) {
 		if (lstLocation != null && !lstLocation.isEmpty()) {
 			for (Location item : lstLocation) {
@@ -925,4 +1011,5 @@ public class BillsController extends GenericForwardComposer {
 		}
 		return null;
 	}
+
 }
