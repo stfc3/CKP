@@ -59,8 +59,6 @@ public class PriceLocationController extends GenericForwardComposer {
     @Wire
     private Grid lstPriceLocation;
     @Wire
-    private Intbox intAdd;
-    @Wire
     private Longbox lgbPriceId;
 
     ListModelList<PriceLocation> listDataModelPriceLocation;
@@ -78,7 +76,7 @@ public class PriceLocationController extends GenericForwardComposer {
     private final int locationMinIndex = 2;
     private final int locationMaxIndex = 3;
     private final int locationIndex = 4;
-    
+
     private Long lngPriceId;
     ///
 
@@ -95,15 +93,12 @@ public class PriceLocationController extends GenericForwardComposer {
         defaultParam.setParamValue(Constants.DEFAULT_ID);
         defaultParam.setParamName(Labels.getLabel("option"));
 
-
         //list loai vi tri
         lstLocationType = utilsService.getParamByKey(Constants.PRAM_LOCATION_TYPE);
         if (lstLocationType == null) {
             lstLocationType = new ArrayList<>();
         }
         lstLocationType.add(Constants.FIRST_INDEX, defaultParam);
-
-
 
         //list vi tri
         defaultLocation = new Location();
@@ -118,13 +113,11 @@ public class PriceLocationController extends GenericForwardComposer {
         lstLocationMax = lstLocationMin;
 
         List<PriceLocation> vlstPriceLocations = new ArrayList<>();
-        if (intAdd.getValue() == 1) {
-            listDataModelPriceLocation = new ListModelList<>(vlstPriceLocations);
-        } else {
-            lngPriceId = lgbPriceId.getValue();
+        lngPriceId = lgbPriceId.getValue();
+        if (lngPriceId != null) {
             vlstPriceLocations = contractService.getPriceLocationByPrice(lngPriceId);
-            listDataModelPriceLocation = new ListModelList<>(vlstPriceLocations);
         }
+        listDataModelPriceLocation = new ListModelList<>(vlstPriceLocations);
 
         lstPriceLocation.setModel(listDataModelPriceLocation);
         setDataDefaultInGrid();

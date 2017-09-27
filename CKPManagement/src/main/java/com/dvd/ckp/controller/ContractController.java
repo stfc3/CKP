@@ -27,8 +27,10 @@ import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.CustomerService;
+import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
+import com.dvd.ckp.domain.Price;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
@@ -64,6 +66,8 @@ public class ContractController extends GenericForwardComposer {
     protected ContractService contractService;
     @WireVariable
     protected CustomerService customerService;
+    @WireVariable
+    protected UtilsService utilsService;
     @Wire
     private Grid lstContract;
     @Wire
@@ -98,6 +102,7 @@ public class ContractController extends GenericForwardComposer {
         context = Sessions.getCurrent().getWebApp().getServletContext();
         contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
         customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
+        utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
 
         lstContracts = contractService.getContractActive();
         listDataModel = new ListModelList(lstContracts);
@@ -359,24 +364,39 @@ public class ContractController extends GenericForwardComposer {
     }
 
     public void onPrice(ForwardEvent event) {
+        Messagebox.show(Labels.getLabel("message.confirm.save.content"), Labels.getLabel("message.confirm.save.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+            @Override
+            public void onEvent(Event e) {
+                if (Messagebox.ON_YES.equals(e.getName())) {
+                    Map<String, Object> arguments = new HashMap<>();
+                    Contract contract;
+                    Long vlngContractId = null;
+                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    List<Component> lstCell = rowSelected.getChildren();
+                    if (isAdd) {
+                        contract = getDataInRow(lstCell);
+                        contract.setStatus(Constants.STATUS_ACTIVE);
+                        contract.setCreateDate(new Date());
+                        contractService.insertOrUpdateContract(contract);
+                        vlngContractId = utilsService.getId().longValue();
+                    } else {
+                        contract = rowSelected.getValue();
+                        vlngContractId = contract.getContractId();
+                    }
+                    StyleUtils.setDisableComponent(lstCell, 4);
+                    reloadGrid();
+                    arguments.put("contractId", vlngContractId);
+                    Window winAddUser = (Window) Executions.createComponents(
+                            "/manager/include/price.zul", mainContract, arguments);
 
-        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-        Contract contract = rowSelected.getValue();
-        Map<String, Object> arguments = new HashMap<>();
-        if (isAdd) {
-            arguments.put("isAdd", 1);
-        } else {
-            arguments.put("isAdd", 0);
-            arguments.put("contractId", contract.getContractId());
-        }
-        Window winAddUser = (Window) Executions.createComponents(
-                "/manager/include/price.zul", mainContract, arguments);
+                    winAddUser.setBorder(true);
+                    winAddUser.setBorder("normal");
+                    winAddUser.setClosable(true);
 
-        winAddUser.setBorder(true);
-        winAddUser.setBorder("normal");
-        winAddUser.setClosable(true);
-
-        winAddUser.doModal();
+                    winAddUser.doModal();
+                }
+            }
+        });
     }
 
     public void onImport(ForwardEvent event) {

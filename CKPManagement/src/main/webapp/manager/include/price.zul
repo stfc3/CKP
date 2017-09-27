@@ -7,7 +7,6 @@
              action="show: slideDown;hide: slideUp"   title="${c:l('price')}"
              border="normal" width="90%" height="90%" maximizable="false" contentStyle="overflow:auto">
         <groupbox>
-            <intbox id="intAdd" value="${arg.isAdd}" visible="false"/>
             <longbox id="lgbContractId" value="${arg.contractId}" visible="false"/>
             <caption label="${c:l('price.category')}" />
             <grid id="lstPrice" mold="paging" pageSize="20" pagingPosition="both">

@@ -67,8 +67,6 @@ public class PriceController extends GenericForwardComposer {
     @Wire
     private Grid lstPrice;
     @Wire
-    private Intbox intAdd;
-    @Wire
     private Longbox lgbContractId;
     @Wire
     private Window mainPrice;
@@ -101,7 +99,6 @@ public class PriceController extends GenericForwardComposer {
 
     private Long lngContractId;
     private boolean isAdd;
-    private boolean isNew;
     ///
 
     @Override
@@ -162,15 +159,11 @@ public class PriceController extends GenericForwardComposer {
         lstLocationMax = lstLocationMin;
 
         List<Price> vlstPrice = new ArrayList<>();
-        if (intAdd.getValue() == 1) {
-            isNew = true;
-            listDataModelPrice = new ListModelList<>(vlstPrice);
-        } else {
-            isNew = false;
-            lngContractId = lgbContractId.getValue();
+        lngContractId = lgbContractId.getValue();
+        if (lgbContractId != null) {
             vlstPrice = contractService.getPriceByContract(lngContractId);
-            listDataModelPrice = new ListModelList<>(vlstPrice);
         }
+        listDataModelPrice = new ListModelList<>(vlstPrice);
 
         lstPrice.setModel(listDataModelPrice);
         setDataDefaultInGrid();
@@ -223,10 +216,7 @@ public class PriceController extends GenericForwardComposer {
         price.setContractId(lngContractId);
         price.setStatus(Constants.STATUS_ACTIVE);
         price.setCreateDate(new Date());
-        listDataModelPrice.add(price);
-        if (!isNew) {
-            contractService.insertOrUpdatePrice(price);
-        }
+        contractService.insertOrUpdatePrice(price);
         StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
     }
@@ -238,12 +228,9 @@ public class PriceController extends GenericForwardComposer {
                 if (Messagebox.ON_YES.equals(e.getName())) {
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
                     Price price = rowSelected.getValue();
-                    listDataModelPrice.remove(price);
                     price.setStatus(Constants.STATUS_INACTIVE);
                     price.setCreateDate(new Date());
-                    if (!isNew) {
-                        contractService.insertOrUpdatePrice(price);
-                    }
+                    contractService.insertOrUpdatePrice(price);
                     reloadGrid();
                 }
             }
@@ -324,7 +311,7 @@ public class PriceController extends GenericForwardComposer {
      * Reload grid
      */
     private void reloadGrid() {
-//        listDataModelPrice = new ListModelList(contractService.getPriceByContract(lngContractId));
+        listDataModelPrice = new ListModelList(contractService.getPriceByContract(lngContractId));
         lstPrice.setModel(listDataModelPrice);
         setDataDefaultInGrid();
     }
@@ -423,23 +410,40 @@ public class PriceController extends GenericForwardComposer {
     }
 
     public void onPriceLocation(ForwardEvent event) {
+        Messagebox.show(Labels.getLabel("message.confirm.save.content"), Labels.getLabel("message.confirm.save.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+            @Override
+            public void onEvent(Event e) {
+                if (Messagebox.ON_YES.equals(e.getName())) {
+                    Map<String, Object> arguments = new HashMap<>();
+                    Price price;
+                    Long vlngPriceId = null;
+                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    List<Component> lstCell = rowSelected.getChildren();
+                    if (isAdd) {
+                        price = getDataInRow(lstCell);
+                        price.setContractId(lngContractId);
+                        price.setStatus(Constants.STATUS_ACTIVE);
+                        price.setCreateDate(new Date());
+                        contractService.insertOrUpdatePrice(price);
+                        vlngPriceId = utilsService.getId().longValue();
+                    } else {
+                        price = rowSelected.getValue();
+                        vlngPriceId = price.getPriceId();
 
-        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-        Price price = rowSelected.getValue();
-        Map<String, Object> arguments = new HashMap<>();
-        if (isAdd) {
-            arguments.put("isAdd", 1);
-        } else {
-            arguments.put("isAdd", 0);
-            arguments.put("priceId", price.getPriceId());
-        }
-        Window winAddUser = (Window) Executions.createComponents(
-                "/manager/include/priceLocation.zul", mainPrice, arguments);
+                    }
+                    StyleUtils.setDisableComponent(lstCell, 4);
+                    reloadGrid();
+                    arguments.put("priceId", vlngPriceId);
+                    Window winAddUser = (Window) Executions.createComponents(
+                            "/manager/include/priceLocation.zul", mainPrice, arguments);
 
-        winAddUser.setBorder(true);
-        winAddUser.setBorder("normal");
-        winAddUser.setClosable(true);
+                    winAddUser.setBorder(true);
+                    winAddUser.setBorder("normal");
+                    winAddUser.setClosable(true);
 
-        winAddUser.doModal();
+                    winAddUser.doModal();
+                }
+            }
+        });
     }
 }

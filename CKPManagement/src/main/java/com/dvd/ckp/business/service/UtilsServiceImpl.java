@@ -7,6 +7,7 @@ package com.dvd.ckp.business.service;
 
 import com.dvd.ckp.business.dao.UtilsDAO;
 import com.dvd.ckp.domain.Param;
+import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,11 @@ public class UtilsServiceImpl implements UtilsService {
     @Override
     public List<Param> getParamByKey(String key) {
         return UtilsDAO.getParamByKey(key);
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public BigInteger getId() {
+        return UtilsDAO.getId();
     }
 
 
