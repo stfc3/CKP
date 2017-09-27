@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:n="native">
+	<window id="quantityStaff"
+		apply="com.dvd.ckp.controller.QuantityStaffController"
+		position="center,center" closable="true"
+		action="show: slideDown;hide: slideUp" border="normal" width="70%"
+		height="70%" maximizable="false" title="${c:l('staff.quantity')}"
+		onCancel="quantityStaff.detach();">
+		<style src="/css/style.css" />
+
+
+		<listbox visible="true" emptyMessage="${c:l('noResult')}"  id="resultList" model="${$composer.listDataModelDetail}" mold="paging" pageSize="20" checkmark="true" multiple="true" pagingPosition="both" sizedByContent="true">
+			<template name="model">
+				<listitem label="${each}">
+					<listcell style="text-align:left">
+						<label value="${each.staffName}" />
+					</listcell>
+				</listitem>
+			</template>
+		</listbox>
+
+
+	</window>
+</zk>

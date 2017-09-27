@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 @NamedQuery(name = "Staff.getAllStaff", query = "select u FROM Staff u WHERE status = 1")
 public class Staff {
 	private int index;
-	private int staffId;
+	private Long staffId;
 	private String staffCode;
 	private String staffName;
 	private String phone;
@@ -30,11 +30,11 @@ public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "staff_id")
-	public int getStaffId() {
+	public Long getStaffId() {
 		return staffId;
 	}
 
-	public void setStaffId(int staffId) {
+	public void setStaffId(Long staffId) {
 		this.staffId = staffId;
 	}
 
