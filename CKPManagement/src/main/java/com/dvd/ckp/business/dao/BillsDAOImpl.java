@@ -1,6 +1,5 @@
 package com.dvd.ckp.business.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -8,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -207,7 +207,9 @@ public class BillsDAOImpl implements BillDAO {
 			Long locationID, Double quantity, int shift) {
 		try {
 			String sql = "CALL calculator_revenue(:construction,:pump,:pump_type,:location_type,:location_id,:quantity,:shift)";
-			Query query = getCurrentSession().createSQLQuery(sql).addEntity(CalculatorRevenue.class);
+			Query query = getCurrentSession().createSQLQuery(sql).addScalar("total_revenue", StandardBasicTypes.DOUBLE)
+					.addScalar("description", StandardBasicTypes.STRING)
+					.setResultTransformer(Transformers.aliasToBean(CalculatorRevenue.class));
 
 			query.setParameter("construction", constructionId);
 			query.setParameter("pump", pumpId).setParameter("pump_type", pumpType);
@@ -216,13 +218,8 @@ public class BillsDAOImpl implements BillDAO {
 			query.setParameter("quantity", quantity);
 			query.setParameter("shift", shift);
 
-			List lstData = query.list();
-			List<CalculatorRevenue> lstDataReturn = new ArrayList();
-			for (int i = 0; i < lstData.size(); i++) {
-				CalculatorRevenue revenue = (CalculatorRevenue) lstData.get(i);
-				lstDataReturn.add(revenue);
-			}
-			return lstDataReturn;
+			List<CalculatorRevenue> lstData = query.list();
+			return lstData;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}

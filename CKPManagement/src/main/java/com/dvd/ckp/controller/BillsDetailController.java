@@ -87,7 +87,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 	private final int locationDetail = 4;
 	private final int locationTypeDetail = 3;
 
-	private Textbox txtBillID;
+	private Longbox txtBillID;
 
 	private Longbox txtConstruction;
 
@@ -411,7 +411,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 			billsDetail.setTotal(Double.valueOf(txtTotal.getValue()));
 		}
 
-		billsDetail.setBillId(Long.valueOf(txtBillID.getValue()));
+		billsDetail.setBillId(txtBillID.getValue());
 		return billsDetail;
 	}
 
