@@ -58,7 +58,8 @@ public class StyleUtils {
                         ((A) child).setDisabled(false);
                     } else if (child instanceof A && c.getChildren().size() == 2) {
                         Button btn = (Button) c.getChildren().get(1);
-                        btn.setDisabled(false);
+//                        btn.setDisabled(false);
+                        btn.setVisible(true);
                     } else if (child instanceof A && c.getChildren().size() >= 4) {
                         A edit;
                         A delete;
@@ -155,7 +156,8 @@ public class StyleUtils {
                         ((A) child).setDisabled(true);
                     } else if (child instanceof A && c.getChildren().size() == 2) {
                         Button btn = (Button) c.getChildren().get(1);
-                        btn.setDisabled(true);
+//                        btn.setDisabled(true);
+                        btn.setVisible(false);
                     } else if (child instanceof A && c.getChildren().size() >= 4) {
                         A edit;
                         A delete;
