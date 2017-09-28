@@ -124,7 +124,7 @@
             <hbox hflex="2">
                 <vbox>
                     <label
-                        style="font-weight: bold;font-size: 16px;color:black"
+                        style="font-weight: bold;font-size: 14px;color:black"
                         value="${c:l('bills.from.date')}">
                     </label>
                     <label
@@ -197,7 +197,7 @@
             <hbox hflex="2">
                 <vbox>
                     <label
-                        style="font-weight: bold;font-size: 16px;color:black"
+                        style="font-weight: bold;font-size: 14px;color:black"
                         value="${c:l('bills.detail.volume')}">
                     </label>
                     <label style="font-style: italic;color:black"
@@ -248,7 +248,7 @@
             <hbox hflex="2">
                 <vbox>
                     <label
-                        style="font-weight: bold;font-size: 16px;color:black"
+                        style="font-weight: bold;font-size: 14px;color:black"
                         value="${c:l('bills.detail.customer')}">
                     </label>
                     <label style="font-style: italic;color:black"
@@ -256,7 +256,7 @@
                     </label>
 
                     <label
-                        style="font-weight: bold;font-size: 16px;color:black"
+                        style="font-weight: bold;font-size: 14px;color:black"
                         value="${c:l('bills.detail.pumps.signature.name')}">
                     </label>
                     <label style="font-style: italic;color:black"
@@ -275,7 +275,7 @@
                                                value="Pum Operator">
                     </label>
                     <label
-                        style="font-weight: bold;font-size: 16px;color:black"
+                        style="font-weight: bold;font-size: 14px;color:black"
                         value="${c:l('bills.detail.pumps.signature.name')}">
                     </label>
                     <label style="font-style: italic;color:black"
