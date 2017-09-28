@@ -66,8 +66,6 @@ public class PumpsController extends GenericForwardComposer {
 	ListModelList<Pumps> listDataModel;
 	private List<Pumps> lstPumps;
 	private List<Pumps> lstPumpsFilter;
-	public Button btnExport;
-	public Button btnImport;
 	private int insertOrUpdate = 0;
 
 	private Window pumps;
@@ -116,16 +114,26 @@ public class PumpsController extends GenericForwardComposer {
 	}
 
 	public void onDelete(ForwardEvent event) {
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		List<Component> lstCell = rowSelected.getChildren();
-		Pumps c = rowSelected.getValue();
-		Pumps pumps = getDataInRow(lstCell);
-		pumps.setPumpsID(c.getPumpsID());
-		pumps.setStatus(3);
-		lstPumpsFilter.remove(pumps);
-		pumpsService.detele(pumps);
-		StyleUtils.setDisableComponent(lstCell, 4);
-		reloadGrid();
+		Messagebox.show(Labels.getLabel("message.confirm.delete.content"),
+				Labels.getLabel("message.confirm.delete.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,
+				new EventListener() {
+					@Override
+					public void onEvent(Event e) {
+						if (Messagebox.ON_YES.equals(e.getName())) {
+							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+							List<Component> lstCell = rowSelected.getChildren();
+							Pumps c = rowSelected.getValue();
+							Pumps pumps = getDataInRow(lstCell);
+							pumps.setPumpsID(c.getPumpsID());
+							pumps.setStatus(3);
+							lstPumpsFilter.remove(pumps);
+							pumpsService.detele(pumps);
+							StyleUtils.setDisableComponent(lstCell, 4);
+							reloadGrid();
+						}
+					}
+				});
+
 	}
 
 	/**
@@ -158,8 +166,9 @@ public class PumpsController extends GenericForwardComposer {
 		Pumps pumps = getDataInRow(lstCell);
 		pumps.setPumpsID(c.getPumpsID());
 		if (insertOrUpdate == 1) {
-			lstPumpsFilter.add(pumps);
 			pumpsService.savePumps(pumps);
+			lstPumps.add(pumps);
+			lstPumpsFilter.add(pumps);
 		} else {
 			pumpsService.update(pumps);
 		}
@@ -171,7 +180,7 @@ public class PumpsController extends GenericForwardComposer {
 	/**
 	 * Add row
 	 */
-	public void onClick$add() {
+	public void onAdd(ForwardEvent event) {
 		Pumps pumpAddItem = new Pumps();
 		pumpAddItem.setStatus(1);
 		listDataModel.add(0, pumpAddItem);
@@ -272,12 +281,12 @@ public class PumpsController extends GenericForwardComposer {
 				index++;
 				pumps.setIndex(index);
 				if (StringUtils.isValidString(pumps.getPumpsCode())
-						&& pumps.getPumpsCode().toLowerCase().contains(item.getPumpsCode().toLowerCase())) {
+						&& item.getPumpsCode().toLowerCase().contains(pumps.getPumpsCode().toLowerCase())) {
 					vlstData.add(item);
 					lstPumpsFilter.clear();
 					lstPumpsFilter.add(item);
 				} else if (StringUtils.isValidString(pumps.getPumpsName())
-						&& pumps.getPumpsName().toLowerCase().contains(item.getPumpsName().toLowerCase())) {
+						&& item.getPumpsName().toLowerCase().contains(pumps.getPumpsName().toLowerCase())) {
 					vlstData.add(item);
 					lstPumpsFilter.clear();
 					lstPumpsFilter.add(item);
@@ -293,7 +302,7 @@ public class PumpsController extends GenericForwardComposer {
 		gridPumps.setModel(listDataModel);
 	}
 
-	public void onClick$btnExport(Event event) {
+	public void onExport(ForwardEvent event) {
 
 		ExcelWriter<Pumps> excelWriter = new ExcelWriter<Pumps>();
 		try {

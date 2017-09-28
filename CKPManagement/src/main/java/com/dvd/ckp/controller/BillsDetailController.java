@@ -23,7 +23,6 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Row;
-import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
@@ -321,7 +320,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 		}
 	}
 
-	public void onClick$addBillDetail() {
+	public void onAdd(ForwardEvent event) {
 		BillsDetail billsDetail = new BillsDetail();
 		listDataModelDetail.add(0, billsDetail);
 		gridBillsDetail.setModel(listDataModelDetail);
@@ -432,6 +431,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 		billsDetail.setStatus(1);
 		if (insertOrUpdate == 1) {
 			billsServices.save(billsDetail);
+			lstBillDetail.add(billsDetail);
 		} else {
 			billsServices.update(billsDetail);
 		}

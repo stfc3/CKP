@@ -73,8 +73,6 @@ public class StaffController extends GenericForwardComposer {
 	private ListModelList<Staff> listDataModel;
 	private List<Staff> lstStaff;
 	private List<Staff> lstStaffFilter;
-	public Button btnExport;
-	public Button btnImport;
 	private int insertOrUpdate = 0;
 
 	private Window staff;
@@ -123,16 +121,26 @@ public class StaffController extends GenericForwardComposer {
 	}
 
 	public void onDelete(ForwardEvent event) {
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		List<Component> lstCell = rowSelected.getChildren();
-		Staff c = rowSelected.getValue();
-		Staff staff = getDataInRow(lstCell);
-		staff.setStaffId(c.getStaffId());
-		staff.setStatus(3);
-		lstStaffFilter.remove(staff);
-		staffService.detele(staff);
-		setDisableComponent(lstCell);
-		reloadGrid();
+		Messagebox.show(Labels.getLabel("message.confirm.delete.content"),
+				Labels.getLabel("message.confirm.delete.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,
+				new EventListener() {
+					@Override
+					public void onEvent(Event e) {
+						if (Messagebox.ON_YES.equals(e.getName())) {
+							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+							List<Component> lstCell = rowSelected.getChildren();
+							Staff c = rowSelected.getValue();
+							Staff staff = getDataInRow(lstCell);
+							staff.setStaffId(c.getStaffId());
+							staff.setStatus(3);
+							lstStaffFilter.remove(staff);
+							staffService.detele(staff);
+							setDisableComponent(lstCell);
+							reloadGrid();
+						}
+					}
+				});
+
 	}
 
 	/**
@@ -225,8 +233,9 @@ public class StaffController extends GenericForwardComposer {
 		Staff staff = getDataInRow(lstCell);
 		staff.setStaffId(c.getStaffId());
 		if (insertOrUpdate == 1) {
-			lstStaffFilter.add(staff);
 			staffService.save(staff);
+			lstStaffFilter.add(staff);
+			lstStaff.add(staff);
 		} else {
 			staffService.update(staff);
 		}
@@ -238,7 +247,7 @@ public class StaffController extends GenericForwardComposer {
 	/**
 	 * Add row
 	 */
-	public void onClick$add() {
+	public void onAdd(ForwardEvent event) {
 		Staff newItem = new Staff();
 		newItem.setStatus(1);
 		listDataModel.add(0, newItem);
@@ -347,47 +356,44 @@ public class StaffController extends GenericForwardComposer {
 		gridStaff.setModel(listDataModel);
 	}
 
-	public void onClick$btnExport(Event event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-//		ExcelWriter<Staff> excelWriter = new ExcelWriter<Staff>();
-//		try {
-//			int index = 0;
-//			for (Staff staff : lstStaffFilter) {
-//				index++;
-//				staff.setIndex(index);
-//				staff.setBirthdayString(
-//						DateTimeUtils.convertDateToString(staff.getBirthday(), Constants.FORMAT_DATE_DD_MM_YYY));
-//			}
-//			String pathFileInput = Constants.PATH_FILE + "file/template/export/staff_data_export.xlsx";
-//			String pathFileOut = Constants.PATH_FILE + "file/export/staff_data_export.xlsx";
-//
-//			excelWriter.write(lstStaffFilter, pathFileInput, pathFileOut);
-//			File file = new File(pathFileOut);
-//			Filedownload.save(file, null);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			logger.error(e.getMessage(), e);
-//		}
+	public void onExport(Event event) {
+		ExcelWriter<Staff> excelWriter = new ExcelWriter<Staff>();
+		try {
+			int index = 0;
+			for (Staff staff : lstStaffFilter) {
+				index++;
+				staff.setIndex(index);
+				staff.setBirthdayString(
+						DateTimeUtils.convertDateToString(staff.getBirthday(), Constants.FORMAT_DATE_DD_MM_YYY));
+			}
+			String pathFileInput = Constants.PATH_FILE + "file/template/export/staff_data_export.xlsx";
+			String pathFileOut = Constants.PATH_FILE + "file/export/staff_data_export.xlsx";
+
+			excelWriter.write(lstStaffFilter, pathFileInput, pathFileOut);
+			File file = new File(pathFileOut);
+			Filedownload.save(file, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage(), e);
+		}
 
 	}
 
 	public void onImport(ForwardEvent event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-//		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadStaff.zul", staff, null);
-//		windownUpload.doModal();
-//		windownUpload.setBorder(true);
-//		windownUpload.setBorder("normal");
-//		windownUpload.setClosable(true);
-//		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
-//
-//			@Override
-//			public void onEvent(Event event) throws Exception {
-//				reloadGrid();
-//
-//			}
-//		});
+
+		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadStaff.zul", staff, null);
+		windownUpload.doModal();
+		windownUpload.setBorder(true);
+		windownUpload.setBorder("normal");
+		windownUpload.setClosable(true);
+		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				reloadGrid();
+
+			}
+		});
 	}
 
 	public void onUpload$uploadbtn(UploadEvent evt) {

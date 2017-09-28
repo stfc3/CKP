@@ -129,9 +129,8 @@
 		<grid id="gridBillsDetail">
 			<auxhead sclass="category-center">
 				<auxheader colspan="20">
-					<button id="addBillDetail"
-						iconSclass="z-icon-plus-circle" label="${c:l('add')}"
-						style="border: none;color: green;font-weight: bold;" />
+					<a class="btn-cursor" forward="onClick=onAdd"
+						iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
 				</auxheader>
 			</auxhead>
 			<columns style="text-align:center; ">

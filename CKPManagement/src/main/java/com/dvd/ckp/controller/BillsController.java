@@ -259,6 +259,8 @@ public class BillsController extends GenericForwardComposer<Component> {
 	private void save(Bills bills) {
 		if (insertOrUpdate == 1) {
 			billsServices.save(bills);
+			lstBills.add(bills);
+			lstBillsFilter.add(bills);
 		} else {
 			billsServices.update(bills);
 		}
@@ -267,21 +269,31 @@ public class BillsController extends GenericForwardComposer<Component> {
 	}
 
 	public void onDelete(ForwardEvent event) {
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		List<Component> lstCell = rowSelected.getChildren();
-		Bills c = rowSelected.getValue();
-		Bills bills = getDataInRow(lstCell);
-		bills.setBillID(c.getBillID());
-		bills.setStatus(3);
-		billsServices.delete(bills);
-		reloadGrid();
+		Messagebox.show(Labels.getLabel("message.confirm.delete.content"),
+				Labels.getLabel("message.confirm.delete.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,
+				new EventListener() {
+					@Override
+					public void onEvent(Event e) {
+						if (Messagebox.ON_YES.equals(e.getName())) {
+
+							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+							List<Component> lstCell = rowSelected.getChildren();
+							Bills c = rowSelected.getValue();
+							Bills bills = getDataInRow(lstCell);
+							bills.setBillID(c.getBillID());
+							bills.setStatus(3);
+							billsServices.delete(bills);
+							reloadGrid();
+						}
+					}
+				});
 
 	}
 
 	/**
 	 * Add row
 	 */
-	public void onClick$add() {
+	public void onAdd(ForwardEvent event) {
 		Bills bill = new Bills();
 		bill.setStatus(1);
 		listDataModel.add(0, bill);
@@ -730,7 +742,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 	 * 
 	 * @param event
 	 */
-	public void onClick$btnExport(Event event) {
+	public void onExport(ForwardEvent event) {
 		ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
 		try {
 			int index = 0;
@@ -836,6 +848,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 							Bills c = rowSelected.getValue();
 							save(c);
+							reloadGrid();
 							Map<String, Object> arguments = new HashMap();
 							BillsDetail billsDetail = getBillsDetail(c.getBillID());
 							if (billsDetail != null) {

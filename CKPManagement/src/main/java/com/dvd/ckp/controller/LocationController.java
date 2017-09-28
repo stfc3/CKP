@@ -23,10 +23,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
-import org.zkoss.zul.A;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Cell;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Intbox;
@@ -71,8 +68,6 @@ public class LocationController extends GenericForwardComposer {
 	ListModelList<Location> listDataModel;
 	private List<Location> lstLocation;
 	private List<Location> lstFilter;
-	public Button btnExport;
-	public Button btnImport;
 	private int insertOrUpdate = 0;
 
 	@Wire
@@ -89,7 +84,6 @@ public class LocationController extends GenericForwardComposer {
 	public Textbox txtTotalRowError;
 
 	private List<LocationExcel> lstError = new ArrayList<LocationExcel>();
-
 	public Button errorList;
 
 	@Override
@@ -120,16 +114,26 @@ public class LocationController extends GenericForwardComposer {
 	}
 
 	public void onDelete(ForwardEvent event) {
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		List<Component> lstCell = rowSelected.getChildren();
-		Location c = rowSelected.getValue();
-		Location location = getDataInRow(lstCell);
-		location.setLocationID(c.getLocationID());
-		location.setStatus(3);
-		lstFilter.remove(location);
-		locationServices.detele(location);
-		StyleUtils.setDisableComponent(lstCell, 4);
-		reloadGrid();
+		Messagebox.show(Labels.getLabel("message.confirm.delete.content"),
+				Labels.getLabel("message.confirm.delete.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,
+				new EventListener() {
+					@Override
+					public void onEvent(Event e) {
+						if (Messagebox.ON_YES.equals(e.getName())) {
+							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+							List<Component> lstCell = rowSelected.getChildren();
+							Location c = rowSelected.getValue();
+							Location location = getDataInRow(lstCell);
+							location.setLocationID(c.getLocationID());
+							location.setStatus(3);
+							lstFilter.remove(location);
+							locationServices.detele(location);
+							StyleUtils.setDisableComponent(lstCell, 4);
+							reloadGrid();
+						}
+					}
+				});
+
 	}
 
 	/**
@@ -145,12 +149,6 @@ public class LocationController extends GenericForwardComposer {
 	}
 
 	/**
-	 * Cancel
-	 *
-	 * @param event
-	 */
-
-	/**
 	 * Save
 	 *
 	 * @param event
@@ -162,8 +160,9 @@ public class LocationController extends GenericForwardComposer {
 		Location location = getDataInRow(lstCell);
 		location.setLocationID(c.getLocationID());
 		if (insertOrUpdate == 1) {
-			lstFilter.add(location);
 			locationServices.save(location);
+			lstFilter.add(location);
+			lstLocation.add(location);
 		} else {
 			locationServices.update(location);
 		}
@@ -175,7 +174,7 @@ public class LocationController extends GenericForwardComposer {
 	/**
 	 * Add row
 	 */
-	public void onClick$add() {
+	public void onAdd(ForwardEvent event) {
 		Location locationAddItem = new Location();
 		locationAddItem.setStatus(1);
 		listDataModel.add(0, locationAddItem);
@@ -267,14 +266,12 @@ public class LocationController extends GenericForwardComposer {
 		gridLocation.setModel(listDataModel);
 	}
 
-	public void onClick$btnExport(Event event) {
+	public void onExport(ForwardEvent event) {
 
 		ExcelWriter<Location> excelWriter = new ExcelWriter<Location>();
 		try {
-
 			String pathFileInput = Constants.PATH_FILE + "file/template/export/location_data_export.xlsx";
 			String pathFileOut = Constants.PATH_FILE + "file/export/location_data_export.xlsx";
-
 			excelWriter.write(lstFilter, pathFileInput, pathFileOut);
 			File file = new File(pathFileOut);
 			Filedownload.save(file, null);
