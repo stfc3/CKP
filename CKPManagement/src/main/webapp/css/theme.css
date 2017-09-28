@@ -626,3 +626,22 @@ a [class^="z-icon-"]{
 }
 /*set style control in grid*/
 /*dongdv*/
+.bill-view td{
+    text-align: center;
+}
+.bill-detail-info table {
+    margin-bottom: 10px !important;
+}
+.bill-view table {
+    margin-bottom: 10px !important;
+}
+.bill-detail-value {
+    font-weight: bold;
+    margin-top: 10px;
+}
+.text-align-center{
+    text-align: center;
+}
+.bill-detail-title{
+    margin-bottom: 20px;
+}
