@@ -68,9 +68,13 @@
 								hflex="1" inplace="true" readonly="true" />
 						</cell>
 						<cell>
-							<intbox value="${each.locationType}"
-								style="text-align: right;" tooltiptext="${each.locationType}"
-								hflex="1" inplace="true" readonly="true" />
+							<combobox hflex="1" buttonVisible="false"
+								inplace="true" readonly="true">
+								<template name="model">
+									<comboitem
+										value="${each.paramValue}" label="${each.paramName}" />
+								</template>
+							</combobox>
 						</cell>
 						<cell style="text-align:center">
 							<a class="btn-cursor"

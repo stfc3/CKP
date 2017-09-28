@@ -226,4 +226,20 @@ public class BillsDAOImpl implements BillDAO {
 		return null;
 	}
 
+	@Override
+	public List<BillsDetail> getBillDetail(Long billID) {
+		try {
+			Query query = getCurrentSession().getNamedQuery("BillsDetail.getAllBillDetailByID");
+			query.setParameter("billId", billID);
+			List<BillsDetail> lstData = query.list();
+			if (lstData != null && !lstData.isEmpty()) {
+				return lstData;
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return null;
+	}
+
 }

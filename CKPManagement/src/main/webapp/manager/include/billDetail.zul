@@ -135,7 +135,6 @@
 			</auxhead>
 			<columns style="text-align:center; ">
 				<column hflex="1">${c:l('pump.index')}</column>
-
 				<!-- 				loai bom -->
 				<column hflex="2">
 					${c:l('bills.detail.pumps.type')}
@@ -148,7 +147,6 @@
 				</column>
 				<!-- 				Vi tri bom -->
 				<column hflex="2">${c:l('bills.detail.place')}</column>
-
 				<!-- 				khoi luong bom -->
 				<column hflex="2">
 					${c:l('bills.detail.quantity')}
@@ -157,12 +155,6 @@
 				<column hflex="2">${c:l('bills.detail.shift')}</column>
 				<!-- 				tong tien -->
 				<column hflex="2">${c:l('bills.detail.total')}</column>
-				<!-- 								so cong nhan toi da -->
-				<!-- 				<column hflex="2"> -->
-				<!-- 					${c:l('bills.detail.max.staff')} -->
-				<!-- 				</column> -->
-				<!-- 								cong nhan -->
-				<!-- 				<column hflex="1">${c:l('bills.detail.staff')}</column> -->
 				<column hflex="2">${c:l('pump.action')}</column>
 			</columns>
 			<template name="model">
@@ -176,7 +168,7 @@
 						<combobox hflex="1" buttonVisible="false"
 							inplace="true" readonly="true">
 							<template name="model">
-								<comboitem value="${each.paramId}"
+								<comboitem value="${each.paramValue}"
 									label="${each.paramName}" />
 							</template>
 						</combobox>
@@ -197,7 +189,7 @@
 						<combobox hflex="1" buttonVisible="false"
 							inplace="true" readonly="true">
 							<template name="model">
-								<comboitem value="${each.paramId}"
+								<comboitem value="${each.paramValue}"
 									label="${each.paramName}" />
 							</template>
 						</combobox>

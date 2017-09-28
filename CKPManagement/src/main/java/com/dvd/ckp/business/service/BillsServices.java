@@ -17,6 +17,8 @@ public interface BillsServices {
 	public void delete(Bills bills);
 
 	public List<BillsDetail> getBillDetail();
+	
+	public List<BillsDetail> getBillDetail(Long billID);
 
 	public void save(BillsDetail billsDetail);
 

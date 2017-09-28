@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -15,7 +16,8 @@ import org.hibernate.annotations.NamedNativeQuery;
 
 @Entity
 @Table(name = "bill_detail")
-@NamedQuery(name = "BillsDetail.getAllBillDetail", query = "FROM BillsDetail u where status=1")
+@NamedQueries({ @NamedQuery(name = "BillsDetail.getAllBillDetail", query = "FROM BillsDetail u where status=1"),
+		@NamedQuery(name = "BillsDetail.getAllBillDetailByID", query = "FROM BillsDetail u where billId = :billId and status=1") })
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "callCalculatorRevenue", query = "CALL calculator_revenue(:construction,:pump,:pump_type,:location_type,:location_id,:quantity,:shift)", resultClass = BillsDetail.class) })
 public class BillsDetail implements Serializable {

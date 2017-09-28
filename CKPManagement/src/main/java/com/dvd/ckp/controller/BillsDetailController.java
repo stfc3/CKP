@@ -22,6 +22,7 @@ import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Longbox;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Window;
 
@@ -81,10 +82,10 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 	private List<Pumps> lstPumps;
 
 	// Vi tri cac column trong grid bills detail
-	private final int pumpIdDetail = 2;
 	private final int pumpTypeIdDetail = 1;
-	private final int locationDetail = 4;
+	private final int pumpIdDetail = 2;
 	private final int locationTypeDetail = 3;
+	private final int locationDetail = 4;
 
 	private Longbox txtBillID;
 
@@ -124,7 +125,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 
 		// list danh sach chi tiet hoa don
 		lstBillDetail = new ArrayList<>();
-		List<BillsDetail> lstData = billsServices.getBillDetail();
+		List<BillsDetail> lstData = billsServices.getBillDetail(txtBillID.getValue());
 		if (lstData != null && !lstData.isEmpty()) {
 			lstBillDetail.addAll(lstData);
 		}
@@ -194,7 +195,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 		List<Param> paramSelected = new ArrayList<>();
 		if (typePumpId != null && lstTypePump != null && !lstTypePump.isEmpty()) {
 			for (Param param : lstTypePump) {
-				if (typePumpId.equals(param.getParamId())) {
+				if (typePumpId.equals(param.getParamValue())) {
 					paramSelected.add(param);
 					break;
 				}
@@ -231,7 +232,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 		List<Param> paramSelected = new ArrayList<>();
 		if (locationTypeId != null && lstTypeLocation != null && !lstTypeLocation.isEmpty()) {
 			for (Param param : lstTypeLocation) {
-				if (locationTypeId.equals(param.getParamId())) {
+				if (locationTypeId.equals(param.getParamValue())) {
 					paramSelected.add(param);
 					break;
 				}
@@ -314,8 +315,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 				setDataPumpsDetail(lstCell, getPumpsDefault(billsDetail.getPumpID()), pumpIdDetail);
 				setDataPumpsTypeDetail(lstCell, getPumpsTypeDefault(billsDetail.getPumpTypeId()), pumpTypeIdDetail);
 				setLocationDetail(lstCell, getLocationDefault(billsDetail.getLocationId()), locationDetail);
-				setDataLocationTypeDetail(lstCell, getLocationTypeDefault(billsDetail.getLocationType()),
-						locationTypeDetail);
+				setDataLocationTypeDetail(lstCell, getLocationTypeDefault(billsDetail.getLocationType()), 3);
 			}
 		}
 	}
@@ -366,30 +366,29 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 		Doublebox txtQuantity = null;
 		Intbox txtShift = null;
 		Label txtTotal = null;
-
-		// may bom
-		component = lstCell.get(pumpIdDetail).getFirstChild();
-		if (component != null && component instanceof Combobox) {
-			cbPump = (Combobox) component;
-			billsDetail.setPumpID(cbPump.getSelectedItem().getValue());
-		}
 		// loai may bom
 		component = lstCell.get(pumpTypeIdDetail).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			cbPumpType = (Combobox) component;
 			billsDetail.setPumpTypeId(cbPumpType.getSelectedItem().getValue());
 		}
+		// may bom
+		component = lstCell.get(pumpIdDetail).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbPump = (Combobox) component;
+			billsDetail.setPumpID(cbPump.getSelectedItem().getValue());
+		}
+		// loai vi tri
+		component = lstCell.get(3).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbLocationType = (Combobox) component;
+			billsDetail.setLocationType(cbLocationType.getSelectedItem().getValue());
+		}
 		// vi tri bom
 		component = lstCell.get(locationDetail).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			cbLocation = (Combobox) component;
 			billsDetail.setLocationId(cbLocation.getSelectedItem().getValue());
-		}
-		// loai vi tri
-		component = lstCell.get(locationTypeDetail).getFirstChild();
-		if (component != null && component instanceof Combobox) {
-			cbLocationType = (Combobox) component;
-			billsDetail.setLocationType(cbLocationType.getSelectedItem().getValue());
 		}
 
 		// khoi luong bom
@@ -483,11 +482,21 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 	}
 
 	public void onDelete(ForwardEvent event) {
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		BillsDetail c = rowSelected.getValue();
-		c.setStatus(0);
-		billsServices.delete(c);
-		reloadGrid();
+		Messagebox.show(Labels.getLabel("message.confirm.delete.content"),
+				Labels.getLabel("message.confirm.delete.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,
+				new EventListener() {
+					@Override
+					public void onEvent(Event e) {
+						if (Messagebox.ON_YES.equals(e.getName())) {
+							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+							BillsDetail c = rowSelected.getValue();
+							c.setStatus(0);
+							billsServices.delete(c);
+							reloadGrid();
+						}
+					}
+				});
+
 	}
 
 	private void onChangeData(List<Component> lstCell) {
@@ -497,23 +506,24 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 		// may bom
 		component = lstCell.get(pumpTypeIdDetail).getFirstChild();
 		if (component != null && component instanceof Combobox) {
-			cbPump = (Combobox) component;
+			cbPumpType = (Combobox) component;
 
 		}
 		// loai may bom
 		component = lstCell.get(pumpIdDetail).getFirstChild();
 		if (component != null && component instanceof Combobox) {
-			cbPumpType = (Combobox) component;
+			cbPump = (Combobox) component;
 		}
 		// vi tri bom
 		component = lstCell.get(locationTypeDetail).getFirstChild();
 		if (component != null && component instanceof Combobox) {
-			cbLocation = (Combobox) component;
+			cbLocationType = (Combobox) component;
+
 		}
 		// loai vi tri
 		component = lstCell.get(locationDetail).getFirstChild();
 		if (component != null && component instanceof Combobox) {
-			cbLocationType = (Combobox) component;
+			cbLocation = (Combobox) component;
 		}
 
 		// khoi luong bom
@@ -579,8 +589,9 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 	private void calculatorRevenue() {
 		Long pumpID = cbPump.getSelectedItem().getValue();
 		Long pumpTypeID = cbPumpType.getSelectedItem().getValue();
-		Long locationID = cbLocation.getSelectedItem().getValue();
 		Long locationTypeID = cbLocationType.getSelectedItem().getValue();
+		Long locationID = cbLocation.getSelectedItem().getValue();
+
 		Double quantity = txtQuantity.getValue();
 		Integer shift = txtShift.getValue();
 		if (pumpID != -1l && pumpTypeID != -1l && locationID != -1l && locationTypeID != -1l && quantity != null
@@ -589,7 +600,9 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 					Long.valueOf(pumpID), Long.valueOf(pumpTypeID), Long.valueOf(locationID),
 					Long.valueOf(locationTypeID), quantity, shift);
 			if (calculatorRevenue != null && !calculatorRevenue.isEmpty()) {
-				txtTotal.setValue(String.valueOf(calculatorRevenue.get(0).getTotal_revenue()));
+				if (calculatorRevenue.get(0).getTotal_revenue() != null) {
+					txtTotal.setValue(String.valueOf(calculatorRevenue.get(0).getTotal_revenue()));
+				}
 			}
 
 		}

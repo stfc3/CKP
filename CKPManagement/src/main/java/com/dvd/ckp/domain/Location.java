@@ -18,8 +18,8 @@ public class Location {
 	private Long locationID;
 	private String locationCode;
 	private String locationName;
-	private int locationValue;
-	private int locationType;
+	private Long locationValue;
+	private Long locationType;
 	private int status;
 
 	@Transient
@@ -61,20 +61,20 @@ public class Location {
 	}
 
 	@Column(name = "location_value")
-	public int getLocationValue() {
+	public Long getLocationValue() {
 		return locationValue;
 	}
 
-	public void setLocationValue(int locationValue) {
+	public void setLocationValue(Long locationValue) {
 		this.locationValue = locationValue;
 	}
 
 	@Column(name = "location_type")
-	public int getLocationType() {
+	public Long getLocationType() {
 		return locationType;
 	}
 
-	public void setLocationType(int locationType) {
+	public void setLocationType(Long locationType) {
 		this.locationType = locationType;
 	}
 

@@ -24,19 +24,24 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.LocationServices;
+import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.common.Constants;
+import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Location;
+import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.excel.domain.LocationExcel;
@@ -59,6 +64,8 @@ public class LocationController extends GenericForwardComposer {
 	private static final Logger logger = Logger.getLogger(LocationController.class);
 	@WireVariable
 	protected LocationServices locationServices;
+	@WireVariable
+	protected UtilsService utilsService;
 	@Wire
 	private Grid gridLocation;
 	@Wire
@@ -70,6 +77,8 @@ public class LocationController extends GenericForwardComposer {
 	private List<Location> lstFilter;
 	private int insertOrUpdate = 0;
 
+	// Danh sach loai vi tri
+	private List<Param> lstTypeLocation;
 	@Wire
 	private Window location;
 
@@ -86,20 +95,30 @@ public class LocationController extends GenericForwardComposer {
 	private List<LocationExcel> lstError = new ArrayList<LocationExcel>();
 	public Button errorList;
 
+	private Param defaultParam;
+
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
 		lstFilter = new ArrayList<Location>();
 		locationServices = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
-
+		utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
+		// danh sach loai vi tri
+		lstTypeLocation = utilsService.getParamByKey(com.dvd.ckp.utils.Constants.PRAM_LOCATION_TYPE);
 		lstLocation = new ArrayList<>();
 		List<Location> vlstData = locationServices.getListLocation();
 		if (vlstData != null) {
 			lstLocation.addAll(vlstData);
 			lstFilter.addAll(vlstData);
 		}
+		// pump type default
+		defaultParam = new Param();
+		defaultParam.setParamId(-1l);
+		defaultParam.setParamName(Labels.getLabel("option"));
+		lstTypeLocation.add(0, defaultParam);
 		listDataModel = new ListModelList<Location>(lstLocation);
 		gridLocation.setModel(listDataModel);
+		setDataDefaultInGridViewDetail();
 	}
 
 	/**
@@ -148,6 +167,56 @@ public class LocationController extends GenericForwardComposer {
 		reloadGrid();
 	}
 
+	// get pump type default
+	private List<Param> getLocationTypeDefault(Long locationTypeId) {
+		List<Param> paramSelected = new ArrayList<>();
+		if (locationTypeId != null && lstTypeLocation != null && !lstTypeLocation.isEmpty()) {
+			for (Param param : lstTypeLocation) {
+				if (locationTypeId.equals(param.getParamValue())) {
+					paramSelected.add(param);
+					break;
+				}
+			}
+		}
+		if (paramSelected.isEmpty()) {
+			paramSelected.add(defaultParam);
+		}
+		return paramSelected;
+	}
+
+	/**
+	 * set data for combobox pump type in windown bill detail
+	 * 
+	 * @param lstCell
+	 * @param selectedIndex
+	 * @param columnIndex
+	 */
+	private void setDataLocationTypeDetail(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+		Combobox combobox = null;
+		Component component = lstCell.get(columnIndex).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			combobox = (Combobox) component;
+			ListModelList listDataModel = new ListModelList(lstTypeLocation);
+			listDataModel.setSelection(selectedIndex);
+			combobox.setModel(listDataModel);
+
+		}
+
+	}
+
+	private void setDataDefaultInGridViewDetail() {
+		gridLocation.renderAll();
+		List<Component> lstRows = gridLocation.getRows().getChildren();
+		if (lstRows != null && !lstRows.isEmpty()) {
+			for (int i = 0; i < lstRows.size(); i++) {
+				Location location = listDataModel.get(i);
+				Component row = lstRows.get(i);
+				List<Component> lstCell = row.getChildren();
+				setDataLocationTypeDetail(lstCell, getLocationTypeDefault(location.getLocationType()), 4);
+			}
+		}
+	}
+
 	/**
 	 * Save
 	 *
@@ -183,6 +252,7 @@ public class LocationController extends GenericForwardComposer {
 		List<Component> lstCell = gridLocation.getRows().getChildren().get(0).getChildren();
 		StyleUtils.setEnableComponent(lstCell, 4);
 		insertOrUpdate = 1;
+		setDataDefaultInGridViewDetail();
 	}
 
 	/**
@@ -195,13 +265,13 @@ public class LocationController extends GenericForwardComposer {
 		Location location = new Location();
 		Textbox txtLocationCode = (Textbox) lstCell.get(1).getFirstChild();
 		Textbox txtLocationName = (Textbox) lstCell.get(2).getFirstChild();
-		Intbox txtLocationValue = (Intbox) lstCell.get(3).getFirstChild();
-		Intbox txtLocationType = (Intbox) lstCell.get(3).getFirstChild();
+		Longbox txtLocationValue = (Longbox) lstCell.get(3).getFirstChild();
+		Combobox txtLocationType = (Combobox) lstCell.get(4).getFirstChild();
 
 		location.setLocationCode(txtLocationCode.getValue());
 		location.setLocationName(txtLocationName.getValue());
 		location.setLocationValue(txtLocationValue.getValue());
-		location.setLocationType(txtLocationType.getValue());
+		location.setLocationType(txtLocationType.getSelectedItem().getValue());
 		location.setStatus(1);
 		return location;
 	}
@@ -367,7 +437,7 @@ public class LocationController extends GenericForwardComposer {
 					Location item = new Location();
 					item.setLocationCode(locationExcel.getLocationCode());
 					item.setLocationName(locationExcel.getLocationName());
-					item.setLocationType(Integer.valueOf(locationExcel.getLocationType()));
+					item.setLocationType(Long.valueOf(locationExcel.getLocationType()));
 					item.setStatus(1);
 					vlstData.add(item);
 					numberSucces++;

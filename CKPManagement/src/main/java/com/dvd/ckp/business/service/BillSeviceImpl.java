@@ -69,4 +69,10 @@ public class BillSeviceImpl implements BillsServices {
 		return billDAO.calculatorRevenue(constructionId, pumpId, pumpType, locationType, locationID, quantity, shift);
 	}
 
+	@Override
+	public List<BillsDetail> getBillDetail(Long billID) {
+		// TODO Auto-generated method stub
+		return billDAO.getBillDetail(billID);
+	}
+
 }
