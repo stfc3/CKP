@@ -611,6 +611,11 @@ h1#logo a span {display:block;position:absolute;width:100%;height:100%;backgroun
 a [class^="z-icon-"]{
     margin-right: 5px;
 }
+.z-a{
+    color: green;
+    cursor: auto;
+    text-decoration: none;
+}
 .z-icon-pencil{
     color: #efa21c;
 }

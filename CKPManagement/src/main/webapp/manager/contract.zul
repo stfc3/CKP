@@ -4,7 +4,7 @@
     <!--<zk xmlns:n="native">-->
     <window  id="mainContract" apply="com.dvd.ckp.controller.ContractController">
         <groupbox>
-            <caption label="${c:l('contract.category')}" />
+            <caption label="${c:l('contract.category')}"/>
             <grid id="lstContract" mold="paging" pageSize="20" pagingPosition="both">
                 <auxhead sclass="category-center" >
                     <auxheader colspan="12">
@@ -71,10 +71,10 @@
                         </cell>
                         <cell>
                             <a class="btn-cursor" forward="onClick=onDownloadFile" label="${each.filePath}" tooltiptext="${each.filePath}"/>
-                            <button class="btn-cursor" disabled="true" style="border: none;color: green;font-weight: bold;" iconSclass="z-icon-paperclip" upload="true"
+                            <button class="btn-cursor" visible="false" style="border: none;color: green;font-weight: bold;" iconSclass="z-icon-paperclip" upload="true"
                             forward="onUpload=onUploadFile"/>
                         </cell>
-                        <cell>
+                        <cell style="text-align:center">
                             <a class="btn-cursor" disabled="true" iconSclass="z-icon-money" forward="onClick=onPrice" tooltiptext="${c:l('price')}"/>
                         </cell>
                         <cell>
