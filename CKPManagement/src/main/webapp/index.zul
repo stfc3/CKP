@@ -79,6 +79,109 @@
                                     chuyên cung cấp các dịch vụ bơm tốt
                                     nhất Việt Nam.
                                 </span>
+                                
+ 
+                                <div class="collection collection--types">
+                                    <div class="collection__inner">
+                                        <div class="collection__content">
+                                            <span class="collection__copy"></span>
+                                        </div>
+                                        <div class="collection__list">
+                                            <x:li class="collection__item">
+          
+                                                <div class="card card--types">
+                                                    <div class="card__figure">
+                                                        <a class="card__link" href="https://elements.envato.com/fonts"></a>
+                                                        <image id="banner" class="card__image" src="images/hop_dong.png" />
+                                                        <div class="card__panel">
+                                                            <span class="card__cta">Quản lý hợp đồng</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__heading">
+                                                        <span class="card__count"></span>Hợp đồng</div>
+                                                </div>
+
+                                            </x:li>
+                                            <x:li class="collection__item">
+          
+                                                <div class="card card--types">
+                                                    <div class="card__figure">
+                                                        <a class="card__link" href="https://elements.envato.com/graphics/icons"></a>
+                                                        <image class="card__image" src="images/khach_hang.jpg" />
+                                                        <div class="card__panel">
+                                                            <span class="card__cta">Quản lý khách hàng</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__heading">
+                                                        <span class="card__count"></span>Khách hàng</div>
+                                                </div>
+
+                                            </x:li>
+                                            <x:li class="collection__item">
+          
+                                                <div class="card card--types">
+                                                    <div class="card__figure">
+                                                        <a class="card__link" href="https://elements.envato.com/graphics"></a>
+                                                        <image class="card__image" src="images/bom.png" />
+                                                        <div class="card__panel">
+                                                            <span class="card__cta">Quản lý máy bơm</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__heading">
+                                                        <span class="card__count"></span>Bơm</div>
+                                                </div>
+
+                                            </x:li>
+                                            <x:li class="collection__item">
+          
+                                                <div class="card card--types">
+                                                    <div class="card__figure">
+                                                        <a class="card__link" href="https://elements.envato.com/graphics/backgrounds"></a>
+                                                        <image class="card__image" src="images/phieu_bom.png" />
+                                                        <div class="card__panel">
+                                                            <span class="card__cta">Quản lý phiếu bơm</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__heading">
+                                                        <span class="card__count"></span>Phiếu bơm</div>
+                                                </div>
+
+                                            </x:li>
+                                            <x:li class="collection__item">
+          
+                                                <div class="card card--types">
+                                                    <div class="card__figure">
+                                                        <a class="card__link" href="https://elements.envato.com/graphics/illustrations"></a>
+                                                        <image class="card__image" src="images/nhan_vien.jpg" />
+                                                        <div class="card__panel">
+                                                            <span class="card__cta">Quản lý nhân viên</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__heading">
+                                                        <span class="card__count"></span>Nhân viên</div>
+                                                </div>
+
+                                            </x:li>
+                                            <x:li class="collection__item">
+          
+                                                <div class="card card--types">
+                                                    <div class="card__figure">
+                                                        <a class="card__link" href="https://elements.envato.com/add-ons/actions-and-presets"></a>
+                                                        <image class="card__image" src="images/user1.jpg" />
+                                                        <div class="card__panel">
+                                                            <span class="card__cta">Quản lý tài khoản</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__heading">
+                                                        <span class="card__count"></span>Tài khoản</div>
+                                                </div>
+
+                                            </x:li>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!--<image id="banner" src="images/banner3.jpg" />-->
                             </tabpanel>
                         </tabpanels>
