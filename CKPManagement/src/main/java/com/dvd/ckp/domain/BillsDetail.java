@@ -1,5 +1,7 @@
 package com.dvd.ckp.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,24 +10,34 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedNativeQueries;
+import org.hibernate.annotations.NamedNativeQuery;
+
 @Entity
 @Table(name = "bill_detail")
-@NamedQuery(name = "BillsDetail.getAllBillDetail", query = "FROM BillsDetail u")
-public class BillsDetail {
+@NamedQuery(name = "BillsDetail.getAllBillDetail", query = "FROM BillsDetail u where status=1")
+@NamedNativeQueries({
+		@NamedNativeQuery(name = "callCalculatorRevenue", query = "CALL calculator_revenue(:construction,:pump,:pump_type,:location_type,:location_id,:quantity,:shift)", resultClass = BillsDetail.class) })
+public class BillsDetail implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4893628034815040774L;
 	private Long billDetailId;
 	private Long billId;
 	private Long pumpID;
 	private Long pumpTypeId;
 	private Long locationId;
 	private Long locationType;
-	private double quantity;
-	private double quantityApprove;
-	private int shift;
-	private double total;
-	private double totalApprove;
-	private int maxStaff;
-	private int isFar;
-	private double quantityConvert;
+	private Double quantity;
+	private Double quantityApprove;
+	private Integer shift;
+	private Double total;
+	private Double totalApprove;
+	private Integer maxStaff;
+	private Integer isFar;
+	private Integer status;
+	private Double quantityConvert;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +67,7 @@ public class BillsDetail {
 	public void setPumpID(Long pumpID) {
 		this.pumpID = pumpID;
 	}
-	
+
 	@Column(name = "pump_type")
 	public Long getPumpTypeId() {
 		return pumpTypeId;
@@ -74,60 +86,60 @@ public class BillsDetail {
 		this.locationId = locationId;
 	}
 
-
-
 	@Column(name = "quantity")
-	public double getQuantity() {
+	public Double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(double quantity) {
+	public void setQuantity(Double quantity) {
 		this.quantity = quantity;
 	}
 
 	@Column(name = "shift")
-	public int getShift() {
+	public Integer getShift() {
 		return shift;
 	}
 
-	public void setShift(int shift) {
+	public void setShift(Integer shift) {
 		this.shift = shift;
 	}
 
 	@Column(name = "total")
-	public double getTotal() {
+	public Double getTotal() {
 		return total;
 	}
 
-	public void setTotal(double total) {
+	public void setTotal(Double total) {
 		this.total = total;
 	}
 
 	@Column(name = "max_staff")
-	public int getMaxStaff() {
+	public Integer getMaxStaff() {
 		return maxStaff;
 	}
 
-	public void setMaxStaff(int maxStaff) {
+	public void setMaxStaff(Integer maxStaff) {
 		this.maxStaff = maxStaff;
 	}
 
 	@Column(name = "is_far")
-	public int getIsFar() {
+	public Integer getIsFar() {
 		return isFar;
 	}
 
-	public void setIsFar(int isFar) {
+	public void setIsFar(Integer isFar) {
 		this.isFar = isFar;
 	}
+
 	@Column(name = "quantity_convert")
-	public double getQuantityConvert() {
+	public Double getQuantityConvert() {
 		return quantityConvert;
 	}
 
-	public void setQuantityConvert(double quantityConvert) {
+	public void setQuantityConvert(Double quantityConvert) {
 		this.quantityConvert = quantityConvert;
 	}
+
 	@Column(name = " location_type")
 	public Long getLocationType() {
 		return locationType;
@@ -138,23 +150,30 @@ public class BillsDetail {
 	}
 
 	@Column(name = " quantity_approve")
-	public double getQuantityApprove() {
+	public Double getQuantityApprove() {
 		return quantityApprove;
 	}
 
-	public void setQuantityApprove(double quantityApprove) {
+	public void setQuantityApprove(Double quantityApprove) {
 		this.quantityApprove = quantityApprove;
 	}
 
 	@Column(name = " total_approve")
-	public double getTotalApprove() {
+	public Double getTotalApprove() {
 		return totalApprove;
 	}
 
-	public void setTotalApprove(double totalApprove) {
+	public void setTotalApprove(Double totalApprove) {
 		this.totalApprove = totalApprove;
 	}
-	
-	
+
+	@Column(name = " status")
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 }

@@ -40,7 +40,7 @@ public class Bills {
 	private String strFromDate;
 	// Ngay roi cong truong
 	private Date toDate;
-	private String strToDate;
+	private String strToDate;	
 	// Thoi gian bat dau bom
 	private Date startTime;
 	private String strStartTime;

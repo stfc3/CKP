@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "pumps")
 @NamedQuery(name = "Pump.getAllPumps", query = "FROM Pumps u WHERE status = 1")
-public class Pumps 	{
+public class Pumps {
 	/**
 	 * @author viettx
 	 * @since 03/09/2017
@@ -22,9 +22,9 @@ public class Pumps 	{
 	private Long pumpsID;
 	private String pumpsCode;
 	private String pumpsName;
-	private int pumpsCapacity;
-	private int pumpsHight;
-	private int pumpsFar;
+	private String pumpsCapacity;
+	private String pumpsHight;
+	private String pumpsFar;
 	private int status;
 	private String statusName;
 
@@ -58,29 +58,29 @@ public class Pumps 	{
 	}
 
 	@Column(name = "pump_capacity")
-	public int getPumpsCapacity() {
+	public String getPumpsCapacity() {
 		return pumpsCapacity;
 	}
 
-	public void setPumpsCapacity(int pumpsCapacity) {
+	public void setPumpsCapacity(String pumpsCapacity) {
 		this.pumpsCapacity = pumpsCapacity;
 	}
 
 	@Column(name = "pump_high")
-	public int getPumpsHight() {
+	public String getPumpsHight() {
 		return pumpsHight;
 	}
 
-	public void setPumpsHight(int pumpsHight) {
+	public void setPumpsHight(String pumpsHight) {
 		this.pumpsHight = pumpsHight;
 	}
 
 	@Column(name = "pump_far")
-	public int getPumpsFar() {
+	public String getPumpsFar() {
 		return pumpsFar;
 	}
 
-	public void setPumpsFar(int pumpsFar) {
+	public void setPumpsFar(String pumpsFar) {
 		this.pumpsFar = pumpsFar;
 	}
 
@@ -100,8 +100,8 @@ public class Pumps 	{
 				+ ", status=" + status + "]";
 	}
 
-	public Pumps(Long pumpsID, String pumpsCode, String pumpsName, int pumpsCapacity, int pumpsHight, int pumpsFar,
-			int status) {
+	public Pumps(Long pumpsID, String pumpsCode, String pumpsName, String pumpsCapacity, String pumpsHight,
+			String pumpsFar, int status) {
 		super();
 		this.pumpsID = pumpsID;
 		this.pumpsCode = pumpsCode;

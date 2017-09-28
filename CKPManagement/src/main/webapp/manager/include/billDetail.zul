@@ -10,9 +10,13 @@
 		<style src="/css/style.css" />
 
 		<hlayout>
-			<textbox id="txtBillID" visible="false"
+			<longbox id="txtBillID" visible="false"
 				value="${arg.bill.billID}">
-			</textbox>
+			</longbox>
+
+			<longbox id="txtConstruction" visible="false"
+				value="${arg.bill.constructionID}">
+			</longbox>
 			<hbox hflex="1" />
 			<!-- 			<hbox hflex="1" /> -->
 			<hbox hflex="2">
@@ -121,6 +125,7 @@
 			<!-- 			<hbox hflex="1" /> -->
 			<hbox hflex="1" />
 		</hlayout>
+
 		<grid id="gridBillsDetail">
 			<auxhead sclass="category-center">
 				<auxheader colspan="20">
@@ -131,18 +136,20 @@
 			</auxhead>
 			<columns style="text-align:center; ">
 				<column hflex="1">${c:l('pump.index')}</column>
-				<!-- 				may bom -->
-				<column hflex="2">${c:l('bills.detail.pumps')}</column>
+
 				<!-- 				loai bom -->
 				<column hflex="2">
 					${c:l('bills.detail.pumps.type')}
 				</column>
-				<!-- 				Vi tri bom -->
-				<column hflex="2">${c:l('bills.detail.place')}</column>
+				<!-- 				may bom -->
+				<column hflex="2">${c:l('bills.detail.pumps')}</column>
 				<!-- 				loai vi tri -->
 				<column hflex="2">
 					${c:l('bills.detail.place.type')}
 				</column>
+				<!-- 				Vi tri bom -->
+				<column hflex="2">${c:l('bills.detail.place')}</column>
+
 				<!-- 				khoi luong bom -->
 				<column hflex="2">
 					${c:l('bills.detail.quantity')}
@@ -151,18 +158,29 @@
 				<column hflex="2">${c:l('bills.detail.shift')}</column>
 				<!-- 				tong tien -->
 				<column hflex="2">${c:l('bills.detail.total')}</column>
-				<!-- 				so cong nhan toi da -->
-				<column hflex="2">
-					${c:l('bills.detail.max.staff')}
-				</column>
-				<!-- 				cong nhan -->
-				<column hflex="1">${c:l('bills.detail.staff')}</column>
+				<!-- 								so cong nhan toi da -->
+				<!-- 				<column hflex="2"> -->
+				<!-- 					${c:l('bills.detail.max.staff')} -->
+				<!-- 				</column> -->
+				<!-- 								cong nhan -->
+				<!-- 				<column hflex="1">${c:l('bills.detail.staff')}</column> -->
 				<column hflex="2">${c:l('pump.action')}</column>
 			</columns>
 			<template name="model">
 				<row value="${each}">
 					<cell style="text-align: center;">
 						<label value="${forEachStatus.index+1}" />
+					</cell>
+
+					<!--loai may bom -->
+					<cell>
+						<combobox hflex="1" buttonVisible="false"
+							inplace="true" readonly="true">
+							<template name="model">
+								<comboitem value="${each.paramId}"
+									label="${each.paramName}" />
+							</template>
+						</combobox>
 					</cell>
 					<!--chon may bom -->
 					<cell>
@@ -175,7 +193,7 @@
 						</combobox>
 					</cell>
 
-					<!--loai may bom -->
+					<!--chon loai vi tri -->
 					<cell>
 						<combobox hflex="1" buttonVisible="false"
 							inplace="true" readonly="true">
@@ -195,49 +213,25 @@
 							</template>
 						</combobox>
 					</cell>
-					<!--chon loai vi tri -->
-					<cell>
-						<combobox hflex="1" buttonVisible="false"
-							inplace="true" readonly="true">
-							<template name="model">
-								<comboitem value="${each.paramId}"
-									label="${each.paramName}" />
-							</template>
-						</combobox>
-					</cell>
+
 					<!--khoi luong bom -->
 					<cell>
-						<textbox value="${each.quantity}"
+						<doublebox value="${each.quantity}"
 							style="text-align: right;" tooltiptext="${each.quantity}"
 							hflex="1" inplace="true" readonly="true" />
 					</cell>
 					<!--Ca cho -->
 					<cell>
-						<textbox value="${each.shift}"
+						<intbox value="${each.shift}"
 							style="text-align: right;" tooltiptext="${each.shift}" hflex="1"
 							inplace="true" readonly="true" />
 					</cell>
 
 					<!--Tong tien -->
 					<cell style="text-align: right;">
-						<textbox value="${each.total}"
-							style="text-align: right;" tooltiptext="${each.total}" hflex="1"
-							inplace="true" readonly="true" />
+						<label value="${each.total}"
+							style="text-align: right;" tooltiptext="${each.total}" hflex="1" />
 					</cell>
-
-					<!--so cong nhan toi da -->
-					<cell>
-						<textbox value="${each.maxStaff}"
-							tooltiptext="${each.maxStaff}" style="text-align: right;"
-							hflex="1" inplace="true" readonly="true" />
-					</cell>
-
-					<!-- 	them so luong cong nhan -->
-					<cell style="text-align: center;">
-						<a iconSclass="z-icon-users"
-							forward="onClick=onStaff" />
-					</cell>
-
 
 
 					<cell style="text-align:center">
@@ -246,7 +240,7 @@
 
 						<a iconSclass="z-icon-trash-o"
 							forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />
-							
+
 						<a iconSclass="z-icon-check"
 							forward="onClick=onSave" visible="false"
 							tooltiptext="${c:l('save')}" />
@@ -254,8 +248,6 @@
 						<a iconSclass="z-icon-ban"
 							forward="onClick=onCancel" visible="false"
 							tooltiptext="${c:l('cancel')}" />
-
-
 
 					</cell>
 				</row>

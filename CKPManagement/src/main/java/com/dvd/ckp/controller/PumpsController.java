@@ -23,12 +23,12 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
-import org.zkoss.zul.A;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
@@ -38,6 +38,7 @@ import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.common.Constants;
+import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
@@ -45,6 +46,7 @@ import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.NumberUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
+import com.dvd.ckp.utils.StyleUtils;
 
 /**
  *
@@ -110,7 +112,7 @@ public class PumpsController extends GenericForwardComposer {
 	public void onEdit(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		setEnableComponent(lstCell);
+		StyleUtils.setEnableComponent(lstCell, 4);
 	}
 
 	public void onDelete(ForwardEvent event) {
@@ -122,68 +124,8 @@ public class PumpsController extends GenericForwardComposer {
 		pumps.setStatus(3);
 		lstPumpsFilter.remove(pumps);
 		pumpsService.detele(pumps);
-		setDisableComponent(lstCell);
+		StyleUtils.setDisableComponent(lstCell, 4);
 		reloadGrid();
-	}
-
-	/**
-	 * Set style enable edit
-	 *
-	 * @param lstCell
-	 */
-	private void setEnableComponent(List<Component> lstCell) {
-		if (lstCell != null && !lstCell.isEmpty()) {
-			for (Component c : lstCell) {
-				if (c instanceof Cell) {
-					Component child = c.getChildren().get(0);
-					if (child instanceof Combobox) {
-						((Combobox) child).setButtonVisible(true);
-						((Combobox) child).setInplace(false);
-					} else if (child instanceof Textbox) {
-						((Textbox) child).setReadonly(false);
-						((Textbox) child).setInplace(false);
-					} else if (child instanceof A) {
-						A edit = (A) child;
-						A save = (A) c.getChildren().get(1);
-						A cancel = (A) c.getChildren().get(2);
-
-						edit.setVisible(false);
-						save.setVisible(true);
-						cancel.setVisible(true);
-
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Set style disable edit
-	 *
-	 * @param lstCell
-	 */
-	private void setDisableComponent(List<Component> lstCell) {
-		if (lstCell != null && !lstCell.isEmpty()) {
-			for (Component c : lstCell) {
-				if (c instanceof Cell) {
-					Component child = c.getChildren().get(0);
-					if (child instanceof Combobox) {
-						((Combobox) child).setButtonVisible(false);
-						((Combobox) child).setInplace(true);
-					} else if (child instanceof Textbox) {
-						((Textbox) child).setReadonly(true);
-						((Textbox) child).setInplace(true);
-					} else if (child instanceof A) {
-						A edit = (A) child;
-						edit.setVisible(true);
-						A save = (A) c.getChildren().get(1);
-						A cancel = (A) c.getChildren().get(2);
-						save.setVisible(false);
-						cancel.setVisible(false);
-					}
-				}
-			}
-		}
 	}
 
 	/**
@@ -194,7 +136,7 @@ public class PumpsController extends GenericForwardComposer {
 	public void onCancel(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		setDisableComponent(lstCell);
+		StyleUtils.setDisableComponent(lstCell, 4);
 		reloadGrid();
 	}
 
@@ -221,7 +163,7 @@ public class PumpsController extends GenericForwardComposer {
 		} else {
 			pumpsService.update(pumps);
 		}
-		setDisableComponent(lstCell);
+		StyleUtils.setDisableComponent(lstCell, 4);
 		reloadGrid();
 		insertOrUpdate = 0;
 	}
@@ -236,7 +178,7 @@ public class PumpsController extends GenericForwardComposer {
 		gridPumps.setModel(listDataModel);
 		gridPumps.renderAll();
 		List<Component> lstCell = gridPumps.getRows().getChildren().get(0).getChildren();
-		setEnableComponent(lstCell);
+		StyleUtils.setEnableComponent(lstCell, 4);
 		insertOrUpdate = 1;
 	}
 
@@ -246,20 +188,49 @@ public class PumpsController extends GenericForwardComposer {
 	 * @param lstCell
 	 * @return
 	 */
+
 	private Pumps getDataInRow(List<Component> lstCell) {
 		Pumps pump = new Pumps();
-		Textbox txtPumpsCode = (Textbox) lstCell.get(1).getFirstChild();
-		Textbox txtPumpsName = (Textbox) lstCell.get(2).getFirstChild();
-		Textbox txtPumpsCapacity = (Textbox) lstCell.get(3).getFirstChild();
-		Textbox txtPumpsHight = (Textbox) lstCell.get(4).getFirstChild();
-		Textbox txtPumpsFar = (Textbox) lstCell.get(5).getFirstChild();
-		Combobox cbxStatus = (Combobox) lstCell.get(6).getFirstChild();
-		pump.setPumpsCode(txtPumpsCode.getValue());
-		pump.setPumpsName(txtPumpsName.getValue());
-		pump.setPumpsCapacity(Integer.valueOf(txtPumpsCapacity.getValue()));
-		pump.setPumpsHight(Integer.valueOf(txtPumpsFar.getValue()));
-		pump.setPumpsFar(Integer.valueOf(txtPumpsHight.getValue()));
-		pump.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
+		Component component;
+
+		Textbox txtPumpsCode = null;
+		Textbox txtPumpsName = null;
+		Textbox txtPumpsCapacity = null;
+		Textbox txtPumpsHight = null;
+		Textbox txtPumpsFar = null;
+
+		// may bom
+		component = lstCell.get(1).getFirstChild();
+		if (component != null && component instanceof Textbox) {
+			txtPumpsCode = (Textbox) component;
+			pump.setPumpsCode(txtPumpsCode.getValue());
+		}
+		// loai may bom
+		component = lstCell.get(2).getFirstChild();
+		if (component != null && component instanceof Textbox) {
+			txtPumpsName = (Textbox) component;
+			pump.setPumpsName(txtPumpsName.getValue());
+		}
+		// vi tri bom
+		component = lstCell.get(3).getFirstChild();
+		if (component != null && component instanceof Textbox) {
+			txtPumpsCapacity = (Textbox) component;
+			pump.setPumpsCapacity(txtPumpsCapacity.getValue());
+		}
+		// loai vi tri
+		component = lstCell.get(4).getFirstChild();
+		if (component != null && component instanceof Textbox) {
+			txtPumpsHight = (Textbox) component;
+			pump.setPumpsHight(txtPumpsHight.getValue());
+		}
+		// loai vi tri
+		component = lstCell.get(5).getFirstChild();
+		if (component != null && component instanceof Textbox) {
+			txtPumpsFar = (Textbox) component;
+			pump.setPumpsFar(txtPumpsFar.getValue());
+		}
+		pump.setStatus(1);
+
 		return pump;
 	}
 
@@ -301,12 +272,12 @@ public class PumpsController extends GenericForwardComposer {
 				index++;
 				pumps.setIndex(index);
 				if (StringUtils.isValidString(pumps.getPumpsCode())
-						&& item.getPumpsCode().toLowerCase().contains(pumps.getPumpsCode().toLowerCase())) {
+						&& pumps.getPumpsCode().toLowerCase().contains(item.getPumpsCode().toLowerCase())) {
 					vlstData.add(item);
 					lstPumpsFilter.clear();
 					lstPumpsFilter.add(item);
 				} else if (StringUtils.isValidString(pumps.getPumpsName())
-						&& item.getPumpsName().toLowerCase().contains(pumps.getPumpsName().toLowerCase())) {
+						&& pumps.getPumpsName().toLowerCase().contains(item.getPumpsName().toLowerCase())) {
 					vlstData.add(item);
 					lstPumpsFilter.clear();
 					lstPumpsFilter.add(item);
@@ -323,44 +294,38 @@ public class PumpsController extends GenericForwardComposer {
 	}
 
 	public void onClick$btnExport(Event event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		// ExcelWriter<Pumps> excelWriter = new ExcelWriter<Pumps>();
-		// try {
-		//
-		// String pathFileInput = Constants.PATH_FILE +
-		// "file/template/export/pumps_data_export.xlsx";
-		// String pathFileOut = Constants.PATH_FILE +
-		// "file/export/pumps_data_export.xlsx";
-		//
-		// excelWriter.write(lstPumpsFilter, pathFileInput, pathFileOut);
-		// File file = new File(pathFileOut);
-		// Filedownload.save(file, null);
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// logger.error(e.getMessage(), e);
-		// }
+
+		ExcelWriter<Pumps> excelWriter = new ExcelWriter<Pumps>();
+		try {
+
+			String pathFileInput = Constants.PATH_FILE + "file/template/export/pumps_data_export.xlsx";
+			String pathFileOut = Constants.PATH_FILE + "file/export/pumps_data_export.xlsx";
+
+			excelWriter.write(lstPumpsFilter, pathFileInput, pathFileOut);
+			File file = new File(pathFileOut);
+			Filedownload.save(file, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage(), e);
+		}
 
 	}
 
 	public void onImport(ForwardEvent event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		// final Window windownUpload = (Window)
-		// Executions.createComponents("/manager/uploadPumps.zul", pumps, null);
-		// windownUpload.doModal();
-		// windownUpload.setBorder(true);
-		// windownUpload.setBorder("normal");
-		// windownUpload.setClosable(true);
-		// windownUpload.addEventListener(Events.ON_CLOSE, new
-		// EventListener<Event>() {
-		//
-		// @Override
-		// public void onEvent(Event event) throws Exception {
-		// reloadGrid();
-		//
-		// }
-		// });
+
+		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadPumps.zul", pumps, null);
+		windownUpload.doModal();
+		windownUpload.setBorder(true);
+		windownUpload.setBorder("normal");
+		windownUpload.setClosable(true);
+		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				reloadGrid();
+
+			}
+		});
 	}
 
 	public void onUpload$uploadbtn(UploadEvent evt) {
@@ -423,9 +388,9 @@ public class PumpsController extends GenericForwardComposer {
 					Pumps item = new Pumps();
 					item.setPumpsCode(pumps.getPumpsCode());
 					item.setPumpsName(pumps.getPumpsName());
-					item.setPumpsCapacity(Integer.valueOf(pumps.getPumpsCapacity()));
-					item.setPumpsHight(Integer.valueOf(pumps.getPumpsHight()));
-					item.setPumpsFar(Integer.valueOf(pumps.getPumpsFar()));
+					item.setPumpsCapacity(pumps.getPumpsCapacity());
+					item.setPumpsHight(pumps.getPumpsHight());
+					item.setPumpsFar(pumps.getPumpsFar());
 					item.setStatus(1);
 					vlstData.add(item);
 					numberSucces++;

@@ -18,6 +18,7 @@ public class Location {
 	private Long locationID;
 	private String locationCode;
 	private String locationName;
+	private int locationValue;
 	private int locationType;
 	private int status;
 
@@ -57,6 +58,15 @@ public class Location {
 
 	public void setLocationName(String locationName) {
 		this.locationName = locationName;
+	}
+
+	@Column(name = "location_value")
+	public int getLocationValue() {
+		return locationValue;
+	}
+
+	public void setLocationValue(int locationValue) {
+		this.locationValue = locationValue;
 	}
 
 	@Column(name = "location_type")

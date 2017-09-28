@@ -44,12 +44,14 @@ public class LocationDAOImpl implements LocationDAO {
 			builder.append("location_code = :code, ");
 			builder.append("location_name = :name, ");
 			builder.append("location_type = :type, ");
+			builder.append("location_value = :value, ");
 			builder.append("status = :status ");
 			builder.append("where location_id = :id ");
 			Query query = getCurrentSession().createSQLQuery(builder.toString());
 			query.setParameter("code", location.getLocationCode());
 			query.setParameter("name", location.getLocationName());
 			query.setParameter("type", location.getLocationType());
+			query.setParameter("value", location.getLocationValue());
 			query.setParameter("status", location.getStatus());
 			query.setParameter("id", location.getLocationID());
 			return query.executeUpdate();

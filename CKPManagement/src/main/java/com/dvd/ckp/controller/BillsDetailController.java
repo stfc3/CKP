@@ -3,6 +3,7 @@ package com.dvd.ckp.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -15,8 +16,13 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Grid;
+import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Longbox;
+import org.zkoss.zul.Row;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -25,6 +31,7 @@ import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.domain.BillsDetail;
+import com.dvd.ckp.domain.CalculatorRevenue;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.Pumps;
@@ -36,6 +43,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 	/**
 	 * 
 	 */
+	private static final Logger LOGGER = Logger.getLogger(BillsDetailController.class);
 	private static final long serialVersionUID = -3785065052690864441L;
 	@WireVariable
 	protected PumpServices pumpServices;
@@ -74,19 +82,30 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 	private List<Pumps> lstPumps;
 
 	// Vi tri cac column trong grid bills detail
-	private final int pumpIdDetail = 1;
-	private final int pumpTypeIdDetail = 2;
-	private final int locationDetail = 3;
-	private final int locationTypeDetail = 4;
+	private final int pumpIdDetail = 2;
+	private final int pumpTypeIdDetail = 1;
+	private final int locationDetail = 4;
+	private final int locationTypeDetail = 3;
 
-	private String txt = "";
 	private Textbox txtBillID;
+
+	private Longbox txtConstruction;
+
+	private static int insertOrUpdate = 0;
+
+	private Combobox cbPump = null;
+	private Combobox cbPumpType = null;
+	private Combobox cbLocation = null;
+	private Combobox cbLocationType = null;
+	private Doublebox txtQuantity = null;
+	private Intbox txtShift = null;
+	private Label txtTotal;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
-		txt = txtBillID.getValue();
+
 		pumpServices = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
 		utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
 		billsServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
@@ -131,6 +150,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 
 		listDataModelDetail = new ListModelList(lstBillDetail);
 		gridBillsDetail.setModel(listDataModelDetail);
+		setDataDefaultInGridViewDetail();
 	}
 
 	/**
@@ -307,8 +327,10 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 		gridBillsDetail.setModel(listDataModelDetail);
 		gridBillsDetail.renderAll();
 		List<Component> lstCell = gridBillsDetail.getRows().getChildren().get(0).getChildren();
+		onChangeData(lstCell);
 		setDataDefaultInGridViewDetail();
 		StyleUtils.setEnableComponent(lstCell, 4);
+		insertOrUpdate = 1;
 	}
 
 	public void onStaff(ForwardEvent event) {
@@ -326,6 +348,251 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 
 			}
 		});
+	}
+
+	/**
+	 * Get object customer
+	 *
+	 * @param lstCell
+	 * @return
+	 */
+	private BillsDetail getDataInRow(List<Component> lstCell) {
+		BillsDetail billsDetail = new BillsDetail();
+		Component component;
+
+		Combobox cbPump = null;
+		Combobox cbPumpType = null;
+		Combobox cbLocation = null;
+		Combobox cbLocationType = null;
+		Doublebox txtQuantity = null;
+		Intbox txtShift = null;
+		Label txtTotal = null;
+
+		// may bom
+		component = lstCell.get(pumpIdDetail).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbPump = (Combobox) component;
+			billsDetail.setPumpID(cbPump.getSelectedItem().getValue());
+		}
+		// loai may bom
+		component = lstCell.get(pumpTypeIdDetail).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbPumpType = (Combobox) component;
+			billsDetail.setPumpTypeId(cbPumpType.getSelectedItem().getValue());
+		}
+		// vi tri bom
+		component = lstCell.get(locationDetail).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbLocation = (Combobox) component;
+			billsDetail.setLocationId(cbLocation.getSelectedItem().getValue());
+		}
+		// loai vi tri
+		component = lstCell.get(locationTypeDetail).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbLocationType = (Combobox) component;
+			billsDetail.setLocationType(cbLocationType.getSelectedItem().getValue());
+		}
+
+		// khoi luong bom
+		component = lstCell.get(5).getFirstChild();
+		if (component != null && component instanceof Doublebox) {
+			txtQuantity = (Doublebox) component;
+			billsDetail.setQuantity(txtQuantity.getValue());
+		}
+		// ca cho
+		component = lstCell.get(6).getFirstChild();
+		if (component != null && component instanceof Intbox) {
+			txtShift = (Intbox) component;
+			billsDetail.setShift(txtShift.getValue());
+		}
+		component = lstCell.get(7).getFirstChild();
+		if (component != null && component instanceof Label) {
+			txtTotal = (Label) component;
+			billsDetail.setTotal(Double.valueOf(txtTotal.getValue()));
+		}
+
+		billsDetail.setBillId(Long.valueOf(txtBillID.getValue()));
+		return billsDetail;
+	}
+
+	public void onSave(ForwardEvent event) {
+		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+		List<Component> lstCell = rowSelected.getChildren();
+
+		BillsDetail c = rowSelected.getValue();
+		BillsDetail billsDetail = getDataInRow(lstCell);
+		billsDetail.setBillDetailId(c.getBillDetailId());
+		save(billsDetail);
+		StyleUtils.setDisableComponent(lstCell, 4);
+		reloadGrid();
+
+	}
+
+	private void save(BillsDetail billsDetail) {
+		billsDetail.setStatus(1);
+		if (insertOrUpdate == 1) {
+			billsServices.save(billsDetail);
+		} else {
+			billsServices.update(billsDetail);
+		}
+		insertOrUpdate = 0;
+	}
+
+	/**
+	 * Reload grid
+	 */
+	private void reloadGrid() {
+		lstBillDetail.clear();
+		List<BillsDetail> lstData = billsServices.getBillDetail();
+		if (lstData != null && !lstData.isEmpty()) {
+			lstBillDetail.addAll(lstData);
+		}
+		listDataModelDetail = new ListModelList(lstBillDetail);
+		gridBillsDetail.setModel(listDataModelDetail);
+		setDataDefaultInGridViewDetail();
+	}
+
+	/**
+	 * Edit row
+	 *
+	 * @param event
+	 */
+	public void onEdit(ForwardEvent event) {
+		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+		List<Component> lstCell = rowSelected.getChildren();
+		onChangeData(lstCell);
+		BillsDetail c = rowSelected.getValue();
+		setDataPumpsDetail(lstCell, getPumpsDefault(c.getPumpID()), pumpIdDetail);
+		setDataPumpsTypeDetail(lstCell, getPumpsTypeDefault(c.getPumpTypeId()), pumpTypeIdDetail);
+		setLocationDetail(lstCell, getLocationDefault(c.getLocationId()), locationDetail);
+		setDataLocationTypeDetail(lstCell, getLocationTypeDefault(c.getLocationType()), locationTypeDetail);
+		StyleUtils.setEnableComponent(lstCell, 4);
+	}
+
+	/**
+	 * Cancel
+	 *
+	 * @param event
+	 */
+	public void onCancel(ForwardEvent event) {
+		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+		List<Component> lstCell = rowSelected.getChildren();
+		StyleUtils.setDisableComponent(lstCell, 6);
+		reloadGrid();
+
+	}
+
+	public void onDelete(ForwardEvent event) {
+		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+		BillsDetail c = rowSelected.getValue();
+		c.setStatus(0);
+		billsServices.delete(c);
+		reloadGrid();
+	}
+
+	private void onChangeData(List<Component> lstCell) {
+
+		Component component;
+
+		// may bom
+		component = lstCell.get(pumpTypeIdDetail).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbPump = (Combobox) component;
+
+		}
+		// loai may bom
+		component = lstCell.get(pumpIdDetail).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbPumpType = (Combobox) component;
+		}
+		// vi tri bom
+		component = lstCell.get(locationTypeDetail).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbLocation = (Combobox) component;
+		}
+		// loai vi tri
+		component = lstCell.get(locationDetail).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbLocationType = (Combobox) component;
+		}
+
+		// khoi luong bom
+		component = lstCell.get(5).getFirstChild();
+		if (component != null && component instanceof Doublebox) {
+			txtQuantity = (Doublebox) component;
+		}
+		// ca cho
+		component = lstCell.get(6).getFirstChild();
+		if (component != null && component instanceof Intbox) {
+			txtShift = (Intbox) component;
+		}
+		component = lstCell.get(7).getFirstChild();
+		if (component != null && component instanceof Label) {
+			txtTotal = (Label) component;
+
+		}
+		cbPump.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				// TODO Auto-generated method stub
+				calculatorRevenue();
+			}
+		});
+		cbPumpType.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				calculatorRevenue();
+			}
+		});
+		cbLocationType.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				calculatorRevenue();
+			}
+		});
+		cbLocation.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				calculatorRevenue();
+			}
+		});
+		txtQuantity.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				calculatorRevenue();
+			}
+		});
+		txtShift.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				calculatorRevenue();
+			}
+		});
+	}
+
+	private void calculatorRevenue() {
+		Long pumpID = cbPump.getSelectedItem().getValue();
+		Long pumpTypeID = cbPumpType.getSelectedItem().getValue();
+		Long locationID = cbLocation.getSelectedItem().getValue();
+		Long locationTypeID = cbLocationType.getSelectedItem().getValue();
+		Double quantity = txtQuantity.getValue();
+		Integer shift = txtShift.getValue();
+		if (pumpID != -1l && pumpTypeID != -1l && locationID != -1l && locationTypeID != -1l && quantity != null
+				&& shift != null) {
+			List<CalculatorRevenue> calculatorRevenue = billsServices.calculatorRevenue(txtConstruction.getValue(),
+					Long.valueOf(pumpID), Long.valueOf(pumpTypeID), Long.valueOf(locationID),
+					Long.valueOf(locationTypeID), quantity, shift);
+			if (calculatorRevenue != null && !calculatorRevenue.isEmpty()) {
+				txtTotal.setValue(String.valueOf(calculatorRevenue.get(0).getTotal_revenue()));
+			}
+
+		}
 	}
 
 }

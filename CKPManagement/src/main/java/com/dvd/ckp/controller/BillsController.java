@@ -5,18 +5,21 @@
  */
 package com.dvd.ckp.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.text.StyleConstants;
 
 import org.apache.log4j.Logger;
 import org.zkoss.util.media.Media;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -26,6 +29,7 @@ import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
@@ -48,17 +52,12 @@ import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Pumps;
+import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
-
-import java.util.HashMap;
-import java.util.Map;
-import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.Events;
 
 /**
  *
@@ -732,27 +731,23 @@ public class BillsController extends GenericForwardComposer<Component> {
 	 * @param event
 	 */
 	public void onClick$btnExport(Event event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		// ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
-		// try {
-		// int index = 0;
-		// for (Bills staff : lstBillsFilter) {
-		// index++;
-		// staff.setIndex(index);
-		// }
-		// String pathFileInput = Constants.PATH_FILE +
-		// "file/template/export/bills_data_export.xlsx";
-		// String pathFileOut = Constants.PATH_FILE +
-		// "file/export/bills_data_export.xlsx";
-		//
-		// excelWriter.write(lstBillsFilter, pathFileInput, pathFileOut);
-		// File file = new File(pathFileOut);
-		// Filedownload.save(file, null);
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// logger.error(e.getMessage(), e);
-		// }
+		ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
+		try {
+			int index = 0;
+			for (Bills staff : lstBillsFilter) {
+				index++;
+				staff.setIndex(index);
+			}
+			String pathFileInput = Constants.PATH_FILE + "file/template/export/bills_data_export.xlsx";
+			String pathFileOut = Constants.PATH_FILE + "file/export/bills_data_export.xlsx";
+
+			excelWriter.write(lstBillsFilter, pathFileInput, pathFileOut);
+			File file = new File(pathFileOut);
+			Filedownload.save(file, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage(), e);
+		}
 
 	}
 
@@ -896,11 +891,10 @@ public class BillsController extends GenericForwardComposer<Component> {
 
 	private double getTotalPrice(Long billID) {
 		double totalPrice = 0;
-
 		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
 			for (BillsDetail detail : lstBillDetail) {
 				if (billID != null && billID.equals(detail.getBillId())) {
-					totalPrice += detail.getTotal();
+					totalPrice = totalPrice + detail.getTotal();
 				}
 			}
 		}

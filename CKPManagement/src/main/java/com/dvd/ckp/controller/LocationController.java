@@ -29,6 +29,7 @@ import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
@@ -46,6 +47,7 @@ import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.NumberUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
+import com.dvd.ckp.utils.StyleUtils;
 
 /**
  *
@@ -114,7 +116,7 @@ public class LocationController extends GenericForwardComposer {
 	public void onEdit(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		setEnableComponent(lstCell);
+		StyleUtils.setEnableComponent(lstCell, 4);
 	}
 
 	public void onDelete(ForwardEvent event) {
@@ -126,68 +128,8 @@ public class LocationController extends GenericForwardComposer {
 		location.setStatus(3);
 		lstFilter.remove(location);
 		locationServices.detele(location);
-		setDisableComponent(lstCell);
+		StyleUtils.setDisableComponent(lstCell, 4);
 		reloadGrid();
-	}
-
-	/**
-	 * Set style enable edit
-	 *
-	 * @param lstCell
-	 */
-	private void setEnableComponent(List<Component> lstCell) {
-		if (lstCell != null && !lstCell.isEmpty()) {
-			for (Component c : lstCell) {
-				if (c instanceof Cell) {
-					Component child = c.getChildren().get(0);
-					if (child instanceof Combobox) {
-						((Combobox) child).setButtonVisible(true);
-						((Combobox) child).setInplace(false);
-					} else if (child instanceof Textbox) {
-						((Textbox) child).setReadonly(false);
-						((Textbox) child).setInplace(false);
-					} else if (child instanceof A) {
-						A edit = (A) child;
-						A save = (A) c.getChildren().get(1);
-						A cancel = (A) c.getChildren().get(2);
-
-						edit.setVisible(false);
-						save.setVisible(true);
-						cancel.setVisible(true);
-
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Set style disable edit
-	 *
-	 * @param lstCell
-	 */
-	private void setDisableComponent(List<Component> lstCell) {
-		if (lstCell != null && !lstCell.isEmpty()) {
-			for (Component c : lstCell) {
-				if (c instanceof Cell) {
-					Component child = c.getChildren().get(0);
-					if (child instanceof Combobox) {
-						((Combobox) child).setButtonVisible(false);
-						((Combobox) child).setInplace(true);
-					} else if (child instanceof Textbox) {
-						((Textbox) child).setReadonly(true);
-						((Textbox) child).setInplace(true);
-					} else if (child instanceof A) {
-						A edit = (A) child;
-						edit.setVisible(true);
-						A save = (A) c.getChildren().get(1);
-						A cancel = (A) c.getChildren().get(2);
-						save.setVisible(false);
-						cancel.setVisible(false);
-					}
-				}
-			}
-		}
 	}
 
 	/**
@@ -198,7 +140,7 @@ public class LocationController extends GenericForwardComposer {
 	public void onCancel(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		setDisableComponent(lstCell);
+		StyleUtils.setDisableComponent(lstCell, 4);
 		reloadGrid();
 	}
 
@@ -225,7 +167,7 @@ public class LocationController extends GenericForwardComposer {
 		} else {
 			locationServices.update(location);
 		}
-		setDisableComponent(lstCell);
+		StyleUtils.setDisableComponent(lstCell, 4);
 		reloadGrid();
 		insertOrUpdate = 0;
 	}
@@ -240,7 +182,7 @@ public class LocationController extends GenericForwardComposer {
 		gridLocation.setModel(listDataModel);
 		gridLocation.renderAll();
 		List<Component> lstCell = gridLocation.getRows().getChildren().get(0).getChildren();
-		setEnableComponent(lstCell);
+		StyleUtils.setEnableComponent(lstCell, 4);
 		insertOrUpdate = 1;
 	}
 
@@ -254,12 +196,14 @@ public class LocationController extends GenericForwardComposer {
 		Location location = new Location();
 		Textbox txtLocationCode = (Textbox) lstCell.get(1).getFirstChild();
 		Textbox txtLocationName = (Textbox) lstCell.get(2).getFirstChild();
-		Textbox txtLocationType = (Textbox) lstCell.get(3).getFirstChild();
-		Combobox cbxStatus = (Combobox) lstCell.get(4).getFirstChild();
+		Intbox txtLocationValue = (Intbox) lstCell.get(3).getFirstChild();
+		Intbox txtLocationType = (Intbox) lstCell.get(3).getFirstChild();
+
 		location.setLocationCode(txtLocationCode.getValue());
 		location.setLocationName(txtLocationName.getValue());
-		location.setLocationType(Integer.valueOf(txtLocationType.getValue()));
-		location.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
+		location.setLocationValue(txtLocationValue.getValue());
+		location.setLocationType(txtLocationType.getValue());
+		location.setStatus(1);
 		return location;
 	}
 
@@ -324,43 +268,39 @@ public class LocationController extends GenericForwardComposer {
 	}
 
 	public void onClick$btnExport(Event event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-//		ExcelWriter<Location> excelWriter = new ExcelWriter<Location>();
-//		try {
-//
-//			String pathFileInput = Constants.PATH_FILE + "file/template/export/location_data_export.xlsx";
-//			String pathFileOut = Constants.PATH_FILE + "file/export/location_data_export.xlsx";
-//
-//			excelWriter.write(lstFilter, pathFileInput, pathFileOut);
-//			File file = new File(pathFileOut);
-//			Filedownload.save(file, null);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			logger.error(e.getMessage(), e);
-//		}
+
+		ExcelWriter<Location> excelWriter = new ExcelWriter<Location>();
+		try {
+
+			String pathFileInput = Constants.PATH_FILE + "file/template/export/location_data_export.xlsx";
+			String pathFileOut = Constants.PATH_FILE + "file/export/location_data_export.xlsx";
+
+			excelWriter.write(lstFilter, pathFileInput, pathFileOut);
+			File file = new File(pathFileOut);
+			Filedownload.save(file, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage(), e);
+		}
 
 	}
 
 	public void onImport(ForwardEvent event) {
-		Messagebox.show(Labels.getLabel("not.support"), Labels.getLabel("comfirm"), Messagebox.OK,
-				Messagebox.INFORMATION);
-		// final Window windownUpload = (Window)
-		// Executions.createComponents("/manager/uploadLocation.zul", location,
-		// null);
-		// windownUpload.doModal();
-		// windownUpload.setBorder(true);
-		// windownUpload.setBorder("normal");
-		// windownUpload.setClosable(true);
-		// windownUpload.addEventListener(Events.ON_CLOSE, new
-		// EventListener<Event>() {
-		//
-		// @Override
-		// public void onEvent(Event event) throws Exception {
-		// reloadGrid();
-		//
-		// }
-		// });
+
+		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadLocation.zul", location,
+				null);
+		windownUpload.doModal();
+		windownUpload.setBorder(true);
+		windownUpload.setBorder("normal");
+		windownUpload.setClosable(true);
+		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				reloadGrid();
+
+			}
+		});
 	}
 
 	public void onUpload$uploadbtn(UploadEvent evt) {

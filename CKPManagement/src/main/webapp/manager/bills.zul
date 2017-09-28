@@ -119,7 +119,7 @@
 						</cell>
 						<!--thoi gian den cong trinh -->
 						<cell style="text-align: right;">
-							<datebox value="${each.fromDate}"
+							<datebox value="${each.fromDate}" format="dd/MM/yyyy"
 								style="text-align: right;" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
@@ -137,7 +137,7 @@
 						</cell>
 						<!--thoi gian roi cong trinh -->
 						<cell style="text-align: right;">
-							<datebox value="${each.endTime}"
+							<datebox value="${each.endTime}" format="dd/MM/yyyy"
 								style="text-align: right;" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
@@ -145,10 +145,10 @@
 						<cell style="text-align:center">
 							<a iconSclass="z-icon-pencil"
 								forward="onClick=onEdit" tooltiptext="${c:l('edit')}" />
-								
+
 							<a iconSclass="z-icon-trash-o"
 								forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />
-								
+
 							<a iconSclass="z-icon-check"
 								forward="onClick=onSave" visible="false"
 								tooltiptext="${c:l('save')}" />

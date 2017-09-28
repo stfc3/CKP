@@ -8,6 +8,7 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
 
 import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.domain.QuantityBean;
@@ -21,7 +22,10 @@ public class QuantityStaffController extends GenericForwardComposer<Component> {
 	private List<Staff> lstStaff;
 
 	@Wire
-	private List<QuantityBean> lstData;	
+	private Listbox resultList;
+
+	@Wire
+	private List<QuantityBean> lstData;
 
 	// Model grid in window bill detail
 	ListModelList<Staff> listDataModelDetail;
@@ -32,7 +36,7 @@ public class QuantityStaffController extends GenericForwardComposer<Component> {
 
 	public ListModelList<Staff> getListDataModelDetail() {
 		return listDataModelDetail;
-	}	
+	}
 
 	public void setListDataModelDetail(ListModelList<Staff> listDataModelDetail) {
 		this.listDataModelDetail = listDataModelDetail;
@@ -45,6 +49,9 @@ public class QuantityStaffController extends GenericForwardComposer<Component> {
 		staffServices = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
 		lstStaff = staffServices.getAllData();
 		listDataModelDetail = new ListModelList<>(lstStaff);
+		listDataModelDetail.setMultiple(true);
+		resultList.setModel(listDataModelDetail);
+		
 
 	}
 

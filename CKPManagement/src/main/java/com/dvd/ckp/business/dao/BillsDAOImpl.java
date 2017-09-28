@@ -1,16 +1,19 @@
 package com.dvd.ckp.business.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
+import com.dvd.ckp.domain.CalculatorRevenue;
 
 @Repository
 public class BillsDAOImpl implements BillDAO {
@@ -122,6 +125,107 @@ public class BillsDAOImpl implements BillDAO {
 			logger.error(e.getMessage(), e);
 		}
 
+		return null;
+	}
+
+	@Override
+	public void save(BillsDetail billsDetail) {
+		getCurrentSession().save(billsDetail);
+
+	}
+
+	@Override
+	public void update(BillsDetail billsDetail) {
+		try {
+			StringBuilder builder = new StringBuilder("update bill_detail set ");
+			builder.append(" pump_id = :pumpId, ");
+			builder.append(" pump_type = :pumpType, ");
+			builder.append(" location_id = :locationId, ");
+			builder.append(" location_type = :locationType, ");
+			builder.append(" quantity = :quantity, ");
+			if (billsDetail.getQuantityApprove() != null) {
+				builder.append(" quantity_approve = :quantityApprove, ");
+			}
+			builder.append(" shift = :shift, ");
+			builder.append(" total = :total ");
+			if (billsDetail.getTotalApprove() != null) {
+				builder.append(" ,total_approve = :totalApprove ");
+			}
+			if (billsDetail.getIsFar() != null) {
+				builder.append(" ,is_far = :isFar ");
+			}
+			if (billsDetail.getQuantityConvert() != null) {
+				builder.append(" ,quantity_convert = :quantityConvert ");
+			}
+			builder.append(" where bill_detail_id = :id ");
+			Query query = getCurrentSession().createSQLQuery(builder.toString());
+			query.setParameter("pumpId", billsDetail.getPumpID());
+			query.setParameter("pumpType", billsDetail.getPumpID());
+			query.setParameter("locationId", billsDetail.getLocationId());
+			query.setParameter("locationType", billsDetail.getLocationType());
+			query.setParameter("quantity", billsDetail.getQuantity());
+			if (billsDetail.getQuantityApprove() != null) {
+				query.setParameter("quantityApprove", billsDetail.getQuantityApprove());
+			}
+			query.setParameter("shift", billsDetail.getShift());
+			query.setParameter("total", billsDetail.getTotal());
+			if (billsDetail.getTotalApprove() != null) {
+				query.setParameter("totalApprove", billsDetail.getTotalApprove());
+			}
+			if (billsDetail.getIsFar() != null) {
+				query.setParameter("isFar", billsDetail.getIsFar());
+			}
+			if (billsDetail.getQuantityConvert() != null) {
+				query.setParameter("quantityConvert", billsDetail.getQuantityConvert());
+			}
+			query.setParameter("id", billsDetail.getBillDetailId());
+			query.executeUpdate();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+	}
+
+	@Override
+	public void delete(BillsDetail billsDetail) {
+		try {
+			StringBuilder builder = new StringBuilder("update bill_detail set ");
+			builder.append(" status = :status ");
+			builder.append(" where bill_detail_id = :id ");
+			Query query = getCurrentSession().createSQLQuery(builder.toString());
+			query.setParameter("status", billsDetail.getStatus());
+			query.setParameter("id", billsDetail.getBillDetailId());
+			query.executeUpdate();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+	}
+
+	@Override
+	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpId, Long pumpType, Long locationType,
+			Long locationID, Double quantity, int shift) {
+		try {
+			String sql = "CALL calculator_revenue(:construction,:pump,:pump_type,:location_type,:location_id,:quantity,:shift)";
+			Query query = getCurrentSession().createSQLQuery(sql).addEntity(CalculatorRevenue.class);
+
+			query.setParameter("construction", constructionId);
+			query.setParameter("pump", pumpId).setParameter("pump_type", pumpType);
+			query.setParameter("location_type", locationType);
+			query.setParameter("location_id", locationID);
+			query.setParameter("quantity", quantity);
+			query.setParameter("shift", shift);
+
+			List lstData = query.list();
+			List<CalculatorRevenue> lstDataReturn = new ArrayList();
+			for (int i = 0; i < lstData.size(); i++) {
+				CalculatorRevenue revenue = (CalculatorRevenue) lstData.get(i);
+				lstDataReturn.add(revenue);
+			}
+			return lstDataReturn;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 		return null;
 	}
 

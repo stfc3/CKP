@@ -138,6 +138,7 @@ CREATE TABLE IF NOT EXISTS bill_detail
     max_staff INT comment 'Số công nhân tối đa. Mặc định là 3 đối với bơm CPP, 5 đối với bơm tĩnh, Có thể hơn nếu được GĐ duyệt',
 	is_far INT DEFAULT 0 comment 'Công trình xa hay không: 1 Xa; 0: không xa',
     quantity_convert DOUBLE comment 'Giới hạn quy đổi cho công nhân',
+    status INT default 1,
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(bill_detail_id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Bảng phiếu bơm chi tiết';
