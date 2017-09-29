@@ -600,6 +600,13 @@ public class BillsController extends GenericForwardComposer<Component> {
 						if (lstConstructionId.contains(c.getConstructionID()) && bills.getPrdID() == c.getPrdID()) {
 							vlstBills.add(c);
 						}
+					} else if (StringUtils.isValidString(bills.getCustomerName())
+							&& StringUtils.isValidString(bills.getConstructionName()) && bills.getPrdID() != 0) {
+						if (lstCustomerId.contains(c.getCustomerID())
+								&& lstConstructionId.contains(c.getConstructionID())
+								&& bills.getPrdID() == c.getPrdID()) {
+							vlstBills.add(c);
+						}
 					}
 				}
 			}
