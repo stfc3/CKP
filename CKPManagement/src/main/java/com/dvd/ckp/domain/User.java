@@ -31,7 +31,7 @@ import javax.persistence.Transient;
 })
 public class User implements Serializable {
 
-    private long userId;
+    private Long userId;
     private String userName;
     private String fullName;
     private String password;
@@ -46,11 +46,11 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
