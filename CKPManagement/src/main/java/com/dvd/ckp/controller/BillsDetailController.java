@@ -427,8 +427,9 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 	}
 
 	private void save(BillsDetail billsDetail) {
-		billsDetail.setStatus(1);
+
 		if (insertOrUpdate == 1) {
+			billsDetail.setStatus(1);
 			billsServices.save(billsDetail);
 			lstBillDetail.add(billsDetail);
 		} else {
@@ -442,7 +443,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 	 */
 	private void reloadGrid() {
 		lstBillDetail.clear();
-		List<BillsDetail> lstData = billsServices.getBillDetail();
+		List<BillsDetail> lstData = billsServices.getBillDetail(txtBillID.getValue());
 		if (lstData != null && !lstData.isEmpty()) {
 			lstBillDetail.addAll(lstData);
 		}

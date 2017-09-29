@@ -6,10 +6,13 @@
 package com.dvd.ckp.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
 import org.zkoss.util.media.Media;
@@ -26,7 +29,9 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zul.A;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Filedownload;
@@ -69,7 +74,8 @@ public class BillsController extends GenericForwardComposer<Component> {
 	 * 
 	 */
 	private static final long serialVersionUID = 457994854668836097L;
-	private static final Logger logger = Logger.getLogger(ConstructionController.class);
+	private static final Logger logger = Logger.getLogger(BillsController.class);
+	ServletContext context;
 	@WireVariable
 	protected ConstructionService constructionService;
 	@WireVariable
@@ -258,6 +264,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 
 	private void save(Bills bills) {
 		if (insertOrUpdate == 1) {
+			bills.setStatus(1);
 			billsServices.save(bills);
 			lstBills.add(bills);
 			lstBillsFilter.add(bills);
@@ -655,28 +662,26 @@ public class BillsController extends GenericForwardComposer<Component> {
 	 *
 	 * @param event
 	 */
-	public void onUpload(ForwardEvent event) {
-		Media media = ((UploadEvent) event.getOrigin()).getMedia();
-		String filePath = "";
-		if (media == null) {
-			Messagebox.show(Labels.getLabel("uploadExcel.selectFile"), Labels.getLabel("ERROR"), Messagebox.OK,
-					Messagebox.ERROR);
-			return;
+	public void onUploadFile(ForwardEvent event) {
+		if (event.getOrigin() instanceof UploadEvent) {
+			UploadEvent uploadEvent = (UploadEvent) event.getOrigin();
+			Media media = uploadEvent.getMedia();
+			Cell cell = (Cell) uploadEvent.getTarget().getParent();
+			A aFileName = (A) cell.getFirstChild();
+			aFileName.setLabel(media.getName());
+			FileUtils fileUtils = new FileUtils();
+			fileUtils.saveFile(media, context.getRealPath("file/bills"));
 		}
-		if (media != null) {
-			filePath = media.getName();
+	}
+
+	public void onDownloadFile(ForwardEvent event) {
+		try {
+			A aFileName = (A) event.getOrigin().getTarget();
+			File file = new File(context.getRealPath("file/bills/" + aFileName.getLabel()));
+			Filedownload.save(file, null);
+		} catch (FileNotFoundException ex) {
+			logger.error(ex.getMessage(), ex);
 		}
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		List<Component> lstCell = rowSelected.getChildren();
-
-		final String vstrFileName = media.getName();
-
-		FileUtils fileUtils = new FileUtils();
-		fileUtils.setSaveFilePath(SAVE_PATH);
-		fileUtils.saveFile(media);
-		filePathBill = fileUtils.getFilePath();
-		fileName = fileUtils.getFileName();
-		setPath(lstCell, fileName, intfilePath);
 	}
 
 	private void setPath(List<Component> lstCell, String fileName, int columnIndex) {
