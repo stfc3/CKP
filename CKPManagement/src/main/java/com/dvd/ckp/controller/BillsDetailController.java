@@ -586,6 +586,8 @@ public class BillsDetailController extends GenericForwardComposer {
 			if (calculatorRevenue != null && !calculatorRevenue.isEmpty()) {
 				if (calculatorRevenue.get(0).getTotal_revenue() != null) {
 					txtTotal.setValue(String.valueOf(calculatorRevenue.get(0).getTotal_revenue()));
+				} else {
+					txtTotal.setValue("0");
 				}
 			}
 

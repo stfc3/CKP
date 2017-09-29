@@ -19,6 +19,7 @@ import org.zkoss.util.media.Media;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -147,7 +148,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
-
+		context = Sessions.getCurrent().getWebApp().getServletContext();
 		// khai bao services
 		constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
 		customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
@@ -256,6 +257,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 		Bills c = rowSelected.getValue();
 		Bills bills = getDataInRow(lstCell);
 		bills.setBillID(c.getBillID());
+		bills.setStatus(1);
 		save(bills);
 		StyleUtils.setDisableComponent(lstCell, 6);
 		reloadGrid();
@@ -331,6 +333,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 		Datebox endDate = null;
 		Datebox toDate = null;
 		Combobox cbxStatus = null;
+		A aFileName = null;
 
 		// ma phieu bom
 		component = lstCell.get(billsCode).getFirstChild();
@@ -351,9 +354,9 @@ public class BillsController extends GenericForwardComposer<Component> {
 			bills.setConstructionID(cbxConstruction.getSelectedItem().getValue());
 		}
 		component = lstCell.get(intfilePath).getFirstChild();
-		if (component != null && component instanceof Button) {
-			Button upload = (Button) component;
-			bills.setFileName(upload.getLabel());
+		if (component != null && component instanceof A) {
+			aFileName = (A) component;
+			bills.setFileName(aFileName.getLabel());
 		}
 
 		// Ngay bom
@@ -851,8 +854,12 @@ public class BillsController extends GenericForwardComposer<Component> {
 					public void onEvent(Event e) throws Exception {
 						if (Messagebox.ON_YES.equals(e.getName())) {
 							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+							List<Component> lstCell = rowSelected.getChildren();
 							Bills c = rowSelected.getValue();
-							save(c);
+							Bills billsValue = getDataInRow(lstCell);
+							billsValue.setBillID(c.getBillID());
+							billsValue.setStatus(1);
+							save(billsValue);
 							reloadGrid();
 							Map<String, Object> arguments = new HashMap();
 							BillsDetail billsDetail = getBillsDetail(c.getBillID());
