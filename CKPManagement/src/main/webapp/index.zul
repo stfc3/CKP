@@ -84,7 +84,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href="https://elements.envato.com/fonts"></a>
+                                                        <a class="card__link" href=""></a>
                                                         <image id="banner" class="card__image" src="images/hop_dong.png" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý hợp đồng</span>
@@ -99,7 +99,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href="https://elements.envato.com/graphics/icons"></a>
+                                                        <a class="card__link" href=""></a>
                                                         <image class="card__image" src="images/khach_hang.jpg" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý khách hàng</span>
@@ -114,7 +114,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href="https://elements.envato.com/graphics"></a>
+                                                        <a class="card__link" href=""></a>
                                                         <image class="card__image" src="images/bom.png" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý máy bơm</span>
@@ -129,7 +129,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href="https://elements.envato.com/graphics/backgrounds"></a>
+                                                        <a class="card__link" href=""></a>
                                                         <image class="card__image" src="images/phieu_bom.png" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý phiếu bơm</span>
@@ -144,7 +144,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href="https://elements.envato.com/graphics/illustrations"></a>
+                                                        <a class="card__link" href=""></a>
                                                         <image class="card__image" src="images/nhan_vien.jpg" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý nhân viên</span>
@@ -159,7 +159,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href="https://elements.envato.com/add-ons/actions-and-presets"></a>
+                                                        <a class="card__link" href=""></a>
                                                         <image class="card__image" src="images/user1.jpg" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý tài khoản</span>

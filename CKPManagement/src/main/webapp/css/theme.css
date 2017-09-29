@@ -606,7 +606,7 @@ h1#logo a span {display:block;position:absolute;width:100%;height:100%;backgroun
 }
 .z-auxheader-content{
     line-height: 14px;
-    text-align:left;
+    text-align:left !important;
 }
 a [class^="z-icon-"]{
     margin-right: 5px;
