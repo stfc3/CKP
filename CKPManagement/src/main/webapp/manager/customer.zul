@@ -7,7 +7,7 @@
             <caption label="${c:l('customer.category')}" />
             <grid id="lstCustomer"  mold="paging" pageSize="20" pagingPosition="bottom">
                 <auxhead sclass="category-center">
-                    <auxheader colspan="10">
+                    <auxheader colspan="9">
                         <a class="btn-cursor" id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <space width="10px"/>
                         <a class="btn-cursor" forward="onClick=onImport" iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
@@ -16,20 +16,16 @@
                     </auxheader>
                 </auxhead>
                 <auxhead sclass="category-center">
-                    <auxheader colspan="1">
-                    </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="9">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterCode" hflex="1"/>
-                    </auxheader>
-                    <auxheader colspan="1">
-                        <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterName" hflex="1"/>
+                        <combobox  hflex="1" id="cbxCustomerFilter" autodrop="true" placeholder="Nhập tên khách hàng để tìm kiếm"
+                                       buttonVisible="false">
+                                <template name="model">
+                                    <comboitem value="${each.customerId}" label="${each.customerName}" />
+                                </template>
+                            </combobox>
                     </auxheader>
                 </auxhead>
-<!--                <frozen style="background: #DFDED8" columns="1">
-                    <div style="padding: 0 10px;" />
-                </frozen>-->
                 <columns style="text-align:center;">
                     <column hflex="1">${c:l('customer.index')}</column>
                     <column hflex="2">${c:l('customer.code')}</column>
@@ -39,7 +35,6 @@
                     <column hflex="3">${c:l('customer.address')}</column>
                     <column hflex="3">${c:l('customer.accountnumber')}</column>
                     <column hflex="3">${c:l('customer.bankname')}</column>
-                    <!--<column hflex="2">${c:l('customer.status')}</column>-->
                     <column hflex="2">${c:l('customer.action')}</column>
                 </columns>
                 <template name="model">
@@ -68,13 +63,6 @@
                         <cell>
                             <textbox value="${each.bankName}" tooltiptext="${each.bankName}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
-<!--                        <cell>
-                            <combobox value="${each.status == 0 ? c:l('inactive') : c:l('active')}" tooltiptext="${each.status == 0 ? c:l('inactive') : c:l('active')}" hflex="1" 
-                                      buttonVisible="false" inplace="true" readonly="true">
-                                <comboitem value="1" label="${c:l('active')}" />
-                                <comboitem value="0" label="${c:l('inactive')}" />
-                            </combobox>
-                        </cell>-->
                         <cell style="text-align:center">
                             <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
                             <a class="btn-cursor" iconSclass="z-icon-trash-o" forward="onClick=onDelete" tooltiptext="${c:l('delete')}"/>

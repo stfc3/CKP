@@ -9,7 +9,6 @@ import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.SpringConstant;
-import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +24,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
@@ -42,9 +42,7 @@ public class CustomerController extends GenericForwardComposer {
     @Wire
     private Grid lstCustomer;
     @Wire
-    private Textbox txtFilterCode;
-    @Wire
-    private Textbox txtFilterName;
+    private Combobox cbxCustomerFilter;
     ListModelList<Customer> listDataModel;
     private List<Customer> lstCustomers;
 
@@ -56,13 +54,12 @@ public class CustomerController extends GenericForwardComposer {
     private final int accountIndex = 6;
     private final int bankIndex = 7;
 
+
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
-        lstCustomers = customerService.getCustomerActive();
-        listDataModel = new ListModelList(lstCustomers);
-        lstCustomer.setModel(listDataModel);
+        reloadGrid();
     }
 
     /**
@@ -198,49 +195,32 @@ public class CustomerController extends GenericForwardComposer {
         lstCustomers = customerService.getCustomerActive();
         listDataModel = new ListModelList(lstCustomers);
         lstCustomer.setModel(listDataModel);
+
+        List<Customer> vlstCustomerFilter = new ArrayList<>();
+        if (lstCustomers != null) {
+            vlstCustomerFilter.addAll(lstCustomers);
+        }
+        ListModelList listModel = new ListModelList(vlstCustomerFilter);
+        cbxCustomerFilter.setModel(listModel);
     }
 
-    public void onOK$txtFilterCode() {
-        Customer customer = new Customer();
-        String vstrCustomerCode = txtFilterCode.getValue();
-        customer.setCustomerCode(vstrCustomerCode);
-        String vstrCustomerName = txtFilterName.getValue();
-        customer.setCustomerName(vstrCustomerName);
-        filter(customer);
+    public void onSelect$cbxCustomerFilter() {
+        Long vstrCustomerId = null;
+        if (cbxCustomerFilter.getSelectedItem() != null) {
+            vstrCustomerId = cbxCustomerFilter.getSelectedItem().getValue();
+        }
+        filter(vstrCustomerId);
     }
 
-    public void onOK$txtFilterName() {
-        Customer customer = new Customer();
-        String vstrCustomerCode = txtFilterCode.getValue();
-        customer.setCustomerCode(vstrCustomerCode);
-        String vstrCustomerName = txtFilterName.getValue();
-        customer.setCustomerName(vstrCustomerName);
-        filter(customer);
-    }
-
-    private void filter(Customer customer) {
+    private void filter(Long pstrCustomerId) {
         List<Customer> vlstCustomer = new ArrayList<>();
-        if (lstCustomers != null && !lstCustomers.isEmpty() && customer != null) {
-            if (!StringUtils.isValidString(customer.getCustomerCode()) && !StringUtils.isValidString(customer.getCustomerName())) {
+        if (lstCustomers != null && !lstCustomers.isEmpty()) {
+            if (Constants.DEFAULT_ID.equals(pstrCustomerId) || pstrCustomerId == null) {
                 vlstCustomer.addAll(lstCustomers);
             } else {
                 for (Customer c : lstCustomers) {
-                    //tim theo ma va ten
-                    if (StringUtils.isValidString(customer.getCustomerCode()) && StringUtils.isValidString(customer.getCustomerName())) {
-                        if ((StringUtils.isValidString(c.getCustomerCode()) && c.getCustomerCode().toLowerCase().contains(customer.getCustomerCode().toLowerCase()))
-                                && (StringUtils.isValidString(c.getCustomerName()) && c.getCustomerName().toLowerCase().contains(customer.getCustomerName().toLowerCase()))) {
-                            vlstCustomer.add(c);
-                        }
-                    } //tim theo ma
-                    else if (StringUtils.isValidString(customer.getCustomerCode()) && !StringUtils.isValidString(customer.getCustomerName())) {
-                        if (StringUtils.isValidString(c.getCustomerCode()) && c.getCustomerCode().toLowerCase().contains(customer.getCustomerCode().toLowerCase())) {
-                            vlstCustomer.add(c);
-                        }
-                    } //tim theo ten
-                    else if (!StringUtils.isValidString(customer.getCustomerCode()) && StringUtils.isValidString(customer.getCustomerName())) {
-                        if (StringUtils.isValidString(c.getCustomerName()) && c.getCustomerName().toLowerCase().contains(customer.getCustomerName().toLowerCase())) {
-                            vlstCustomer.add(c);
-                        }
+                    if (pstrCustomerId.equals(c.getCustomerId())) {
+                        vlstCustomer.add(c);
                     }
                 }
             }

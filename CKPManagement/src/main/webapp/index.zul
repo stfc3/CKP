@@ -84,7 +84,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href=""></a>
+                                                        <a class="card__link" id="homeContract"></a>
                                                         <image id="banner" class="card__image" src="images/hop_dong.png" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý hợp đồng</span>
@@ -99,7 +99,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href=""></a>
+                                                        <a class="card__link" id="homeCustomer"></a>
                                                         <image class="card__image" src="images/khach_hang.jpg" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý khách hàng</span>
@@ -114,7 +114,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href=""></a>
+                                                        <a class="card__link" id="homePump"></a>
                                                         <image class="card__image" src="images/bom.png" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý máy bơm</span>
@@ -129,7 +129,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href=""></a>
+                                                        <a class="card__link" id="homeBill"></a>
                                                         <image class="card__image" src="images/phieu_bom.png" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý phiếu bơm</span>
@@ -144,7 +144,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href=""></a>
+                                                        <a class="card__link" id="homeStaff"></a>
                                                         <image class="card__image" src="images/nhan_vien.jpg" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý nhân viên</span>
@@ -159,7 +159,7 @@
           
                                                 <div class="card card--types">
                                                     <div class="card__figure">
-                                                        <a class="card__link" href=""></a>
+                                                        <a class="card__link" id="homeUser"></a>
                                                         <image class="card__image" src="images/user1.jpg" />
                                                         <div class="card__panel">
                                                             <span class="card__cta">Quản lý tài khoản</span>

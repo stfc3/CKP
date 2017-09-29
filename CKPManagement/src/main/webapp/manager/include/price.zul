@@ -75,7 +75,7 @@
                         <cell>
                             <doublebox value="${each.convertValue}" tooltiptext="${each.convertValue}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
-                        <cell>
+                        <cell style="text-align:center">
                             <a class="btn-cursor" disabled="true" iconSclass="z-icon-money" forward="onClick=onPriceLocation" tooltiptext="${c:l('pricelocation')}"/>
                         </cell>
                         <cell style="text-align:center">
