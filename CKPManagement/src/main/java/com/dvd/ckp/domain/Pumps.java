@@ -1,5 +1,7 @@
 package com.dvd.ckp.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,11 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
 @Entity
 @Table(name = "pumps")
-@NamedQuery(name = "Pump.getAllPumps", query = "FROM Pumps u WHERE status = 1")
+@NamedQuery(name = "Pump.getAllPumps", query = "FROM Pumps u WHERE status = 1 order by createDate desc")
 public class Pumps {
 	/**
 	 * @author viettx
@@ -27,6 +30,7 @@ public class Pumps {
 	private String pumpsFar;
 	private int status;
 	private String statusName;
+	private Date createDate;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -137,6 +141,16 @@ public class Pumps {
 
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
+	}
+
+	@Column(name = "create_date")
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 }

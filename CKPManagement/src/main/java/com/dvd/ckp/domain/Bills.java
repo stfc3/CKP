@@ -20,7 +20,7 @@ import com.dvd.ckp.utils.DateTimeUtils;
 
 @Entity
 @Table(name = "bills")
-@NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u where status not in (3)")
+@NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u where status = 1 order by createDate desc")
 public class Bills {
 	private static final Logger LOGGER = Logger.getLogger(Bills.class);
 	private int index;
@@ -64,6 +64,8 @@ public class Bills {
 	private List<Customer> listCustomer;
 	// danh sach cong trinh
 	private List<Construction> listConstruction;
+
+	private Date createDate;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -315,6 +317,16 @@ public class Bills {
 
 	public void setStrEndTime(String strEndTime) {
 		this.strEndTime = strEndTime;
+	}
+
+	@Column(name = "create_date")
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	@Override

@@ -137,7 +137,7 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 
 		// pump type default
 		defaultParam = new Param();
-		defaultParam.setParamId(-1l);
+		defaultParam.setParamValue(-1l);
 		defaultParam.setParamName(Labels.getLabel("option"));
 		lstTypePump.add(0, defaultParam);
 		lstTypeLocation.add(0, defaultParam);

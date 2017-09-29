@@ -9,11 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
 @Entity
 @Table(name = "staff")
-@NamedQuery(name = "Staff.getAllStaff", query = "select u FROM Staff u WHERE status = 1")
+@NamedQuery(name = "Staff.getAllStaff", query = "select u FROM Staff u WHERE status = 1  order by createDate desc")
 public class Staff {
 	private int index;
 	private Long staffId;
@@ -102,6 +103,7 @@ public class Staff {
 	}
 
 	@Column(name = "create_date")
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	public Date getCreateDate() {
 		return createDate;
 	}

@@ -1,6 +1,7 @@
 package com.dvd.ckp.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,14 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 
 @Entity
 @Table(name = "bill_detail")
-@NamedQueries({ @NamedQuery(name = "BillsDetail.getAllBillDetail", query = "FROM BillsDetail u where status=1"),
-		@NamedQuery(name = "BillsDetail.getAllBillDetailByID", query = "FROM BillsDetail u where billId = :billId and status=1") })
+@NamedQueries({ @NamedQuery(name = "BillsDetail.getAllBillDetail", query = "FROM BillsDetail u where status=1 order by createDate desc"),
+		@NamedQuery(name = "BillsDetail.getAllBillDetailByID", query = "FROM BillsDetail u where billId = :billId and status=1 order by createDate desc") })
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "callCalculatorRevenue", query = "CALL calculator_revenue(:construction,:pump,:pump_type,:location_type,:location_id,:quantity,:shift)", resultClass = BillsDetail.class) })
 public class BillsDetail implements Serializable {
@@ -40,6 +42,7 @@ public class BillsDetail implements Serializable {
 	private Integer isFar;
 	private Integer status;
 	private Double quantityConvert;
+	private Date createDate;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -177,5 +180,15 @@ public class BillsDetail implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	
+    @Column(name = "create_date")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
 }

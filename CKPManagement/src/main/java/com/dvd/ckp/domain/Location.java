@@ -1,6 +1,8 @@
 package com.dvd.ckp.domain;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,11 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
 @Entity
 @Table(name = "location")
-@NamedQuery(name = "Location.getAll", query = "select t FROM Location t WHERE status = 1")
+@NamedQuery(name = "Location.getAll", query = "select t FROM Location t WHERE status = 1  order by createDate desc")
 public class Location {
 	private int index;
 	private Long locationID;
@@ -21,6 +24,8 @@ public class Location {
 	private Long locationValue;
 	private Long locationType;
 	private int status;
+
+	private Date createDate;
 
 	@Transient
 	public int getIndex() {
@@ -85,6 +90,16 @@ public class Location {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	@Column(name = "create_date")
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 }
