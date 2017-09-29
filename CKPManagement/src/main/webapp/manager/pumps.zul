@@ -26,14 +26,18 @@
 					</auxheader>
 				</auxhead>
 				<auxhead sclass="category-center">
-					<auxheader colspan="1"></auxheader>
-					<auxheader colspan="1">
+
+					<auxheader colspan="10">
 						<a iconSclass="z-icon-filter" />
-						<textbox id="txtFilterCode" hflex="1" />
-					</auxheader>
-					<auxheader colspan="1">
-						<a iconSclass="z-icon-filter" />
-						<textbox id="txtFilterName" hflex="1" />
+						<combobox hflex="1" id="cbFilterName"
+							placeholder="${c:l('pump.filter')}" autodrop="true"
+							buttonVisible="false">
+							<template name="model">
+								<comboitem
+									value="${each.pumpsID}"
+									label="${each.pumpsName}" />
+							</template>
+						</combobox>
 					</auxheader>
 				</auxhead>
 				<columns style="text-align:center; ">

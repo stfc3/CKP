@@ -62,9 +62,8 @@ public class PumpsController extends GenericForwardComposer {
 	@Wire
 	private Grid gridPumps;
 	@Wire
-	private Textbox txtFilterCode;
-	@Wire
-	private Textbox txtFilterName;
+	private Combobox cbFilterName;
+	ListModelList<Pumps> listDataPump;
 	ListModelList<Pumps> listDataModel;
 	private List<Pumps> lstPumps;
 	private List<Pumps> lstPumpsFilter;
@@ -102,6 +101,9 @@ public class PumpsController extends GenericForwardComposer {
 		}
 		listDataModel = new ListModelList<Pumps>(lstPumps);
 		gridPumps.setModel(listDataModel);
+		listDataPump = new ListModelList<>(lstPumps);
+		cbFilterName.setModel(listDataPump);
+
 	}
 
 	/**
@@ -259,48 +261,35 @@ public class PumpsController extends GenericForwardComposer {
 		gridPumps.setModel(listDataModel);
 	}
 
-	public void onChange$txtFilterCode() {
+	public void onChange$cbFilterName() {
 		Pumps pumps = new Pumps();
-		String vstrPumpsCode = txtFilterCode.getValue();
-		pumps.setPumpsCode(vstrPumpsCode);
-		String vstrPumpsName = txtFilterName.getValue();
-		pumps.setPumpsName(vstrPumpsName);
-		filter(pumps);
-	}
-
-	public void onChange$txtFilterName() {
-		Pumps pumps = new Pumps();
-		String vstrPumpsCode = txtFilterCode.getValue();
-		pumps.setPumpsCode(vstrPumpsCode);
-		String vstrPumpsName = txtFilterName.getValue();
-		pumps.setPumpsName(vstrPumpsName);
+		Long pumpID = null;
+		if (cbFilterName.getSelectedItem() != null) {
+			pumpID = cbFilterName.getSelectedItem().getValue();
+		}
+		pumps.setPumpsID(pumpID);
 		filter(pumps);
 	}
 
 	private void filter(Pumps pumps) {
 		int index = 0;
 		List<Pumps> vlstData = new ArrayList<>();
-		if (lstPumps != null && !lstPumps.isEmpty()) {
-			for (Pumps item : lstPumps) {
-				index++;
-				pumps.setIndex(index);
-				if (StringUtils.isValidString(pumps.getPumpsCode())
-						&& item.getPumpsCode().toLowerCase().contains(pumps.getPumpsCode().toLowerCase())) {
-					vlstData.add(item);
-					lstPumpsFilter.clear();
-					lstPumpsFilter.add(item);
-				} else if (StringUtils.isValidString(pumps.getPumpsName())
-						&& item.getPumpsName().toLowerCase().contains(pumps.getPumpsName().toLowerCase())) {
-					vlstData.add(item);
-					lstPumpsFilter.clear();
-					lstPumpsFilter.add(item);
-				}
-			}
-		}
-		if (!StringUtils.isValidString(pumps.getPumpsCode()) && !StringUtils.isValidString(pumps.getPumpsName())) {
+		if (pumps.getPumpsID() == null) {
 			vlstData.addAll(lstPumps);
 			lstPumpsFilter.clear();
 			lstPumpsFilter.addAll(lstPumps);
+		} else {
+			if (lstPumps != null && !lstPumps.isEmpty()) {
+				for (Pumps item : lstPumps) {
+					index++;
+					pumps.setIndex(index);
+					if (pumps.getPumpsID() != null && pumps.getPumpsID().equals(item.getPumpsID())) {
+						vlstData.add(item);
+						lstPumpsFilter.clear();
+						lstPumpsFilter.add(item);
+					}
+				}
+			}
 		}
 		listDataModel = new ListModelList<Pumps>(vlstData);
 		gridPumps.setModel(listDataModel);

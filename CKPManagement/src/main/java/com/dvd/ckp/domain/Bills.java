@@ -32,7 +32,7 @@ public class Bills {
 	private Long customerID;
 	private String customerName;
 	// Thoi gian nhap phieu bom
-	private int prdID;
+	private Integer prdID;
 	private Date dateInput;
 	private String strDateInput;
 	// ngay bat dau den cong truong
@@ -58,7 +58,7 @@ public class Bills {
 	private String fileName;
 
 	// thanh tien
-	private double cost;
+	private Double cost;
 
 	// danh sach khach hang
 	private List<Customer> listCustomer;

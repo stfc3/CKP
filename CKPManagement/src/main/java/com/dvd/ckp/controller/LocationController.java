@@ -43,6 +43,7 @@ import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Param;
+import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.excel.domain.LocationExcel;
@@ -70,9 +71,8 @@ public class LocationController extends GenericForwardComposer {
 	@Wire
 	private Grid gridLocation;
 	@Wire
-	private Textbox txtFilterCode;
-	@Wire
-	private Textbox txtFilterName;
+	private Combobox cbFilterName;
+	ListModelList<Location> listDataLocation;
 	ListModelList<Location> listDataModel;
 	private List<Location> lstLocation;
 	private List<Location> lstFilter;
@@ -112,6 +112,8 @@ public class LocationController extends GenericForwardComposer {
 			lstLocation.addAll(vlstData);
 			lstFilter.addAll(vlstData);
 		}
+		listDataLocation = new ListModelList<>(vlstData);
+		cbFilterName.setModel(listDataLocation);
 		// pump type default
 		defaultParam = new Param();
 		defaultParam.setParamValue(-1l);
@@ -295,50 +297,38 @@ public class LocationController extends GenericForwardComposer {
 		setDataDefaultInGridViewDetail();
 	}
 
-	public void onChange$txtFilterCode() {
+	public void onChange$cbFilterName() {
 		Location location = new Location();
-		String vstrLocationCode = txtFilterCode.getValue();
-		location.setLocationCode(vstrLocationCode);
-		String vstrLocationName = txtFilterName.getValue();
-		location.setLocationName(vstrLocationName);
-		filter(location);
-	}
+		Long locationID = null;
+		if (cbFilterName.getSelectedItem() != null) {
+			locationID = cbFilterName.getSelectedItem().getValue();
+		}
+		location.setLocationID(locationID);
 
-	public void onChange$txtFilterName() {
-		Location location = new Location();
-		String vstrLocationCode = txtFilterCode.getValue();
-		location.setLocationCode(vstrLocationCode);
-		String vstrLocationName = txtFilterName.getValue();
-		location.setLocationName(vstrLocationName);
 		filter(location);
 	}
 
 	private void filter(Location location) {
 		int index = 0;
 		List<Location> vlstData = new ArrayList<>();
-		if (lstLocation != null && !lstLocation.isEmpty()) {
-			for (Location item : lstLocation) {
-				index++;
-				item.setIndex(index);
-				if (StringUtils.isValidString(location.getLocationCode())
-						&& item.getLocationCode().toLowerCase().contains(location.getLocationCode().toLowerCase())) {
-					vlstData.add(item);
-					lstFilter.clear();
-					lstFilter.add(item);
-				} else if (StringUtils.isValidString(location.getLocationName())
-						&& item.getLocationName().toLowerCase().contains(location.getLocationName().toLowerCase())) {
-					vlstData.add(item);
-					lstFilter.clear();
-					lstFilter.add(item);
-				}
-			}
-		}
-		if (!StringUtils.isValidString(location.getLocationCode())
-				&& !StringUtils.isValidString(location.getLocationName())) {
+		if (location.getLocationID() == null) {
 			vlstData.addAll(lstLocation);
 			lstFilter.clear();
 			lstFilter.addAll(lstLocation);
+		} else {
+			if (lstLocation != null && !lstLocation.isEmpty()) {
+				for (Location item : lstLocation) {
+					index++;
+					item.setIndex(index);
+					if (location.getLocationID() != null && location.getLocationID().equals(item.getLocationID())) {
+						vlstData.add(item);
+						lstFilter.clear();
+						lstFilter.add(item);
+					}
+				}
+			}
 		}
+
 		listDataModel = new ListModelList<Location>(vlstData);
 		gridLocation.setModel(listDataModel);
 	}
