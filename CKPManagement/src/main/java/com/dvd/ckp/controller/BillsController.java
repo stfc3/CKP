@@ -891,8 +891,8 @@ public class BillsController extends GenericForwardComposer<Component> {
 
 								@Override
 								public void onEvent(Event event) throws Exception {
-									windownUpload.detach();
-
+									lstBillDetail = billsServices.getBillDetail();
+									reloadGrid();
 								}
 							});
 						}

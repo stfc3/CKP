@@ -113,7 +113,7 @@ public class LocationController extends GenericForwardComposer {
 		}
 		// pump type default
 		defaultParam = new Param();
-		defaultParam.setParamId(-1l);
+		defaultParam.setParamValue(-1l);
 		defaultParam.setParamName(Labels.getLabel("option"));
 		lstTypeLocation.add(0, defaultParam);
 		listDataModel = new ListModelList<Location>(lstLocation);
@@ -286,6 +286,7 @@ public class LocationController extends GenericForwardComposer {
 		}
 		listDataModel = new ListModelList<Location>(vlstData);
 		gridLocation.setModel(listDataModel);
+		setDataDefaultInGridViewDetail();
 	}
 
 	public void onChange$txtFilterCode() {
