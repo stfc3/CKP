@@ -24,7 +24,6 @@ public class Location {
 	private Long locationValue;
 	private Long locationType;
 	private int status;
-
 	private Date createDate;
 
 	@Transient

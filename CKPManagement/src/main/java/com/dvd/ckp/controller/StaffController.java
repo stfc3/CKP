@@ -36,6 +36,7 @@ import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.common.Constants;
+import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
@@ -133,9 +134,9 @@ public class StaffController extends GenericForwardComposer {
 							staff.setStaffId(c.getStaffId());
 							staff.setStatus(0);
 							staff.setCreateDate(new Date());
-
 							staffService.detele(staff);
-							lstStaffFilter.remove(staff);
+							lstStaffFilter.remove(getIndexStaffFilter(c.getStaffId()));
+							lstStaff.remove(getIndexStaff(c.getStaffId()));
 							StyleUtils.setDisableComponent(lstCell, 4);
 							reloadGrid();
 						}
@@ -179,6 +180,7 @@ public class StaffController extends GenericForwardComposer {
 			lstStaffFilter.add(vstaff);
 			lstStaff.add(vstaff);
 		} else {
+			vstaff.setCreateDate(new Date());
 			staffService.update(vstaff);
 		}
 		StyleUtils.setDisableComponent(lstCell, 4);
@@ -460,4 +462,25 @@ public class StaffController extends GenericForwardComposer {
 		return value.replace("/", "");
 	}
 
+	private int getIndexStaff(Long staffID) {
+		if (lstStaff != null && !lstStaff.isEmpty()) {
+			for (Staff staff : lstStaff) {
+				if (staffID.equals(staff.getStaffId())) {
+					return lstStaff.indexOf(staff);
+				}
+			}
+		}
+		return -1;
+	}
+
+	private int getIndexStaffFilter(Long staffID) {
+		if (lstStaffFilter != null && !lstStaffFilter.isEmpty()) {
+			for (Staff staff : lstStaffFilter) {
+				if (staffID.equals(staff.getStaffId())) {
+					return lstStaffFilter.indexOf(staff);
+				}
+			}
+		}
+		return -1;
+	}
 }

@@ -8,6 +8,7 @@ package com.dvd.ckp.controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -254,11 +255,11 @@ public class BillsController extends GenericForwardComposer<Component> {
 	public void onSave(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		Bills c = rowSelected.getValue();
-		Bills bills = getDataInRow(lstCell);
-		bills.setBillID(c.getBillID());
-		bills.setStatus(1);
-		save(bills);
+		Bills bill = rowSelected.getValue();
+		getDataInRow(lstCell, bill);
+
+		bill.setStatus(1);
+		save(bill);
 		StyleUtils.setDisableComponent(lstCell, 6);
 		reloadGrid();
 
@@ -271,6 +272,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 			lstBills.add(bills);
 			lstBillsFilter.add(bills);
 		} else {
+			bills.setCreateDate(new Date());
 			billsServices.update(bills);
 		}
 
@@ -287,11 +289,12 @@ public class BillsController extends GenericForwardComposer<Component> {
 
 							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 							List<Component> lstCell = rowSelected.getChildren();
-							Bills c = rowSelected.getValue();
-							Bills bills = getDataInRow(lstCell);
-							bills.setBillID(c.getBillID());
-							bills.setStatus(3);
-							billsServices.delete(bills);
+							Bills bill = rowSelected.getValue();
+							getDataInRow(lstCell, bill);
+							bill.setStatus(0);
+							billsServices.delete(bill);
+							lstBills.remove(getIndexBill(bill.getBillID()));
+							lstBillsFilter.remove(getIndexBillFilter(bill.getBillID()));
 							reloadGrid();
 						}
 					}
@@ -320,8 +323,8 @@ public class BillsController extends GenericForwardComposer<Component> {
 	 * @param lstCell
 	 * @return
 	 */
-	private Bills getDataInRow(List<Component> lstCell) {
-		Bills bills = new Bills();
+	private void getDataInRow(List<Component> lstCell, Bills bills) {
+
 		Component component;
 
 		Textbox txtBillsCode = null;
@@ -403,8 +406,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 			cbxStatus = (Combobox) component;
 			bills.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
 		}
-		logger.info(bills.toString());
-		return bills;
+
 	}
 
 	/**
@@ -846,6 +848,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 	 * 
 	 * @param event
 	 */
+	@SuppressWarnings({ "unchecked", "unchecked" })
 	public void onAddDetail(ForwardEvent event) {
 		Messagebox.show(Labels.getLabel("bills.comfirm"), Labels.getLabel("comfirm"), Messagebox.YES | Messagebox.NO,
 				Messagebox.QUESTION, new EventListener() {
@@ -855,31 +858,31 @@ public class BillsController extends GenericForwardComposer<Component> {
 						if (Messagebox.ON_YES.equals(e.getName())) {
 							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 							List<Component> lstCell = rowSelected.getChildren();
-							Bills c = rowSelected.getValue();
-							Bills billsValue = getDataInRow(lstCell);
-							billsValue.setBillID(c.getBillID());
+							Bills billsValue = rowSelected.getValue();
+							getDataInRow(lstCell, billsValue);
 							billsValue.setStatus(1);
 							save(billsValue);
 							reloadGrid();
+
 							Map<String, Object> arguments = new HashMap();
-							BillsDetail billsDetail = getBillsDetail(c.getBillID());
+							BillsDetail billsDetail = getBillsDetail(billsValue.getBillID());
 							if (billsDetail != null) {
 								arguments.put("detail", billsDetail);
 							} else {
 								arguments.put("detail", new BillsDetail());
 							}
-							arguments.put("bill", c);
+							arguments.put("bill", billsValue);
 							if (billsDetail != null) {
 								Pumps pumps = getPumps(billsDetail.getPumpID());
 								arguments.put("pumps", pumps);
 								Location location = getLocation(billsDetail.getLocationId());
 								arguments.put("location", location);
 							}
-							Construction construction = getConstruction(c.getConstructionID());
+							Construction construction = getConstruction(billsValue.getConstructionID());
 							arguments.put("construction", construction);
-							List<BillsDetail> lstData = new ArrayList<>();
-
-							lstData.addAll(getListBillsDetail(c.getBillID()));
+							// List<BillsDetail> lstData = new ArrayList<>();
+							//
+							// lstData.addAll(getListBillsDetail(c.getBillID()));
 
 							final Window windownUpload = (Window) Executions
 									.createComponents("/manager/include/billDetail.zul", bills, arguments);
@@ -1010,4 +1013,25 @@ public class BillsController extends GenericForwardComposer<Component> {
 		return null;
 	}
 
+	private int getIndexBill(Long bill) {
+		if (lstBills != null && !lstBills.isEmpty()) {
+			for (Bills bills : lstBills) {
+				if (bill.equals(bills.getBillID())) {
+					return lstBills.indexOf(bills);
+				}
+			}
+		}
+		return -1;
+	}
+
+	private int getIndexBillFilter(Long bill) {
+		if (lstBillsFilter != null && !lstBillsFilter.isEmpty()) {
+			for (Bills bills : lstBillsFilter) {
+				if (bill.equals(bills.getBillID())) {
+					return lstBillsFilter.indexOf(bills);
+				}
+			}
+		}
+		return -1;
+	}
 }

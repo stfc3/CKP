@@ -56,7 +56,8 @@ public class PumpsDAOImpl implements PumpsDAO {
 			strSQL.append(" pump_capacity = :pumpCapacity, ");
 			strSQL.append(" pump_high = :pumpHight, ");
 			strSQL.append(" pump_far = :pumpFar, ");
-			strSQL.append(" status = :status ");
+			strSQL.append(" status = :status ,");
+			strSQL.append(" create_date = :create_date ");
 			strSQL.append(" where pump_id = :pumpId");
 
 			Query query = getCurrentSession().createSQLQuery(strSQL.toString());
@@ -67,6 +68,7 @@ public class PumpsDAOImpl implements PumpsDAO {
 			query.setParameter("pumpHight", pumps.getPumpsHight());
 			query.setParameter("status", pumps.getStatus());
 			query.setParameter("pumpId", pumps.getPumpsID());
+			query.setParameter("create_date", pumps.getCreateDate());
 			int numberRow = query.executeUpdate();
 			return numberRow;
 		} catch (Exception e) {
@@ -108,7 +110,7 @@ public class PumpsDAOImpl implements PumpsDAO {
 			session.beginTransaction().rollback();
 		} finally {
 			session.close();
-		}		
+		}
 	}
 
 }

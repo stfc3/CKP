@@ -68,6 +68,7 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append("construction_id = :constructionID, ");
 			builder.append("status = :status, ");
 			builder.append("path = :filePath, ");
+			builder.append("create_date = :createDate, ");
 			builder.append("file_name = :fileName where ");
 			builder.append("bill_id = :billID ");
 			Query query = session.createSQLQuery(builder.toString());
@@ -82,6 +83,7 @@ public class BillsDAOImpl implements BillDAO {
 			query.setParameter("status", bills.getStatus());
 			query.setParameter("filePath", bills.getFilePath());
 			query.setParameter("fileName", bills.getFileName());
+			query.setParameter("createDate", bills.getCreateDate());
 			query.setParameter("billID", bills.getBillID());
 
 			query.executeUpdate();
@@ -157,6 +159,7 @@ public class BillsDAOImpl implements BillDAO {
 			if (billsDetail.getQuantityConvert() != null) {
 				builder.append(" ,quantity_convert = :quantityConvert ");
 			}
+			builder.append(" ,create_date = :create_date ");
 			builder.append(" where bill_detail_id = :id ");
 			Query query = getCurrentSession().createSQLQuery(builder.toString());
 			query.setParameter("pumpId", billsDetail.getPumpID());
@@ -178,6 +181,7 @@ public class BillsDAOImpl implements BillDAO {
 			if (billsDetail.getQuantityConvert() != null) {
 				query.setParameter("quantityConvert", billsDetail.getQuantityConvert());
 			}
+			query.setParameter("create_date", billsDetail.getCreateDate());
 			query.setParameter("id", billsDetail.getBillDetailId());
 			query.executeUpdate();
 		} catch (Exception e) {

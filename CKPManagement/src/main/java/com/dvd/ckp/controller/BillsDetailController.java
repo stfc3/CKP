@@ -1,6 +1,7 @@
 package com.dvd.ckp.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -409,12 +410,12 @@ public class BillsDetailController extends GenericForwardComposer {
 	}
 
 	private void save(BillsDetail billsDetail) {
-
 		if (insertOrUpdate == 1) {
 			billsDetail.setStatus(1);
 			billsServices.save(billsDetail);
 			lstBillDetail.add(billsDetail);
 		} else {
+			billsDetail.setCreateDate(new Date());
 			billsServices.update(billsDetail);
 		}
 		insertOrUpdate = 0;

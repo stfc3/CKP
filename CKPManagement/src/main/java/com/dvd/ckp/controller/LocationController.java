@@ -7,6 +7,7 @@ package com.dvd.ckp.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -130,6 +131,7 @@ public class LocationController extends GenericForwardComposer {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
 		StyleUtils.setEnableComponent(lstCell, 4);
+
 	}
 
 	public void onDelete(ForwardEvent event) {
@@ -144,9 +146,10 @@ public class LocationController extends GenericForwardComposer {
 							Location c = rowSelected.getValue();
 							Location location = getDataInRow(lstCell);
 							location.setLocationID(c.getLocationID());
-							location.setStatus(3);
-							lstFilter.remove(location);
+							location.setStatus(0);
 							locationServices.detele(location);
+							lstFilter.remove(getIndexLocationFilter(c.getLocationID()));
+							lstLocation.remove(getIndexLocation(c.getLocationID()));
 							StyleUtils.setDisableComponent(lstCell, 4);
 							reloadGrid();
 						}
@@ -233,6 +236,7 @@ public class LocationController extends GenericForwardComposer {
 			lstFilter.add(location);
 			lstLocation.add(location);
 		} else {
+			location.setCreateDate(new Date());
 			locationServices.update(location);
 		}
 		StyleUtils.setDisableComponent(lstCell, 4);
@@ -280,11 +284,13 @@ public class LocationController extends GenericForwardComposer {
 	 * Reload grid
 	 */
 	private void reloadGrid() {
-		List<Location> vlstData = new ArrayList<Location>();
-		if (locationServices.getListLocation() != null && !locationServices.getListLocation().isEmpty()) {
-			vlstData.addAll(locationServices.getListLocation());
+		List<Location> vlstData = locationServices.getListLocation();
+		if (vlstData != null && !vlstData.isEmpty()) {
+			listDataModel = new ListModelList<Location>(vlstData);
+		} else {
+			listDataModel = new ListModelList<Location>(new ArrayList<>());
 		}
-		listDataModel = new ListModelList<Location>(vlstData);
+
 		gridLocation.setModel(listDataModel);
 		setDataDefaultInGridViewDetail();
 	}
@@ -482,5 +488,27 @@ public class LocationController extends GenericForwardComposer {
 			// TODO Auto-generated catch block
 			logger.error(e.getMessage(), e);
 		}
+	}
+
+	private int getIndexLocation(Long locationID) {
+		if (lstLocation != null && !lstLocation.isEmpty()) {
+			for (Location location : lstLocation) {
+				if (locationID.equals(location.getLocationID())) {
+					return lstLocation.indexOf(location);
+				}
+			}
+		}
+		return -1;
+	}
+
+	private int getIndexLocationFilter(Long locationID) {
+		if (lstLocation != null && !lstLocation.isEmpty()) {
+			for (Location location : lstLocation) {
+				if (locationID.equals(location.getLocationID())) {
+					return lstLocation.indexOf(location);
+				}
+			}
+		}
+		return -1;
 	}
 }

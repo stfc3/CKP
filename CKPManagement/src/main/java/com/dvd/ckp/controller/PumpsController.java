@@ -7,6 +7,7 @@ package com.dvd.ckp.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -40,6 +41,7 @@ import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Pumps;
+import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.utils.FileUtils;
@@ -125,9 +127,10 @@ public class PumpsController extends GenericForwardComposer {
 							Pumps c = rowSelected.getValue();
 							Pumps pumps = getDataInRow(lstCell);
 							pumps.setPumpsID(c.getPumpsID());
-							pumps.setStatus(3);
-							lstPumpsFilter.remove(pumps);
+							pumps.setStatus(0);
 							pumpsService.detele(pumps);
+							lstPumpsFilter.remove(getIndexPumpFilter(c.getPumpsID()));
+							lstPumps.remove(getIndexPump(c.getPumpsID()));
 							StyleUtils.setDisableComponent(lstCell, 4);
 							reloadGrid();
 						}
@@ -170,6 +173,7 @@ public class PumpsController extends GenericForwardComposer {
 			lstPumps.add(pumps);
 			lstPumpsFilter.add(pumps);
 		} else {
+			pumps.setCreateDate(new Date());
 			pumpsService.update(pumps);
 		}
 		StyleUtils.setDisableComponent(lstCell, 4);
@@ -444,6 +448,28 @@ public class PumpsController extends GenericForwardComposer {
 			// TODO Auto-generated catch block
 			logger.error(e.getMessage(), e);
 		}
+	}
+
+	private int getIndexPump(Long pumpID) {
+		if (lstPumps != null && !lstPumps.isEmpty()) {
+			for (Pumps pump : lstPumps) {
+				if (pumpID.equals(pump.getPumpsID())) {
+					return lstPumps.indexOf(pump);
+				}
+			}
+		}
+		return -1;
+	}
+
+	private int getIndexPumpFilter(Long pumpID) {
+		if (lstPumpsFilter != null && !lstPumpsFilter.isEmpty()) {
+			for (Pumps pump : lstPumpsFilter) {
+				if (pumpID.equals(pump.getPumpsID())) {
+					return lstPumpsFilter.indexOf(pump);
+				}
+			}
+		}
+		return -1;
 	}
 
 }
