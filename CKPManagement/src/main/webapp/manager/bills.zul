@@ -25,19 +25,20 @@
 					</auxheader>
 				</auxhead>
 				<auxhead sclass="category-center">
-					<auxheader colspan="1"></auxheader>
-					<auxheader colspan="1"></auxheader>
-					<auxheader colspan="1">
-						<a iconSclass="z-icon-filter" />						
+
+					<auxheader colspan="4">
+						<a iconSclass="z-icon-filter" />
 						<combobox id="cbFilterCustomer" hflex="1"
-							autodrop="true" buttonVisible="false" />
+							autodrop="true" buttonVisible="false"
+							placeholder="${c:l('bills.filter.customer')}" />
 					</auxheader>
-					<auxheader colspan="1">
+					<auxheader colspan="4">
 						<a iconSclass="z-icon-filter" />
 						<combobox id="cbFilterConstruction" hflex="1"
-							autodrop="true" buttonVisible="false" />
+							autodrop="true" buttonVisible="false"
+							placeholder="${c:l('bills.filter.construction')}" />
 					</auxheader>
-					<auxheader colspan="1">
+					<auxheader colspan="4">
 						<a iconSclass="z-icon-filter" />
 						<datebox id="dtFilterDate" hflex="1" />
 					</auxheader>
