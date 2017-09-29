@@ -28,12 +28,14 @@
 					<auxheader colspan="1"></auxheader>
 					<auxheader colspan="1"></auxheader>
 					<auxheader colspan="1">
-						<a iconSclass="z-icon-filter" />
-						<textbox id="txtFilterCustomer" hflex="1" />
+						<a iconSclass="z-icon-filter" />						
+						<combobox id="cbFilterCustomer" hflex="1"
+							autodrop="true" buttonVisible="false" />
 					</auxheader>
 					<auxheader colspan="1">
 						<a iconSclass="z-icon-filter" />
-						<textbox id="txtFilterConstruction" hflex="1" />
+						<combobox id="cbFilterConstruction" hflex="1"
+							autodrop="true" buttonVisible="false" />
 					</auxheader>
 					<auxheader colspan="1">
 						<a iconSclass="z-icon-filter" />

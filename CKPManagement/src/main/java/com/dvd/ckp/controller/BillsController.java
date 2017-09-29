@@ -97,10 +97,6 @@ public class BillsController extends GenericForwardComposer<Component> {
 	private Grid gridBills;
 
 	@Wire
-	private Textbox txtFilterCustomer;
-	@Wire
-	private Textbox txtFilterConstruction;
-	@Wire
 	private Datebox dtFilterDate;
 
 	// Model grid in window bill
@@ -145,6 +141,12 @@ public class BillsController extends GenericForwardComposer<Component> {
 	private static int insertOrUpdate = 0;
 
 	private Window bills;
+	@Wire
+	private Combobox cbFilterCustomer;
+	private ListModelList<String> modelListCustomer;
+	@Wire
+	private Combobox cbFilterConstruction;
+	private ListModelList<String> modelListConstruction;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -177,7 +179,13 @@ public class BillsController extends GenericForwardComposer<Component> {
 		lstPumps = pumpServices.getAllListData();
 
 		listContact = contractService.getAllContract();
+		List<String> lstCustomerName = getListCustomerName();
+		modelListCustomer = new ListModelList<>(lstCustomerName);
+		cbFilterCustomer.setModel(modelListCustomer);
 
+		List<String> lstConstructionName = getListConstructionName();
+		modelListConstruction = new ListModelList<>(lstConstructionName);
+		cbFilterConstruction.setModel(modelListConstruction);
 		// list danh sach hoa don
 		lstBills = new ArrayList<>();
 		// list de export data theo du lieu filter
@@ -437,13 +445,18 @@ public class BillsController extends GenericForwardComposer<Component> {
 		setDataDefaultInGrid();
 	}
 
-	public void onChange$txtFilterCustomer() {
+	public void onChange$cbFilterCustomer() {
 		Bills bills = new Bills();
-		String vstrCustomer = txtFilterCustomer.getValue();
+		String vstrCustomer = "";
+		if (cbFilterCustomer.getSelectedItem() != null) {
+			vstrCustomer = cbFilterCustomer.getSelectedItem().getValue();
+		}
 		bills.setCustomerName(vstrCustomer);
 
-		String vstrConstructionName = txtFilterConstruction.getValue();
-		bills.setConstructionName(vstrConstructionName);
+		String vstrConstructionName = "";
+		if (cbFilterConstruction.getSelectedItem() != null) {
+			vstrConstructionName = cbFilterConstruction.getSelectedItem().getValue();
+		}
 
 		try {
 			if (dtFilterDate.getValue() != null) {
@@ -467,12 +480,18 @@ public class BillsController extends GenericForwardComposer<Component> {
 		filter(bills);
 	}
 
-	public void onChange$txtFilterConstruction() {
+	public void onChange$cbFilterConstruction() {
 		Bills bills = new Bills();
-		String vstrCustomer = txtFilterCustomer.getValue();
+		String vstrCustomer = "";
+		if (cbFilterCustomer.getSelectedItem() != null) {
+			vstrCustomer = cbFilterCustomer.getSelectedItem().getValue();
+		}
 		bills.setCustomerName(vstrCustomer);
 
-		String vstrConstructionName = txtFilterConstruction.getValue();
+		String vstrConstructionName = "";
+		if (cbFilterConstruction.getSelectedItem() != null) {
+			vstrConstructionName = cbFilterConstruction.getSelectedItem().getValue();
+		}
 		bills.setConstructionName(vstrConstructionName);
 		try {
 			if (dtFilterDate.getValue() != null) {
@@ -498,10 +517,16 @@ public class BillsController extends GenericForwardComposer<Component> {
 
 	public void onChange$dtFilterDate() {
 		Bills bills = new Bills();
-		String vstrCustomer = txtFilterCustomer.getValue();
+		String vstrCustomer = "";
+		if (cbFilterCustomer.getSelectedItem() != null) {
+			vstrCustomer = cbFilterCustomer.getSelectedItem().getValue();
+		}
 		bills.setCustomerName(vstrCustomer);
 
-		String vstrConstructionName = txtFilterConstruction.getValue();
+		String vstrConstructionName = "";
+		if (cbFilterConstruction.getSelectedItem() != null) {
+			vstrConstructionName = cbFilterConstruction.getSelectedItem().getValue();
+		}
 		bills.setConstructionName(vstrConstructionName);
 		try {
 			if (dtFilterDate.getValue() != null) {
@@ -1033,5 +1058,25 @@ public class BillsController extends GenericForwardComposer<Component> {
 			}
 		}
 		return -1;
+	}
+
+	private List<String> getListCustomerName() {
+		List<String> lstNameCustomer = new ArrayList<>();
+		if (lstCustomer != null && !lstCustomer.isEmpty()) {
+			for (Customer item : lstCustomer) {
+				lstNameCustomer.add(item.getCustomerName());
+			}
+		}
+		return lstNameCustomer;
+	}
+
+	private List<String> getListConstructionName() {
+		List<String> lstNameConstruction = new ArrayList<>();
+		if (lstConstructions != null && !lstConstructions.isEmpty()) {
+			for (Construction item : lstConstructions) {
+				lstNameConstruction.add(item.getConstructionName());
+			}
+		}
+		return lstNameConstruction;
 	}
 }
