@@ -108,9 +108,7 @@
 								style="border: none;color: green;font-weight: bold;"
 								iconSclass="z-icon-paperclip" upload="true"
 								forward="onUpload=onUploadFile" />
-							<textbox value="${each.filePath}"
-								visible="false">
-							</textbox>
+
 						</cell>
 						<!--thanh tien -->
 						<cell style="text-align: right;">

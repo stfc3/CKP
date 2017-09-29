@@ -226,18 +226,18 @@
 
 
 					<cell style="text-align:center">
-						<a iconSclass="z-icon-pencil"
+						<a class="btn-cursor" iconSclass="z-icon-pencil"
 							forward="onClick=onEdit" tooltiptext="${c:l('edit')}" />
 
-						<a iconSclass="z-icon-trash-o"
+						<a class="btn-cursor" iconSclass="z-icon-trash-o"
 							forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />
 
-						<a iconSclass="z-icon-check"
+						<a class="btn-cursor" iconSclass="z-icon-check"
 							forward="onClick=onSave" visible="false"
 							tooltiptext="${c:l('save')}" />
 
-						<a iconSclass="z-icon-ban"
-							forward="onClick=onCancel" visible="false"
+						<a class="btn-cursor" iconSclass="z-icon-ban"
+							forward="onClick=onDisable" visible="false"
 							tooltiptext="${c:l('cancel')}" />
 
 					</cell>

@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -39,7 +38,7 @@ import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StyleUtils;
 
-public class BillsDetailController extends GenericForwardComposer<Component> {
+public class BillsDetailController extends GenericForwardComposer {
 	/**
 	 * 
 	 */
@@ -332,23 +331,6 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 		insertOrUpdate = 1;
 	}
 
-	public void onStaff(ForwardEvent event) {
-		final Window windownUpload = (Window) Executions.createComponents("/manager/include/quantityStaff.zul",
-				windowAddDetail, null);
-		windownUpload.doModal();
-		windownUpload.setBorder(true);
-		windownUpload.setBorder("normal");
-		windownUpload.setClosable(true);
-		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
-
-			@Override
-			public void onEvent(Event event) throws Exception {
-				windownUpload.detach();
-
-			}
-		});
-	}
-
 	/**
 	 * Get object customer
 	 *
@@ -474,10 +456,11 @@ public class BillsDetailController extends GenericForwardComposer<Component> {
 	 *
 	 * @param event
 	 */
-	public void onCancel(ForwardEvent event) {
+	public void onDisable(ForwardEvent event) {
+		insertOrUpdate = 0;
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		StyleUtils.setDisableComponent(lstCell, 6);
+		StyleUtils.setDisableComponent(lstCell, 4);
 		reloadGrid();
 
 	}
