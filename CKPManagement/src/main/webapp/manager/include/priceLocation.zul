@@ -12,11 +12,11 @@
             <grid id="lstPriceLocation" mold="paging" pageSize="20" pagingPosition="both">
                 <auxhead sclass="category-center" >
                     <auxheader colspan="6">
-                        <a id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
+                        <a class="btn-cursor" id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <space width="10px"/>
-                        <a iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
+                        <a class="btn-cursor" iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
                         <space width="10px"/>
-                        <a iconSclass="z-icon-file-excel-o" label="${c:l('export')}"/>
+                        <a class="btn-cursor" iconSclass="z-icon-file-excel-o" label="${c:l('export')}"/>
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">
@@ -64,10 +64,10 @@
                             <doublebox value="${each.priceLocation}" tooltiptext="${each.priceLocation}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell style="text-align:center">
-                            <a iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
+                            <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
                             <a class="btn-cursor" iconSclass="z-icon-trash-o" forward="onClick=onDelete" tooltiptext="${c:l('delete')}"/>
-                            <a iconSclass="z-icon-check" forward="onClick=onSave" visible="false" tooltiptext="${c:l('save')}" />
-                            <a iconSclass="z-icon-ban" forward="onClick=onCancel" visible="false" tooltiptext="${c:l('cancel')}"/>
+                            <a class="btn-cursor" iconSclass="z-icon-check" forward="onClick=onSave" visible="false" tooltiptext="${c:l('save')}" />
+                            <a class="btn-cursor" iconSclass="z-icon-ban" forward="onClick=onCancel" visible="false" tooltiptext="${c:l('cancel')}"/>
                         </cell>
                     </row>
                 </template>

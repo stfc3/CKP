@@ -252,3 +252,82 @@ CREATE TABLE IF NOT EXISTS params
     create_date timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(param_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 comment 'Danh mục các tham số cấu hình';
+
+# insert user admin
+insert into users (user_name, full_name, password) value ('admin','Admin', 'BIiUXiXpQAGjPulwa9L5Rg==');
+
+DELIMITER $$
+CREATE PROCEDURE `calculator_revenue`(in p_construction_id bigint, in p_pump_id bigint, in p_pump_type int, 
+in p_location_type int, in p_location_id bigint, in p_quantity double, in p_num_shift int)
+BEGIN
+#biến dừng lặp cursor
+DECLARE done INT DEFAULT FALSE;
+#Biến tính tổng tiền
+DECLARE total_revenue double DEFAULT 0;
+DECLARE v_m3_revenue double DEFAULT 0;
+DECLARE v_shift_revenue double DEFAULT 0;
+DECLARE v_wait_revenue double DEFAULT 0;
+DECLARE v_location_revenue double DEFAULT 0;
+#Biến select trong price
+DECLARE v_price_m3, v_price_shift, v_price_wait, v_price_location, v_convert_value double;
+DECLARE v_convert_type int;
+DECLARE v_price_id, v_location_min, v_location_max bigint;
+
+DECLARE c_data cursor for 
+select p.price_id, p.price_m3, p.price_shift, p.price_wait,  p.convert_type, p.convert_value 
+from construction ct, contracts c, prices p 
+where  ct.contract_id=c.contract_id and c.contract_id=p.contract_id and ct.status=1 and c.status=1 and p.status=1
+and ct.construction_id=p_construction_id and p.pump_id=p_pump_id and p.pump_type=p_pump_type;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+open c_data;		
+        start_loop: loop
+			fetch c_data into v_price_id, v_price_m3, v_price_shift, v_price_wait, v_convert_type, v_convert_value;
+			IF done THEN
+				LEAVE start_loop;
+			END IF;
+            BEGIN
+				#Nếu có ca chờ --> Tính giá ca chờ
+				if(p_num_shift is not null) then
+                    set v_wait_revenue=p_num_shift*v_price_wait;
+                    #select v_price_wait,v_wait_revenue;
+				end if;
+				#Tính giá bơm
+                #Nếu loại quy đổi là m3
+                IF(v_convert_type=1) THEN
+					#Nếu khối lượng < khối lượng giới hạn quy đổi
+                    IF(p_quantity< v_convert_value) THEN
+						SET p_quantity = v_convert_value;
+                    END IF;
+                    SET v_m3_revenue =p_quantity*v_price_m3;
+				#Nếu tính loại quy đổi là ca
+				ELSE
+					#Nếu khối lượng < khối lượng giới hạn quy đổi
+                    IF(p_quantity< v_convert_value) THEN
+                        SET v_shift_revenue =v_price_shift;
+					ELSE
+						SET v_m3_revenue =p_quantity*v_price_m3;
+                    END IF;
+				END IF;
+                #Tính giá vị trí
+                SELECT location_value INTO @lo_value FROM location l WHERE l.location_id=p_location_id AND l.location_type=1;
+                SELECT lmin.location_value, lmax.location_value, pl.price_location INTO @lo_min, @lo_max, @price_location FROM location lmin, location lmax, price_location pl  
+				WHERE lmin.location_id=pl.location_min AND lmax.location_id=pl.location_max AND pl.location_type=1 AND pl.price_id=3;
+                #Nêu vị trí nhỏ hơn vị trí min hoặc lớn hơn vị trí max thì tính lũy tiến
+                IF(@lo_value<@lo_min) THEN
+					SET v_location_revenue= (@lo_min-@lo_value)*@price_location;
+                ELSE
+					IF(@lo_value>@lo_max) THEN
+						SET v_location_revenue= (@lo_value-@lo_max)*@price_location;
+					END IF;
+				END IF;
+                #Nếu loại vị trí không phải là sàn
+                IF(p_location_type !=1) THEN
+                    SELECT price_location INTO @price_location_other  FROM price_location p WHERE p.price_id=v_price_id AND p.location_type=p_location_type;
+                    SET v_location_revenue=v_location_revenue+@price_location_other;
+                END IF;
+			END;
+		END loop start_loop; 
+        SET total_revenue=v_location_revenue+v_m3_revenue+v_wait_revenue;
+        select total_revenue, 'Thành công' description;
+END$$
+DELIMITER ;

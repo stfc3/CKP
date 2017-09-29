@@ -63,7 +63,7 @@
 								readonly="true" />
 						</cell>
 						<cell>
-							<intbox value="${each.locationValue}"
+							<longbox value="${each.locationValue}"
 								style="text-align: right;" tooltiptext="${each.locationValue}"
 								hflex="1" inplace="true" readonly="true" />
 						</cell>

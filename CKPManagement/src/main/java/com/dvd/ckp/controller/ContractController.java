@@ -126,7 +126,7 @@ public class ContractController extends GenericForwardComposer {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         Contract c = rowSelected.getValue();
-        setComboboxCustomer(lstCell, getCustomerDefault(c.getContractId()), customerIndex);
+        setComboboxCustomer(lstCell, getCustomerDefault(c.getCustomerId()), customerIndex);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 
@@ -153,9 +153,8 @@ public class ContractController extends GenericForwardComposer {
         isAdd = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        Contract c = rowSelected.getValue();
-        Contract contract = getDataInRow(lstCell);
-        contract.setContractId(c.getContractId());
+        Contract contract = rowSelected.getValue();
+        getDataInRow(lstCell, contract);
         contract.setStatus(Constants.STATUS_ACTIVE);
         contract.setCreateDate(new Date());
         contractService.insertOrUpdateContract(contract);
@@ -201,8 +200,7 @@ public class ContractController extends GenericForwardComposer {
      * @param lstCell
      * @return
      */
-    private Contract getDataInRow(List<Component> lstCell) {
-        Contract contract = new Contract();
+    private void getDataInRow(List<Component> lstCell, Contract contract) {
         Component component;
         Textbox txtContractCode = null;
         Textbox txtContractName = null;
@@ -258,7 +256,6 @@ public class ContractController extends GenericForwardComposer {
             dteExpiration = (Datebox) component;
             contract.setExpirationDate(dteExpiration.getValue());
         }
-        return contract;
     }
 
     /**
@@ -372,15 +369,15 @@ public class ContractController extends GenericForwardComposer {
                     Contract contract;
                     Long vlngContractId = null;
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    contract = rowSelected.getValue();
                     List<Component> lstCell = rowSelected.getChildren();
+                    getDataInRow(lstCell, contract);
+                    contract.setStatus(Constants.STATUS_ACTIVE);
+                    contract.setCreateDate(new Date());
+                    contractService.insertOrUpdateContract(contract);
                     if (isAdd) {
-                        contract = getDataInRow(lstCell);
-                        contract.setStatus(Constants.STATUS_ACTIVE);
-                        contract.setCreateDate(new Date());
-                        contractService.insertOrUpdateContract(contract);
                         vlngContractId = utilsService.getId().longValue();
                     } else {
-                        contract = rowSelected.getValue();
                         vlngContractId = contract.getContractId();
                     }
                     StyleUtils.setDisableComponent(lstCell, 4);

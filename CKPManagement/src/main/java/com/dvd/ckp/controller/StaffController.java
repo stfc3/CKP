@@ -23,10 +23,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
-import org.zkoss.zul.A;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Cell;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
@@ -47,6 +44,8 @@ import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
+import com.dvd.ckp.utils.StyleUtils;
+import java.util.Date;
 
 /**
  *
@@ -54,469 +53,469 @@ import com.dvd.ckp.utils.StringUtils;
  */
 public class StaffController extends GenericForwardComposer {
 
-	private static final Logger logger = Logger.getLogger(StaffController.class);
-	@WireVariable
-	protected StaffServices staffService;
-	@Wire
-	private Grid gridStaff;
-	@Wire
-	private Textbox txtFilterCode;
-	@Wire
-	private Textbox txtFilterName;
+    private static final Logger logger = Logger.getLogger(StaffController.class);
+    @WireVariable
+    protected StaffServices staffService;
+    @Wire
+    private Grid gridStaff;
+    @Wire
+    private Textbox txtFilterCode;
+    @Wire
+    private Textbox txtFilterName;
 
-	@Wire
-	private Textbox txtFilterPhone;
+    @Wire
+    private Textbox txtFilterPhone;
 
-	@Wire
-	private Textbox txtFilterEmail;
+    @Wire
+    private Textbox txtFilterEmail;
 
-	private ListModelList<Staff> listDataModel;
-	private List<Staff> lstStaff;
-	private List<Staff> lstStaffFilter;
-	private int insertOrUpdate = 0;
+    private ListModelList<Staff> listDataModel;
+    private List<Staff> lstStaff;
+    private List<Staff> lstStaffFilter;
+    private int insertOrUpdate = 0;
 
-	private Window staff;
+    private Window staff;
 
-	private static final String SAVE_PATH = "/Staff/";
+    private static final String SAVE_PATH = "/Staff/";
 
-	private Label linkFileName;
-	private Textbox hiddenFileName;
-	private Textbox hdFileName;
+    private Label linkFileName;
+    private Textbox hiddenFileName;
+    private Textbox hdFileName;
 
-	public Textbox txtTotalRow;
-	public Textbox txtTotalRowSucces;
-	public Textbox txtTotalRowError;
+    public Textbox txtTotalRow;
+    public Textbox txtTotalRowSucces;
+    public Textbox txtTotalRowError;
 
-	public Button btnCancel;
-	public Button errorList;
-	// public Window uploadPump;
+    public Button btnCancel;
+    public Button errorList;
+    // public Window uploadPump;
 
-	List<StaffExcel> lstError = new ArrayList<StaffExcel>();
+    List<StaffExcel> lstError = new ArrayList<StaffExcel>();
 
-	@Override
-	public void doAfterCompose(Component comp) throws Exception {
-		super.doAfterCompose(comp);
-		lstStaffFilter = new ArrayList<Staff>();
-		staffService = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
+    @Override
+    public void doAfterCompose(Component comp) throws Exception {
+        super.doAfterCompose(comp);
+        lstStaffFilter = new ArrayList<Staff>();
+        staffService = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
 
-		lstStaff = new ArrayList<Staff>();
-		List<Staff> vlstStaff = staffService.getAllData();
-		if (vlstStaff != null) {
-			lstStaff.addAll(vlstStaff);
-			lstStaffFilter.addAll(vlstStaff);
-		}
-		listDataModel = new ListModelList<Staff>(lstStaff);
-		gridStaff.setModel(listDataModel);
-	}
+        lstStaff = new ArrayList<Staff>();
+        List<Staff> vlstStaff = staffService.getAllData();
+        if (vlstStaff != null) {
+            lstStaff.addAll(vlstStaff);
+            lstStaffFilter.addAll(vlstStaff);
+        }
+        listDataModel = new ListModelList<Staff>(lstStaff);
+        gridStaff.setModel(listDataModel);
+    }
 
-	/**
-	 * Edit row
-	 *
-	 * @param event
-	 */
-	public void onEdit(ForwardEvent event) {
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		List<Component> lstCell = rowSelected.getChildren();
-		setEnableComponent(lstCell);
-	}
+    /**
+     * Edit row
+     *
+     * @param event
+     */
+    public void onEdit(ForwardEvent event) {
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        List<Component> lstCell = rowSelected.getChildren();
+        StyleUtils.setEnableComponent(lstCell,4);
+    }
 
-	public void onDelete(ForwardEvent event) {
-		Messagebox.show(Labels.getLabel("message.confirm.delete.content"),
-				Labels.getLabel("message.confirm.delete.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,
-				new EventListener() {
-					@Override
-					public void onEvent(Event e) {
-						if (Messagebox.ON_YES.equals(e.getName())) {
-							Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-							List<Component> lstCell = rowSelected.getChildren();
-							Staff c = rowSelected.getValue();
-							Staff staff = getDataInRow(lstCell);
-							staff.setStaffId(c.getStaffId());
-							staff.setStatus(3);
-							lstStaffFilter.remove(staff);
-							staffService.detele(staff);
-							setDisableComponent(lstCell);
-							reloadGrid();
-						}
-					}
-				});
+    public void onDelete(ForwardEvent event) {
+        Messagebox.show(Labels.getLabel("message.confirm.delete.content"),
+                Labels.getLabel("message.confirm.delete.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,
+                new EventListener() {
+            @Override
+            public void onEvent(Event e) {
+                if (Messagebox.ON_YES.equals(e.getName())) {
+                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    List<Component> lstCell = rowSelected.getChildren();
+                    Staff c = rowSelected.getValue();
+                    Staff staff = getDataInRow(lstCell);
+                    staff.setStaffId(c.getStaffId());
+                    staff.setStatus(3);
+                    staff.setCreateDate(new Date());
+                    lstStaffFilter.remove(staff);
+                    staffService.detele(staff);
+                    StyleUtils.setDisableComponent(lstCell, 4);
+                    reloadGrid();
+                }
+            }
+        });
 
-	}
+    }
 
-	/**
-	 * Set style enable edit
-	 *
-	 * @param lstCell
-	 */
-	private void setEnableComponent(List<Component> lstCell) {
-		if (lstCell != null && !lstCell.isEmpty()) {
-			for (Component c : lstCell) {
-				if (c instanceof Cell) {
-					Component child = c.getChildren().get(0);
-					if (child instanceof Combobox) {
-						((Combobox) child).setButtonVisible(true);
-						((Combobox) child).setInplace(false);
-					} else if (child instanceof Textbox) {
-						((Textbox) child).setReadonly(false);
-						((Textbox) child).setInplace(false);
-					} else if (child instanceof A) {
-						A edit = (A) child;
-						A save = (A) c.getChildren().get(1);
-						A cancel = (A) c.getChildren().get(2);
+    /**
+     * Set style enable edit
+     *
+     * @param lstCell
+     */
+//	private void setEnableComponent(List<Component> lstCell) {
+//		if (lstCell != null && !lstCell.isEmpty()) {
+//			for (Component c : lstCell) {
+//				if (c instanceof Cell) {
+//					Component child = c.getChildren().get(0);
+//					if (child instanceof Combobox) {
+//						((Combobox) child).setButtonVisible(true);
+//						((Combobox) child).setInplace(false);
+//					} else if (child instanceof Textbox) {
+//						((Textbox) child).setReadonly(false);
+//						((Textbox) child).setInplace(false);
+//					} else if (child instanceof A) {
+//						A edit = (A) child;
+//						A save = (A) c.getChildren().get(1);
+//						A cancel = (A) c.getChildren().get(2);
+//
+//						edit.setVisible(false);
+//						save.setVisible(true);
+//						cancel.setVisible(true);
+//
+//					}
+//				}
+//			}
+//		}
+//	}
+    /**
+     * Set style disable edit
+     *
+     * @param lstCell
+     */
+//	private void setDisableComponent(List<Component> lstCell) {
+//		if (lstCell != null && !lstCell.isEmpty()) {
+//			for (Component c : lstCell) {
+//				if (c instanceof Cell) {
+//					Component child = c.getChildren().get(0);
+//					if (child instanceof Combobox) {
+//						((Combobox) child).setButtonVisible(false);
+//						((Combobox) child).setInplace(true);
+//					} else if (child instanceof Textbox) {
+//						((Textbox) child).setReadonly(true);
+//						((Textbox) child).setInplace(true);
+//					} else if (child instanceof A) {
+//						A edit = (A) child;
+//						edit.setVisible(true);
+//						A save = (A) c.getChildren().get(1);
+//						A cancel = (A) c.getChildren().get(2);
+//						save.setVisible(false);
+//						cancel.setVisible(false);
+//					}
+//				}
+//			}
+//		}
+//	}
+    /**
+     * Cancel
+     *
+     * @param event
+     */
+    public void onCancel(ForwardEvent event) {
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        List<Component> lstCell = rowSelected.getChildren();
+        StyleUtils.setDisableComponent(lstCell,4);
+        reloadGrid();
+    }
 
-						edit.setVisible(false);
-						save.setVisible(true);
-						cancel.setVisible(true);
+    /**
+     * Cancel
+     *
+     * @param event
+     */
+    /**
+     * Save
+     *
+     * @param event
+     */
+    public void onSave(ForwardEvent event) {
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        List<Component> lstCell = rowSelected.getChildren();
+        Staff c = rowSelected.getValue();
+        Staff vstaff = getDataInRow(lstCell);
+        vstaff.setStatus(com.dvd.ckp.utils.Constants.STATUS_ACTIVE);
+        vstaff.setCreateDate(new Date());
+        vstaff.setStaffId(c.getStaffId());
+        if (insertOrUpdate == 1) {
+            staffService.save(vstaff);
+            lstStaffFilter.add(vstaff);
+            lstStaff.add(vstaff);
+        } else {
+            staffService.update(vstaff);
+        }
+        StyleUtils.setDisableComponent(lstCell,4);
+        reloadGrid();
+        insertOrUpdate = 0;
+    }
 
-					}
-				}
-			}
-		}
-	}
+    /**
+     * Add row
+     */
+    public void onAdd(ForwardEvent event) {
+        Staff newItem = new Staff();
+        newItem.setStatus(1);
+        listDataModel.add(0, newItem);
+        gridStaff.setModel(listDataModel);
+        gridStaff.renderAll();
+        List<Component> lstCell = gridStaff.getRows().getChildren().get(0).getChildren();
+        StyleUtils.setEnableComponent(lstCell,4);
+        insertOrUpdate = 1;
+    }
 
-	/**
-	 * Set style disable edit
-	 *
-	 * @param lstCell
-	 */
-	private void setDisableComponent(List<Component> lstCell) {
-		if (lstCell != null && !lstCell.isEmpty()) {
-			for (Component c : lstCell) {
-				if (c instanceof Cell) {
-					Component child = c.getChildren().get(0);
-					if (child instanceof Combobox) {
-						((Combobox) child).setButtonVisible(false);
-						((Combobox) child).setInplace(true);
-					} else if (child instanceof Textbox) {
-						((Textbox) child).setReadonly(true);
-						((Textbox) child).setInplace(true);
-					} else if (child instanceof A) {
-						A edit = (A) child;
-						edit.setVisible(true);
-						A save = (A) c.getChildren().get(1);
-						A cancel = (A) c.getChildren().get(2);
-						save.setVisible(false);
-						cancel.setVisible(false);
-					}
-				}
-			}
-		}
-	}
+    /**
+     * Get object customer
+     *
+     * @param lstCell
+     * @return
+     */
+    private Staff getDataInRow(List<Component> lstCell) {
+        Staff staff = new Staff();
+        Textbox txtStaffCode = (Textbox) lstCell.get(1).getFirstChild();
+        Textbox txtStaffName = (Textbox) lstCell.get(2).getFirstChild();
+        Datebox dateBirthday = (Datebox) lstCell.get(3).getFirstChild();
+        Textbox txtPhone = (Textbox) lstCell.get(4).getFirstChild();
+        Textbox txtEmail = (Textbox) lstCell.get(5).getFirstChild();
+        Textbox txtAddress = (Textbox) lstCell.get(6).getFirstChild();
+//        Combobox cbxStatus = (Combobox) lstCell.get(7).getFirstChild();
+        staff.setStaffCode(txtStaffCode.getValue());
+        staff.setStaffName(txtStaffName.getValue());
+        staff.setPhone(txtPhone.getValue());
+        staff.setAddress(txtAddress.getValue());
+        staff.setEmail(txtEmail.getValue());
+        staff.setBirthday(dateBirthday.getValue());
+//        staff.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
+        return staff;
+    }
 
-	/**
-	 * Cancel
-	 *
-	 * @param event
-	 */
-	public void onCancel(ForwardEvent event) {
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		List<Component> lstCell = rowSelected.getChildren();
-		setDisableComponent(lstCell);
-		reloadGrid();
-	}
+    /**
+     * Reload grid
+     */
+    private void reloadGrid() {
+        List<Staff> vlstData = new ArrayList<Staff>();
+        List<Staff> list = staffService.getAllData();
+        if (list != null && !list.isEmpty()) {
+            vlstData.addAll(list);
+        }
+        listDataModel = new ListModelList<Staff>(vlstData);
+        gridStaff.setModel(listDataModel);
+    }
 
-	/**
-	 * Cancel
-	 *
-	 * @param event
-	 */
+    public void onChange$txtFilterCode() {
+        Staff staff = new Staff();
 
-	/**
-	 * Save
-	 *
-	 * @param event
-	 */
-	public void onSave(ForwardEvent event) {
-		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-		List<Component> lstCell = rowSelected.getChildren();
-		Staff c = rowSelected.getValue();
-		Staff staff = getDataInRow(lstCell);
-		staff.setStaffId(c.getStaffId());
-		if (insertOrUpdate == 1) {
-			staffService.save(staff);
-			lstStaffFilter.add(staff);
-			lstStaff.add(staff);
-		} else {
-			staffService.update(staff);
-		}
-		setDisableComponent(lstCell);
-		reloadGrid();
-		insertOrUpdate = 0;
-	}
+        String vstrStaffCode = txtFilterCode.getValue();
+        staff.setStaffCode(vstrStaffCode);
 
-	/**
-	 * Add row
-	 */
-	public void onAdd(ForwardEvent event) {
-		Staff newItem = new Staff();
-		newItem.setStatus(1);
-		listDataModel.add(0, newItem);
-		gridStaff.setModel(listDataModel);
-		gridStaff.renderAll();
-		List<Component> lstCell = gridStaff.getRows().getChildren().get(0).getChildren();
-		setEnableComponent(lstCell);
-		insertOrUpdate = 1;
-	}
+        String vstrStaffName = txtFilterName.getValue();
+        staff.setStaffName(vstrStaffName);
 
-	/**
-	 * Get object customer
-	 *
-	 * @param lstCell
-	 * @return
-	 */
-	private Staff getDataInRow(List<Component> lstCell) {
-		Staff staff = new Staff();
-		Textbox txtStaffCode = (Textbox) lstCell.get(1).getFirstChild();
-		Textbox txtStaffName = (Textbox) lstCell.get(2).getFirstChild();
-		Textbox txtPhone = (Textbox) lstCell.get(4).getFirstChild();
-		Textbox txtEmail = (Textbox) lstCell.get(5).getFirstChild();
-		Textbox txtAddress = (Textbox) lstCell.get(6).getFirstChild();
-		Datebox dateBirthday = (Datebox) lstCell.get(3).getFirstChild();
-		Combobox cbxStatus = (Combobox) lstCell.get(7).getFirstChild();
-		staff.setStaffCode(txtStaffCode.getValue());
-		staff.setStaffName(txtStaffName.getValue());
-		staff.setPhone(txtPhone.getValue());
-		staff.setAddress(txtAddress.getValue());
-		staff.setEmail(txtEmail.getValue());
-		staff.setBirthday(dateBirthday.getValue());
-		staff.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
-		return staff;
-	}
+        filter(staff);
+    }
 
-	/**
-	 * Reload grid
-	 */
-	private void reloadGrid() {
-		List<Staff> vlstData = new ArrayList<Staff>();
-		List<Staff> list = staffService.getAllData();
-		if (list != null && !list.isEmpty()) {
-			vlstData.addAll(list);
-		}
-		listDataModel = new ListModelList<Staff>(vlstData);
-		gridStaff.setModel(listDataModel);
-	}
+    public void onChange$txtFilterName() {
+        Staff staff = new Staff();
 
-	public void onChange$txtFilterCode() {
-		Staff staff = new Staff();
+        String vstrStaffCode = txtFilterCode.getValue();
+        staff.setStaffCode(vstrStaffCode);
 
-		String vstrStaffCode = txtFilterCode.getValue();
-		staff.setStaffCode(vstrStaffCode);
+        String vstrStaffName = txtFilterName.getValue();
+        staff.setStaffName(vstrStaffName);
 
-		String vstrStaffName = txtFilterName.getValue();
-		staff.setStaffName(vstrStaffName);
+        filter(staff);
+    }
 
-		filter(staff);
-	}
+    private void filter(Staff staff) {
+        List<Staff> vlstData = new ArrayList<>();
+        if (!StringUtils.isValidString(staff.getStaffCode()) && !StringUtils.isValidString(staff.getStaffName())) {
+            vlstData.addAll(lstStaff);
+            lstStaffFilter.clear();
+            lstStaffFilter.addAll(lstStaff);
+        } else {
+            if (lstStaff != null && !lstStaff.isEmpty()) {
+                for (Staff item : lstStaff) {
+                    if (StringUtils.isValidString(staff.getStaffCode())
+                            && item.getStaffCode().toLowerCase().contains(staff.getStaffCode().toLowerCase())
+                            && StringUtils.isValidString(staff.getStaffName())
+                            && item.getStaffName().toLowerCase().contains(staff.getStaffName().toLowerCase())) {
+                        vlstData.add(item);
+                        lstStaffFilter.clear();
+                        lstStaffFilter.add(item);
+                    } else if (!StringUtils.isValidString(staff.getStaffCode())
+                            && StringUtils.isValidString(staff.getStaffName())
+                            && item.getStaffName().toLowerCase().contains(staff.getStaffName().toLowerCase())) {
+                        vlstData.add(item);
+                        lstStaffFilter.clear();
+                        lstStaffFilter.add(item);
+                    } else if (StringUtils.isValidString(staff.getStaffCode())
+                            && item.getStaffCode().toLowerCase().contains(staff.getStaffCode().toLowerCase())
+                            && !StringUtils.isValidString(staff.getStaffName())) {
+                        vlstData.add(item);
+                        lstStaffFilter.clear();
+                        lstStaffFilter.add(item);
+                    }
+                }
+            }
+        }
+        listDataModel = new ListModelList<Staff>(vlstData);
+        gridStaff.setModel(listDataModel);
+    }
 
-	public void onChange$txtFilterName() {
-		Staff staff = new Staff();
+    public void onExport(Event event) {
+        ExcelWriter<Staff> excelWriter = new ExcelWriter<Staff>();
+        try {
+            int index = 0;
+            for (Staff staff : lstStaffFilter) {
+                index++;
+                staff.setIndex(index);
+                staff.setBirthdayString(
+                        DateTimeUtils.convertDateToString(staff.getBirthday(), Constants.FORMAT_DATE_DD_MM_YYY));
+            }
+            String pathFileInput = Constants.PATH_FILE + "file/template/export/staff_data_export.xlsx";
+            String pathFileOut = Constants.PATH_FILE + "file/export/staff_data_export.xlsx";
 
-		String vstrStaffCode = txtFilterCode.getValue();
-		staff.setStaffCode(vstrStaffCode);
+            excelWriter.write(lstStaffFilter, pathFileInput, pathFileOut);
+            File file = new File(pathFileOut);
+            Filedownload.save(file, null);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            logger.error(e.getMessage(), e);
+        }
 
-		String vstrStaffName = txtFilterName.getValue();
-		staff.setStaffName(vstrStaffName);
+    }
 
-		filter(staff);
-	}
+    public void onImport(ForwardEvent event) {
 
-	private void filter(Staff staff) {
-		List<Staff> vlstData = new ArrayList<>();
-		if (!StringUtils.isValidString(staff.getStaffCode()) && !StringUtils.isValidString(staff.getStaffName())) {
-			vlstData.addAll(lstStaff);
-			lstStaffFilter.clear();
-			lstStaffFilter.addAll(lstStaff);
-		} else {
-			if (lstStaff != null && !lstStaff.isEmpty()) {
-				for (Staff item : lstStaff) {
-					if (StringUtils.isValidString(staff.getStaffCode())
-							&& item.getStaffCode().toLowerCase().contains(staff.getStaffCode().toLowerCase())
-							&& StringUtils.isValidString(staff.getStaffName())
-							&& item.getStaffName().toLowerCase().contains(staff.getStaffName().toLowerCase())) {
-						vlstData.add(item);
-						lstStaffFilter.clear();
-						lstStaffFilter.add(item);
-					} else if (!StringUtils.isValidString(staff.getStaffCode())
-							&& StringUtils.isValidString(staff.getStaffName())
-							&& item.getStaffName().toLowerCase().contains(staff.getStaffName().toLowerCase())) {
-						vlstData.add(item);
-						lstStaffFilter.clear();
-						lstStaffFilter.add(item);
-					} else if (StringUtils.isValidString(staff.getStaffCode())
-							&& item.getStaffCode().toLowerCase().contains(staff.getStaffCode().toLowerCase())
-							&& !StringUtils.isValidString(staff.getStaffName())) {
-						vlstData.add(item);
-						lstStaffFilter.clear();
-						lstStaffFilter.add(item);
-					}
-				}
-			}
-		}
-		listDataModel = new ListModelList<Staff>(vlstData);
-		gridStaff.setModel(listDataModel);
-	}
+        final Window windownUpload = (Window) Executions.createComponents("/manager/uploadStaff.zul", staff, null);
+        windownUpload.doModal();
+        windownUpload.setBorder(true);
+        windownUpload.setBorder("normal");
+        windownUpload.setClosable(true);
+        windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
 
-	public void onExport(Event event) {
-		ExcelWriter<Staff> excelWriter = new ExcelWriter<Staff>();
-		try {
-			int index = 0;
-			for (Staff staff : lstStaffFilter) {
-				index++;
-				staff.setIndex(index);
-				staff.setBirthdayString(
-						DateTimeUtils.convertDateToString(staff.getBirthday(), Constants.FORMAT_DATE_DD_MM_YYY));
-			}
-			String pathFileInput = Constants.PATH_FILE + "file/template/export/staff_data_export.xlsx";
-			String pathFileOut = Constants.PATH_FILE + "file/export/staff_data_export.xlsx";
+            @Override
+            public void onEvent(Event event) throws Exception {
+                reloadGrid();
 
-			excelWriter.write(lstStaffFilter, pathFileInput, pathFileOut);
-			File file = new File(pathFileOut);
-			Filedownload.save(file, null);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error(e.getMessage(), e);
-		}
+            }
+        });
+    }
 
-	}
+    public void onUpload$uploadbtn(UploadEvent evt) {
+        Media media = evt.getMedia();
 
-	public void onImport(ForwardEvent event) {
+        if (media == null) {
+            Messagebox.show(Labels.getLabel("uploadExcel.selectFile"), Labels.getLabel("ERROR"), Messagebox.OK,
+                    Messagebox.ERROR);
+            return;
+        }
+        final String vstrFileName = media.getName();
 
-		final Window windownUpload = (Window) Executions.createComponents("/manager/uploadStaff.zul", staff, null);
-		windownUpload.doModal();
-		windownUpload.setBorder(true);
-		windownUpload.setBorder("normal");
-		windownUpload.setClosable(true);
-		windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+        hdFileName.setValue(vstrFileName);
+        linkFileName.setValue(vstrFileName);
+        FileUtils fileUtils = new FileUtils();
+        fileUtils.setSaveFilePath(SAVE_PATH);
+        fileUtils.saveFile(media);
+        hdFileName.setValue(fileUtils.getFileName());
+        hiddenFileName.setValue(fileUtils.getFilePath());
+    }
 
-			@Override
-			public void onEvent(Event event) throws Exception {
-				reloadGrid();
+    public void onClick$btnSave() {
+        int numberSucces = 0;
+        int numberRowError = 1;
+        try {
+            ExcelReader<StaffExcel> reader = new ExcelReader<>();
+            String filePath = hiddenFileName.getValue();
+            List<StaffExcel> listData = reader.read(filePath, StaffExcel.class);
+            List<Staff> vlstData = new ArrayList<>();
+            if (listData != null && !listData.isEmpty()) {
+                for (StaffExcel staff : listData) {
 
-			}
-		});
-	}
+                    if (!StringUtils.isValidString(staff.getStaffCode())) {
+                        staff.setDescription(
+                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.capacity")}));
+                        staff.setIndex(numberRowError);
+                        lstError.add(staff);
+                        numberRowError++;
+                        continue;
+                    }
 
-	public void onUpload$uploadbtn(UploadEvent evt) {
-		Media media = evt.getMedia();
+                    if (!StringUtils.isValidString(staff.getStaffName())) {
+                        staff.setDescription(
+                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.capacity")}));
+                        staff.setIndex(numberRowError);
+                        lstError.add(staff);
+                        numberRowError++;
+                        continue;
+                    }
 
-		if (media == null) {
-			Messagebox.show(Labels.getLabel("uploadExcel.selectFile"), Labels.getLabel("ERROR"), Messagebox.OK,
-					Messagebox.ERROR);
-			return;
-		}
-		final String vstrFileName = media.getName();
+                    if (!StringUtils.isValidString(staff.getPhone())) {
+                        staff.setDescription(
+                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.capacity")}));
+                        staff.setIndex(numberRowError);
+                        lstError.add(staff);
+                        numberRowError++;
+                        continue;
+                    }
 
-		hdFileName.setValue(vstrFileName);
-		linkFileName.setValue(vstrFileName);
-		FileUtils fileUtils = new FileUtils();
-		fileUtils.setSaveFilePath(SAVE_PATH);
-		fileUtils.saveFile(media);
-		hdFileName.setValue(fileUtils.getFileName());
-		hiddenFileName.setValue(fileUtils.getFilePath());
-	}
+                    if (!StringUtils.isValidString(staff.getEmail())) {
+                        staff.setDescription(
+                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.capacity")}));
+                        staff.setIndex(numberRowError);
+                        lstError.add(staff);
+                        numberRowError++;
+                        continue;
+                    }
+                    Staff item = new Staff();
+                    item.setStaffCode(staff.getStaffCode());
+                    item.setStaffName(staff.getStaffName());
+                    item.setPhone(staff.getPhone());
+                    item.setEmail(staff.getEmail());
+                    item.setBirthday(DateTimeUtils.convertStringToTime(replateBirthDay(staff.getBirthday()),
+                            Constants.FORMAT_DATE_DDMMYYYY));
+                    item.setAddress(staff.getAddress());
+                    item.setStatus(1);
+                    vlstData.add(item);
+                    numberSucces++;
+                }
+            }
+            txtTotalRow.setValue(String.valueOf(vlstData.size()));
+            txtTotalRowSucces.setValue(String.valueOf(numberSucces));
 
-	public void onClick$btnSave() {
-		int numberSucces = 0;
-		int numberRowError = 1;
-		try {
-			ExcelReader<StaffExcel> reader = new ExcelReader<>();
-			String filePath = hiddenFileName.getValue();
-			List<StaffExcel> listData = reader.read(filePath, StaffExcel.class);
-			List<Staff> vlstData = new ArrayList<>();
-			if (listData != null && !listData.isEmpty()) {
-				for (StaffExcel staff : listData) {
+            if (lstError != null && !lstError.isEmpty()) {
+                errorList.setVisible(true);
+                txtTotalRowError.setValue(String.valueOf(lstError.size()));
+            }
+            staffService.importData(vlstData);
 
-					if (!StringUtils.isValidString(staff.getStaffCode())) {
-						staff.setDescription(
-								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.capacity") }));
-						staff.setIndex(numberRowError);
-						lstError.add(staff);
-						numberRowError++;
-						continue;
-					}
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
 
-					if (!StringUtils.isValidString(staff.getStaffName())) {
-						staff.setDescription(
-								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.capacity") }));
-						staff.setIndex(numberRowError);
-						lstError.add(staff);
-						numberRowError++;
-						continue;
-					}
+    public void onDownloadFile(ForwardEvent event) {
+        try {
+            String pathFileInput = Constants.PATH_FILE + "file/template/import/import_staff_data.xlsx";
 
-					if (!StringUtils.isValidString(staff.getPhone())) {
-						staff.setDescription(
-								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.capacity") }));
-						staff.setIndex(numberRowError);
-						lstError.add(staff);
-						numberRowError++;
-						continue;
-					}
+            File file = new File(pathFileInput);
+            Filedownload.save(file, null);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            logger.error(e.getMessage(), e);
+        }
+    }
 
-					if (!StringUtils.isValidString(staff.getEmail())) {
-						staff.setDescription(
-								Labels.getLabel("pump.not.number", new String[] { Labels.getLabel("pump.capacity") }));
-						staff.setIndex(numberRowError);
-						lstError.add(staff);
-						numberRowError++;
-						continue;
-					}
-					Staff item = new Staff();
-					item.setStaffCode(staff.getStaffCode());
-					item.setStaffName(staff.getStaffName());
-					item.setPhone(staff.getPhone());
-					item.setEmail(staff.getEmail());
-					item.setBirthday(DateTimeUtils.convertStringToTime(replateBirthDay(staff.getBirthday()),
-							Constants.FORMAT_DATE_DDMMYYYY));
-					item.setAddress(staff.getAddress());
-					item.setStatus(1);
-					vlstData.add(item);
-					numberSucces++;
-				}
-			}
-			txtTotalRow.setValue(String.valueOf(vlstData.size()));
-			txtTotalRowSucces.setValue(String.valueOf(numberSucces));
+    public void onDownloadFileError(ForwardEvent event) {
+        ExcelWriter<StaffExcel> writer = new ExcelWriter<>();
+        try {
+            String pathFileOutput = Constants.PATH_FILE + "file/export/error/error_staff_data.xlsx";
+            String pathFileInput = Constants.PATH_FILE + "file/template/error/error_staff_data.xlsx";
 
-			if (lstError != null && !lstError.isEmpty()) {
-				errorList.setVisible(true);
-				txtTotalRowError.setValue(String.valueOf(lstError.size()));
-			}
-			staffService.importData(vlstData);
+            writer.write(lstError, pathFileInput, pathFileOutput);
+            File file = new File(pathFileOutput);
+            Filedownload.save(file, null);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            logger.error(e.getMessage(), e);
+        }
+    }
 
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-	}
-
-	public void onDownloadFile(ForwardEvent event) {
-		try {
-			String pathFileInput = Constants.PATH_FILE + "file/template/import/import_staff_data.xlsx";
-
-			File file = new File(pathFileInput);
-			Filedownload.save(file, null);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error(e.getMessage(), e);
-		}
-	}
-
-	public void onDownloadFileError(ForwardEvent event) {
-		ExcelWriter<StaffExcel> writer = new ExcelWriter<>();
-		try {
-			String pathFileOutput = Constants.PATH_FILE + "file/export/error/error_staff_data.xlsx";
-			String pathFileInput = Constants.PATH_FILE + "file/template/error/error_staff_data.xlsx";
-
-			writer.write(lstError, pathFileInput, pathFileOutput);
-			File file = new File(pathFileOutput);
-			Filedownload.save(file, null);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error(e.getMessage(), e);
-		}
-	}
-
-	private String replateBirthDay(String value) {
-		return value.replace("/", "");
-	}
+    private String replateBirthDay(String value) {
+        return value.replace("/", "");
+    }
 
 }

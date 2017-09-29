@@ -6,7 +6,7 @@
 		position="center,center" closable="true"
 		action="show: slideDown;hide: slideUp" border="normal" width="90%"
 		height="90%" maximizable="false" title="${c:l('bills.view.detail')}"
-		onCancel="windowAddDetail.detach();">
+		onCancel="windowAddDetail.detach();" contentStyle="overflow:auto">
 		<style src="/css/style.css" />
 
 		<hlayout>

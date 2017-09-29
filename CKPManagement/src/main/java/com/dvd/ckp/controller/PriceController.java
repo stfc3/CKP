@@ -42,7 +42,6 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Doublebox;
-import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Window;
 
@@ -210,9 +209,8 @@ public class PriceController extends GenericForwardComposer {
         isAdd = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        Price p = rowSelected.getValue();
-        Price price = getDataInRow(lstCell);
-        price.setPriceId(p.getPriceId());
+        Price price = rowSelected.getValue();
+        getDataInRow(lstCell, price);
         price.setContractId(lngContractId);
         price.setStatus(Constants.STATUS_ACTIVE);
         price.setCreateDate(new Date());
@@ -259,8 +257,7 @@ public class PriceController extends GenericForwardComposer {
      * @param lstCell
      * @return
      */
-    private Price getDataInRow(List<Component> lstCell) {
-        Price price = new Price();
+    private void getDataInRow(List<Component> lstCell, Price price) {
         Component component;
         Combobox cbxPumpType = null;
         Combobox cbxPump = null;
@@ -304,7 +301,6 @@ public class PriceController extends GenericForwardComposer {
             dbbConvertValue = (Doublebox) component;
             price.setConvertValue(dbbConvertValue.getValue());
         }
-        return price;
     }
 
     /**
@@ -418,16 +414,16 @@ public class PriceController extends GenericForwardComposer {
                     Price price;
                     Long vlngPriceId = null;
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    price = rowSelected.getValue();
                     List<Component> lstCell = rowSelected.getChildren();
+                    getDataInRow(lstCell, price);
+                    price.setContractId(lngContractId);
+                    price.setStatus(Constants.STATUS_ACTIVE);
+                    price.setCreateDate(new Date());
+                    contractService.insertOrUpdatePrice(price);
                     if (isAdd) {
-                        price = getDataInRow(lstCell);
-                        price.setContractId(lngContractId);
-                        price.setStatus(Constants.STATUS_ACTIVE);
-                        price.setCreateDate(new Date());
-                        contractService.insertOrUpdatePrice(price);
                         vlngPriceId = utilsService.getId().longValue();
                     } else {
-                        price = rowSelected.getValue();
                         vlngPriceId = price.getPriceId();
 
                     }
