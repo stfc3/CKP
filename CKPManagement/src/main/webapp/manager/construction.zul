@@ -7,7 +7,7 @@
             <caption label="${c:l('construction.category')}" />
             <grid id="lstConstruction" mold="paging" pageSize="20" pagingPosition="bottom">
                 <auxhead sclass="category-center" >
-                    <auxheader colspan="8">
+                    <auxheader colspan="6">
                         <a class="btn-cursor" id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <space width="10px"/>
                         <a class="btn-cursor" forward="onClick=onImport" iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
@@ -16,15 +16,14 @@
                     </auxheader>
                 </auxhead>
                 <auxhead sclass="category-center">
-                    <auxheader colspan="1">
-                    </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="6">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterCode" hflex="1"/>
-                    </auxheader>
-                    <auxheader colspan="1">
-                        <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterName" hflex="1"/>
+                        <combobox  hflex="1" id="cbxConstructionFilter" autodrop="true" placeholder="Nhập tên công trình để tìm kiếm"
+                                   buttonVisible="false">
+                            <template name="model">
+                                <comboitem value="${each.constructionId}" label="${each.constructionName}" />
+                            </template>
+                        </combobox>
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">

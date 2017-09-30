@@ -196,12 +196,7 @@ public class CustomerController extends GenericForwardComposer {
         listDataModel = new ListModelList(lstCustomers);
         lstCustomer.setModel(listDataModel);
 
-        List<Customer> vlstCustomerFilter = new ArrayList<>();
-        if (lstCustomers != null) {
-            vlstCustomerFilter.addAll(lstCustomers);
-        }
-        ListModelList listModel = new ListModelList(vlstCustomerFilter);
-        cbxCustomerFilter.setModel(listModel);
+        cbxCustomerFilter.setModel(listDataModel);
     }
 
     public void onSelect$cbxCustomerFilter() {
@@ -215,7 +210,7 @@ public class CustomerController extends GenericForwardComposer {
     private void filter(Long pstrCustomerId) {
         List<Customer> vlstCustomer = new ArrayList<>();
         if (lstCustomers != null && !lstCustomers.isEmpty()) {
-            if (Constants.DEFAULT_ID.equals(pstrCustomerId) || pstrCustomerId == null) {
+            if (pstrCustomerId == null) {
                 vlstCustomer.addAll(lstCustomers);
             } else {
                 for (Customer c : lstCustomers) {
@@ -227,7 +222,6 @@ public class CustomerController extends GenericForwardComposer {
         }
         listDataModel = new ListModelList(vlstCustomer);
         lstCustomer.setModel(listDataModel);
-
     }
 
     public void onImport(ForwardEvent event) {

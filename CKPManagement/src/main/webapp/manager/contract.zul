@@ -16,15 +16,23 @@
                     </auxheader>
                 </auxhead>
                 <auxhead sclass="category-center">
-                    <auxheader colspan="1">
-                    </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="6">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterCode" hflex="1"/>
+                        <combobox  hflex="1" id="cbxContractFilter" autodrop="true" placeholder="Nhập tên hợp đồng để tìm kiếm"
+                                       buttonVisible="false">
+                            <template name="model">
+                                <comboitem value="${each.contractId}" label="${each.contractName}" />
+                            </template>
+                        </combobox>
                     </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="6">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterName" hflex="1"/>
+                        <combobox  hflex="1" id="cbxCustomerFilter" autodrop="true" placeholder="Nhập tên khách hàng để tìm kiếm"
+                                       buttonVisible="false">
+                            <template name="model">
+                                <comboitem value="${each.customerId}" label="${each.customerName}" />
+                            </template>
+                        </combobox>
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">
@@ -72,7 +80,7 @@
                         <cell>
                             <a class="btn-cursor" forward="onClick=onDownloadFile" label="${each.filePath}" tooltiptext="${each.filePath}"/>
                             <button class="btn-cursor" visible="false" style="border: none;color: green;font-weight: bold;" iconSclass="z-icon-paperclip" upload="true"
-                            forward="onUpload=onUploadFile"/>
+                                    forward="onUpload=onUploadFile"/>
                         </cell>
                         <cell style="text-align:center">
                             <a class="btn-cursor" disabled="true" iconSclass="z-icon-money" forward="onClick=onPrice" tooltiptext="${c:l('price')}"/>

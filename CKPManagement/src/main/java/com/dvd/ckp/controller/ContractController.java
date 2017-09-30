@@ -71,9 +71,9 @@ public class ContractController extends GenericForwardComposer {
     @Wire
     private Grid lstContract;
     @Wire
-    private Textbox txtFilterCode;
+    private Combobox cbxCustomerFilter;
     @Wire
-    private Textbox txtFilterName;
+    private Combobox cbxContractFilter;
     @Wire
     private Window mainContract;
     ListModelList<Contract> listDataModel;
@@ -109,6 +109,10 @@ public class ContractController extends GenericForwardComposer {
         lstContract.setModel(listDataModel);
 
         lstCustomers = customerService.getCustomerActive();
+
+        cbxContractFilter.setModel(listDataModel);
+        cbxCustomerFilter.setModel(new ListModelList<>(lstCustomers));
+
         defaultCustomer = new Customer();
         defaultCustomer.setCustomerId(Constants.DEFAULT_ID);
         defaultCustomer.setCustomerName(Labels.getLabel("option"));
@@ -265,48 +269,57 @@ public class ContractController extends GenericForwardComposer {
         lstContracts = contractService.getContractActive();
         listDataModel = new ListModelList(lstContracts);
         lstContract.setModel(listDataModel);
+
+        cbxContractFilter.setModel(listDataModel);
+
         setDataDefaultInGrid();
     }
 
-    public void onOK$txtFilterCode() {
-        Contract contract = new Contract();
-        String vstrContractCode = txtFilterCode.getValue();
-        contract.setContractCode(vstrContractCode);
-        String vstrContractName = txtFilterName.getValue();
-        contract.setContractName(vstrContractName);
-        filter(contract);
+    public void onSelect$cbxContractFilter() {
+
+        Long vlngCustomerId = null;
+        Long vlngContractId = null;
+        if (cbxCustomerFilter.getSelectedItem() != null) {
+            vlngCustomerId = cbxCustomerFilter.getSelectedItem().getValue();
+        }
+        if (cbxContractFilter.getSelectedItem() != null) {
+            vlngContractId = cbxContractFilter.getSelectedItem().getValue();
+        }
+        filter(vlngContractId, vlngCustomerId);
     }
 
-    public void onOK$txtFilterName() {
-        Contract contract = new Contract();
-        String vstrContractCode = txtFilterCode.getValue();
-        contract.setContractCode(vstrContractCode);
-        String vstrContractName = txtFilterName.getValue();
-        contract.setContractName(vstrContractName);
-        filter(contract);
+    public void onSelect$cbxCustomerFilter() {
+        Long vlngCustomerId = null;
+        Long vlngContractId = null;
+        if (cbxCustomerFilter.getSelectedItem() != null) {
+            vlngCustomerId = cbxCustomerFilter.getSelectedItem().getValue();
+        }
+        if (cbxContractFilter.getSelectedItem() != null) {
+            vlngContractId = cbxContractFilter.getSelectedItem().getValue();
+        }
+        filter(vlngContractId, vlngCustomerId);
     }
 
-    private void filter(Contract contract) {
+    private void filter(Long contractId, Long customerId) {
         List<Contract> vlstContracts = new ArrayList<>();
-        if (lstContracts != null && !lstContracts.isEmpty() && contract != null) {
-            if (!StringUtils.isValidString(contract.getContractCode()) && !StringUtils.isValidString(contract.getContractName())) {
+        if (lstContracts != null && !lstContracts.isEmpty()) {
+            if (contractId == null && customerId == null) {
                 vlstContracts.addAll(lstContracts);
             } else {
                 for (Contract c : lstContracts) {
-                    //tim theo ma va ten
-                    if (StringUtils.isValidString(contract.getContractCode()) && StringUtils.isValidString(contract.getContractName())) {
-                        if ((StringUtils.isValidString(c.getContractCode()) && c.getContractCode().toLowerCase().contains(contract.getContractCode().toLowerCase()))
-                                && (StringUtils.isValidString(c.getContractName()) && c.getContractName().toLowerCase().contains(contract.getContractName().toLowerCase()))) {
+                    //tim theo hop dong va cong trinh
+                    if (contractId != null && customerId != null) {
+                        if (contractId.equals(c.getContractId()) && customerId.equals(c.getCustomerId())) {
                             vlstContracts.add(c);
                         }
-                    } //tim theo ma
-                    else if (StringUtils.isValidString(contract.getContractCode()) && !StringUtils.isValidString(contract.getContractName())) {
-                        if (StringUtils.isValidString(c.getContractCode()) && c.getContractCode().toLowerCase().contains(contract.getContractCode().toLowerCase())) {
+                    } //tim hop dong
+                    else if (contractId != null && customerId == null) {
+                        if (contractId.equals(c.getContractId())) {
                             vlstContracts.add(c);
                         }
-                    } //tim theo ten
-                    else if (!StringUtils.isValidString(contract.getContractCode()) && StringUtils.isValidString(contract.getContractName())) {
-                        if (StringUtils.isValidString(c.getContractName()) && c.getContractName().toLowerCase().contains(contract.getContractName().toLowerCase())) {
+                    } //tim khach hang
+                    else if (contractId == null && customerId != null) {
+                        if (customerId.equals(c.getCustomerId())) {
                             vlstContracts.add(c);
                         }
                     }
@@ -315,7 +328,7 @@ public class ContractController extends GenericForwardComposer {
         }
         listDataModel = new ListModelList(vlstContracts);
         lstContract.setModel(listDataModel);
-
+        setDataDefaultInGrid();
     }
 
     private void setComboboxCustomer(List<Component> lstCell, List<Customer> selectedIndex, int columnIndex) {

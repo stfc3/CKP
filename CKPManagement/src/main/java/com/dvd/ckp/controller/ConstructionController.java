@@ -47,9 +47,7 @@ public class ConstructionController extends GenericForwardComposer {
     @Wire
     private Grid lstConstruction;
     @Wire
-    private Textbox txtFilterCode;
-    @Wire
-    private Textbox txtFilterName;
+    private Combobox cbxConstructionFilter;
     ListModelList<Construction> listDataModel;
     List<Contract> lstContract;
     private List<Construction> lstConstructions;
@@ -58,8 +56,6 @@ public class ConstructionController extends GenericForwardComposer {
     private final int nameIndex = 2;
     private final int contractIndex = 3;
     private final int addressIndex = 4;
-//    private final int convertIndex = 5;
-//    private final int statusIndex = 6;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -75,6 +71,8 @@ public class ConstructionController extends GenericForwardComposer {
         defaultContract.setContractId(Constants.DEFAULT_ID);
         defaultContract.setContractName(Labels.getLabel("option"));
         lstContract.add(Constants.FIRST_INDEX, defaultContract);
+
+        cbxConstructionFilter.setModel(listDataModel);
         setDataDefaultInGrid();
     }
 
@@ -198,56 +196,34 @@ public class ConstructionController extends GenericForwardComposer {
         lstConstructions = constructionService.getConstructionActive();
         listDataModel = new ListModelList(lstConstructions);
         lstConstruction.setModel(listDataModel);
+        cbxConstructionFilter.setModel(listDataModel);
         setDataDefaultInGrid();
     }
 
-    public void onOK$txtFilterCode() {
-        Construction construction = new Construction();
-        String vstrConstructionCode = txtFilterCode.getValue();
-        construction.setConstructionCode(vstrConstructionCode);
-        String vstrConstructionName = txtFilterName.getValue();
-        construction.setConstructionName(vstrConstructionName);
-        filter(construction);
+    public void onSelect$cbxConstructionFilter() {
+        Long vstrConstructionId = null;
+        if (cbxConstructionFilter.getSelectedItem() != null) {
+            vstrConstructionId = cbxConstructionFilter.getSelectedItem().getValue();
+        }
+        filter(vstrConstructionId);
     }
 
-    public void onOK$txtFilterName() {
-        Construction construction = new Construction();
-        String vstrConstructionCode = txtFilterCode.getValue();
-        construction.setConstructionCode(vstrConstructionCode);
-        String vstrConstructionName = txtFilterName.getValue();
-        construction.setConstructionName(vstrConstructionName);
-        filter(construction);
-    }
-
-    private void filter(Construction construction) {
+    private void filter(Long vstrConstructionId) {
         List<Construction> vlstConstruction = new ArrayList<>();
-        if (lstConstructions != null && !lstConstructions.isEmpty() && construction != null) {
-            if (!StringUtils.isValidString(construction.getConstructionCode()) && !StringUtils.isValidString(construction.getConstructionName())) {
+        if (lstConstructions != null && !lstConstructions.isEmpty()) {
+            if (vstrConstructionId == null) {
                 vlstConstruction.addAll(lstConstructions);
             } else {
                 for (Construction c : lstConstructions) {
-                    //tim theo ma va ten
-                    if (StringUtils.isValidString(construction.getConstructionCode()) && StringUtils.isValidString(construction.getConstructionName())) {
-                        if ((StringUtils.isValidString(c.getConstructionCode()) && c.getConstructionCode().toLowerCase().contains(construction.getConstructionCode().toLowerCase()))
-                                && (StringUtils.isValidString(c.getConstructionName()) && c.getConstructionName().toLowerCase().contains(construction.getConstructionName().toLowerCase()))) {
-                            vlstConstruction.add(c);
-                        }
-                    } //tim theo ma
-                    else if (StringUtils.isValidString(construction.getConstructionCode()) && !StringUtils.isValidString(construction.getConstructionName())) {
-                        if (StringUtils.isValidString(c.getConstructionCode()) && c.getConstructionCode().toLowerCase().contains(construction.getConstructionCode().toLowerCase())) {
-                            vlstConstruction.add(c);
-                        }
-                    } //tim theo ten
-                    else if (!StringUtils.isValidString(construction.getConstructionCode()) && StringUtils.isValidString(construction.getConstructionName())) {
-                        if (StringUtils.isValidString(c.getConstructionName()) && c.getConstructionName().toLowerCase().contains(construction.getConstructionName().toLowerCase())) {
-                            vlstConstruction.add(c);
-                        }
+                    if (vstrConstructionId.equals(c.getConstructionId())) {
+                        vlstConstruction.add(c);
                     }
                 }
             }
         }
         listDataModel = new ListModelList(vlstConstruction);
         lstConstruction.setModel(listDataModel);
+        setDataDefaultInGrid();
 
     }
 

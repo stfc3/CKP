@@ -16,14 +16,18 @@
                     </auxheader>
                 </auxhead>
                 <auxhead sclass="category-center">
-                    <auxheader colspan="9">
+                    <auxheader colspan="1">
+                    </auxheader>
+                    <auxheader colspan="2">
                         <a iconSclass="z-icon-filter"/>
                         <combobox  hflex="1" id="cbxCustomerFilter" autodrop="true" placeholder="Nhập tên khách hàng để tìm kiếm"
-                                       buttonVisible="false">
-                                <template name="model">
-                                    <comboitem value="${each.customerId}" label="${each.customerName}" />
-                                </template>
-                            </combobox>
+                                   buttonVisible="false">
+                            <template name="model">
+                                <comboitem value="${each.customerId}" label="${each.customerName}" />
+                            </template>
+                        </combobox>
+                    </auxheader>
+                    <auxheader colspan="6">
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center;">
