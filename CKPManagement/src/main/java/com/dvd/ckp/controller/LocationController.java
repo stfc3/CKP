@@ -112,7 +112,7 @@ public class LocationController extends GenericForwardComposer {
 			lstLocation.addAll(vlstData);
 			lstFilter.addAll(vlstData);
 		}
-		listDataLocation = new ListModelList<>(vlstData);
+		listDataLocation = new ListModelList<>(lstLocation);
 		cbFilterName.setModel(listDataLocation);
 		// pump type default
 		defaultParam = new Param();
