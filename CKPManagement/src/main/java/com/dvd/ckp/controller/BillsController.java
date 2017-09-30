@@ -119,7 +119,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 	// Danh sach vi tri bom
 	private List<Location> lstLocation;
 
-	private List<Contract> listContact;
+	// private List<Contract> listContact;
 
 	// Vi tri cac column trong grid
 
@@ -163,22 +163,44 @@ public class BillsController extends GenericForwardComposer<Component> {
 
 		// list danh sach cong trinh
 		lstConstructions = new ArrayList<>();
-		lstConstructions.addAll(constructionService.getConstructionActive());
+		List<Construction> lstCon = constructionService.getConstructionActive();
+		if (lstCon != null && !lstCon.isEmpty()) {
+			lstConstructions.addAll(lstCon);
+		}
 
 		// list danh sach khach hang
 		lstCustomer = new ArrayList<>();
-		lstCustomer.addAll(customerService.getCustomerActive());
+		List<Customer> lstCus = customerService.getCustomerActive();
+		if (lstCus != null && !lstCus.isEmpty()) {
+			lstCustomer.addAll(lstCus);
+		}
 
 		// list danh sach chi tiet hoa don
-		lstBillDetail = billsServices.getBillDetail();
+		lstBillDetail = new ArrayList<>();
+		List<BillsDetail> lstBillDe = billsServices.getBillDetail();
+		if (lstBillDe != null && !lstBillDe.isEmpty()) {
+			lstBillDetail.addAll(lstBillDe);
+		}
 
 		// danh sach vi tri bom
-		lstLocation = locationServices.getListLocation();
+		lstLocation = new ArrayList<>();
+		List<Location> lstLoca = locationServices.getListLocation();
+		if (lstLoca != null && !lstLoca.isEmpty()) {
+			lstLocation.addAll(lstLoca);
+		}
 
 		// danh sach bom
-		lstPumps = pumpServices.getAllListData();
+		lstPumps = new ArrayList<>();
+		List<Pumps> lstPump = pumpServices.getAllListData();
+		if (lstPump != null && !lstPump.isEmpty()) {
+			lstPumps.addAll(lstPump);
+		}
 
-		listContact = contractService.getAllContract();
+		// listContact = new ArrayList<>();
+		// List<Contract> lstCont = contractService.getAllContract();
+		// if(lstCont != null && !lstCont.isEmpty()){
+		//
+		// }
 		modelListCustomer = new ListModelList<>(lstCustomer);
 		cbFilterCustomer.setModel(modelListCustomer);
 
@@ -965,39 +987,39 @@ public class BillsController extends GenericForwardComposer<Component> {
 	/**
 	 * lay danh sach hop dong theo khach hang
 	 */
-	private List<Contract> getContractByCustomer(Long customerID) {
-		List<Contract> lstReturn = new ArrayList<>();
-		if (listContact != null && !listContact.isEmpty()) {
-			for (Contract contract : listContact) {
-				if (customerID.equals(contract)) {
-					lstReturn.add(contract);
-				}
-			}
-		}
-		return lstReturn;
-	}
+	// private List<Contract> getContractByCustomer(Long customerID) {
+	// List<Contract> lstReturn = new ArrayList<>();
+	// if (listContact != null && !listContact.isEmpty()) {
+	// for (Contract contract : listContact) {
+	// if (customerID.equals(contract)) {
+	// lstReturn.add(contract);
+	// }
+	// }
+	// }
+	// return lstReturn;
+	// }
 
 	/**
 	 * Lay danh sach cong trinh theo khach hang
 	 */
-	private List<Construction> getConstructionByContract(Long customerID) {
-		List<Contract> lstContract = getContractByCustomer(customerID);
-		List<Construction> lstConstruction = new ArrayList<>();
-		if (lstConstructions != null && !lstConstructions.isEmpty()) {
-			for (Construction construction : lstConstructions) {
-				if (lstContract != null && !lstContract.isEmpty()) {
-					for (Contract contract : lstContract) {
-
-						if (construction.getContractId().equals(contract.getContractId())) {
-							lstConstruction.add(construction);
-						}
-					}
-				}
-			}
-		}
-
-		return lstConstruction;
-	}
+	// private List<Construction> getConstructionByContract(Long customerID) {
+	// List<Contract> lstContract = getContractByCustomer(customerID);
+	// List<Construction> lstConstruction = new ArrayList<>();
+	// if (lstConstructions != null && !lstConstructions.isEmpty()) {
+	// for (Construction construction : lstConstructions) {
+	// if (lstContract != null && !lstContract.isEmpty()) {
+	// for (Contract contract : lstContract) {
+	//
+	// if (construction.getContractId().equals(contract.getContractId())) {
+	// lstConstruction.add(construction);
+	// }
+	// }
+	// }
+	// }
+	// }
+	//
+	// return lstConstruction;
+	// }
 
 	/**
 	 * Lay thong tin may bom len man hinh view bill detail
