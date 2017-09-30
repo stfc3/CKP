@@ -72,6 +72,7 @@ CREATE TABLE IF NOT EXISTS construction
     contract_id BIGINT NOT NULL,
     construction_code VARCHAR(50),
     construction_name VARCHAR(100),
+    construction_address VARCHAR(200),
     status INT DEFAULT 1,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(construction_id)
@@ -329,5 +330,41 @@ OPEN c_data;
 		END LOOP START_LOOP; 
         SET total_revenue=v_location_revenue+v_m3_revenue+v_wait_revenue;
         SELECT total_revenue, 'Thành công' description;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `calculator_quantity`(in p_bill_detail_id bigint)
+BEGIN
+#Biến tính sản lượng công nhân
+DECLARE v_quantity double DEFAULT 0;
+#Giới hạn quy đổi sản lượng. Mặc định là 60
+DECLARE v_quantity_limit INT DEFAULT 60;
+# % tăng thêm đối với công trình đặc biệt
+DECLARE v_percent double DEFAULT 0.25; # 25%
+
+
+SELECT max_staff, is_far, quantity_convert, CASE WHEN quantity_approve IS NOT NULL THEN quantity_approve ELSE quantity END quantity 
+INTO @max_staff, @is_far, @quantity_convert, @quantity
+FROM bill_detail WHERE bill_detail_id=p_bill_detail_id AND status=1;
+# Lây tổng số công nhân thực hiện bơm
+SELECT COUNT(*) INTO @staff_total FROM quantity_staff WHERE bill_detail_id=p_bill_detail_id;
+
+#Nếu khối lượng bơm < hơn khối lượng công ty tính cho công nhân
+IF(@quantity<v_quantity_limit) THEN
+	SET v_quantity=@quantity_convert;
+ELSE 
+	SET v_quantity=@quantity;
+END IF;
+# Nếu là công trình đặc biệt
+IF (@is_far = 1) THEN
+	SET v_quantity=v_quantity + v_quantity*v_percent;
+END IF;
+#Công thức tính khối lượng: (Khối lượng * số lượng công nhân tối đa)/ số lượng công nhân thực hiện
+SET v_quantity=v_quantity*@max_staff/ @staff_total;
+SET SQL_SAFE_UPDATES=0;
+UPDATE  quantity_staff SET quantity=v_quantity, create_date = now() WHERE bill_detail_id=p_bill_detail_id;
+SET SQL_SAFE_UPDATES=1;
+select v_quantity, @is_far,@max_staff, @staff_total;
 END$$
 DELIMITER ;

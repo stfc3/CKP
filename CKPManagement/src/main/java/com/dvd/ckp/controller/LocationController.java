@@ -28,7 +28,6 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
-import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Longbox;
@@ -40,10 +39,8 @@ import org.zkoss.zul.Window;
 import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.common.Constants;
-import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Param;
-import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.excel.domain.LocationExcel;
@@ -112,7 +109,7 @@ public class LocationController extends GenericForwardComposer {
 			lstLocation.addAll(vlstData);
 			lstFilter.addAll(vlstData);
 		}
-		listDataLocation = new ListModelList<>(vlstData);
+		listDataLocation = new ListModelList<>(lstLocation);
 		cbFilterName.setModel(listDataLocation);
 		// pump type default
 		defaultParam = new Param();
