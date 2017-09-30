@@ -30,6 +30,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
@@ -49,18 +50,21 @@ public class UserController extends GenericForwardComposer {
     protected UserService userService;
     @Wire
     private Grid lstUser;
-    @Wire
-    private Textbox txtFilterUserName;
-    @Wire
-    private Textbox txtFilterFullName;
-    @Wire
-    private Textbox txtFilterEmail;
+//    @Wire
+//    private Textbox txtFilterUserName;
+//    @Wire
+//    private Textbox txtFilterFullName;
+//    @Wire
+//    private Textbox txtFilterEmail;
     @Wire
     private Textbox txtFilterPhone;
     ListModelList<User> listDataModel;
     private List<User> lstUsers;
     private Window user;
     private boolean blnAddOrEdit = false;
+
+    @Wire
+    private Combobox cbxUserFilter;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -73,6 +77,7 @@ public class UserController extends GenericForwardComposer {
         }
         listDataModel = new ListModelList(lstUsers);
         lstUser.setModel(listDataModel);
+        cbxUserFilter.setModel(listDataModel);
     }
 
     /**
@@ -201,103 +206,55 @@ public class UserController extends GenericForwardComposer {
         List<User> vlstUser = userService.getAllUser();
         listDataModel = new ListModelList(vlstUser);
         lstUser.setModel(listDataModel);
+        cbxUserFilter.setModel(listDataModel);
     }
 
-    public void onChange$txtFilterUserName() {
+    public void onSelect$cbxUserFilter() {
+        Long vstrUserId = null;
+        if (cbxUserFilter.getSelectedItem() != null) {
+            vstrUserId = cbxUserFilter.getSelectedItem().getValue();
+        }
         User user = new User();
-        String vstrUserName = txtFilterUserName.getValue();
-        user.setUserName(vstrUserName);
-        String vstrFullName = txtFilterFullName.getValue();
-        user.setFullName(vstrFullName);
-        String vstrEmail = txtFilterEmail.getValue();
-        user.setEmail(vstrEmail);
         String vstrPhone = txtFilterPhone.getValue();
         user.setPhone(vstrPhone);
-        filter(user);
-    }
-
-    public void onChange$txtFilterFullName() {
-        User user = new User();
-        String vstrUserName = txtFilterUserName.getValue();
-        user.setUserName(vstrUserName);
-        String vstrFullName = txtFilterFullName.getValue();
-        user.setFullName(vstrFullName);
-        String vstrEmail = txtFilterEmail.getValue();
-        user.setEmail(vstrEmail);
-        String vstrPhone = txtFilterPhone.getValue();
-        user.setPhone(vstrPhone);
-        filter(user);
-    }
-
-    public void onChange$txtFilterEmail() {
-        User user = new User();
-        String vstrUserName = txtFilterUserName.getValue();
-        user.setUserName(vstrUserName);
-        String vstrFullName = txtFilterFullName.getValue();
-        user.setFullName(vstrFullName);
-        String vstrEmail = txtFilterEmail.getValue();
-        user.setEmail(vstrEmail);
-        String vstrPhone = txtFilterPhone.getValue();
-        user.setPhone(vstrPhone);
+        user.setUserId(vstrUserId);
         filter(user);
     }
 
     public void onChange$txtFilterPhone() {
+        Long vstrUserId = null;
+        if (cbxUserFilter.getSelectedItem() != null) {
+            vstrUserId = cbxUserFilter.getSelectedItem().getValue();
+        }
         User user = new User();
-        String vstrUserName = txtFilterUserName.getValue();
-        user.setUserName(vstrUserName);
-        String vstrFullName = txtFilterFullName.getValue();
-        user.setFullName(vstrFullName);
-        String vstrEmail = txtFilterEmail.getValue();
-        user.setEmail(vstrEmail);
         String vstrPhone = txtFilterPhone.getValue();
         user.setPhone(vstrPhone);
+        user.setUserId(vstrUserId);
         filter(user);
     }
 
     private void filter(User user) {
         List<User> vlstCustomer = new ArrayList<>();
         if (lstUsers != null && !lstUsers.isEmpty() && user != null) {
-            if (!StringUtils.isValidString(user.getUserName())
-                    && !StringUtils.isValidString(user.getFullName())
-                    && !StringUtils.isValidString(user.getEmail())
-                    && !StringUtils.isValidString(user.getPhone())) {
+            if ((Constants.DEFAULT_ID.equals(user.getUserId()) || user.getUserId() == null) && user.getPhone().equalsIgnoreCase("")) {
                 vlstCustomer.addAll(lstUsers);
             } else {
                 for (User c : lstUsers) {
-                    //tim theo ma va ten
-                    if (StringUtils.isValidString(user.getUserName()) && StringUtils.isValidString(user.getFullName()) && StringUtils.isValidString(user.getEmail()) && StringUtils.isValidString(user.getPhone())) {
-                        if ((StringUtils.isValidString(c.getUserName()) && c.getUserName().toLowerCase().contains(user.getUserName().toLowerCase()))
-                                && (StringUtils.isValidString(c.getFullName()) && c.getFullName().toLowerCase().contains(user.getFullName().toLowerCase()))
-                                && (StringUtils.isValidString(c.getEmail()) && c.getEmail().toLowerCase().contains(user.getEmail().toLowerCase()))
-                                && (StringUtils.isValidString(c.getPhone()) && c.getPhone().toLowerCase().contains(user.getPhone().toLowerCase()))) {
-                            vlstCustomer.add(c);
-                        }
-                    } //tim theo user
-                    else if (StringUtils.isValidString(user.getUserName()) && !StringUtils.isValidString(user.getEmail())
-                            && !StringUtils.isValidString(user.getFullName())
-                            && !StringUtils.isValidString(user.getPhone())) {
-                        if (StringUtils.isValidString(c.getUserName()) && c.getUserName().toLowerCase().contains(user.getUserName().toLowerCase())) {
-                            vlstCustomer.add(c);
-                        }
-                    } //tim theo ful name
-                    else if (!StringUtils.isValidString(user.getUserName()) && StringUtils.isValidString(user.getFullName())
-                            && !StringUtils.isValidString(user.getEmail()) && !StringUtils.isValidString(user.getPhone())) {
-                        if (StringUtils.isValidString(c.getFullName()) && c.getFullName().toLowerCase().contains(user.getFullName().toLowerCase())) {
-                            vlstCustomer.add(c);
-                        }
-                    } //tim theo email
-                    else if (!StringUtils.isValidString(user.getUserName()) && StringUtils.isValidString(user.getEmail())
-                            && !StringUtils.isValidString(user.getFullName()) && !StringUtils.isValidString(user.getPhone())) {
-                        if (StringUtils.isValidString(c.getEmail()) && c.getEmail().toLowerCase().contains(user.getEmail().toLowerCase())) {
-                            vlstCustomer.add(c);
-                        }
-                    } else if (!StringUtils.isValidString(user.getUserName()) && !StringUtils.isValidString(user.getEmail())
-                            && !StringUtils.isValidString(user.getFullName()) && StringUtils.isValidString(user.getPhone())) {
-                        if (StringUtils.isValidString(c.getPhone()) && c.getPhone().toLowerCase().contains(user.getPhone().toLowerCase())) {
+                    if ((!Constants.DEFAULT_ID.equals(user.getUserId()) && user.getUserId() != null) && !user.getPhone().equalsIgnoreCase("")) {
+                        if (user.getUserId().equals(c.getUserId()) && c.getPhone().toLowerCase().contains(user.getPhone().toLowerCase())) {
                             vlstCustomer.add(c);
                         }
                     }
+                    else if ((!Constants.DEFAULT_ID.equals(user.getUserId()) || user.getUserId() != null) && user.getPhone().equalsIgnoreCase("")) {
+                        if (user.getUserId().equals(c.getUserId())) {
+                            vlstCustomer.add(c);
+                        }
+                    } else if ((Constants.DEFAULT_ID.equals(user.getUserId()) || user.getUserId() == null) && !user.getPhone().equalsIgnoreCase("")) {
+                        if (c.getPhone().toLowerCase().contains(user.getPhone().toLowerCase())) {
+                            vlstCustomer.add(c);
+                        }
+                    }
+
                 }
             }
         }

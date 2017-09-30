@@ -24,6 +24,7 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
@@ -37,6 +38,7 @@ import org.zkoss.zul.Window;
 import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.domain.Location;
+import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
@@ -60,15 +62,8 @@ public class StaffController extends GenericForwardComposer {
 	@Wire
 	private Grid gridStaff;
 	@Wire
-	private Textbox txtFilterCode;
-	@Wire
-	private Textbox txtFilterName;
-
-	@Wire
-	private Textbox txtFilterPhone;
-
-	@Wire
-	private Textbox txtFilterEmail;
+	private Combobox cbFilterName;
+	ListModelList<Staff> listDataStaff;
 
 	private ListModelList<Staff> listDataModel;
 	private List<Staff> lstStaff;
@@ -107,6 +102,8 @@ public class StaffController extends GenericForwardComposer {
 		}
 		listDataModel = new ListModelList<Staff>(lstStaff);
 		gridStaff.setModel(listDataModel);
+		listDataStaff = new ListModelList<Staff>(lstStaff);
+		cbFilterName.setModel(listDataStaff);
 	}
 
 	/**
@@ -239,55 +236,28 @@ public class StaffController extends GenericForwardComposer {
 		gridStaff.setModel(listDataModel);
 	}
 
-	public void onChange$txtFilterCode() {
+	public void onChange$cbFilterName() {
 		Staff staff = new Staff();
+		Long staffID = null;
+		if (cbFilterName.getSelectedItem() != null) {
+			staffID = cbFilterName.getSelectedItem().getValue();
+		}
 
-		String vstrStaffCode = txtFilterCode.getValue();
-		staff.setStaffCode(vstrStaffCode);
-
-		String vstrStaffName = txtFilterName.getValue();
-		staff.setStaffName(vstrStaffName);
-
-		filter(staff);
-	}
-
-	public void onChange$txtFilterName() {
-		Staff staff = new Staff();
-
-		String vstrStaffCode = txtFilterCode.getValue();
-		staff.setStaffCode(vstrStaffCode);
-
-		String vstrStaffName = txtFilterName.getValue();
-		staff.setStaffName(vstrStaffName);
+		staff.setStaffId(staffID);
 
 		filter(staff);
 	}
 
 	private void filter(Staff staff) {
 		List<Staff> vlstData = new ArrayList<>();
-		if (!StringUtils.isValidString(staff.getStaffCode()) && !StringUtils.isValidString(staff.getStaffName())) {
+		if (staff.getStaffId() == null) {
 			vlstData.addAll(lstStaff);
 			lstStaffFilter.clear();
 			lstStaffFilter.addAll(lstStaff);
 		} else {
 			if (lstStaff != null && !lstStaff.isEmpty()) {
 				for (Staff item : lstStaff) {
-					if (StringUtils.isValidString(staff.getStaffCode())
-							&& item.getStaffCode().toLowerCase().contains(staff.getStaffCode().toLowerCase())
-							&& StringUtils.isValidString(staff.getStaffName())
-							&& item.getStaffName().toLowerCase().contains(staff.getStaffName().toLowerCase())) {
-						vlstData.add(item);
-						lstStaffFilter.clear();
-						lstStaffFilter.add(item);
-					} else if (!StringUtils.isValidString(staff.getStaffCode())
-							&& StringUtils.isValidString(staff.getStaffName())
-							&& item.getStaffName().toLowerCase().contains(staff.getStaffName().toLowerCase())) {
-						vlstData.add(item);
-						lstStaffFilter.clear();
-						lstStaffFilter.add(item);
-					} else if (StringUtils.isValidString(staff.getStaffCode())
-							&& item.getStaffCode().toLowerCase().contains(staff.getStaffCode().toLowerCase())
-							&& !StringUtils.isValidString(staff.getStaffName())) {
+					if (staff.getStaffId() != null && staff.getStaffId().equals(item.getStaffId())) {
 						vlstData.add(item);
 						lstStaffFilter.clear();
 						lstStaffFilter.add(item);

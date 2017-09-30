@@ -29,14 +29,25 @@
 					<auxheader colspan="4">
 						<a iconSclass="z-icon-filter" />
 						<combobox id="cbFilterCustomer" hflex="1"
-							autodrop="true" buttonVisible="false"
-							placeholder="${c:l('bills.filter.customer')}" />
+							placeholder="${c:l('bills.filter.customer')}" autodrop="true"
+							buttonVisible="false">
+							<template name="model">
+								<comboitem value="${each.customerId}"
+									label="${each.customerName}" />
+							</template>
+						</combobox>
 					</auxheader>
 					<auxheader colspan="4">
 						<a iconSclass="z-icon-filter" />
-						<combobox id="cbFilterConstruction" hflex="1"
-							autodrop="true" buttonVisible="false"
-							placeholder="${c:l('bills.filter.construction')}" />
+						<combobox hflex="1" id="cbFilterConstruction"
+							placeholder="${c:l('bills.filter.construction')}" autodrop="true"
+							buttonVisible="false">
+							<template name="model">
+								<comboitem
+									value="${each.constructionId}"
+									label="${each.constructionName}" />
+							</template>
+						</combobox>
 					</auxheader>
 					<auxheader colspan="4">
 						<a iconSclass="z-icon-filter" />
