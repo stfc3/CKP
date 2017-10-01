@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS objects
     object_id BIGINT NOT NULL AUTO_INCREMENT,
     object_code VARCHAR(50),
     object_name VARCHAR(200),
-    object_type INT COMMENT 'loại đối tượng 1: chức năng danh mục; 2: chức năng báo cáo',
+    object_type INT COMMENT 'loại đối tượng 1: chức năng danh mục; 2: chức năng báo cáo; 3: action',
     status INT DEFAULT 1,
     path VARCHAR(100) COMMENT 'đường dẫn chức năng',
     parent_id BIGINT COMMENT 'mã chức năng cha',
