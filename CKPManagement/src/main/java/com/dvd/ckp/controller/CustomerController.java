@@ -6,7 +6,9 @@
 package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.CustomerService;
+import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.domain.Customer;
+import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StyleUtils;
@@ -39,6 +41,8 @@ public class CustomerController extends GenericForwardComposer {
     private static final Logger logger = Logger.getLogger(CustomerController.class);
     @WireVariable
     protected CustomerService customerService;
+    @WireVariable
+    protected UtilsService utilsService;
     @Wire
     private Grid lstCustomer;
     @Wire
@@ -53,12 +57,29 @@ public class CustomerController extends GenericForwardComposer {
     private final int addressIndex = 5;
     private final int accountIndex = 6;
     private final int bankIndex = 7;
+    
+    Param defaultParam;
+    List<Param> lstBanks;
 
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
+        utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
+        
+        defaultParam = new Param();
+        defaultParam.setParamValue(Constants.DEFAULT_ID);
+        defaultParam.setParamName(Labels.getLabel("option"));
+        
+        //list loai may bom
+        lstBanks = utilsService.getParamByKey(Constants.PRAM_BANK);
+        if (lstBanks == null) {
+            lstBanks = new ArrayList<>();
+        }
+        lstBanks.add(Constants.FIRST_INDEX, defaultParam);
+        
+        
         reloadGrid();
     }
 
@@ -71,6 +92,8 @@ public class CustomerController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
+        Customer customer = rowSelected.getValue();
+        setComboboxParam(lstCell, getParamDefault(customer.getBankId(), bankIndex), bankIndex);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 
@@ -131,6 +154,7 @@ public class CustomerController extends GenericForwardComposer {
         lstCustomer.setModel(listDataModel);
         lstCustomer.renderAll();
         List<Component> lstCell = lstCustomer.getRows().getFirstChild().getChildren();
+        setDataDefaultInGrid();
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 
@@ -149,7 +173,7 @@ public class CustomerController extends GenericForwardComposer {
         Textbox txtTaxCode = null;
         Textbox txtCustomerAddress = null;
         Textbox txtAccountNumber = null;
-        Textbox txtBankName = null;
+        Combobox cbxBank = null;
         component = lstCell.get(codeIndex).getFirstChild();
         if (component != null && component instanceof Textbox) {
             txtCustomerCode = (Textbox) component;
@@ -181,9 +205,9 @@ public class CustomerController extends GenericForwardComposer {
             customer.setAccountNumber(txtAccountNumber.getValue());
         }
         component = lstCell.get(bankIndex).getFirstChild();
-        if (component != null && component instanceof Textbox) {
-            txtBankName = (Textbox) component;
-            customer.setBankName(txtBankName.getValue());
+        if (component != null && component instanceof Combobox) {
+            cbxBank = (Combobox) component;
+            customer.setBankId(cbxBank.getSelectedItem().getValue());
         }
         return customer;
     }
@@ -197,6 +221,8 @@ public class CustomerController extends GenericForwardComposer {
         lstCustomer.setModel(listDataModel);
 
         cbxCustomerFilter.setModel(listDataModel);
+        
+        setDataDefaultInGrid();
     }
 
     public void onSelect$cbxCustomerFilter() {
@@ -224,6 +250,61 @@ public class CustomerController extends GenericForwardComposer {
         lstCustomer.setModel(listDataModel);
     }
 
+    
+    private void setDataDefaultInGrid() {
+        lstCustomer.renderAll();
+        List<Component> lstRows = lstCustomer.getRows().getChildren();
+        if (lstRows != null && !lstRows.isEmpty()) {
+            for (int i = 0; i < lstRows.size(); i++) {
+                Customer customer = listDataModel.get(i);
+                Component row = lstRows.get(i);
+                List<Component> lstCell = row.getChildren();
+                setComboboxParam(lstCell, getParamDefault(customer.getBankId(), bankIndex), bankIndex);
+            }
+        }
+    }
+    private List<Param> getParamDefault(Long paramValue, int type) {
+        List<Param> paramSelected = new ArrayList<>();
+        List<Param> lstParam = null;
+        switch (type) {
+            case bankIndex:
+                lstParam = lstBanks;
+                break;
+            default:
+                break;
+        }
+        if (paramValue != null && lstParam != null && !lstParam.isEmpty()) {
+            for (Param vParam : lstParam) {
+                if (paramValue.equals(vParam.getParamValue())) {
+                    paramSelected.add(vParam);
+                    break;
+                }
+            }
+        }
+        if (paramSelected.isEmpty()) {
+            paramSelected.add(defaultParam);
+        }
+        return paramSelected;
+    }
+    private void setComboboxParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+        Combobox cbxParam = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        List<Param> lstParam = null;
+        switch (columnIndex) {
+            case bankIndex:
+                lstParam = lstBanks;
+                break;
+            default:
+                break;
+        }
+        if (component != null && component instanceof Combobox) {
+            cbxParam = (Combobox) component;
+            ListModelList listDataModelParam = new ListModelList(lstParam);
+            listDataModelParam.setSelection(selectedIndex);
+            cbxParam.setModel(listDataModelParam);
+            cbxParam.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getParamName());
+        }
+    }
     public void onImport(ForwardEvent event) {
         Messagebox.show("Chức năng chưa được hỗ trợ", "Thông báo", Messagebox.OK, Messagebox.INFORMATION);
     }

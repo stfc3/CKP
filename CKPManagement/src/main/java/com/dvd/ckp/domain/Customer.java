@@ -37,7 +37,7 @@ public class Customer implements Serializable {
     private String customerAddress;
     private String taxCode;
     private String accountNumber;
-    private String bankName;
+    private Long bankId;
     private Integer status;
     private Date createDate;
 
@@ -106,13 +106,13 @@ public class Customer implements Serializable {
         this.accountNumber = accountNumber;
     }
 
-    @Column(name = "bank_name")
-    public String getBankName() {
-        return bankName;
+    @Column(name = "bank_id")
+    public Long getBankId() {
+        return bankId;
     }
 
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public void setBankId(Long bankId) {
+        this.bankId = bankId;
     }
 
     @Column(name = "status")

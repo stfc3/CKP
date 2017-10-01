@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS customers
     customer_phone VARCHAR(20),
     tax_code VARCHAR(20) COMMENT 'Mã số thuế',
     account_number VARCHAR(50) COMMENT 'Tài khoản ngân hàng',
-    bank_name VARCHAR(200) COMMENT 'Tên ngân hàng',
+    bank_id BIGINT COMMENT 'Tên ngân hàng',
     status INT DEFAULT 1 COMMENT '1: Hoạt động; 0: Không hoạt động',
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(customer_id)
@@ -117,6 +117,8 @@ CREATE TABLE IF NOT EXISTS bills
     start_time DATETIME COMMENT 'Thời gian bắt đầu bơm',
     end_time DATETIME COMMENT 'Thời gian bơm xong',
     construction_id BIGINT,
+    file_name VARCHAR(100),
+    path VARCHAR(300),
     status INT DEFAULT 1,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(bill_id)
@@ -368,3 +370,23 @@ SET SQL_SAFE_UPDATES=1;
 select v_quantity, @is_far,@max_staff, @staff_total;
 END$$
 DELIMITER ;
+
+
+INSERT INTO params (param_key, param_value, param_name) VALUES ('BANK',1,'Vietcombank');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('BANK',2,'Viettinbank');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('BANK',3,'Agribank');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('BANK',4,'BIDV');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('BANK',5,'ACB');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('BANK',6,'MB bank');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('BANK',7,'VPBank');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('BANK',8,'Sacombank');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('BANK',9,'Oceanbank');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('BANK',10,'Bắc Á Bank');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('PUMP_TYPE',1,'Bơm tĩnh');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('PUMP_TYPE',2,'Bơm cần');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('PUMP_TYPE',3,'Bơm cần phân phối');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('CONVERT_TYPE',1,'M3');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('CONVERT_TYPE',2,'Ca');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('LOCATION_TYPE',1,'Tầng');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('LOCATION_TYPE',2,'Cột vách');
+INSERT INTO params (param_key, param_value, param_name) VALUES ('LOCATION_TYPE',3,'Cầu thang');
