@@ -5,8 +5,7 @@
  */
 package com.dvd.ckp.controller;
 
-import com.dvd.ckp.utils.Constants;
-import org.apache.commons.lang3.RandomStringUtils;
+import com.dvd.ckp.utils.ValidateUtils;
 
 /**
  *
@@ -19,13 +18,9 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        String RESET_RANDOM_PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        String pwd = RandomStringUtils.random(8, RESET_RANDOM_PASSWORD);
-//        System.out.println(pwd);
-        
-        if (!"654321aA".matches(Constants.PASSWORD_PATTERN)) {
-            System.out.println("A");   
-        }
+
+        System.out.println("a: " + ValidateUtils.validateEmail(".mkyong@yahoo.com"));
+
     }
 
 }
