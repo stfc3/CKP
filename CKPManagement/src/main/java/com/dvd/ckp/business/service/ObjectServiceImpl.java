@@ -9,27 +9,29 @@ import com.dvd.ckp.business.dao.ObjectDAO;
 import com.dvd.ckp.domain.Object;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author daond
  */
+@Service
 public class ObjectServiceImpl implements ObjectService{
 
     @Autowired
-    private ObjectDAO objectDAO;
+    private ObjectDAO ObjectDAO;
     
     @Transactional(readOnly = true)
     @Override
     public List<Object> getAllObject() {
-        return objectDAO.getAllObject();
+        return ObjectDAO.getAllObject();
     }
 
     @Transactional
     @Override
     public void insertOrUpdateObject(Object object) {
-        objectDAO.insertOrUpdateObject(object);
+        ObjectDAO.insertOrUpdateObject(object);
     }
     
 }

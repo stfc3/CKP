@@ -6,6 +6,7 @@
 package com.dvd.ckp.controller;
 
 import com.dvd.ckp.bean.UserToken;
+import com.dvd.ckp.business.service.ObjectService;
 import com.dvd.ckp.business.service.UserService;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.domain.User;
@@ -39,6 +40,8 @@ public class LoginController extends SelectorComposer<Component> {
     protected UserService userService;
     @WireVariable
     protected UtilsService utilsService;
+    @WireVariable
+    protected ObjectService objectService;
     @Wire
     private Label mesg;
     @Wire
@@ -67,6 +70,7 @@ public class LoginController extends SelectorComposer<Component> {
         session = Sessions.getCurrent();
         userService = (UserService) SpringUtil.getBean(SpringConstant.USER_SERVICES);
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
+        objectService = (ObjectService) SpringUtil.getBean(SpringConstant.OBJECT_SERVICES);
         if (session.getAttribute(Constants.USER_TOKEN) != null) {
             Executions.sendRedirect(Constants.PAGE_HOME);
         }
@@ -82,7 +86,7 @@ public class LoginController extends SelectorComposer<Component> {
         } else if (!vstrPassword.equals(EncryptUtil.decrypt(vuser.getPassword()))) {
             mesg.setValue(Labels.getLabel("login.error"));
         } else {
-            UserToken userToken=new UserToken();
+            UserToken userToken = new UserToken();
             userToken.setUserName(vuser.getUserName());
             userToken.setFullName(vuser.getFullName());
             userToken.setEmail(vuser.getEmail());
@@ -90,7 +94,11 @@ public class LoginController extends SelectorComposer<Component> {
             userToken.setCard(vuser.getCard());
             userToken.setAddress(vuser.getAddress());
             userToken.setType(vuser.getType());
-            userToken.setListObject(utilsService.getListObject(vuser.getUserId()));
+            if (Constants.USER_ADMIN.equals(vuser.getType())) {
+                userToken.setListObject(objectService.getAllObject());
+            } else {
+                userToken.setListObject(utilsService.getListObject(vuser.getUserId()));
+            }
             session.setAttribute(Constants.USER_TOKEN, userToken);
             Executions.sendRedirect(Constants.PAGE_HOME);
         }

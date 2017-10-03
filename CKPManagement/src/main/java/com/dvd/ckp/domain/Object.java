@@ -24,14 +24,14 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "objects")
 @NamedQueries({
-    @NamedQuery(name = "Object.getAllObject", query = "SELECT o FROM Object o ORDER BY createDate")
+    @NamedQuery(name = "Object.getAllObject", query = "SELECT o FROM Object o WHERE o.status=1 ORDER BY createDate")
 })
 public class Object implements Serializable {
 
     private Long objectId;
     private String objectCode;
     private String objectName;
-    private Integer objectType;
+    private Long objectType;
     private Integer status;
     private String path;
     private Long parentId;
@@ -68,11 +68,11 @@ public class Object implements Serializable {
     }
 
     @Column(name = "object_type")
-    public Integer getObjectType() {
+    public Long getObjectType() {
         return objectType;
     }
 
-    public void setObjectType(Integer objectType) {
+    public void setObjectType(Long objectType) {
         this.objectType = objectType;
     }
 
