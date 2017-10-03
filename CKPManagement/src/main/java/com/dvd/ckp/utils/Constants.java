@@ -36,4 +36,5 @@ public interface Constants {
     String PRAM_LOCATION_TYPE = "LOCATION_TYPE";
     String PRAM_CONVERT_TYPE = "CONVERT_TYPE";
     String PRAM_PRICE_TYPE = "PRICE_TYPE";
+    String PRAM_OBJECT = "OBJECT";
 }

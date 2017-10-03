@@ -33,6 +33,7 @@
                                 <treechildren>
                                     <treeitem id="itemUser" label="${c:l('administrator.user')}" value="/manager/user.zul"/>
                                     <!--<treeitem id="itemRole" label="${c:l('administrator.role')}" value="/manager/role.zul"/>-->
+                                    <treeitem id="itemObject" label="${c:l('administrator.role')}" value="/manager/object.zul"/>
                                 </treechildren>
                             </treeitem>
                             <treeitem label="${c:l('staff')}">

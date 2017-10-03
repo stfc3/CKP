@@ -15,6 +15,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -23,28 +24,29 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "objects")
 @NamedQueries({
-    @NamedQuery(name = "Object.getAllObject", query = "SELECT o FROM Object o ORDER BY createDate")
+    @NamedQuery(name = "Object.getAllObject", query = "SELECT o FROM Object o WHERE status = 1 ORDER BY createDate")
 })
 public class Object {
 
-    private long objectId;
+    private Long objectId;
     private String objectCode;
     private String objectName;
-    private int objectType;
+    private Long objectType;
     private int status;
     private String path;
-    private long parentId;
+    private Long parentId;
     private String icon;
     private Date createDate;
+    private int index;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "object_id")
-    public long getObjectId() {
+    public Long getObjectId() {
         return objectId;
     }
 
-    public void setObjectId(long objectId) {
+    public void setObjectId(Long objectId) {
         this.objectId = objectId;
     }
 
@@ -67,11 +69,11 @@ public class Object {
     }
 
     @Column(name = "object_type")
-    public int getObjectType() {
+    public Long getObjectType() {
         return objectType;
     }
 
-    public void setObjectType(int objectType) {
+    public void setObjectType(Long objectType) {
         this.objectType = objectType;
     }
 
@@ -94,11 +96,11 @@ public class Object {
     }
 
     @Column(name = "parent_id")
-    public long getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(long parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
@@ -121,4 +123,12 @@ public class Object {
         this.createDate = createDate;
     }
 
+    @Transient
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 }
