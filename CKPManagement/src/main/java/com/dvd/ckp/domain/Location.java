@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "location")
 @NamedQuery(name = "Location.getAll", query = "select t FROM Location t WHERE status = 1  order by createDate desc")
-public class Location {
+public class Location implements Serializable {
 	private int index;
 	private Long locationID;
 	private String locationCode;

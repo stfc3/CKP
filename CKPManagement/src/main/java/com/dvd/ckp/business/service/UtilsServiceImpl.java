@@ -12,6 +12,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.dvd.ckp.domain.Object;
 
 /**
  *
@@ -32,6 +33,12 @@ public class UtilsServiceImpl implements UtilsService {
     @Override
     public BigInteger getId() {
         return UtilsDAO.getId();
+    }
+    
+    @Transactional(readOnly = true)
+    @Override
+    public List<Object> getListObject(Long userId) {
+        return UtilsDAO.getListObject(userId);
     }
 
 

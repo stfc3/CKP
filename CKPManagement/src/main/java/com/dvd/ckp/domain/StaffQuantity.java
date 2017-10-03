@@ -1,5 +1,6 @@
 package com.dvd.ckp.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "quantity_staff")
 @NamedQuery(name = "StaffQuantity.getAll", query = "FROM StaffQuantity u")
-public class StaffQuantity {
+public class StaffQuantity implements Serializable {
 	private int id;
 	private int staffId;
 	private String staffName;

@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.controller;
 
+import com.dvd.ckp.bean.UserToken;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,12 @@ import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.West;
 
 import com.dvd.ckp.business.service.UserService;
-import com.dvd.ckp.domain.User;
 import com.dvd.ckp.utils.Constants;
+import com.dvd.ckp.domain.Object;
+import com.dvd.ckp.utils.StringUtils;
+import org.zkoss.util.resource.Labels;
+import org.zkoss.zul.Tree;
+import org.zkoss.zul.Treechildren;
 
 /**
  *
@@ -52,6 +57,8 @@ public class MainController extends SelectorComposer<Component> {
     Tabs tabs;
     @Wire
     Tabpanels tabpanels;
+    @Wire
+    Tree treeMenu;
     @Wire
     Treeitem itemCustomer;
     @Wire
@@ -84,20 +91,121 @@ public class MainController extends SelectorComposer<Component> {
     Span userName;
     private Session session;
     private List<Tab> lstTabs;
-    private int limitTabs = 100;
+    private final int limitTabs = 100;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         session = Sessions.getCurrent();
-        if (session.getAttribute(Constants.TOKEN) == null) {
+        if (session.getAttribute(Constants.USER_TOKEN) == null) {
             Executions.sendRedirect(Constants.PAGE_LOGIN);
+        } else {
+            UserToken userToken = (UserToken) session.getAttribute(Constants.USER_TOKEN);
+            if (userToken != null) {
+                userName.appendChild(new Label(userToken.getFullName()));
+                createMenu(userToken);
+            }
         }
-        if (session.getAttribute(Constants.SESSION_USER) != null) {
-            User users = (User) session.getAttribute(Constants.SESSION_USER);
-            userName.appendChild(new Label(users.getFullName()));
+        lstTabs = new ArrayList<>();
+    }
+
+    private void createMenu(UserToken userToken) {
+        if (userToken != null) {
+            List<Object> lstAllObjects = userToken.getListObject();
+            List<Object> lstRootMenu = getListRootMenu(lstAllObjects);
+            if (lstRootMenu != null && !lstRootMenu.isEmpty()) {
+                Treechildren treeChildrenRoot = new Treechildren();
+                treeChildrenRoot.setParent(treeMenu);
+                for (Object rootMenu : lstRootMenu) {
+                    if (rootMenu != null) {
+                        Treeitem itemRoot = new Treeitem();
+                        itemRoot.setOpen(true);
+                        itemRoot.setId(rootMenu.getObjectCode());
+                        itemRoot.setLabel(Labels.getLabel(rootMenu.getObjectName()));
+                        itemRoot.setValue(rootMenu.getPath());
+                        //Add click event
+                        itemRoot.addEventListener("onClick", new TreeOnClickListener());
+                        itemRoot.setParent(treeChildrenRoot);
+
+                        List<Object> lstChilds = getListChild(lstAllObjects, rootMenu.getObjectId());
+                        if (lstChilds != null && !lstChilds.isEmpty()) {
+                            addMenuItem(lstAllObjects, lstChilds, itemRoot);
+                        }
+
+                    }
+                }
+            }
         }
-        lstTabs = new ArrayList<Tab>();
+    }
+
+    private void addMenuItem(List<Object> lstAllObjects, List<Object> lstObjectChilds, Treeitem itemParent) {
+        if (lstObjectChilds != null && !lstObjectChilds.isEmpty()) {
+            Treechildren treeChildren = new Treechildren();
+            treeChildren.setParent(itemParent);
+            for (Object itemMenu : lstObjectChilds) {
+                if (itemMenu != null) {
+                    Treeitem item = new Treeitem();
+                    item.setOpen(false);
+                    item.setId(itemMenu.getObjectCode());
+                    item.setLabel(Labels.getLabel(itemMenu.getObjectName()));
+                    item.setValue(itemMenu.getPath());
+                    //Add click event
+                    item.addEventListener("onClick", new TreeOnClickListener());
+                    item.setParent(treeChildren);
+
+                    List<Object> lstChilds = getListChild(lstAllObjects, itemMenu.getObjectId());
+                    if (lstChilds != null && !lstChilds.isEmpty()) {
+                        addMenuItem(lstAllObjects, lstChilds, item);
+                    }
+
+                }
+            }
+        }
+    }
+
+    private List<Object> getListRootMenu(List<Object> lstObjects) {
+        List<Object> lstRootMenu = new ArrayList<>();
+        if (lstObjects != null && !lstObjects.isEmpty()) {
+            for (Object object : lstObjects) {
+                if (object.getParentId() == null) {
+                    lstRootMenu.add(object);
+                }
+            }
+        }
+        return lstRootMenu;
+    }
+
+    private List<Object> getListChild(List<Object> lstObjects, Long parentId) {
+        List<Object> lstChilds = new ArrayList<>();
+        if (lstObjects != null && !lstObjects.isEmpty()) {
+            for (Object object : lstObjects) {
+                if (parentId.equals(object.getParentId())) {
+                    lstChilds.add(object);
+                }
+            }
+        }
+        return lstChilds;
+    }
+
+    class TreeOnClickListener implements EventListener {
+
+        @Override
+        public void onEvent(Event event) {
+            try {
+                Treeitem treeitem = (Treeitem) event.getTarget();
+                String strUrl = treeitem.getValue();
+                String strId = "tab_" + treeitem.getId();
+                String strTabName = treeitem.getLabel();
+                if (StringUtils.isValidString(strUrl)) {
+                    addTab(strUrl, strId, strTabName);
+                } else {
+                    treeitem.setOpen(!treeitem.isOpen());
+                }
+
+            } catch (Exception ex) {
+//                logger.error(ex.getMessage(), ex);
+            }
+        }
     }
 
     @Listen("onClick = #logout")
@@ -187,13 +295,13 @@ public class MainController extends SelectorComposer<Component> {
         addTab(vstrURL, vstrId, vstrTitle);
     }
 
-    private void addTab(String pstrURL, final String pstrId, String pstrTilte) {
+    private void addTab(String pstrURL, final String pstrId, String pstrTablName) {
         Include contentTabMenu;
         if (lstTabs.size() < limitTabs) {
             Tab newTab = getExistTab(pstrId, lstTabs);
             if (newTab == null) {
-                newTab = new Tab(pstrTilte);
-                newTab.setTooltiptext(pstrTilte);
+                newTab = new Tab(pstrTablName);
+                newTab.setTooltiptext(pstrTablName);
                 newTab.setId(pstrId);
                 newTab.setClosable(true);
                 newTab.setSelected(true);

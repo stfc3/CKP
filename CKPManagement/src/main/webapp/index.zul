@@ -17,8 +17,8 @@
                     CKP Management
                 </north>
                 <center class="menu-index-background" autoscroll="true">
-                    <tree id="tree" class="menu-index-background">
-                        <treechildren>
+                    <tree id="treeMenu" class="menu-index-background">
+<!--                        <treechildren>
                             <treeitem label="${c:l('revenue')}">
                                 <treechildren>
                                     <treeitem id="itemCustomer" label="${c:l('revenue.customer')}" value="/manager/customer.zul" />
@@ -32,7 +32,7 @@
                             <treeitem label="${c:l('administrator')}">
                                 <treechildren>
                                     <treeitem id="itemUser" label="${c:l('administrator.user')}" value="/manager/user.zul"/>
-                                    <!--<treeitem id="itemRole" label="${c:l('administrator.role')}" value="/manager/role.zul"/>-->
+                                    <treeitem id="itemRole" label="${c:l('administrator.role')}" value="/manager/role.zul"/>
                                 </treechildren>
                             </treeitem>
                             <treeitem label="${c:l('staff')}">
@@ -40,7 +40,7 @@
                                     <treeitem id="itemStaff" label="${c:l('staff')}" value="/manager/staff.zul" />
                                 </treechildren>
                             </treeitem>
-                        </treechildren>
+                        </treechildren>-->
                     </tree>
                 </center>
             </borderlayout>

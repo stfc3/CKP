@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,26 +26,26 @@ import javax.persistence.Temporal;
 @NamedQueries({
     @NamedQuery(name = "Object.getAllObject", query = "SELECT o FROM Object o ORDER BY createDate")
 })
-public class Object {
+public class Object implements Serializable {
 
-    private long objectId;
+    private Long objectId;
     private String objectCode;
     private String objectName;
-    private int objectType;
-    private int status;
+    private Integer objectType;
+    private Integer status;
     private String path;
-    private long parentId;
+    private Long parentId;
     private String icon;
     private Date createDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "object_id")
-    public long getObjectId() {
+    public Long getObjectId() {
         return objectId;
     }
 
-    public void setObjectId(long objectId) {
+    public void setObjectId(Long objectId) {
         this.objectId = objectId;
     }
 
@@ -67,20 +68,20 @@ public class Object {
     }
 
     @Column(name = "object_type")
-    public int getObjectType() {
+    public Integer getObjectType() {
         return objectType;
     }
 
-    public void setObjectType(int objectType) {
+    public void setObjectType(Integer objectType) {
         this.objectType = objectType;
     }
 
     @Column(name = "status")
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -94,11 +95,11 @@ public class Object {
     }
 
     @Column(name = "parent_id")
-    public long getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(long parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 

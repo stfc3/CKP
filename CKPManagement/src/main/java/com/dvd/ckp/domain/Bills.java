@@ -17,11 +17,12 @@ import org.apache.log4j.Logger;
 
 import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.utils.DateTimeUtils;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "bills")
 @NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u where status = 1 order by createDate desc")
-public class Bills {
+public class Bills implements Serializable {
 	private static final Logger LOGGER = Logger.getLogger(Bills.class);
 	private int index;
 	// id phieu bom

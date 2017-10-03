@@ -39,7 +39,8 @@ public class User implements Serializable {
     private String phone;
     private String address;
     private String card;
-    private int status;
+    private Integer status;
+    private Integer type;
     private Date createDate;
     private int index;
 
@@ -118,11 +119,11 @@ public class User implements Serializable {
     }
 
     @Column(name = "status")
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -144,4 +145,14 @@ public class User implements Serializable {
     public void setIndex(int index) {
         this.index = index;
     }
+
+    @Column(name = "type")
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+    
 }

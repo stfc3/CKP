@@ -12,10 +12,7 @@ package com.dvd.ckp.utils;
 public interface Constants {
 
     //Session
-    String TOKEN = "token";
-    String SESSION_USER = "user";
-    String SESSION_PRICE = "price";
-    String SESSION_PRICE_LOCATION = "price_location";
+    String USER_TOKEN = "userToken";
 
     //Page
     String PAGE_HOME = "/index.zul";

@@ -5,13 +5,14 @@
  */
 package com.dvd.ckp.controller;
 
+import com.dvd.ckp.bean.UserToken;
 import com.dvd.ckp.business.service.UserService;
+import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.domain.User;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.EncryptUtil;
 import com.dvd.ckp.utils.SpringConstant;
 import java.io.IOException;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
@@ -36,6 +37,8 @@ public class LoginController extends SelectorComposer<Component> {
     private static final Logger logger = Logger.getLogger(LoginController.class);
     @WireVariable
     protected UserService userService;
+    @WireVariable
+    protected UtilsService utilsService;
     @Wire
     private Label mesg;
     @Wire
@@ -63,7 +66,8 @@ public class LoginController extends SelectorComposer<Component> {
         super.doAfterCompose(comp);
         session = Sessions.getCurrent();
         userService = (UserService) SpringUtil.getBean(SpringConstant.USER_SERVICES);
-        if (session.getAttribute(Constants.TOKEN) != null) {
+        utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
+        if (session.getAttribute(Constants.USER_TOKEN) != null) {
             Executions.sendRedirect(Constants.PAGE_HOME);
         }
     }
@@ -78,8 +82,16 @@ public class LoginController extends SelectorComposer<Component> {
         } else if (!vstrPassword.equals(EncryptUtil.decrypt(vuser.getPassword()))) {
             mesg.setValue(Labels.getLabel("login.error"));
         } else {
-            session.setAttribute(Constants.TOKEN, new String(Base64.encodeBase64(vstrUserName.getBytes())));
-            session.setAttribute(Constants.SESSION_USER, vuser);
+            UserToken userToken=new UserToken();
+            userToken.setUserName(vuser.getUserName());
+            userToken.setFullName(vuser.getFullName());
+            userToken.setEmail(vuser.getEmail());
+            userToken.setPhone(vuser.getPhone());
+            userToken.setCard(vuser.getCard());
+            userToken.setAddress(vuser.getAddress());
+            userToken.setType(vuser.getType());
+            userToken.setListObject(utilsService.getListObject(vuser.getUserId()));
+            session.setAttribute(Constants.USER_TOKEN, userToken);
             Executions.sendRedirect(Constants.PAGE_HOME);
         }
     }

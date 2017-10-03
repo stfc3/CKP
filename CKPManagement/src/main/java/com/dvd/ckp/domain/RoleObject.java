@@ -22,36 +22,36 @@ import javax.persistence.Temporal;
  * @author daond
  */
 @Entity
-@Table(name = "user_role")
+@Table(name = "role_object")
 @NamedQueries({
-    @NamedQuery(name = "UserRole.getAllRole", query = "FROM UserRole r ORDER BY createDate")
+    @NamedQuery(name = "RoleObject.getAllRoleObject", query = "FROM RoleObject ro WHERE status=1 ORDER BY createDate DESC")
 })
-public class UserRole implements Serializable {
+public class RoleObject implements Serializable {
 
-    private Long userRoleId;
-    private Long userId;
+    private Long roleObjectId;
     private Long roleId;
+    private Long objectId;
     private Integer status;
     private Date createDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_role_id")
-    public Long getUserRoleId() {
-        return userRoleId;
+    @Column(name = "role_object_id")
+    public Long getRoleObjectId() {
+        return roleObjectId;
     }
 
-    public void setUserRoleId(Long userRoleId) {
-        this.userRoleId = userRoleId;
+    public void setRoleObjectId(Long roleObjectId) {
+        this.roleObjectId = roleObjectId;
     }
 
-    @Column(name = "user_id")
-    public Long getUserId() {
-        return userId;
+    @Column(name = "object_id")
+    public Long getObjectId() {
+        return objectId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setObjectId(Long objectId) {
+        this.objectId = objectId;
     }
 
     @Column(name = "role_id")

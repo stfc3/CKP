@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ import javax.persistence.Temporal;
 @NamedQueries({
     @NamedQuery(name = "Role.getAllRole", query = "FROM Role r ORDER BY createDate")
 })
-public class Role {
+public class Role implements Serializable {
 
     private long roleId;
     private String roleCode;

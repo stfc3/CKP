@@ -189,6 +189,7 @@ CREATE TABLE IF NOT EXISTS users
     phone VARCHAR(20) COMMENT 'Số điện thoai',
     address VARCHAR(200) COMMENT 'Địa chỉ',
     card VARCHAR(20) COMMENT 'Số CMT',
+    type INT DEFAULT 0 COMMENT 'Loại người dùng: 1-admnin; 0-người dùng bình thường',
     status INT DEFAULT 1,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(user_id)
