@@ -1,291 +1,319 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<zk xmlns:n="native">
-    <window id="viewBillDetail"
-                apply="com.dvd.ckp.controller.BillsController"
-                position="center,center" closable="true"
-                action="show: slideDown;hide: slideUp" border="normal" width="90%"
-                height="90%" maximizable="false" title="${c:l('bills.view.detail')}"
-                onCancel="viewBillDetail.detach();" contentStyle="overflow:auto">
-        <style src="/css/style.css" />
+<zk>
+	<window id="windowAddDetail"
+		apply="com.dvd.ckp.controller.BillsViewController"
+		position="center,center" closable="true"
+		action="show: slideDown;hide: slideUp" border="normal" width="90%"
+		height="90%" maximizable="false" title="${c:l('bills.view.detail')}"
+		onCancel="windowAddDetail.detach();" contentStyle="overflow:auto">
+		<style src="/css/style.css" />
 
-        <hlayout>
-            <hbox hflex="1" />
-            <hbox hflex="2">
-                <image id="image" src="images/logo-slogan.png"
-                                       width="100%" height="100%" />
-            </hbox>
-            <hbox hflex="2">
-                <vbox>
-                    <label
-                        style="font-weight: bold;text-align: right;">
-                        Ngõ 2, Chu Văn An, Yết Kiêu - Hà Đông - Hà Nội
-                    </label>
+		<hlayout>
+			<longbox id="txtBillID" visible="false"
+				value="${arg.bill.billID}">
+			</longbox>
 
-                    <label
-                        style="font-weight: bold;text-align: right;">
-                        Điện thoại: 04 22 450 159 - Fax: 04 22 253 243
-                    </label>
+			<longbox id="txtConstruction" visible="false"
+				value="${arg.bill.constructionID}">
+			</longbox>
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="2">
+				<image id="image" src="images/logo-slogan.png"
+					width="100%" height="100%" />
+			</hbox>
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;text-align: right;">
+						Ngõ 2, Chu Văn An, Yết Kiêu - Hà Đông - Hà Nội
+					</label>
 
-                    <label
-                        style="font-weight: bold;text-align: right;">
-                        Hotline: 0988 757 50(Mr.Nam) * 0983 288
-                        455(Mr.Khang)
-                    </label>
-                </vbox>
-            </hbox>
-            <hbox hflex="1" />
-            <!-- 			<hbox hflex="1" /> -->
-        </hlayout>
-        <hlayout spacing="10px" class="text-align-center bill-detail-title">
-            <!--<hbox hflex="1" />-->
-            <!-- 			<hbox hflex="1" /> -->
-            <label class="lb-title-bill-detail">
-                PHIẾU BƠM BÊ TÔNG/CONCRETE PUMP DOCKET
-            </label>
-            <!-- 			<hbox hflex="1" /> -->
-            <!--<hbox hflex="1" />-->
-        </hlayout>
+					<label
+						style="font-weight: bold;text-align: right;">
+						Điện thoại: 04 22 450 159 - Fax: 04 22 253 243
+					</label>
 
-        <hlayout spacing="10px" class="bill-detail-info">
-            <hbox hflex="2" />
-            <!-- 			<hbox hflex="1" /> -->
-            <hbox hflex="1" style="text-align: right;">
-                <label style="font-weight: bold;text-align: right;">
-                    Ngày/Date:
-                </label>
-            </hbox>
-            <hbox hflex="2">
-                <label value="${arg.bill.strDateInput}"></label>
-            </hbox>
-            <hbox hflex="1" style="text-align: right;">
-                <label style="font-weight: bold; text-align: right;">
-                    Số phiếu/Docket No:
-                </label>
-            </hbox>
-            <hbox hflex="2">
-                <label value="${arg.bill.billCode}"></label>
-            </hbox>
-            <hbox hflex="1" />
-            <!-- 			<hbox hflex="1" /> -->
-        </hlayout>
+					<label
+						style="font-weight: bold;text-align: right;">
+						Hotline: 0988 757 50(Mr.Nam) * 0983 288
+						455(Mr.Khang)
+					</label>
+				</vbox>
+			</hbox>
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+		</hlayout>
+		<hlayout spacing="10px">
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+			<label class="lb-title-bill-detail">
+				PHIẾU BƠM BÊ TÔNG/CONCRETE PUMP DOCKET
+			</label>
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="1" />
+		</hlayout>
 
-        <hlayout spacing="10px" class="bill-detail-info">
-            <hbox hflex="2" />
-            <!-- 			<hbox hflex="1" /> -->
-            <hbox hflex="1">
-                <label style="font-weight: bold;">
-                    Khách hàng/Customer:
-                </label>
-            </hbox>
-            <hbox hflex="2">
-                <label value="${arg.bill.customerName}"></label>
-            </hbox>
-            <hbox hflex="1">
-                <label style="font-weight: bold;">
-                    Bơm sử dụng/Pumpused:
-                </label>
-            </hbox>
-            <hbox hflex="2">
-                <label value="${arg.pumps.pumpsName}"></label>
-            </hbox>
-            <!-- 			<hbox hflex="1" /> -->
-            <hbox hflex="1" />
-        </hlayout>
+		<hlayout spacing="10px">
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="2" style="text-align: right;">
+				<label style="font-weight: bold;text-align: right;">
+					Ngày/Date:
+				</label>
+			</hbox>
+			<hbox hflex="2">
+				<label value="${arg.bill.strDateInput}"></label>
+			</hbox>
+			<hbox hflex="2" style="text-align: right;">
+				<label style="font-weight: bold; text-align: right;">
+					Số phiếu/Docket No:
+				</label>
+			</hbox>
+			<hbox hflex="2">
+				<label value="${arg.bill.billCode}"></label>
+			</hbox>
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+		</hlayout>
 
-        <hlayout spacing="10px" class="bill-detail-info">
-            <hbox hflex="2" />
-            <!-- 			<hbox hflex="1" /> -->
-            <hbox hflex="1">
-                <label style="font-weight: bold;">
-                    Tên công trình/Project name:
-                </label>
-            </hbox>
-            <hbox hflex="2">
-                <label value="${arg.bill.constructionName}"></label>
-            </hbox>
-            <hbox hflex="1">
-                <label style="font-weight: bold;">
-                    Địa chỉ công trình/Project address:
-                </label>
-            </hbox>
-            <hbox hflex="2">
-                <label
-                    value="${arg.construction.constructionAddress}">
-                </label>
-            </hbox>
-            <!-- 			<hbox hflex="1" /> -->
-            <hbox hflex="1" />
-        </hlayout>
+		<hlayout spacing="10px">
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="2">
+				<label style="font-weight: bold;">
+					Khách hàng/Customer:
+				</label>
+			</hbox>
+			<hbox hflex="2">
+				<label value="${arg.bill.customerName}"></label>
+			</hbox>
+			<hbox hflex="2">
+				<label style="font-weight: bold;">
+					Bơm sử dụng/Pumpused:
+				</label>
+			</hbox>
+			<hbox hflex="2">
+				<label value="${arg.pumps.pumpsName}"></label>
+			</hbox>
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="1" />
+		</hlayout>
+
+		<hlayout spacing="10px">
+			<hbox hflex="1" />
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="2">
+				<label style="font-weight: bold;">
+					Tên công trình/Project name:
+				</label>
+			</hbox>
+			<hbox hflex="2">
+				<label value="${arg.bill.constructionName}"></label>
+			</hbox>
+			<hbox hflex="2">
+				<label style="font-weight: bold;">
+					Địa chỉ công trình/Project address:
+				</label>
+			</hbox>
+			<hbox hflex="2">
+				<label
+					value="${arg.construction.constructionAddress}">
+				</label>
+			</hbox>
+			<!-- 			<hbox hflex="1" /> -->
+			<hbox hflex="1" />
+		</hlayout>
+
+		<grid id="gridBillsDetail">
+			<template name="model">
+				<row value="${each}">
+					<vlayout
+						style="border: 1px solid silver !important;text-align: center;">
+
+						<hbox style="margin-left:20px">
+							<a class="btn-cursor"
+								forward="onClick=onAdd" iconSclass="z-icon-plus-circle"
+								label="${c:l('add')}" />
+						</hbox>
+						<hlayout>
+							<hbox hflex="1" />
+
+							<hbox hflex="2">
+								<vbox>
+									<label
+										style="font-weight: bold;font-size: 14px;color:black"
+										value="${c:l('bills.from.date')}">
+									</label>
+									<label
+										style="font-style: italic;color:black;text-align: center;"
+										value="(Time arrive project)">
+									</label>
+
+									<label class="bill-detail-value"
+										style="font-style: italic;color:black;text-align: center;"
+										value="${each.fromDate}">
+									</label>
+								</vbox>
+							</hbox>
+							<hbox hflex="1" />
+							<hbox hflex="2">
+								<vbox>
+									<label
+										style="font-weight: bold;font-size: 14px;color:black"
+										value="${c:l('bills.start.time')}">
+									</label>
+									<label
+										style="font-style: italic;color:black;text-align: center;"
+										value="(Time start pumping)">
+									</label>
+									<label class="bill-detail-value"
+										style="font-style: italic;color:black;text-align: center;"
+										value="${each.startTime}">
+									</label>
+								</vbox>
+							</hbox>
+							<hbox hflex="1" />
+							<hbox hflex="2">
+								<vbox>
+									<label
+										style="font-weight: bold;font-size: 14px;color:black"
+										value="${c:l('bills.end.time')}">
+									</label>
+									<label
+										style="font-style: italic;color:black;text-align: center;"
+										value="(Time finish pumping)">
+									</label>
+									<label class="bill-detail-value"
+										style="font-style: italic;color:black;text-align: center;"
+										value="${each.endTime}">
+									</label>
+								</vbox>
+							</hbox>
+							<hbox hflex="1" />
+							<hbox hflex="2">
+								<vbox>
+									<label
+										style="font-weight: bold;font-size: 14px;color:black"
+										value="${c:l('bills.to.date')}">
+									</label>
+									<label
+										style="font-style: italic;color:black;text-align: center;"
+										value="(Time leave project)">
+									</label>
+									<label class="bill-detail-value"
+										style="font-style: italic;color:black;text-align: center;"
+										value="${each.toDate}">
+									</label>
+								</vbox>
+							</hbox>
+							<hbox hflex="1" />
+						</hlayout>
+
+						<hlayout class="bill-view">
+							<hbox hflex="1" />
+							<hbox hflex="2">
+								<vbox>
+									<label
+										style="font-weight: bold;font-size: 14px;color:black"
+										value="${c:l('bills.detail.volume')}">
+									</label>
+									<label
+										style="font-style: italic;color:black"
+										value="(Volume pumped)">
+									</label>
+									<label class="bill-detail-value"
+										style="font-style: italic;color:black;text-align: center;"
+										value="${each.quantity}">
+									</label>
+								</vbox>
+							</hbox>
+							<hbox hflex="1" />
+							<hbox hflex="2">
+								<vbox>
+									<label
+										style="font-weight: bold;font-size: 14px;color:black"
+										value="${c:l('bills.detail.place')}">
+									</label>
+									<label
+										style="font-style: italic;color:black"
+										value="(Pumping place)">
+									</label>
+
+									<label class="bill-detail-value"
+										style="font-style: italic;color:black;text-align: center;"
+										value="${each.location}">
+									</label>
+								</vbox>
+							</hbox>
+							<hbox hflex="1" />
+							<hbox hflex="2">
+								<vbox>
+									<label
+										style="font-weight: bold;font-size: 14px;color:black"
+										value="${c:l('bills.detail.note')}">
+									</label>
+									<label
+										style="font-style: italic;color:black" value="(Remark)">
+									</label>
+								</vbox>
+							</hbox>
+
+							<hbox hflex="1" />
+						</hlayout>
+						<hlayout class="bill-view">
+							<hbox hflex="1" />
+							<hbox hflex="2">
+								<vbox>
+									<label
+										style="font-weight: bold;font-size: 14px;color:black"
+										value="${c:l('bills.detail.customer')}">
+									</label>
+									<label
+										style="font-style: italic;color:black" value="Customer">
+									</label>
+
+									<label
+										style="font-weight: bold;font-size: 14px;color:black"
+										value="${c:l('bills.detail.pumps.signature.name')}">
+									</label>
+									<label
+										style="font-style: italic;color:black"
+										value="(Signature and name)">
+									</label>
+								</vbox>
+							</hbox>
+							<hbox hflex="1" />
+							<hbox hflex="2">
+								<vbox>
+									<label
+										style="font-weight: bold;font-size: 14px;color:black ;text-align: center;"
+										value="${c:l('bills.detail.pumps.operator')}">
+									</label>
+									<label
+										style="font-style: italic;color:black" value="Pum Operator">
+									</label>
+									<label
+										style="font-weight: bold;font-size: 14px;color:black"
+										value="${c:l('bills.detail.pumps.signature.name')}">
+									</label>
+									<label
+										style="font-style: italic;color:black"
+										value="(Signature and name)">
+									</label>
+								</vbox>
+							</hbox>
+
+							<hbox hflex="1" />
+						</hlayout>
+					</vlayout>
+
+				</row>
+
+			</template>
 
 
-        <hlayout style="border: 1px solid silver !important;" class="bill-view">
-            <hbox hflex="1" />
-            <hbox hflex="2">
-                <vbox>
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black"
-                        value="${c:l('bills.from.date')}">
-                    </label>
-                    <label
-                        style="font-style: italic;color:black;text-align: center;"
-                        value="(Time arrive project)">
-                    </label>
-
-                    <label class="bill-detail-value"
-                        style="font-style: italic;color:black;text-align: center;"
-                        value="${arg.bill.strFromDate}">
-                    </label>
-                </vbox>
-            </hbox>
-            <hbox hflex="1" />
-            <hbox hflex="2">
-                <vbox>
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black"
-                        value="${c:l('bills.start.time')}">
-                    </label>
-                    <label
-                        style="font-style: italic;color:black;text-align: center;"
-                        value="(Time start pumping)">
-                    </label>
-                    <label class="bill-detail-value"
-                        style="font-style: italic;color:black;text-align: center;"
-                        value="${arg.bill.strStartTime}">
-                    </label>
-                </vbox>
-            </hbox>
-            <hbox hflex="1" />
-            <hbox hflex="2">
-                <vbox>
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black"
-                        value="${c:l('bills.end.time')}">
-                    </label>
-                    <label
-                        style="font-style: italic;color:black;text-align: center;"
-                        value="(Time finish pumping)">
-                    </label>
-                    <label class="bill-detail-value"
-                        style="font-style: italic;color:black;text-align: center;"
-                        value="${arg.bill.strEndTime}">
-                    </label>
-                </vbox>
-            </hbox>
-            <hbox hflex="1" />
-            <hbox hflex="2">
-                <vbox>
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black"
-                        value="${c:l('bills.to.date')}">
-                    </label>
-                    <label
-                        style="font-style: italic;color:black;text-align: center;"
-                        value="(Time leave project)">
-                    </label>
-                    <label class="bill-detail-value"
-                        style="font-style: italic;color:black;text-align: center;"
-                        value="${arg.bill.strToDate}">
-                    </label>
-                </vbox>
-            </hbox>
-            <hbox hflex="1" />
-        </hlayout>
-
-        <hlayout style="border: 1px solid silver !important;" class="bill-view">
-            <hbox hflex="1" />
-            <hbox hflex="2">
-                <vbox>
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black"
-                        value="${c:l('bills.detail.volume')}">
-                    </label>
-                    <label style="font-style: italic;color:black"
-                                               value="(Volume pumped)">
-                    </label>
-                    <label class="bill-detail-value"
-                        style="font-style: italic;color:black;text-align: center;"
-                        value="${arg.detail.quantity}">
-                    </label>
-                </vbox>
-            </hbox>
-            <hbox hflex="1" />
-            <hbox hflex="2">
-                <vbox>
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black"
-                        value="${c:l('bills.detail.place')}">
-                    </label>
-                    <label style="font-style: italic;color:black"
-                                               value="(Pumping place)">
-                    </label>
-
-                    <label class="bill-detail-value"
-                        style="font-style: italic;color:black;text-align: center;"
-                        value="${arg.location.locationName}">
-                    </label>
-                </vbox>
-            </hbox>
-            <hbox hflex="1" />
-            <hbox hflex="2">
-                <vbox>
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black"
-                        value="${c:l('bills.detail.note')}">
-                    </label>
-                    <label style="font-style: italic;color:black"
-                                               value="(Remark)">
-                    </label>
-                </vbox>
-            </hbox>
-
-            <hbox hflex="1" />
-        </hlayout>
-
-        <hlayout
-            style="border: 1px solid silver !important;text-align: center;" class="bill-view">
-            <hbox hflex="1" />
-            <hbox hflex="2">
-                <vbox>
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black"
-                        value="${c:l('bills.detail.customer')}">
-                    </label>
-                    <label style="font-style: italic;color:black"
-                                               value="Customer">
-                    </label>
-
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black"
-                        value="${c:l('bills.detail.pumps.signature.name')}">
-                    </label>
-                    <label style="font-style: italic;color:black"
-                                               value="(Signature and name)">
-                    </label>
-                </vbox>
-            </hbox>
-            <hbox hflex="1" />
-            <hbox hflex="2">
-                <vbox>
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black ;text-align: center;"
-                        value="${c:l('bills.detail.pumps.operator')}">
-                    </label>
-                    <label style="font-style: italic;color:black"
-                                               value="Pum Operator">
-                    </label>
-                    <label
-                        style="font-weight: bold;font-size: 14px;color:black"
-                        value="${c:l('bills.detail.pumps.signature.name')}">
-                    </label>
-                    <label style="font-style: italic;color:black"
-                                               value="(Signature and name)">
-                    </label>
-                </vbox>
-            </hbox>
-
-            <hbox hflex="1" />
-        </hlayout>
-
-    </window>
+		</grid>
+	</window>
 </zk>

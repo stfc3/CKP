@@ -3,14 +3,17 @@ package com.dvd.ckp.business.dao;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.metamodel.binding.HibernateTypeDescriptor;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.CalculatorRevenue;
@@ -236,6 +239,43 @@ public class BillsDAOImpl implements BillDAO {
 			Query query = getCurrentSession().getNamedQuery("BillsDetail.getAllBillDetailByID");
 			query.setParameter("billId", billID);
 			List<BillsDetail> lstData = query.list();
+			if (lstData != null && !lstData.isEmpty()) {
+				return lstData;
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return null;
+	}
+
+	@Override
+	public List<BillViewDetail> getDataView(Long billID) {
+		try {
+			StringBuilder builder = new StringBuilder(
+					"select b.bill_id as billID,d.bill_detail_id as billDetailID,b.from_time as fromDate,b.start_time as startTime, ");
+			builder.append(
+					" b.end_time as endTime, b.to_time as toDate,d.quantity as quantity,d.quantity_approve as quantityApprove, l.location_name as location from bills b ");
+			builder.append(" left join bill_detail d ");
+			builder.append(" on b.bill_id = d.bill_id ");
+			builder.append(" left join location l ");
+			builder.append(" on d.location_id = l.location_id ");
+			builder.append(" where b.bill_id = :billID ");
+			builder.append(" and b.status = 1 ");
+			builder.append(" and d.status = 1 ");
+			builder.append(" and l.status = 1 ");
+			Query query = getCurrentSession().createSQLQuery(builder.toString())
+					.addScalar("billID", StandardBasicTypes.LONG).addScalar("billDetailID", StandardBasicTypes.LONG)
+					.addScalar("fromDate", StandardBasicTypes.DATE)
+					.addScalar("startTime", StandardBasicTypes.DATE)
+					.addScalar("endTime", StandardBasicTypes.DATE)
+					.addScalar("toDate", StandardBasicTypes.DATE)
+					.addScalar("quantity", StandardBasicTypes.DOUBLE)
+					.addScalar("quantityApprove", StandardBasicTypes.DOUBLE)					
+					.addScalar("location", StandardBasicTypes.STRING)
+					.setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));
+			query.setParameter("billID", billID);
+			List<BillViewDetail> lstData = query.list();
 			if (lstData != null && !lstData.isEmpty()) {
 				return lstData;
 			}

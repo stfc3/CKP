@@ -2,6 +2,7 @@ package com.dvd.ckp.business.dao;
 
 import java.util.List;
 
+import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.CalculatorRevenue;
@@ -17,7 +18,7 @@ public interface BillDAO {
 	public void delete(Bills bills);
 
 	public List<BillsDetail> getBillDetail();
-	
+
 	public List<BillsDetail> getBillDetail(Long billID);
 
 	public void save(BillsDetail billsDetail);
@@ -28,5 +29,7 @@ public interface BillDAO {
 
 	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpId, Long pumpType, Long locationType,
 			Long locationID, Double quantity, int shift);
+
+	public List<BillViewDetail> getDataView(Long billID);
 
 }

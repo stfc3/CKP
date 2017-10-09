@@ -18,7 +18,8 @@ import org.hibernate.annotations.NamedNativeQuery;
 
 @Entity
 @Table(name = "bill_detail")
-@NamedQueries({ @NamedQuery(name = "BillsDetail.getAllBillDetail", query = "FROM BillsDetail u where status=1 order by createDate desc"),
+@NamedQueries({
+		@NamedQuery(name = "BillsDetail.getAllBillDetail", query = "FROM BillsDetail u where status=1 order by createDate desc"),
 		@NamedQuery(name = "BillsDetail.getAllBillDetailByID", query = "FROM BillsDetail u where billId = :billId and status=1 order by createDate desc") })
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "callCalculatorRevenue", query = "CALL calculator_revenue(:construction,:pump,:pump_type,:location_type,:location_id,:quantity,:shift)", resultClass = BillsDetail.class) })
@@ -93,7 +94,11 @@ public class BillsDetail implements Serializable {
 
 	@Column(name = "quantity")
 	public Double getQuantity() {
-		return quantity;
+		if (quantity != null) {
+			return quantity;
+		} else {
+			return 0d;
+		}
 	}
 
 	public void setQuantity(Double quantity) {
@@ -111,7 +116,11 @@ public class BillsDetail implements Serializable {
 
 	@Column(name = "total")
 	public Double getTotal() {
-		return total;
+		if (total != null) {
+			return total;
+		} else {
+			return 0d;
+		}
 	}
 
 	public void setTotal(Double total) {
@@ -180,15 +189,15 @@ public class BillsDetail implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-    @Column(name = "create_date")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    public Date getCreateDate() {
-        return createDate;
-    }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+	@Column(name = "create_date")
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
 }

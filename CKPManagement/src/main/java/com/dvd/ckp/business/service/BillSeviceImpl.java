@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dvd.ckp.business.dao.BillDAO;
+import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.CalculatorRevenue;
@@ -73,6 +74,12 @@ public class BillSeviceImpl implements BillsServices {
 	public List<BillsDetail> getBillDetail(Long billID) {
 		// TODO Auto-generated method stub
 		return billDAO.getBillDetail(billID);
+	}
+
+	@Override
+	public List<BillViewDetail> getDataView(Long billID) {
+		// TODO Auto-generated method stub
+		return billDAO.getDataView(billID);
 	}
 
 }

@@ -595,4 +595,6 @@ public class BillsDetailController extends GenericForwardComposer {
 		}
 	}
 
+
+
 }
