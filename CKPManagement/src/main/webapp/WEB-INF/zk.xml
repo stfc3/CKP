@@ -598,5 +598,7 @@ Copyright (C) 2006 Potix Corporation. All Rights Reserved.
         <max-desktops-per-session>15</max-desktops-per-session>
         <max-requests-per-session>5</max-requests-per-session>
         <max-pushes-per-session>3</max-pushes-per-session>-->
+        <device-type>ajax</device-type>    
+        <timeout-uri>/login.zul</timeout-uri>    
     </session-config>
 </zk>
