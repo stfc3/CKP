@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk>
-	<window id="windowAddDetail"
+	<window id="windowViewBillDetail"
 		apply="com.dvd.ckp.controller.BillsViewController"
 		position="center,center" closable="true"
 		action="show: slideDown;hide: slideUp" border="normal" width="90%"
 		height="90%" maximizable="false" title="${c:l('bills.view.detail')}"
-		onCancel="windowAddDetail.detach();" contentStyle="overflow:auto">
+		onCancel="windowViewBillDetail.detach();"
+		contentStyle="overflow:auto">
 		<style src="/css/style.css" />
 
 		<hlayout>
@@ -129,14 +130,24 @@
 		<grid id="gridBillsDetail">
 			<template name="model">
 				<row value="${each}">
+
 					<vlayout
 						style="border: 1px solid silver !important;text-align: center;">
+						<!-- 				an bill detail id -->
+						<textbox value="${each.billDetailID}"
+							visible="false">
+						</textbox>
+						<hbox hflex="1" style="margin-left:20px">
 
-						<hbox style="margin-left:20px">
 							<a class="btn-cursor"
-								forward="onClick=onAdd" iconSclass="z-icon-plus-circle"
-								label="${c:l('add')}" />
+								forward="onClick=onAddStaff" iconSclass="z-icon-users"
+								label="${c:l('staff.quantity.add')}" />
+							<a class="btn-cursor"
+								forward="onClick=onApprove" iconSclass="z-icon-check"
+								label="${c:l('staff.quantity.approve')}" />
+							<hbox hflex="4" />
 						</hbox>
+						
 						<hlayout>
 							<hbox hflex="1" />
 
@@ -153,7 +164,7 @@
 
 									<label class="bill-detail-value"
 										style="font-style: italic;color:black;text-align: center;"
-										value="${each.fromDate}">
+										value="${each.strFromDate}">
 									</label>
 								</vbox>
 							</hbox>
@@ -170,7 +181,7 @@
 									</label>
 									<label class="bill-detail-value"
 										style="font-style: italic;color:black;text-align: center;"
-										value="${each.startTime}">
+										value="${each.strStartTime}">
 									</label>
 								</vbox>
 							</hbox>
@@ -187,7 +198,7 @@
 									</label>
 									<label class="bill-detail-value"
 										style="font-style: italic;color:black;text-align: center;"
-										value="${each.endTime}">
+										value="${each.strEndTime}">
 									</label>
 								</vbox>
 							</hbox>
@@ -204,7 +215,7 @@
 									</label>
 									<label class="bill-detail-value"
 										style="font-style: italic;color:black;text-align: center;"
-										value="${each.toDate}">
+										value="${each.strToDate}">
 									</label>
 								</vbox>
 							</hbox>

@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.dvd.ckp.business.dao.PumpsDAO;
 import com.dvd.ckp.business.dao.StaffDAO;
-import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.domain.StaffQuantity;
 
@@ -47,13 +45,13 @@ public class StaffSeviceImpl implements StaffServices {
 	}
 
 	@Override
-	public List<StaffQuantity> getQuantity() {
+	public List<StaffQuantity> getQuantity(Long billDetailId) {
 		// TODO Auto-generated method stub
-		return staffDAO.getQuantity();
+		return staffDAO.getQuantity(billDetailId);
 	}
 
 	@Override
-	public void save(StaffQuantity quantity) {
+	public void save(List<StaffQuantity> quantity) {
 		// TODO Auto-generated method stub
 		staffDAO.save(quantity);
 
@@ -63,6 +61,13 @@ public class StaffSeviceImpl implements StaffServices {
 	public int update(StaffQuantity quantity) {
 		// TODO Auto-generated method stub
 		return staffDAO.update(quantity);
+	}
+
+	@Override
+	public void delete(Long billDetailID) {
+		// TODO Auto-generated method stub
+		staffDAO.delete(billDetailID);
+		
 	}
 
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:n="native">
+	<window id="approveQuantity"
+		apply="com.dvd.ckp.controller.ApproveQuantityController"
+		position="center,center" closable="true" border="normal" width="30%"
+		title="${c:l('staff.quantity.approve')}" height="40%"
+		maximizable="false" onCancel="approveQuantity.detach();"
+		contentStyle="overflow:auto">
+		<style src="/css/style.css" />
+		<style src="/css/theme.css" />
+		<groupbox>
+			<vlayout>
+				<longbox id="txtBillID" value="${arg.billDetailID}"
+					visible="false">
+				</longbox>
+
+				<hbox>
+					<hbox hflex="2" />
+					<label>
+						${c:l('staff.quantity.approve.quantity')}
+					</label>
+					<doublebox id="quantityApprove"></doublebox>
+					<hbox hflex="2" />
+				</hbox>
+				<hbox>
+					<hbox hflex="2" />
+					<label>
+						${c:l('staff.quantity.approve.total')}
+					</label>
+					<doublebox id="totalApprove"></doublebox>
+					<hbox hflex="2" />
+				</hbox>
+			</vlayout>
+			<hlayout>
+				<hbox hflex="3" />
+				<hbox hflex="2">
+					<a class="btn-cursor" forward="onClick=onAction"
+						iconSclass="z-icon-floppy-o" label="${c:l('save')}" />
+					<a class="btn-cursor"
+						onClick="approveQuantity.detach();" iconSclass="z-icon-times"
+						label="${c:l('cancel')}" />
+				</hbox>
+				<hbox hflex="3" />
+			</hlayout>
+		</groupbox>
+	</window>
+</zk>

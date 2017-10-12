@@ -117,10 +117,11 @@ public class StaffDAOImpl implements StaffDAO {
 	}
 
 	@Override
-	public List<StaffQuantity> getQuantity() {
+	public List<StaffQuantity> getQuantity(Long billDetailID) {
 		// TODO Auto-generated method stub
 		try {
 			Query query = getCurrentSession().getNamedQuery("StaffQuantity.getAll");
+			query.setParameter("billId", billDetailID);
 			@SuppressWarnings("unchecked")
 			List<StaffQuantity> lstData = query.list();
 			if (lstData != null && !lstData.isEmpty()) {
@@ -133,9 +134,15 @@ public class StaffDAOImpl implements StaffDAO {
 	}
 
 	@Override
-	public void save(StaffQuantity quantity) {
+	public void save(List<StaffQuantity> quantity) {
 		// TODO Auto-generated method stub
-		getCurrentSession().saveOrUpdate(quantity);
+		Session session = getCurrentSession();
+		if (quantity != null && !quantity.isEmpty()) {
+			for (StaffQuantity staffQuantity : quantity) {
+				session.saveOrUpdate(staffQuantity);
+			}
+		}
+
 	}
 
 	@Override
@@ -158,6 +165,22 @@ public class StaffDAOImpl implements StaffDAO {
 			logger.error(e.getMessage(), e);
 		}
 		return -1;
+	}
+
+	@Override
+	public void delete(Long billDetailId) {
+		try {
+			StringBuilder strDelete = new StringBuilder("delete from quantity_staff where bill_detail_id = :billId");
+			Query query = getCurrentSession().createSQLQuery(strDelete.toString());
+			query.setParameter("billId", billDetailId);	
+			query.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error(e.getMessage(), e);
+		}
+		
+		
+		
 	}
 
 }

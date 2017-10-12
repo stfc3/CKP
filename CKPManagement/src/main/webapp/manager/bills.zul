@@ -64,7 +64,7 @@
 					</column>
 					<column hflex="2">${c:l('bills.prd.id')}</column>
 					<column hflex="2">${c:l('bills.file')}</column>
-					<column hflex="1">${c:l('bills.cost')}</column>
+					<column hflex="1">${c:l('bills.cost')} (VNĐ)</column>
 					<column hflex="2">${c:l('bills.from.date')}</column>
 					<column hflex="2">
 						${c:l('bills.start.time')}
@@ -127,7 +127,7 @@
 						<!--thanh tien -->
 						<cell style="text-align: right;">
 							<label style="text-align: right;"
-								value="${each.cost}" tooltiptext="${each.cost}" />
+								value="${c:formatNumber(each.cost, '###,###,###.##')}" tooltiptext="${each.cost}" />
 						</cell>
 						<!--thoi gian den cong trinh -->
 						<cell style="text-align: right;">

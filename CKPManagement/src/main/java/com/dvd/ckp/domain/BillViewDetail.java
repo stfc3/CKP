@@ -2,13 +2,23 @@ package com.dvd.ckp.domain;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
+import com.dvd.ckp.common.Constants;
+import com.dvd.ckp.utils.DateTimeUtils;
+
 public class BillViewDetail {
+	private static final Logger LOGGER = Logger.getLogger(BillViewDetail.class);
 	private Long billID;
 	private Long billDetailID;
 	private Date fromDate;
+	private String strFromDate;	
 	private Date startTime;
+	private String strStartTime;
 	private Date endTime;
+	private String strEndTime;
 	private Date toDate;
+	private String strToDate;
 	private Double quantity;
 	private Double quantityApprove;
 	private String location;
@@ -92,6 +102,68 @@ public class BillViewDetail {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	
+	
+	
+	public String getStrFromDate() {
+		try {
+			return DateTimeUtils.convertDateToString(fromDate, Constants.FORMAT_DATE_DD_MM_YYY);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			LOGGER.error(e.getMessage(), e);
+		}
+		return "";
+	}
+
+	public void setStrFromDate(String strFromDate) {
+		this.strFromDate = strFromDate;
+	}
+
+	
+	public String getStrToDate() {
+		try {
+			return DateTimeUtils.convertDateToString(toDate, Constants.FORMAT_DATE_DD_MM_YYY);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			LOGGER.error(e.getMessage(), e);
+		}
+		return "";
+	}
+
+	public void setStrToDate(String strToDate) {
+		this.strToDate = strToDate;
+	}
+
+	
+	public String getStrStartTime() {
+		try {
+			return DateTimeUtils.convertDateToString(startTime, Constants.FORMAT_HOUR);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			LOGGER.error(e.getMessage(), e);
+		}
+		return "";
+	}
+
+	public void setStrStartTime(String strStartTime) {
+		this.strStartTime = strStartTime;
+	}
+
+	
+	public String getStrEndTime() {
+		try {
+			return DateTimeUtils.convertDateToString(endTime, Constants.FORMAT_HOUR);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			LOGGER.error(e.getMessage(), e);
+		}
+		return "";
+	}
+
+	public void setStrEndTime(String strEndTime) {
+		this.strEndTime = strEndTime;
 	}
 
 }

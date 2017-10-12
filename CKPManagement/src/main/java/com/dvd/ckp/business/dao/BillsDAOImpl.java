@@ -3,16 +3,15 @@ package com.dvd.ckp.business.dao;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.metamodel.binding.HibernateTypeDescriptor;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dvd.ckp.bean.QuantityValue;
 import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
@@ -266,12 +265,10 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append(" and l.status = 1 ");
 			Query query = getCurrentSession().createSQLQuery(builder.toString())
 					.addScalar("billID", StandardBasicTypes.LONG).addScalar("billDetailID", StandardBasicTypes.LONG)
-					.addScalar("fromDate", StandardBasicTypes.DATE)
-					.addScalar("startTime", StandardBasicTypes.DATE)
-					.addScalar("endTime", StandardBasicTypes.DATE)
-					.addScalar("toDate", StandardBasicTypes.DATE)
+					.addScalar("fromDate", StandardBasicTypes.DATE).addScalar("startTime", StandardBasicTypes.DATE)
+					.addScalar("endTime", StandardBasicTypes.DATE).addScalar("toDate", StandardBasicTypes.DATE)
 					.addScalar("quantity", StandardBasicTypes.DOUBLE)
-					.addScalar("quantityApprove", StandardBasicTypes.DOUBLE)					
+					.addScalar("quantityApprove", StandardBasicTypes.DOUBLE)
 					.addScalar("location", StandardBasicTypes.STRING)
 					.setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));
 			query.setParameter("billID", billID);
@@ -284,6 +281,68 @@ public class BillsDAOImpl implements BillDAO {
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<QuantityValue> getQuantity(Long billDetailId) {
+		// TODO Auto-generated method stub
+		try {
+			StringBuilder strSQL = new StringBuilder("CALL calculator_quantity(:billDetail)");
+			Query query = getCurrentSession().createSQLQuery(strSQL.toString())
+					.addScalar("v_quantity", StandardBasicTypes.DOUBLE)
+					.setResultTransformer(Transformers.aliasToBean(QuantityValue.class));
+			query.setParameter("billDetail", billDetailId);
+			@SuppressWarnings("unchecked")
+			List<QuantityValue> lstData = query.list();
+			return lstData;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	@Override
+	public void update(Integer isFar, Double quantityConvert, Integer maxStaff, Long billDetail) {
+		try {
+			StringBuilder builder = new StringBuilder("update bill_detail set ");
+			builder.append(" max_staff = :maxStaff, ");
+			builder.append(" is_far = :isFar, ");
+			builder.append(" quantity_convert = :quantityConvert ");
+			builder.append(" where bill_detail_id = :billDetailId ");
+			Query query = getCurrentSession().createSQLQuery(builder.toString());
+			query.setParameter("maxStaff", maxStaff);
+			query.setParameter("isFar", isFar);
+			query.setParameter("quantityConvert", quantityConvert);
+			query.setParameter("billDetailId", billDetail);
+			query.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error(e.getMessage(), e);
+		} finally {
+			// TODO: handle finally clause
+		}
+
+	}
+
+	@Override
+	public void upadte(Double quantityApprove, Double totalApprove, Long billDetailID) {
+		// TODO Auto-generated method stub
+		try {
+			StringBuilder builder = new StringBuilder("update bill_detail set ");
+			builder.append(" quantity_approve = :quantityApprove, ");
+			builder.append(" total_approve = :totalApprove ");
+			builder.append(" where bill_detail_id = :billDetailId ");
+			Query query = getCurrentSession().createSQLQuery(builder.toString());
+			query.setParameter("quantityApprove", quantityApprove);
+			query.setParameter("totalApprove", totalApprove);
+			query.setParameter("billDetailId", billDetailID);
+			query.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error(e.getMessage(), e);
+		} finally {
+			// TODO: handle finally clause
+		}
 	}
 
 }

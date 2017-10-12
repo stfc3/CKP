@@ -2,7 +2,6 @@ package com.dvd.ckp.business.service;
 
 import java.util.List;
 
-import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.domain.StaffQuantity;
 
@@ -20,9 +19,12 @@ public interface StaffServices {
 
 	// staff quantity
 
-	public List<StaffQuantity> getQuantity();
+	public List<StaffQuantity> getQuantity(Long billDetailID);
 
-	public void save(StaffQuantity quantity);
+	public void save(List<StaffQuantity> quantity);
+	
+	public void delete(Long billDetailID);
 
 	public int update(StaffQuantity quantity);
+
 }

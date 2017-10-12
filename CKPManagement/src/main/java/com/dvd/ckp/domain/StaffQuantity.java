@@ -11,73 +11,56 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "quantity_staff")
-@NamedQuery(name = "StaffQuantity.getAll", query = "FROM StaffQuantity u")
+@NamedQuery(name = "StaffQuantity.getAll", query = "FROM StaffQuantity u where billId =:billId")
 public class StaffQuantity implements Serializable {
-	private int id;
-	private int staffId;
-	private String staffName;
-	private int billId;
-	private String billName;
-	private double quantity;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1222545222531839106L;
+	private Long id;
+	private Long staffId;
+	private Long billId;
+	private Double quantity;
 	private Date createDate;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "staff_id")
-	public int getStaffId() {
+	public Long getStaffId() {
 		return staffId;
 	}
 
-	public void setStaffId(int staffId) {
+	public void setStaffId(Long staffId) {
 		this.staffId = staffId;
 	}
 
-	@Transient
-	public String getStaffName() {
-		return staffName;
-	}
-
-	public void setStaffName(String staffName) {
-		this.staffName = staffName;
-	}
-
 	@Column(name = "bill_detail_id")
-	public int getBillId() {
+	public Long getBillId() {
 		return billId;
 	}
 
-	public void setBillId(int billId) {
+	public void setBillId(Long billId) {
 		this.billId = billId;
 	}
 
-	@Transient
-	public String getBillName() {
-		return billName;
-	}
-
-	public void setBillName(String billName) {
-		this.billName = billName;
-	}
-
 	@Column(name = "quantity")
-	public double getQuantity() {
+	public Double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(double quantity) {
+	public void setQuantity(Double quantity) {
 		this.quantity = quantity;
 	}
 

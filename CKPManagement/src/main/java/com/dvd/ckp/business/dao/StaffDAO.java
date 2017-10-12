@@ -19,9 +19,11 @@ public interface StaffDAO {
 
 	// staff quantity
 
-	public List<StaffQuantity> getQuantity();
+	public List<StaffQuantity> getQuantity(Long billDetailId);
 
-	public void save(StaffQuantity quantity);
+	public void save(List<StaffQuantity> quantity);
+	
+	public void delete(Long billDetailId);
 
 	public int update(StaffQuantity quantity);
 

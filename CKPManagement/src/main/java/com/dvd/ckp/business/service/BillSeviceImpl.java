@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.dvd.ckp.bean.QuantityValue;
 import com.dvd.ckp.business.dao.BillDAO;
 import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
@@ -65,7 +66,7 @@ public class BillSeviceImpl implements BillsServices {
 
 	@Override
 	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpId, Long pumpType, Long locationType,
-			Long locationID, Double quantity, int shift) {
+			Long locationID, Double quantity, Integer shift) {
 		// TODO Auto-generated method stub
 		return billDAO.calculatorRevenue(constructionId, pumpId, pumpType, locationType, locationID, quantity, shift);
 	}
@@ -80,6 +81,26 @@ public class BillSeviceImpl implements BillsServices {
 	public List<BillViewDetail> getDataView(Long billID) {
 		// TODO Auto-generated method stub
 		return billDAO.getDataView(billID);
+	}
+
+	@Override
+	public List<QuantityValue> getQuantity(Long billDetailId) {
+		// TODO Auto-generated method stub
+		return billDAO.getQuantity(billDetailId);
+	}
+
+	@Override
+	public void update(Integer isFar, Double quantityConvert, Integer maxStaff, Long billDetail) {
+		// TODO Auto-generated method stub
+		billDAO.update(isFar, quantityConvert, maxStaff, billDetail);
+	}
+
+	@Override
+	public void upadte(Double quantityApprove, Double totalApprove, Long billDetailID) {
+		// TODO Auto-generated method stub
+
+		billDAO.upadte(quantityApprove, totalApprove, billDetailID);
+
 	}
 
 }
