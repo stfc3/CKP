@@ -21,6 +21,7 @@ public class BillViewDetail {
 	private String strToDate;
 	private Double quantity;
 	private Double quantityApprove;
+	private Double quantityView;
 	private String location;
 	private String note;
 
@@ -165,5 +166,20 @@ public class BillViewDetail {
 	public void setStrEndTime(String strEndTime) {
 		this.strEndTime = strEndTime;
 	}
+
+	public Double getQuantityView() {
+		if(quantityApprove != null){
+			quantityView = quantityApprove; 
+		}else{
+			quantityView = quantity;
+		}
+		return quantityView;
+	}
+
+	public void setQuantityView(Double quantityView) {
+		this.quantityView = quantityView;
+	}
+	
+	
 
 }

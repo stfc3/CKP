@@ -11,6 +11,7 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Messagebox;
 
@@ -42,17 +43,19 @@ public class ApproveQuantityController extends GenericForwardComposer {
 	}
 
 	public void onAction(ForwardEvent event) {
-		Messagebox.show(Labels.getLabel("staff.quantity.comfirm"), Labels.getLabel("comfirm"),
+		Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve"), Labels.getLabel("comfirm"),
 				Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
 					@Override
 					public void onEvent(Event e) {
 						if (Messagebox.ON_YES.equals(e.getName())) {
 							Double quantityApproveValue = quantityApprove.getValue();
-							Double totalApproveValue = totalApprove.getValue();
-							logger.info("bill detail id: " + billDetail);
+							Double totalApproveValue = null;
+							logger.info("Quantity approve: " + quantityApproveValue);
+							logger.info("Bill detail id: " + txtBillID.getValue());
 							billsServices.upadte(quantityApproveValue, totalApproveValue, billDetail);
-							quantityApprove.setValue(null);
-							totalApprove.setValue(null);
+							totalApproveValue = billsServices.getQuantity(billDetail).get(0).getV_quantity();
+							billsServices.upadte(quantityApproveValue, totalApproveValue, billDetail);
+							totalApprove.setValue(totalApproveValue);
 						}
 					}
 				});

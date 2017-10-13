@@ -66,6 +66,8 @@ public class AddStaffController extends GenericForwardComposer {
 	private Doublebox dbQuantityConvert;
 	@Wire
 	private Longbox txtBillID;
+	@Wire
+	private Longbox txtPumpType;
 
 	private Long billID;
 	List<StaffQuantity> listQuantity;
@@ -78,6 +80,12 @@ public class AddStaffController extends GenericForwardComposer {
 		lstStaff = new ArrayList<Staff>();
 		lstStaffAll = new ArrayList<Staff>();
 		billID = txtBillID.getValue();
+		Long pumpType = txtPumpType.getValue();
+		if (pumpType == 1l) {
+			intMaxStaff.setValue(5);
+		} else if (pumpType == 3l) {
+			intMaxStaff.setValue(3);
+		}
 		List<Staff> vlstStaff = staffService.getAllData();
 		if (vlstStaff != null) {
 			lstStaff.addAll(vlstStaff);
@@ -222,26 +230,24 @@ public class AddStaffController extends GenericForwardComposer {
 							} else {
 								isFar = 0;
 							}
-							Integer maxStaff;
-							// if (intMaxStaff.getValue() == null) {
-							// Messagebox.show(Labels.getLabel("staff.quantity.comfirm"),
-							// Labels.getLabel("comfirm"),
-							// Messagebox.OK, Messagebox.ERROR);
-							// return;
-							// }
-							maxStaff = intMaxStaff.getValue();
+							Long pumpType = txtPumpType.getValue();
+							Integer maxStaff = intMaxStaff.getValue();
+							if (maxStaff == null) {
+								if (pumpType == 1l) {
+									maxStaff = 5;
+								} else if (pumpType == 3l) {
+									maxStaff = 3;
+								}
 
-							Double quantityConvert;
-							// if (intMaxStaff.getValue() == null) {
-							// Messagebox.show(Labels.getLabel("staff.quantity.comfirm"),
-							// Labels.getLabel("comfirm"),
-							// Messagebox.OK, Messagebox.ERROR);
-							// return;
-							// }
-							quantityConvert = dbQuantityConvert.getValue();
+							}
+
+							Double quantityConvert = dbQuantityConvert.getValue();
+							if (quantityConvert == null) {
+								quantityConvert = 60d;
+							}
 							billsServices.update(isFar, quantityConvert, maxStaff, billID);
 
-							// staffService.delete(billID);
+							 staffService.delete(billID);
 							List<StaffQuantity> lstQuantity = new ArrayList<>();
 
 							if (lstStaffSelected != null && !lstStaffSelected.isEmpty()) {

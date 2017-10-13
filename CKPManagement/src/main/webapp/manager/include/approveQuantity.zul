@@ -28,7 +28,7 @@
 					<label>
 						${c:l('staff.quantity.approve.total')}
 					</label>
-					<doublebox id="totalApprove"></doublebox>
+					<doublebox readonly="true" id="totalApprove"></doublebox>
 					<hbox hflex="2" />
 				</hbox>
 			</vlayout>

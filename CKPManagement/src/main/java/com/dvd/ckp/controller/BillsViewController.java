@@ -25,7 +25,8 @@ import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
 import com.dvd.ckp.domain.BillViewDetail;
-import com.dvd.ckp.utils.SpringConstant;
+import com.dvd.ckp.domain.BillsDetail;
+import com.dvd.ckp.utils.SpringConstant;	
 
 public class BillsViewController extends GenericForwardComposer<Component> {
 	/**
@@ -41,6 +42,8 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 
 	// Danh sach hoa don chi tiet
 	private List<BillViewDetail> lstBillDetail;
+
+	private List<BillsDetail> lstDataBill;
 
 	// Model grid in window bill detail
 	ListModelList<BillViewDetail> listDataModelDetail;
@@ -59,12 +62,15 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 		Long billId = txtBillID.getValue();
 		billsServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
 		List<BillViewDetail> lstData = billsServices.getDataView(billId);
+		List<BillsDetail> lstDetail = billsServices.getBillDetail(billId);
 		lstBillDetail = new ArrayList<>();
-
-		if (lstData != null && !lstData.isEmpty()) {
+		lstDataBill = new ArrayList<>();
+		if (lstData != null && !lstData.isEmpty()) {			
 			lstBillDetail.addAll(lstData);
 		}
-
+		if (lstDetail != null && !lstDetail.isEmpty()) {
+			lstDataBill.addAll(lstDetail);
+		}
 		listDataModelDetail = new ListModelList<BillViewDetail>(lstBillDetail);
 		gridBillsDetail.setModel(listDataModelDetail);
 
@@ -100,7 +106,7 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 		Component component;
 
 		// ma phieu bom
-		component = lstCell.get(0).getFirstChild();
+		component = lstCell.get(0);
 		if (component instanceof Textbox) {
 			final Textbox billID = (Textbox) component;
 			billDetailId = billID.getValue();
@@ -109,6 +115,7 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 		// TODO Auto-generated method stub
 		Map<String, Object> arguments = new HashMap();
 		arguments.put("billDetailID", billDetailId);
+		arguments.put("pumpsType", getPumpType(Long.valueOf(billDetailId)));
 		if (isApprove == 1) {
 			final Window windownUpload = (Window) Executions.createComponents("/manager/include/addStaff.zul",
 					windowViewBillDetail, arguments);
@@ -136,13 +143,26 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 
 				@Override
 				public void onEvent(Event event) throws Exception {
+					LOGGER.info("Reload");
 					reload();
 					windownUpload.detach();
 
 				}
 			});
+
 		}
 
+	}
+
+	private Long getPumpType(Long billDetailID) {
+		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
+			for (BillsDetail billsDetail : lstDataBill) {
+				if (billDetailID.equals(billsDetail.getBillDetailId())) {
+					return billsDetail.getPumpTypeId();
+				}
+			}
+		}
+		return null;
 	}
 
 }

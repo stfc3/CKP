@@ -12,6 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
@@ -36,9 +37,11 @@ public class BillsDetail implements Serializable {
 	private Long locationType;
 	private Double quantity;
 	private Double quantityApprove;
+	private Double quantityView;
 	private Integer shift;
 	private Double total;
 	private Double totalApprove;
+	private Double totalView;
 	private Integer maxStaff;
 	private Integer isFar;
 	private Integer status;
@@ -198,6 +201,34 @@ public class BillsDetail implements Serializable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	@Transient
+	public Double getQuantityView() {
+		if (quantityApprove != null) {
+			quantityView = quantityApprove;
+		} else {
+			quantityView = quantity;
+		}
+		return quantityView;
+	}
+
+	public void setQuantityView(Double quantityView) {
+		this.quantityView = quantityView;
+	}
+
+	@Transient
+	public Double getTotalView() {
+		if (totalApprove != null) {
+			totalView = totalApprove;
+		} else {
+			totalView = total;
+		}
+		return totalView;
+	}
+
+	public void setTotalView(Double totalView) {
+		this.totalView = totalView;
 	}
 
 }

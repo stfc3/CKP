@@ -138,16 +138,15 @@
 							visible="false">
 						</textbox>
 						<hbox hflex="1" style="margin-left:20px">
-
 							<a class="btn-cursor"
 								forward="onClick=onAddStaff" iconSclass="z-icon-users"
 								label="${c:l('staff.quantity.add')}" />
 							<a class="btn-cursor"
 								forward="onClick=onApprove" iconSclass="z-icon-check"
-								label="${c:l('staff.quantity.approve')}" />
+								label="${c:l('staff.quantity.approve')}" />						
 							<hbox hflex="4" />
 						</hbox>
-						
+
 						<hlayout>
 							<hbox hflex="1" />
 
@@ -234,10 +233,11 @@
 										style="font-style: italic;color:black"
 										value="(Volume pumped)">
 									</label>
-									<label class="bill-detail-value"
+									<doublebox class="bill-detail-value"
+										 readonly="true"
 										style="font-style: italic;color:black;text-align: center;"
-										value="${each.quantity}">
-									</label>
+										value="${each.quantityView}">
+									</doublebox>
 								</vbox>
 							</hbox>
 							<hbox hflex="1" />

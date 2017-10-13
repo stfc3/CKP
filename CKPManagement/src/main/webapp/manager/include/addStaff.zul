@@ -14,6 +14,9 @@
 				<longbox id="txtBillID" value="${arg.billDetailID}"
 					visible="false">
 				</longbox>
+				<longbox id="txtPumpType" value="${arg.pumpsType}"
+					visible="false">
+				</longbox>
 				<grid id="gridFullStaff" hflex="1">
 					<auxhead sclass="category-center">
 						<auxheader colspan="12">
@@ -43,7 +46,9 @@
 									<label>
 										${c:l('staff.quantity.quantity.convert')}
 									</label>
-									<doublebox id="dbQuantityConvert"></doublebox>
+									<doublebox id="dbQuantityConvert"
+										value="60">
+									</doublebox>
 									<hbox hflex="1" />
 								</hbox>
 							</hlayout>
