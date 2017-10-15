@@ -101,10 +101,6 @@ public class AddStaffController extends GenericForwardComposer {
 		if (lstStaffQuantity != null && !lstStaffQuantity.isEmpty()) {
 			listQuantity.addAll(lstStaffQuantity);
 		}
-		getDataSelected(lstStaffQuantity);
-
-		listDataModelSelected = new ListModelList<Staff>(lstStaffSelected);
-		gridSelectStaff.setModel(listDataModelSelected);
 
 		/*
 		 * loai bo nhung cong nhan da duoc chon khoi list full
@@ -112,6 +108,11 @@ public class AddStaffController extends GenericForwardComposer {
 		removeStaffSelected(lstStaffQuantity);
 		listDataModel = new ListModelList<Staff>(lstStaff);
 		gridFullStaff.setModel(listDataModel);
+
+		getDataSelected(lstStaffQuantity);
+		listDataModelSelected = new ListModelList<Staff>(lstStaffSelected);
+		gridSelectStaff.setModel(listDataModelSelected);
+
 	}
 
 	private void getDataSelected(List<StaffQuantity> staffQuantities) {
@@ -247,7 +248,7 @@ public class AddStaffController extends GenericForwardComposer {
 							}
 							billsServices.update(isFar, quantityConvert, maxStaff, billID);
 
-							 staffService.delete(billID);
+							staffService.delete(billID);
 							List<StaffQuantity> lstQuantity = new ArrayList<>();
 
 							if (lstStaffSelected != null && !lstStaffSelected.isEmpty()) {
@@ -255,12 +256,13 @@ public class AddStaffController extends GenericForwardComposer {
 									StaffQuantity quantity = new StaffQuantity();
 									quantity.setStaffId(staff.getStaffId());
 									quantity.setBillId(billID);
-									if (!isExist(staff.getStaffId())) {
-										lstQuantity.add(quantity);
-									}
+
+									lstQuantity.add(quantity);
+
 								}
 							}
 							staffService.save(lstQuantity);
+							logger.info("Bill detail id: " + billID);
 							billsServices.getQuantity(billID).get(0).getV_quantity();
 							onReloadSelectGrid();
 						}

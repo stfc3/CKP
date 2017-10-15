@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
@@ -19,14 +20,16 @@ import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Longbox;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
 import com.dvd.ckp.domain.BillViewDetail;
+import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
-import com.dvd.ckp.utils.SpringConstant;	
+import com.dvd.ckp.utils.SpringConstant;
 
 public class BillsViewController extends GenericForwardComposer<Component> {
 	/**
@@ -44,6 +47,8 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 	private List<BillViewDetail> lstBillDetail;
 
 	private List<BillsDetail> lstDataBill;
+
+	private List<Bills> lstBill;
 
 	// Model grid in window bill detail
 	ListModelList<BillViewDetail> listDataModelDetail;
@@ -65,7 +70,7 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 		List<BillsDetail> lstDetail = billsServices.getBillDetail(billId);
 		lstBillDetail = new ArrayList<>();
 		lstDataBill = new ArrayList<>();
-		if (lstData != null && !lstData.isEmpty()) {			
+		if (lstData != null && !lstData.isEmpty()) {
 			lstBillDetail.addAll(lstData);
 		}
 		if (lstDetail != null && !lstDetail.isEmpty()) {
@@ -73,6 +78,8 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 		}
 		listDataModelDetail = new ListModelList<BillViewDetail>(lstBillDetail);
 		gridBillsDetail.setModel(listDataModelDetail);
+
+		lstBill = billsServices.getAllData();
 
 	}
 
@@ -115,7 +122,8 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 		// TODO Auto-generated method stub
 		Map<String, Object> arguments = new HashMap();
 		arguments.put("billDetailID", billDetailId);
-		arguments.put("pumpsType", getPumpType(Long.valueOf(billDetailId)));
+		arguments.put("bill", getBill());
+		arguments.put("billDetai", getPumpType(Long.valueOf(billDetailId)));
 		if (isApprove == 1) {
 			final Window windownUpload = (Window) Executions.createComponents("/manager/include/addStaff.zul",
 					windowViewBillDetail, arguments);
@@ -133,32 +141,55 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 				}
 			});
 		} else if (isApprove == 2) {
-			final Window windownUpload = (Window) Executions.createComponents("/manager/include/approveQuantity.zul",
-					windowViewBillDetail, arguments);
-			windownUpload.doModal();
-			windownUpload.setBorder(true);
-			windownUpload.setBorder("normal");
-			windownUpload.setClosable(true);
-			windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+			Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message"), Labels.getLabel("comfirm"),
+					Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+						@Override
+						public void onEvent(Event e) {
+							if (Messagebox.ON_NO.equals(e.getName())) {
+								final Window windownUpload = (Window) Executions.createComponents(
+										"/manager/include/approveQuantity.zul", windowViewBillDetail, arguments);
+								windownUpload.doModal();
+								windownUpload.setBorder(true);
+								windownUpload.setBorder("normal");
+								windownUpload.setClosable(true);
+								windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
 
-				@Override
-				public void onEvent(Event event) throws Exception {
-					LOGGER.info("Reload");
-					reload();
-					windownUpload.detach();
+									@Override
+									public void onEvent(Event event) throws Exception {
+										LOGGER.info("Reload");
+										reload();
+										windownUpload.detach();
 
-				}
-			});
+									}
+								});
+							} else {
+								Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message.ok"),
+										Labels.getLabel("comfirm"), Messagebox.OK, Messagebox.INFORMATION);
+							}
+						}
+					});
 
 		}
 
 	}
 
-	private Long getPumpType(Long billDetailID) {
+	private BillsDetail getPumpType(Long billDetailID) {
 		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
 			for (BillsDetail billsDetail : lstDataBill) {
 				if (billDetailID.equals(billsDetail.getBillDetailId())) {
-					return billsDetail.getPumpTypeId();
+					return billsDetail;
+				}
+			}
+		}
+		return null;
+	}
+
+	private Bills getBill() {
+		Long billID = txtBillID.getValue();
+		if (lstBill != null && !lstBill.isEmpty()) {
+			for (Bills bills : lstBill) {
+				if (billID != null && billID.equals(bills.getBillID())) {
+					return bills;
 				}
 			}
 		}

@@ -14,7 +14,7 @@
 				<longbox id="txtBillID" value="${arg.billDetailID}"
 					visible="false">
 				</longbox>
-				<longbox id="txtPumpType" value="${arg.pumpsType}"
+				<longbox id="txtPumpType" value="${arg.billDetai.pumpTypeId}"
 					visible="false">
 				</longbox>
 				<grid id="gridFullStaff" hflex="1">

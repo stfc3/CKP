@@ -4,17 +4,37 @@
 	<window id="approveQuantity"
 		apply="com.dvd.ckp.controller.ApproveQuantityController"
 		position="center,center" closable="true" border="normal" width="30%"
-		title="${c:l('staff.quantity.approve')}" height="40%"
+		title="${c:l('staff.quantity.approve')}" height="30%"
 		maximizable="false" onCancel="approveQuantity.detach();"
 		contentStyle="overflow:auto">
 		<style src="/css/style.css" />
 		<style src="/css/theme.css" />
 		<groupbox>
+			<longbox id="txtConstruction"
+				value="${arg.bill.constructionID}" visible="false">
+			</longbox>
+			<longbox id="txtBillID" value="${arg.billDetailID}"
+				visible="false">
+			</longbox>
+			<longbox id="txtPumpId" value="${arg.billDetai.pumpID}"
+				visible="false">
+			</longbox>
+			<longbox id="txtPumpTypeId"
+				value="${arg.billDetai.pumpTypeId}" visible="false">
+			</longbox>
+			<longbox id="txtLocationID"
+				value="${arg.billDetai.locationId}" visible="false">
+			</longbox>
+			<longbox id="txtLocationTypeID"
+				value="${arg.billDetai.locationType}" visible="false">
+			</longbox>
+			<intbox id="txtShift" value="${arg.billDetai.shift}"
+				visible="false">
+			</intbox>
+			<intbox id="txtMaxStaff" value="${arg.billDetai.maxStaff}"
+				visible="false">
+			</intbox>
 			<vlayout>
-				<longbox id="txtBillID" value="${arg.billDetailID}"
-					visible="false">
-				</longbox>
-
 				<hbox>
 					<hbox hflex="2" />
 					<label>
@@ -23,7 +43,7 @@
 					<doublebox id="quantityApprove"></doublebox>
 					<hbox hflex="2" />
 				</hbox>
-				<hbox>
+				<hbox visible="false">
 					<hbox hflex="2" />
 					<label>
 						${c:l('staff.quantity.approve.total')}

@@ -1,5 +1,7 @@
 package com.dvd.ckp.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
@@ -11,11 +13,16 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
+import com.dvd.ckp.business.service.StaffServices;
+import com.dvd.ckp.domain.CalculatorRevenue;
+import com.dvd.ckp.domain.StaffQuantity;
 import com.dvd.ckp.utils.SpringConstant;
 
 public class ApproveQuantityController extends GenericForwardComposer {
@@ -27,19 +34,47 @@ public class ApproveQuantityController extends GenericForwardComposer {
 	private Long billDetail;
 
 	@WireVariable
+	protected StaffServices staffService;
+
+	@WireVariable
 	protected BillsServices billsServices;
 	@Wire
 	private Longbox txtBillID;
 	@Wire
 	private Doublebox quantityApprove;
 	@Wire
-	private Doublebox totalApprove;
+	private Window approveQuantity;
+	@Wire
+	private Longbox txtConstruction;
+
+	@Wire
+	private Longbox txtPumpId;
+
+	@Wire
+	private Longbox txtPumpTypeId;
+
+	@Wire
+	private Longbox txtLocationID;
+
+	@Wire
+	private Longbox txtLocationTypeID;
+
+	@Wire
+	private Intbox txtShift;
+
+	@Wire
+	private Intbox txtMaxStaff;
+
+	List<StaffQuantity> listQuantity;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
 		billDetail = txtBillID.getValue();
 		billsServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
+		staffService = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
+
+		listQuantity = staffService.getQuantity(billDetail);
 	}
 
 	public void onAction(ForwardEvent event) {
@@ -50,12 +85,23 @@ public class ApproveQuantityController extends GenericForwardComposer {
 						if (Messagebox.ON_YES.equals(e.getName())) {
 							Double quantityApproveValue = quantityApprove.getValue();
 							Double totalApproveValue = null;
-							logger.info("Quantity approve: " + quantityApproveValue);
-							logger.info("Bill detail id: " + txtBillID.getValue());
 							billsServices.upadte(quantityApproveValue, totalApproveValue, billDetail);
+							if (listQuantity == null || listQuantity.isEmpty()) {
+								Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message.max.staff"),
+										Labels.getLabel("comfirm"), Messagebox.OK, Messagebox.ERROR);
+								return;
+							}
 							totalApproveValue = billsServices.getQuantity(billDetail).get(0).getV_quantity();
 							billsServices.upadte(quantityApproveValue, totalApproveValue, billDetail);
-							totalApprove.setValue(totalApproveValue);
+							// totalApprove.setValue(totalApproveValue);
+							// approveQuantity.onClose();
+							List<CalculatorRevenue> lstRevenue = billsServices.calculatorRevenue(
+									txtConstruction.getValue(), txtPumpId.getValue(), txtPumpTypeId.getValue(),
+									txtLocationID.getValue(), txtLocationTypeID.getValue(), quantityApproveValue,
+									txtShift.getValue());
+							logger.info("Value: " + lstRevenue.get(0).getTotal_revenue());
+							approveQuantity.onClose();
+							approveQuantity.detach();
 						}
 					}
 				});
