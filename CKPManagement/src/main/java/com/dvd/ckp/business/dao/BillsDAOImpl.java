@@ -254,11 +254,13 @@ public class BillsDAOImpl implements BillDAO {
 			StringBuilder builder = new StringBuilder(
 					"select b.bill_id as billID,d.bill_detail_id as billDetailID,b.from_time as fromDate,b.start_time as startTime, ");
 			builder.append(
-					" b.end_time as endTime, b.to_time as toDate,d.quantity as quantity,d.quantity_approve as quantityApprove, l.location_name as location from bills b ");
+					" b.end_time as endTime, b.to_time as toDate,d.quantity as quantity,d.quantity_approve as quantityApprove, l.location_name as location, p.pump_name as pump from bills b ");
 			builder.append(" left join bill_detail d ");
 			builder.append(" on b.bill_id = d.bill_id ");
 			builder.append(" left join location l ");
 			builder.append(" on d.location_id = l.location_id ");
+			builder.append(" left join pumps p ");
+			builder.append(" on d.pump_id = p.pump_id ");			
 			builder.append(" where b.bill_id = :billID ");
 			builder.append(" and b.status = 1 ");
 			builder.append(" and d.status = 1 ");
@@ -270,6 +272,7 @@ public class BillsDAOImpl implements BillDAO {
 					.addScalar("quantity", StandardBasicTypes.DOUBLE)
 					.addScalar("quantityApprove", StandardBasicTypes.DOUBLE)
 					.addScalar("location", StandardBasicTypes.STRING)
+					.addScalar("pump", StandardBasicTypes.STRING)
 					.setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));
 			query.setParameter("billID", billID);
 			List<BillViewDetail> lstData = query.list();

@@ -138,12 +138,18 @@
 							visible="false">
 						</textbox>
 						<hbox hflex="1" style="margin-left:20px">
+							<label value="Bơm sử dụng"></label>
+							<textbox value="${each.pump}"
+								inplace="false" readonly="true">
+							</textbox>
+						</hbox>
+						<hbox hflex="1" style="margin-left:20px">
 							<a class="btn-cursor"
 								forward="onClick=onAddStaff" iconSclass="z-icon-users"
 								label="${c:l('staff.quantity.add')}" />
 							<a class="btn-cursor"
 								forward="onClick=onApprove" iconSclass="z-icon-check"
-								label="${c:l('staff.quantity.approve')}" />						
+								label="${c:l('staff.quantity.approve')}" />
 							<hbox hflex="4" />
 						</hbox>
 
@@ -234,7 +240,7 @@
 										value="(Volume pumped)">
 									</label>
 									<doublebox class="bill-detail-value"
-										 readonly="true"
+										readonly="true"
 										style="font-style: italic;color:black;text-align: center;"
 										value="${each.quantityView}">
 									</doublebox>
@@ -273,51 +279,7 @@
 
 							<hbox hflex="1" />
 						</hlayout>
-						<hlayout class="bill-view">
-							<hbox hflex="1" />
-							<hbox hflex="2">
-								<vbox>
-									<label
-										style="font-weight: bold;font-size: 14px;color:black"
-										value="${c:l('bills.detail.customer')}">
-									</label>
-									<label
-										style="font-style: italic;color:black" value="Customer">
-									</label>
 
-									<label
-										style="font-weight: bold;font-size: 14px;color:black"
-										value="${c:l('bills.detail.pumps.signature.name')}">
-									</label>
-									<label
-										style="font-style: italic;color:black"
-										value="(Signature and name)">
-									</label>
-								</vbox>
-							</hbox>
-							<hbox hflex="1" />
-							<hbox hflex="2">
-								<vbox>
-									<label
-										style="font-weight: bold;font-size: 14px;color:black ;text-align: center;"
-										value="${c:l('bills.detail.pumps.operator')}">
-									</label>
-									<label
-										style="font-style: italic;color:black" value="Pum Operator">
-									</label>
-									<label
-										style="font-weight: bold;font-size: 14px;color:black"
-										value="${c:l('bills.detail.pumps.signature.name')}">
-									</label>
-									<label
-										style="font-style: italic;color:black"
-										value="(Signature and name)">
-									</label>
-								</vbox>
-							</hbox>
-
-							<hbox hflex="1" />
-						</hlayout>
 					</vlayout>
 
 				</row>
@@ -326,5 +288,48 @@
 
 
 		</grid>
+		<hlayout class="bill-view">
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 14px;color:black"
+						value="${c:l('bills.detail.customer')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="Customer">
+					</label>
+
+					<label
+						style="font-weight: bold;font-size: 14px;color:black"
+						value="${c:l('bills.detail.pumps.signature.name')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="(Signature and name)">
+					</label>
+				</vbox>
+			</hbox>
+			<hbox hflex="1" />
+			<hbox hflex="2">
+				<vbox>
+					<label
+						style="font-weight: bold;font-size: 14px;color:black ;text-align: center;"
+						value="${c:l('bills.detail.pumps.operator')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="Pum Operator">
+					</label>
+					<label
+						style="font-weight: bold;font-size: 14px;color:black"
+						value="${c:l('bills.detail.pumps.signature.name')}">
+					</label>
+					<label style="font-style: italic;color:black"
+						value="(Signature and name)">
+					</label>
+				</vbox>
+			</hbox>
+
+			<hbox hflex="1" />
+		</hlayout>
 	</window>
 </zk>

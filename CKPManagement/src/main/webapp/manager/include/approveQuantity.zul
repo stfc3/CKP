@@ -55,9 +55,9 @@
 			<hlayout>
 				<hbox hflex="3" />
 				<hbox hflex="2">
-					<a class="btn-cursor" forward="onClick=onAction"
+					<button class="btn-cursor" forward="onClick=onAction"
 						iconSclass="z-icon-floppy-o" label="${c:l('save')}" />
-					<a class="btn-cursor"
+					<button class="btn-cursor"
 						onClick="approveQuantity.detach();" iconSclass="z-icon-times"
 						label="${c:l('cancel')}" />
 				</hbox>
