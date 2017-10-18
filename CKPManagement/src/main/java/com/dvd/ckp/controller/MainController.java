@@ -38,6 +38,9 @@ import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.domain.Object;
 import com.dvd.ckp.utils.StringUtils;
 import org.zkoss.util.resource.Labels;
+import org.zkoss.zhtml.Li;
+import org.zkoss.zul.A;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.Treechildren;
 
@@ -50,8 +53,6 @@ public class MainController extends SelectorComposer<Component> {
     @WireVariable
     protected UserService userService;
     @Wire
-    Spreadsheet ss;
-    @Wire
     Tabbox tabContent;
     @Wire
     Tabs tabs;
@@ -59,30 +60,10 @@ public class MainController extends SelectorComposer<Component> {
     Tabpanels tabpanels;
     @Wire
     Tree treeMenu;
+    
     @Wire
-    Treeitem itemCustomer;
-    @Wire
-    Treeitem itemContract;
-    @Wire
-    Treeitem itemConstruction;
-
-    @Wire
-    Treeitem itemPumps;
-
-    @Wire
-    Treeitem itemLocation;
-
-    @Wire
-    Treeitem itemStaff;
-
-    @Wire
-    Treeitem itemUser;
-
-    @Wire
-    Treeitem itemRole;
-
-    @Wire
-    Treeitem itemBills;
+    Div divListFunction;
+    
     @Wire
     West westMenu;
     @Wire
@@ -104,6 +85,7 @@ public class MainController extends SelectorComposer<Component> {
             if (userToken != null) {
                 userName.appendChild(new Label(userToken.getFullName()));
                 createMenu(userToken);
+                createMenuHome(userToken);
             }
         }
         lstTabs = new ArrayList<>();
@@ -186,6 +168,78 @@ public class MainController extends SelectorComposer<Component> {
         }
         return lstChilds;
     }
+    private void createMenuHome(UserToken userToken){
+        if(userToken!=null){
+            List<Object> lstAllObjects = userToken.getListObject();
+            List<Object> lstFunction = getListFunction(lstAllObjects);
+            if(lstFunction!=null && !lstFunction.isEmpty()){
+                for(Object function:lstFunction){
+                    buildFunction(function);
+                }
+            }
+        }
+    }
+    private void buildFunction(Object object){
+        Li liItem=new Li();
+        liItem.setSclass("collection__item");
+        liItem.setParent(divListFunction);
+        
+        Div divCardType=new Div();
+        divCardType.setClass("card card--types");
+        divCardType.setParent(liItem);
+        
+        
+        Div divCardFigure=new Div();
+        divCardFigure.setClass("card__figure");
+        divCardFigure.setParent(divCardType);
+        
+        A aCardLink=new A();
+        aCardLink.setClass("card__link");
+        aCardLink.setParent(divCardFigure);
+        aCardLink.setAttribute("MENU_ID", object.getObjectCode());
+        aCardLink.setAttribute("MENU_NAME", Labels.getLabel(object.getObjectName()));
+        aCardLink.setAttribute("MENU_PATH", object.getPath());
+        
+        aCardLink.addEventListener("onClick", new MenuHomeOnClickListener());
+        
+        Image imgCardImage=new Image();
+        imgCardImage.setClass("card__image");
+        imgCardImage.setSrc(object.getIcon());
+        imgCardImage.setParent(divCardFigure);
+        Div divCardPanel=new Div();
+        divCardPanel.setClass("card__panel");
+        divCardPanel.setParent(divCardFigure);
+        
+        Span spanCardCta=new Span();
+        spanCardCta.setClass("card__cta");
+        spanCardCta.setParent(divCardPanel);
+        Label lblFunctionName=new Label(Labels.getLabel(object.getObjectName()));
+        lblFunctionName.setParent(spanCardCta);
+        
+        
+        Div divCardHeading=new Div();
+        divCardHeading.setClass("card__heading");
+        divCardHeading.setParent(divCardType);
+        
+        Span spanCardCount=new Span();
+        spanCardCount.setClass("card__count");
+        spanCardCount.setParent(divCardHeading);
+        Label lblFunctionShort=new Label(Labels.getLabel(object.getObjectName()));
+        lblFunctionShort.setParent(divCardHeading);
+        
+        
+    }
+    private List<Object> getListFunction(List<Object> lstObjects) {
+        List<Object> lstFunction = new ArrayList<>();
+        if (lstObjects != null && !lstObjects.isEmpty()) {
+            for (Object object : lstObjects) {
+                if (StringUtils.isValidString(object.getPath())) {
+                    lstFunction.add(object);
+                }
+            }
+        }
+        return lstFunction;
+    }
 
     class TreeOnClickListener implements EventListener {
 
@@ -207,6 +261,25 @@ public class MainController extends SelectorComposer<Component> {
             }
         }
     }
+    
+    class MenuHomeOnClickListener implements EventListener {
+
+        @Override
+        public void onEvent(Event event) {
+            try {
+                A menu = (A) event.getTarget();
+                String strUrl = String.valueOf(menu.getAttribute("MENU_PATH"));
+                String strId = "tab_" + String.valueOf(menu.getAttribute("MENU_ID"));
+                String strTabName = String.valueOf(menu.getAttribute("MENU_NAME"));
+                if (StringUtils.isValidString(strUrl)) {
+                    addTab(strUrl, strId, strTabName);
+                } 
+
+            } catch (Exception ex) {
+//                logger.error(ex.getMessage(), ex);
+            }
+        }
+    }
 
     @Listen("onClick = #logout")
     public void logout() throws IOException {
@@ -219,81 +292,6 @@ public class MainController extends SelectorComposer<Component> {
         westMenu.setOpen(!westMenu.isOpen());
     }
 
-    @Listen("onClick = #itemCustomer, #homeCustomer")
-    public void itemCustomer() throws IOException {
-        String vstrURL = itemCustomer.getValue();
-        String vstrId = "tab" + itemCustomer.getId();
-        String vstrTitle = itemCustomer.getLabel();
-        addTab(vstrURL, vstrId, vstrTitle);
-    }
-
-    @Listen("onClick = #itemContract,#homeContract")
-    public void itemContract() throws IOException {
-        String vstrURL = itemContract.getValue();
-        String vstrId = "tab" + itemContract.getId();
-        String vstrTitle = itemContract.getLabel();
-        addTab(vstrURL, vstrId, vstrTitle);
-    }
-
-    @Listen("onClick = #itemConstruction")
-    public void itemConstruction() throws IOException {
-        String vstrURL = itemConstruction.getValue();
-        String vstrId = "tab" + itemConstruction.getId();
-        String vstrTitle = itemConstruction.getLabel();
-        addTab(vstrURL, vstrId, vstrTitle);
-    }
-
-    // Pumps
-    @Listen("onClick = #itemPumps, #homePump")
-    public void itemPumps() throws IOException {
-        String vstrURL = itemPumps.getValue();
-        String vstrId = "tab" + itemPumps.getId();
-        String vstrTitle = itemPumps.getLabel();
-        addTab(vstrURL, vstrId, vstrTitle);
-    }
-
-    // location
-    @Listen("onClick = #itemLocation")
-    public void itemLocation() throws IOException {
-        String vstrURL = itemLocation.getValue();
-        String vstrId = "tab" + itemLocation.getId();
-        String vstrTitle = itemLocation.getLabel();
-        addTab(vstrURL, vstrId, vstrTitle);
-    }
-
-    // staff
-    @Listen("onClick = #itemStaff, #homeStaff")
-    public void itemStaff() throws IOException {
-        String vstrURL = itemStaff.getValue();
-        String vstrId = "tab" + itemStaff.getId();
-        String vstrTitle = itemStaff.getLabel();
-        addTab(vstrURL, vstrId, vstrTitle);
-    }
-
-    // staff
-    @Listen("onClick = #itemBills, #homeBill")
-    public void itemStaffQuantity() throws IOException {
-        String vstrURL = itemBills.getValue();
-        String vstrId = "tab" + itemBills.getId();
-        String vstrTitle = itemBills.getLabel();
-        addTab(vstrURL, vstrId, vstrTitle);
-    }
-
-    @Listen("onClick = #itemUser, #homeUser")
-    public void itemUser() throws IOException {
-        String vstrURL = itemUser.getValue();
-        String vstrId = "tab" + itemUser.getId();
-        String vstrTitle = itemUser.getLabel();
-        addTab(vstrURL, vstrId, vstrTitle);
-    }
-
-    @Listen("onClick = #itemRole")
-    public void itemRole() throws IOException {
-        String vstrURL = itemRole.getValue();
-        String vstrId = "tab" + itemRole.getId();
-        String vstrTitle = itemRole.getLabel();
-        addTab(vstrURL, vstrId, vstrTitle);
-    }
 
     private void addTab(String pstrURL, final String pstrId, String pstrTablName) {
         Include contentTabMenu;

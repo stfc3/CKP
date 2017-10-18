@@ -11,7 +11,6 @@ import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.SpringConstant;
-import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
 import java.util.ArrayList;
 import java.util.Date;
