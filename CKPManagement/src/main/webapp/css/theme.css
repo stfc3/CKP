@@ -650,3 +650,93 @@ a [class^="z-icon-"]{
 .bill-detail-title{
     margin-bottom: 20px;
 }
+/*view bill detail*/
+.banner-view-bill-detail {
+    border-bottom: 1px solid silver;
+    margin-bottom: 10px;
+    color: #0070c0;
+}
+.banner-view-bill-detail table {
+    margin-bottom: 2px;
+}
+.banner-view-bill-title {
+    margin-bottom: 10px;
+    color: #0070c0;
+}
+.banner-view-bill-title table {
+    margin-bottom: 2px;
+}
+.banner-view-bill-title-content {
+    color: #0070c0;
+}
+.banner-view-bill-title-content table {
+    margin-bottom: 8px;
+}
+.action-staff-approve{
+    /*background-color: red;*/
+    margin-bottom: 0px;
+    text-align: right;
+}
+.btn-staff{
+    float: right;
+    margin-right: 10px;
+}
+.btn-approve{
+    float: right;
+    margin-right: 20px;
+}
+.table-content-bill-detail {
+    /*border: 1px solid silver;*/
+    text-align: center;
+
+}
+.table-content-bill-detail table {
+    padding-right: 0px;
+}
+.table-content-bill-detail table td{
+    text-align: center;
+}
+.boder-top {
+    border-top: 1px solid silver;
+}
+.boder-bottom {
+    border-bottom: 1px solid silver;
+}
+.border-left {
+    border-left: 1px solid silver;
+}
+.border-right {
+    border-right: 1px solid silver;
+}
+.table-detail-row {
+    /*background-color: red;*/
+    height: 130px !important;
+    padding-bottom: 0px;
+}
+.table-detail-row table {
+    /*height: 120px !important;*/
+}
+.table-detail-row .z-hlayout-inner {
+    padding-right: 0px !important;
+    width: auto !important;
+}
+.vlayout-bill-detail {
+    color: #0070c0;
+}
+.vlayout-bill-detail .z-vlayout-inner {
+    padding-bottom: 0px !important;
+}
+.pump-using-title{
+    margin: 0 5px 0 10px;
+    font-weight: bold;
+}
+.pump-using {
+    color: #ef3f09;
+}
+.color-focus {
+    color: #ef3f09;
+}
+.border-none{
+    border: none !important;
+}
+/*view bill detail*/
