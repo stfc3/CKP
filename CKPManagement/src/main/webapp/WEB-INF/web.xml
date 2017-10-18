@@ -51,6 +51,21 @@
     </listener>
  
  
+<!--    <listener>
+        <listener-class>
+            com.stfc.listener.ServletUtilListener
+        </listener-class>
+    </listener>-->
+<!--    <listener>
+        <listener-class>
+            com.stfc.birt.plugin.BIRTContextListener
+        </listener-class>
+    </listener>-->
+    <!--    <listener>
+        <listener-class>
+                com.viettel.bi.plugin.birt.BIRTSessionListener
+        </listener-class>
+    </listener>-->
  
     <!-- ====================================================== -->
     <!-- SPRING REQUEST LISTENER -->

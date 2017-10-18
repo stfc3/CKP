@@ -40,6 +40,7 @@
 	<bean
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
+        <!--<bean id="birtConn" class="com.stfc.birt.plugin.BIRTConnector" init-method="startup" destroy-method="shutdown" scope="singleton"/>-->
 	<bean id="UserService" class="com.dvd.ckp.business.service.UserServiceImpl" />
 	<bean id="CustomerService" class="com.dvd.ckp.business.service.CustomerServiceImpl" />
 

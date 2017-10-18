@@ -24,6 +24,7 @@ public class BillViewDetail {
 	private Double quantityView;
 	private String location;
 	private String note;
+	private String pump;
 
 	public Long getBillID() {
 		return billID;
@@ -178,6 +179,14 @@ public class BillViewDetail {
 
 	public void setQuantityView(Double quantityView) {
 		this.quantityView = quantityView;
+	}
+
+	public String getPump() {
+		return pump;
+	}
+
+	public void setPump(String pump) {
+		this.pump = pump;
 	}
 	
 	
