@@ -140,7 +140,7 @@
                                     value="Bơm sử dụng: ">
                                 </label>
                                 <label class="pump-using"
-                                    value="(Time arrive project)">
+                                    value="${each.pump}">
                                 </label>
                                 <a class="btn-cursor btn-staff"
                                    forward="onClick=onAddStaff" iconSclass="z-icon-users"
