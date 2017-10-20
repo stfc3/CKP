@@ -127,7 +127,7 @@
 						<!--thanh tien -->
 						<cell style="text-align: right;">
 							<label style="text-align: right;"
-								value="${c:formatNumber(each.cost, '###,###,###.##')}" tooltiptext="${each.cost}" />
+								value="${each.cost!=null ? c:formatNumber(each.cost, '###,###,###.##') : '' }" tooltiptext="${each.cost}" />
 						</cell>
 						<!--thoi gian den cong trinh -->
 						<cell style="text-align: right;">

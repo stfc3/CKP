@@ -165,7 +165,7 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append(" where bill_detail_id = :id ");
 			Query query = getCurrentSession().createSQLQuery(builder.toString());
 			query.setParameter("pumpId", billsDetail.getPumpID());
-			query.setParameter("pumpType", billsDetail.getPumpID());
+			query.setParameter("pumpType", billsDetail.getPumpTypeId());
 			query.setParameter("locationId", billsDetail.getLocationId());
 			query.setParameter("locationType", billsDetail.getLocationType());
 			query.setParameter("quantity", billsDetail.getQuantity());

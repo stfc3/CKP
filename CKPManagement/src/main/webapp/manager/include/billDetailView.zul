@@ -228,7 +228,7 @@
 
                         <hlayout class="table-detail-row">
                             <!--<hbox hflex="1" />-->
-                            <hbox hflex="2" class="table-content-bill-detail boder-top boder-bottom border-right">
+                            <hbox hflex="1" class="table-content-bill-detail boder-top boder-bottom border-right">
                                 <vbox>
                                     <label
                                         style="font-weight: bold;font-size: 14px;"
@@ -245,7 +245,7 @@
                                 </vbox>
                             </hbox>
                             <!--<hbox hflex="1" />-->
-                            <hbox hflex="2" class="table-content-bill-detail boder-top boder-bottom border-right">
+                            <hbox hflex="1" class="table-content-bill-detail boder-top boder-bottom border-right">
                                 <vbox>
                                     <label
                                         style="font-weight: bold;font-size: 14px;"

@@ -97,13 +97,13 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 	}
 
 	public void onAddStaff(ForwardEvent event) {
-		Vlayout rowSelected = (Vlayout) event.getOrigin().getTarget().getParent().getParent();
+		Vlayout rowSelected = (Vlayout) event.getOrigin().getTarget().getParent().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
 		getDataInRow(lstCell, 1);
 	}
 
 	public void onApprove(ForwardEvent event) {
-		Vlayout rowSelected = (Vlayout) event.getOrigin().getTarget().getParent().getParent();
+		Vlayout rowSelected = (Vlayout) event.getOrigin().getTarget().getParent().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
 		getDataInRow(lstCell, 2);
 	}

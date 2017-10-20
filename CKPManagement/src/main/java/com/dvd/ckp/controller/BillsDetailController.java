@@ -315,7 +315,7 @@ public class BillsDetailController extends GenericForwardComposer {
 				setDataPumpsDetail(lstCell, getPumpsDefault(billsDetail.getPumpID()), pumpIdDetail);
 				setDataPumpsTypeDetail(lstCell, getPumpsTypeDefault(billsDetail.getPumpTypeId()), pumpTypeIdDetail);
 				setLocationDetail(lstCell, getLocationDefault(billsDetail.getLocationId()), locationDetail);
-				setDataLocationTypeDetail(lstCell, getLocationTypeDefault(billsDetail.getLocationType()), 3);
+				setDataLocationTypeDetail(lstCell, getLocationTypeDefault(billsDetail.getLocationType()), locationTypeDetail);
 			}
 		}
 	}
@@ -362,7 +362,7 @@ public class BillsDetailController extends GenericForwardComposer {
 			billsDetail.setPumpID(cbPump.getSelectedItem().getValue());
 		}
 		// loai vi tri
-		component = lstCell.get(3).getFirstChild();
+		component = lstCell.get(locationTypeDetail).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			cbLocationType = (Combobox) component;
 			billsDetail.setLocationType(cbLocationType.getSelectedItem().getValue());
@@ -582,8 +582,7 @@ public class BillsDetailController extends GenericForwardComposer {
 		if (pumpID != -1l && pumpTypeID != -1l && locationID != -1l && locationTypeID != -1l && quantity != null
 				&& shift != null) {
 			List<CalculatorRevenue> calculatorRevenue = billsServices.calculatorRevenue(txtConstruction.getValue(),
-					Long.valueOf(pumpID), Long.valueOf(pumpTypeID), Long.valueOf(locationID),
-					Long.valueOf(locationTypeID), quantity, shift);
+					Long.valueOf(pumpID), Long.valueOf(pumpTypeID),Long.valueOf(locationTypeID), Long.valueOf(locationID),quantity, shift);
 			if (calculatorRevenue != null && !calculatorRevenue.isEmpty()) {
 				if (calculatorRevenue.get(0).getTotalRevenue() != null) {
 					txtTotal.setValue(String.valueOf(calculatorRevenue.get(0).getTotalRevenue()));
