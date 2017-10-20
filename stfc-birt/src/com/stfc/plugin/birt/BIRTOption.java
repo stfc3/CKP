@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.viettel.bi.plugin.birt;
+package com.stfc.plugin.birt;
 
 import java.lang.reflect.Field;
 import java.util.Properties;

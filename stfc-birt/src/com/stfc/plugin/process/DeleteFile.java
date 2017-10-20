@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.viettel.bi.plugin.process;
+package com.stfc.plugin.process;
 
 import java.util.HashMap;
 import java.util.List;

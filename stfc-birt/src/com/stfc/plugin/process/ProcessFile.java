@@ -1,7 +1,7 @@
-package com.viettel.bi.plugin.process;
+package com.stfc.plugin.process;
 
-import com.viettel.bi.plugin.birt.BIRTOption;
-import com.viettel.bi.plugin.birt.BIRTUtil;
+import com.stfc.plugin.birt.BIRTOption;
+import com.stfc.plugin.birt.BIRTUtil;
 import com.viettel.eafs.util.FileUtil;
 import com.viettel.eafs.util.ServletUtil;
 import java.io.File;

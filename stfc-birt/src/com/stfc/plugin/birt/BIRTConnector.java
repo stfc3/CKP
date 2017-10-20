@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.viettel.bi.plugin.birt;
+package com.stfc.plugin.birt;
 
 import java.util.logging.Level;
 import javax.servlet.ServletContext;
@@ -13,7 +13,7 @@ import org.eclipse.birt.report.engine.api.EngineConfig;
 import org.eclipse.birt.report.engine.api.EngineConstants;
 import org.eclipse.birt.report.engine.api.IReportEngine;
 import org.eclipse.birt.report.engine.api.IReportEngineFactory;
-import com.viettel.bi.plugin.AbstractPluginConnector;
+import com.stfc.plugin.AbstractPluginConnector;
 import com.viettel.eafs.util.ServletUtil;
 import java.io.File;
 import java.net.URL;

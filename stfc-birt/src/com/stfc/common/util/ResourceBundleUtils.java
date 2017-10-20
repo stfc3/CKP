@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.viettel.bi.common.util;
+package com.stfc.common.util;
 
 import java.util.ResourceBundle;
 import org.apache.log4j.Logger;

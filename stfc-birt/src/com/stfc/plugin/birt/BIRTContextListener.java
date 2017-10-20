@@ -2,7 +2,7 @@
  * Copyright (C) 2010 Viettel Telecom. All rights reserved.
  * VIETTEL PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package com.viettel.bi.plugin.birt;
+package com.stfc.plugin.birt;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

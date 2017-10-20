@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.viettel.bi.plugin.writelog;
+package com.stfc.plugin.writelog;
 
-import com.viettel.bi.common.util.ResourceBundleUtils;
+import com.stfc.common.util.ResourceBundleUtils;
 import com.viettel.logging.LogWriter;
 import java.net.URISyntaxException;
 import java.net.URL;

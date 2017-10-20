@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.viettel.bi.plugin.birt;
+package com.stfc.plugin.birt;
 
 import com.viettel.eafs.util.FileUtil;
 import com.viettel.eafs.util.ServletUtil;
