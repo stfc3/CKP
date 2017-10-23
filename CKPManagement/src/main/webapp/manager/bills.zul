@@ -26,7 +26,7 @@
 				</auxhead>
 				<auxhead sclass="category-center">
 
-					<auxheader colspan="4">
+					<auxheader colspan="3">
 						<a iconSclass="z-icon-filter" />
 						<combobox id="cbFilterCustomer" hflex="1"
 							placeholder="${c:l('bills.filter.customer')}" autodrop="true"
@@ -37,7 +37,7 @@
 							</template>
 						</combobox>
 					</auxheader>
-					<auxheader colspan="4">
+					<auxheader colspan="3">
 						<a iconSclass="z-icon-filter" />
 						<combobox hflex="1" id="cbFilterConstruction"
 							placeholder="${c:l('bills.filter.construction')}" autodrop="true"
@@ -49,7 +49,7 @@
 							</template>
 						</combobox>
 					</auxheader>
-					<auxheader colspan="4">
+					<auxheader colspan="6">
 						<a iconSclass="z-icon-filter" />
 						<datebox id="dtFilterDate" hflex="1" />
 					</auxheader>
@@ -57,20 +57,20 @@
 				</auxhead>
 				<columns style="text-align:center; ">
 					<column hflex="1">${c:l('pump.index')}</column>
-					<column hflex="1">${c:l('bills.code')}</column>
-					<column hflex="2">${c:l('bills.customer')}</column>
-					<column hflex="2">
+					<column hflex="2">${c:l('bills.code')}</column>
+					<column hflex="4">${c:l('bills.customer')}</column>
+					<column hflex="4">
 						${c:l('bills.construction.name')}
 					</column>
 					<column hflex="2">${c:l('bills.prd.id')}</column>
-					<column hflex="2">${c:l('bills.file')}</column>
-					<column hflex="1">${c:l('bills.cost')} (VNĐ)</column>
-					<column hflex="2">${c:l('bills.from.date')}</column>
-					<column hflex="2">
+					<column hflex="4">${c:l('bills.file')}</column>
+					<column hflex="3">${c:l('bills.cost')} (VNĐ)</column>
+					<column hflex="2" visible="false">${c:l('bills.from.date')}</column>
+					<column hflex="2" visible="false">
 						${c:l('bills.start.time')}
 					</column>
-					<column hflex="2">${c:l('bills.end.time')}</column>
-					<column hflex="2">${c:l('bills.to.date')}</column>
+					<column hflex="2" visible="false">${c:l('bills.end.time')}</column>
+					<column hflex="2" visible="false">${c:l('bills.to.date')}</column>
 					<!-- 					<column hflex="1">${c:l('pump.status')}</column> -->
 					<column hflex="2">${c:l('pump.action')}</column>
 				</columns>
@@ -108,7 +108,7 @@
 						</cell>
 						<!--ngay bom -->
 						<cell>
-							<datebox value="${each.dateInput}"
+							<datebox value="${each.dateInput}" buttonVisible="false"
 								style="text-align: right;" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
@@ -130,25 +130,25 @@
 								value="${each.cost!=null ? c:formatNumber(each.cost, '###,###,###.##') : '' }" tooltiptext="${each.cost}" />
 						</cell>
 						<!--thoi gian den cong trinh -->
-						<cell style="text-align: right;">
+						<cell style="text-align: right;" visible="false">
 							<datebox value="${each.fromDate}"
 								format="dd/MM/yyyy" style="text-align: right;" hflex="1"
 								inplace="true" readonly="true" />
 						</cell>
 						<!--thoi gian bat dau bom -->
-						<cell>
+						<cell visible="false">
 							<datebox value="${each.startTime}" cols="12"
 								format="dd/MM/yyyy HH:mm" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
 						<!--thoi gian bom xong-->
-						<cell style="text-align: right;">
+						<cell style="text-align: right;" visible="false">
 							<datebox value="${each.endTime}" cols="12"
 								format="dd/MM/yyyy HH:mm" hflex="1" inplace="true"
 								readonly="true" />
 						</cell>
 						<!--thoi gian roi cong trinh -->
-						<cell style="text-align: right;">
+						<cell style="text-align: right;" visible="false">
 							<datebox value="${each.endTime}"
 								format="dd/MM/yyyy" style="text-align: right;" hflex="1"
 								inplace="true" readonly="true" />

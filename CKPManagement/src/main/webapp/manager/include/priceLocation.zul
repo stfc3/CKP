@@ -25,6 +25,7 @@
                     <column hflex="3">${c:l('pricelocation.min')}</column>
                     <column hflex="3">${c:l('pricelocation.max')}</column>
                     <column hflex="3">${c:l('pricelocation.value')}</column>
+                    <column hflex="3">${c:l('pricelocationshift.value')}</column>
                     <column hflex="2">${c:l('pricelocation.action')}</column>
                 </columns>
                 <template name="model">
@@ -62,6 +63,9 @@
                         </cell>
                         <cell>
                             <doublebox value="${each.priceLocation}" tooltiptext="${each.priceLocation}" hflex="1" inplace="true" readonly="true"/>
+                        </cell>
+                        <cell>
+                            <doublebox value="${each.priceLocationShift}" tooltiptext="${each.priceLocationShift}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell style="text-align:center">
                             <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>

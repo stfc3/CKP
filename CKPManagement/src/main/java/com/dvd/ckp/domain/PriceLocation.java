@@ -36,6 +36,7 @@ public class PriceLocation implements Serializable {
     private Long locationMin;
     private Long locationMax;
     private Double priceLocation;
+    private Double priceLocationShift;
     private Integer status;
     private Date createDate;
 
@@ -93,6 +94,14 @@ public class PriceLocation implements Serializable {
 
     public void setPriceLocation(Double priceLocation) {
         this.priceLocation = priceLocation;
+    }
+    @Column(name = "price_location_shift")
+    public Double getPriceLocationShift() {
+        return priceLocationShift;
+    }
+
+    public void setPriceLocationShift(Double priceLocationShift) {
+        this.priceLocationShift = priceLocationShift;
     }
 
     @Column(name = "status")

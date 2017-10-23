@@ -32,7 +32,7 @@ public interface BillDAO {
 
 	public void delete(BillsDetail billsDetail);
 
-	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpId, Long pumpType, Long locationType,
+	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpType, Long locationType,
 			Long locationID, Double quantity, int shift);
 
 	public List<BillViewDetail> getDataView(Long billID);

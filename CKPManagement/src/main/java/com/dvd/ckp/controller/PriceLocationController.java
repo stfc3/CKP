@@ -37,7 +37,6 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Doublebox;
-import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Longbox;
 
 /**
@@ -76,6 +75,7 @@ public class PriceLocationController extends GenericForwardComposer {
     private final int locationMinIndex = 2;
     private final int locationMaxIndex = 3;
     private final int locationIndex = 4;
+    private final int locationShiftIndex = 5;
 
     private Long lngPriceId;
     ///
@@ -214,6 +214,7 @@ public class PriceLocationController extends GenericForwardComposer {
         Combobox cbxLocationMin = null;
         Combobox cbxLocationMax = null;
         Doublebox dbbLocation = null;
+        Doublebox dbbLocationShift = null;
         component = lstCell.get(locationTypeIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             cbxLocationType = (Combobox) component;
@@ -233,6 +234,11 @@ public class PriceLocationController extends GenericForwardComposer {
         if (component != null && component instanceof Doublebox) {
             dbbLocation = (Doublebox) component;
             priceLocation.setPriceLocation(dbbLocation.getValue());
+        }
+        component = lstCell.get(locationShiftIndex).getFirstChild();
+        if (component != null && component instanceof Doublebox) {
+            dbbLocationShift = (Doublebox) component;
+            priceLocation.setPriceLocationShift(dbbLocationShift.getValue());
         }
         return priceLocation;
     }

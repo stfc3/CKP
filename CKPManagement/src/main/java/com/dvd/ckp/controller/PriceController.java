@@ -89,12 +89,12 @@ public class PriceController extends GenericForwardComposer {
 
     /// index price
     private final int pumpTypeIndex = 1;
-    private final int pumpIndex = 2;
-    private final int m3Index = 3;
-    private final int shiftIndex = 4;
-    private final int waitIndex = 5;
-    private final int convertTypeIndex = 6;
-    private final int convertValueIndex = 7;
+//    private final int pumpIndex = 2;
+    private final int m3Index = 2;
+    private final int shiftIndex = 3;
+    private final int waitIndex = 4;
+    private final int convertTypeIndex = 5;
+    private final int convertValueIndex = 6;
 
     private Long lngContractId;
     private boolean isAdd;
@@ -181,7 +181,7 @@ public class PriceController extends GenericForwardComposer {
         Price price = rowSelected.getValue();
         setComboboxParam(lstCell, getParamDefault(price.getPumpType(), pumpTypeIndex), pumpTypeIndex);
         setComboboxParam(lstCell, getParamDefault(price.getConvertType(), convertTypeIndex), convertTypeIndex);
-        setComboboxPump(lstCell, getPumpDefault(price.getPumpId()), pumpIndex);
+//        setComboboxPump(lstCell, getPumpDefault(price.getPumpId()), pumpIndex);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 
@@ -271,11 +271,11 @@ public class PriceController extends GenericForwardComposer {
             cbxPumpType = (Combobox) component;
             price.setPumpType(cbxPumpType.getSelectedItem().getValue());
         }
-        component = lstCell.get(pumpIndex).getFirstChild();
-        if (component != null && component instanceof Combobox) {
-            cbxPump = (Combobox) component;
-            price.setPumpId(cbxPump.getSelectedItem().getValue());
-        }
+//        component = lstCell.get(pumpIndex).getFirstChild();
+//        if (component != null && component instanceof Combobox) {
+//            cbxPump = (Combobox) component;
+//            price.setPumpId(cbxPump.getSelectedItem().getValue());
+//        }
         component = lstCell.get(m3Index).getFirstChild();
         if (component != null && component instanceof Doublebox) {
             dbbM3 = (Doublebox) component;
@@ -322,7 +322,7 @@ public class PriceController extends GenericForwardComposer {
                 List<Component> lstCell = row.getChildren();
                 setComboboxParam(lstCell, getParamDefault(price.getPumpType(), pumpTypeIndex), pumpTypeIndex);
                 setComboboxParam(lstCell, getParamDefault(price.getConvertType(), convertTypeIndex), convertTypeIndex);
-                setComboboxPump(lstCell, getPumpDefault(price.getPumpId()), pumpIndex);
+//                setComboboxPump(lstCell, getPumpDefault(price.getPumpId()), pumpIndex);
             }
         }
     }
@@ -406,40 +406,40 @@ public class PriceController extends GenericForwardComposer {
     }
 
     public void onPriceLocation(ForwardEvent event) {
-        Messagebox.show(Labels.getLabel("message.confirm.save.content"), Labels.getLabel("message.confirm.save.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
-            @Override
-            public void onEvent(Event e) {
-                if (Messagebox.ON_YES.equals(e.getName())) {
-                    Map<String, Object> arguments = new HashMap<>();
-                    Price price;
-                    Long vlngPriceId = null;
-                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-                    price = rowSelected.getValue();
-                    List<Component> lstCell = rowSelected.getChildren();
-                    getDataInRow(lstCell, price);
-                    price.setContractId(lngContractId);
-                    price.setStatus(Constants.STATUS_ACTIVE);
-                    price.setCreateDate(new Date());
-                    contractService.insertOrUpdatePrice(price);
-                    if (isAdd) {
-                        vlngPriceId = utilsService.getId().longValue();
-                    } else {
-                        vlngPriceId = price.getPriceId();
+//        Messagebox.show(Labels.getLabel("message.confirm.save.content"), Labels.getLabel("message.confirm.save.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+//            @Override
+//            public void onEvent(Event e) {
+//                if (Messagebox.ON_YES.equals(e.getName())) {
+        Map<String, Object> arguments = new HashMap<>();
+        Price price;
+        Long vlngPriceId = null;
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        price = rowSelected.getValue();
+        List<Component> lstCell = rowSelected.getChildren();
+        getDataInRow(lstCell, price);
+        price.setContractId(lngContractId);
+        price.setStatus(Constants.STATUS_ACTIVE);
+        price.setCreateDate(new Date());
+        contractService.insertOrUpdatePrice(price);
+        if (isAdd) {
+            vlngPriceId = utilsService.getId().longValue();
+        } else {
+            vlngPriceId = price.getPriceId();
 
-                    }
-                    StyleUtils.setDisableComponent(lstCell, 4);
-                    reloadGrid();
-                    arguments.put("priceId", vlngPriceId);
-                    Window winAddUser = (Window) Executions.createComponents(
-                            "/manager/include/priceLocation.zul", mainPrice, arguments);
+        }
+        StyleUtils.setDisableComponent(lstCell, 4);
+        reloadGrid();
+        arguments.put("priceId", vlngPriceId);
+        Window winAddUser = (Window) Executions.createComponents(
+                "/manager/include/priceLocation.zul", mainPrice, arguments);
 
-                    winAddUser.setBorder(true);
-                    winAddUser.setBorder("normal");
-                    winAddUser.setClosable(true);
+        winAddUser.setBorder(true);
+        winAddUser.setBorder("normal");
+        winAddUser.setClosable(true);
 
-                    winAddUser.doModal();
-                }
-            }
-        });
+        winAddUser.doModal();
+//                }
+//            }
+//        });
     }
 }

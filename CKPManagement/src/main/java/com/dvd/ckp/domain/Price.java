@@ -34,7 +34,7 @@ public class Price implements Serializable {
 
     private Long priceId;
     private Long contractId;
-    private Long pumpId;
+//    private Long pumpId;
     private Long pumpType;
     private Double priceM3;
     private Double priceShift;
@@ -65,14 +65,14 @@ public class Price implements Serializable {
         this.contractId = contractId;
     }
 
-    @Column(name = "pump_id")
-    public Long getPumpId() {
-        return pumpId;
-    }
-
-    public void setPumpId(Long pumpId) {
-        this.pumpId = pumpId;
-    }
+//    @Column(name = "pump_id")
+//    public Long getPumpId() {
+//        return pumpId;
+//    }
+//
+//    public void setPumpId(Long pumpId) {
+//        this.pumpId = pumpId;
+//    }
 
     @Column(name = "pump_type")
     public Long getPumpType() {
