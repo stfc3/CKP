@@ -20,7 +20,6 @@ import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zss.ui.Spreadsheet;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
@@ -101,7 +100,7 @@ public class MainController extends SelectorComposer<Component> {
                 for (Object rootMenu : lstRootMenu) {
                     if (rootMenu != null) {
                         Treeitem itemRoot = new Treeitem();
-                        itemRoot.setOpen(true);
+                        itemRoot.setOpen(false);
                         itemRoot.setId(rootMenu.getObjectCode());
                         itemRoot.setLabel(Labels.getLabel(rootMenu.getObjectName()));
                         itemRoot.setValue(rootMenu.getPath());
