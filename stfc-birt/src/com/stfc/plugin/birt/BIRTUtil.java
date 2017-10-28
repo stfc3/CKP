@@ -397,7 +397,7 @@ public class BIRTUtil {
 
     }
 
-    private void donotRepeatColumnHeaderRecursive(DesignElementHandle element) throws Throwable {
+     private void donotRepeatColumnHeaderRecursive(DesignElementHandle element) throws Throwable {
         GridHandle grid;
         CellHandle cell;
         DesignElementHandle nextElement;

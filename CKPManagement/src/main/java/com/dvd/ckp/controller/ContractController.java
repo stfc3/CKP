@@ -372,39 +372,39 @@ public class ContractController extends GenericForwardComposer {
     }
 
     public void onPrice(ForwardEvent event) {
-        Messagebox.show(Labels.getLabel("message.confirm.save.content"), Labels.getLabel("message.confirm.save.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
-            @Override
-            public void onEvent(Event e) {
-                if (Messagebox.ON_YES.equals(e.getName())) {
-                    Map<String, Object> arguments = new HashMap<>();
-                    Contract contract;
-                    Long vlngContractId = null;
-                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-                    contract = rowSelected.getValue();
-                    List<Component> lstCell = rowSelected.getChildren();
-                    getDataInRow(lstCell, contract);
-                    contract.setStatus(Constants.STATUS_ACTIVE);
-                    contract.setCreateDate(new Date());
-                    contractService.insertOrUpdateContract(contract);
-                    if (isAdd) {
-                        vlngContractId = utilsService.getId().longValue();
-                    } else {
-                        vlngContractId = contract.getContractId();
-                    }
-                    StyleUtils.setDisableComponent(lstCell, 4);
-                    reloadGrid();
-                    arguments.put("contractId", vlngContractId);
-                    Window winAddUser = (Window) Executions.createComponents(
-                            "/manager/include/price.zul", mainContract, arguments);
+//        Messagebox.show(Labels.getLabel("message.confirm.save.content"), Labels.getLabel("message.confirm.save.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+//            @Override
+//            public void onEvent(Event e) {
+//                if (Messagebox.ON_YES.equals(e.getName())) {
+        Map<String, Object> arguments = new HashMap<>();
+        Contract contract;
+        Long vlngContractId = null;
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        contract = rowSelected.getValue();
+        List<Component> lstCell = rowSelected.getChildren();
+        getDataInRow(lstCell, contract);
+        contract.setStatus(Constants.STATUS_ACTIVE);
+        contract.setCreateDate(new Date());
+        contractService.insertOrUpdateContract(contract);
+        if (isAdd) {
+            vlngContractId = utilsService.getId().longValue();
+        } else {
+            vlngContractId = contract.getContractId();
+        }
+        StyleUtils.setDisableComponent(lstCell, 4);
+        reloadGrid();
+        arguments.put("contractId", vlngContractId);
+        Window winAddUser = (Window) Executions.createComponents(
+                "/manager/include/price.zul", mainContract, arguments);
 
-                    winAddUser.setBorder(true);
-                    winAddUser.setBorder("normal");
-                    winAddUser.setClosable(true);
+        winAddUser.setBorder(true);
+        winAddUser.setBorder("normal");
+        winAddUser.setClosable(true);
 
-                    winAddUser.doModal();
-                }
-            }
-        });
+        winAddUser.doModal();
+//                }
+//            }
+//        });
     }
 
     public void onImport(ForwardEvent event) {

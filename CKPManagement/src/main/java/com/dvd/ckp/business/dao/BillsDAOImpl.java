@@ -209,16 +209,16 @@ public class BillsDAOImpl implements BillDAO {
 	}
 
 	@Override
-	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpId, Long pumpType, Long locationType,
+	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpType, Long locationType,
 			Long locationID, Double quantity, int shift) {
 		try {
-			String sql = "CALL calculator_revenue(:construction,:pump,:pump_type,:location_type,:location_id,:quantity,:shift)";
+			String sql = "CALL calculator_revenue(:construction,:pump_type,:location_type,:location_id,:quantity,:shift)";
 			Query query = getCurrentSession().createSQLQuery(sql).addScalar("total_revenue", StandardBasicTypes.DOUBLE)
 					.addScalar("description", StandardBasicTypes.STRING)
 					.setResultTransformer(Transformers.aliasToBean(CalculatorRevenue.class));
 
 			query.setParameter("construction", constructionId);
-			query.setParameter("pump", pumpId).setParameter("pump_type", pumpType);
+			query.setParameter("pump_type", pumpType);
 			query.setParameter("location_type", locationType);
 			query.setParameter("location_id", locationID);
 			query.setParameter("quantity", quantity);

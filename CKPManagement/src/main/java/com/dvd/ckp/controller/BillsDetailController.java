@@ -582,7 +582,7 @@ public class BillsDetailController extends GenericForwardComposer {
 		if (pumpID != -1l && pumpTypeID != -1l && locationID != -1l && locationTypeID != -1l && quantity != null
 				&& shift != null) {
 			List<CalculatorRevenue> calculatorRevenue = billsServices.calculatorRevenue(txtConstruction.getValue(),
-					Long.valueOf(pumpID), Long.valueOf(pumpTypeID),Long.valueOf(locationTypeID), Long.valueOf(locationID),quantity, shift);
+					Long.valueOf(pumpTypeID),Long.valueOf(locationTypeID), Long.valueOf(locationID),quantity, shift);
 			if (calculatorRevenue != null && !calculatorRevenue.isEmpty()) {
 				if (calculatorRevenue.get(0).getTotal_revenue() != null) {
 					txtTotal.setValue(String.valueOf(calculatorRevenue.get(0).getTotal_revenue()));

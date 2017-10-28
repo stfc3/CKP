@@ -19,5 +19,7 @@ public interface ConstructionDAO {
     List<Construction> getConstructionActive();
 
     void insertOrUpdateConstruction(Construction construction);
+    
+     List<Construction> getConstructionByCustomer(Long customerId);
 
 }

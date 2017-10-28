@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS prices
 (
     price_id BIGINT NOT NULL AUTO_INCREMENT,
     contract_id BIGINT,
-    pump_id BIGINT,
+    #pump_id BIGINT,
     pump_type INT COMMENT 'Loại máy bơm: bơm tĩnh, bơm qua cần phân phối,...',
     price_m3 DOUBLE COMMENT 'Đơn giá theo m3',
     price_shift DOUBLE COMMENT 'Đơn giá theo ca',
@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS price_location
     location_type INT COMMENT 'Loại vị trí: 1 tầng; 2 các vị trí còn lại',
     location_min BIGINT COMMENT 'Từ tầng',
     location_max BIGINT COMMENT 'Đến tầng',
-    price_location DOUBLE COMMENT 'Đơn giá theo vị trí',
+    price_location DOUBLE COMMENT 'Đơn giá vị trí theo m3',
+    price_location_shift DOUBLE COMMENT 'Đơn giá vị trí theo ca',
 	status INT DEFAULT 1 COMMENT '1: Hoạt động; 0: Không hoạt động',
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(price_location_id)

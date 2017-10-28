@@ -13,16 +13,18 @@
                 <auxhead sclass="category-center" >
                     <auxheader colspan="10">
                         <a class="btn-cursor" id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
+                        <!--
                         <space width="10px"/>
                         <a class="btn-cursor" iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
                         <space width="10px"/>
                         <a class="btn-cursor" iconSclass="z-icon-file-excel-o" label="${c:l('export')}"/>
+                        -->
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">
                     <column hflex="1">${c:l('price.index')}</column>
                     <column hflex="3">${c:l('price.pumpType')}</column>
-                    <column hflex="6">${c:l('price.pump')}</column>
+                    <!--<column hflex="6">${c:l('price.pump')}</column>-->
                     <column hflex="3">${c:l('price.m3')}</column>
                     <column hflex="3">${c:l('price.shift')}</column>
                     <column hflex="3">${c:l('price.wait')}</column>
@@ -46,14 +48,14 @@
                             </combobox>
                         </cell>
                         <!--May bom-->
-                        <cell>
+<!--                        <cell>
                             <combobox  hflex="1"  
                                        buttonVisible="false" inplace="true"  readonly="true">
                                 <template name="model">
                                     <comboitem value="${each.pumpsID}" label="${each.pumpsName}" />
                                 </template>
                             </combobox>
-                        </cell>
+                        </cell>-->
                         <cell>
                             <doublebox value="${each.priceM3}" tooltiptext="${each.priceM3}" hflex="1" inplace="true" readonly="true"/>
                         </cell>

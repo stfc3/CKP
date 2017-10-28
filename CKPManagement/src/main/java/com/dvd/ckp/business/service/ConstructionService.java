@@ -19,4 +19,6 @@ public interface ConstructionService {
     List<Construction> getConstructionActive();
 
     void insertOrUpdateConstruction(Construction construction);
+    
+     List<Construction> getConstructionByCustomer(Long customerId);
 }
