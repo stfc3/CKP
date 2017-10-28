@@ -56,4 +56,6 @@
 	<bean id="RoleService" class="com.dvd.ckp.business.service.RoleServiceImpl" />
 	<bean id="UtilsService" class="com.dvd.ckp.business.service.UtilsServiceImpl" />
         <bean id="ObjectService" class="com.dvd.ckp.business.service.ObjectServiceImpl" />
+        
+    <bean id="RentService" class="com.dvd.ckp.business.service.RentServicesImpl" />
 </beans>

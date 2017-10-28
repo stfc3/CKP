@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS prices
     price_m3 DOUBLE COMMENT 'Đơn giá theo m3',
     price_shift DOUBLE COMMENT 'Đơn giá theo ca',
     price_wait DOUBLE COMMENT 'Đơn giá theo ca chờ',
+    price_rent DOUBLE COMMENT 'Đơn giá thuê',
     convert_type INT COMMENT 'Loại chuyển đổi. 1: m3 sang m3; 2: m3 sang ca',
     convert_value DOUBLE COMMENT 'Giá trị tính chuyển đổi',
 	status INT DEFAULT 1 COMMENT '1: Hoạt động; 0: Không hoạt động',
@@ -391,3 +392,19 @@ INSERT INTO params (param_key, param_value, param_name) VALUES ('CONVERT_TYPE',2
 INSERT INTO params (param_key, param_value, param_name) VALUES ('LOCATION_TYPE',1,'Tầng');
 INSERT INTO params (param_key, param_value, param_name) VALUES ('LOCATION_TYPE',2,'Cột vách');
 INSERT INTO params (param_key, param_value, param_name) VALUES ('LOCATION_TYPE',3,'Cầu thang');
+
+
+DROP TABLE IF EXISTS rent_equipment;
+CREATE TABLE IF NOT EXISTS rent_equipment(
+    rent_id BIGINT NOT NULL AUTO_INCREMENT,
+    rent_type integer,
+    customers_id integer,
+    construction_id integer,    
+    contact_id integer,
+    start_date datetime,
+    end_date datetime,
+    average_price double default 0,
+    status integer default 1,
+    create_date timestamp default current_timestamp,
+    PRIMARY KEY(rent_id)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8 COMMENT 'Bảng quan ly cho thue can phan phoi';

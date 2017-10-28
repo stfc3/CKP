@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
@@ -48,11 +49,22 @@ public class DateTimeUtils {
 			return null;
 		}
 	}
+	
+	public static Long getDifferenceDay(Date startDate, Date endDate){
+		Long diff = endDate.getTime() - startDate.getTime();
+		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+	}
 
+	public static int getLastDayOfMonth(Date date){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+	}
 	public static void main(String[] arg) {
 		try {
-			System.out.println(convertDateToString(new Date(), "dd/MM/yyyy HH:MM:ss"));
-			System.out.println(convertStringToTime("20170922110926", "HH:MM:ss"));
+//			System.out.println(convertDateToString(new Date(), "dd/MM/yyyy HH:MM:ss"));
+			System.out.println(getDifferenceDay(convertStringToTime("20171001", "yyyyMMdd"),new Date()));
+			System.out.println("Last day of month: " + getLastDayOfMonth(convertStringToTime("20170901", "yyyyMMdd")));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
