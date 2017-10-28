@@ -13,10 +13,12 @@
                 <auxhead sclass="category-center" >
                     <auxheader colspan="6">
                         <a class="btn-cursor" id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
+                        <!--
                         <space width="10px"/>
                         <a class="btn-cursor" iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
                         <space width="10px"/>
                         <a class="btn-cursor" iconSclass="z-icon-file-excel-o" label="${c:l('export')}"/>
+                        -->
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">

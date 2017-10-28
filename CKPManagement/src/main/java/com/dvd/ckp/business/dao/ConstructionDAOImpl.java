@@ -34,6 +34,7 @@ public class ConstructionDAOImpl implements ConstructionDAO {
         Query query = getCurrentSession().getNamedQuery("Construction.fillAllConstruction");
         return (List<Construction>) query.list();
     }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<Construction> getConstructionActive() {
@@ -46,6 +47,22 @@ public class ConstructionDAOImpl implements ConstructionDAO {
     @Override
     public void insertOrUpdateConstruction(Construction construction) {
         getCurrentSession().saveOrUpdate(construction);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Construction> getConstructionByCustomer(Long customerId) {
+
+        if (customerId != null) {
+            StringBuilder vsbdSQL = new StringBuilder("SELECT ct FROM Construction ct, Contract ctr, Customer c ");
+            vsbdSQL.append("WHERE ct.contractId=ctr.contractId AND ctr.customerId=c.customerId ");
+            vsbdSQL.append("AND c.customerId= :customerId");
+            Query query = getCurrentSession().createQuery(vsbdSQL.toString());
+            query.setParameter("customerId", customerId);
+            return (List<Construction>) query.list();
+        } else {
+            return null;
+        }
     }
 
 }

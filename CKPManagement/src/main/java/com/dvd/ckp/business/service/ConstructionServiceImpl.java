@@ -39,5 +39,11 @@ public class ConstructionServiceImpl implements ConstructionService {
     public void insertOrUpdateConstruction(Construction construction) {
         ConstructionDAO.insertOrUpdateConstruction(construction);
     }
+    
+    @Transactional(readOnly = true)
+    @Override
+    public List<Construction> getConstructionByCustomer(Long customerId) {
+        return ConstructionDAO.getConstructionByCustomer(customerId);
+    }
 
 }

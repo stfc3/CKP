@@ -187,7 +187,7 @@
             <version>1.0.0.Final</version>
         </dependency>
         <!--Start BIRT-->
-<!--        <dependency>
+        <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>3.8</version>
@@ -570,18 +570,17 @@
             <version>3.5.100</version>
         </dependency>
         
-         https://mvnrepository.com/artifact/org.eclipse.birt.runtime/org.eclipse.birt.runtime 
         <dependency>
-            <groupId>org.eclipse.birt.runtime</groupId>
-            <artifactId>org.eclipse.birt.runtime</artifactId>
-            <version>4.6.0-20160607</version>
+            <groupId>com.stfc</groupId>
+            <artifactId>org.eclipse.birt.runtime_4.3.0.v20130613</artifactId>
+            <version>1.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.stfc</groupId>
             <artifactId>uk.co.spudsoft.birt.emitters.excel_0.8.0.201307252232</artifactId>
             <version>1.0</version>
-        </dependency>-->
+        </dependency>
         
         <!--End BIRT-->
     </dependencies>

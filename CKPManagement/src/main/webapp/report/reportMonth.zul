@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window  id="mainReportMonth" apply="com.dvd.ckp.report.ReportMonth">
+        <groupbox>
+            <caption label="${c:l('report.reportMass')}" />
+            <vlayout>
+                <hbox>
+                    <label hflex="3"/>
+                    <div hflex="3">
+                        <label value="${c:l('report.param.customer')}"/>
+                        <combobox id="cbxCustomer" name="p_customer" >
+                            <template name="model">
+                                <comboitem value="${each.customerId}" label="${each.customerName}" />
+                            </template>
+                        </combobox>
+                    </div>
+                    <div hflex="3">
+                        <label value="${c:l('report.param.construction')}"/>
+                        <combobox id="cbxConstruction" name="p_construction" >
+                            <template name="model">
+                                <comboitem value="${each.constructionId}" label="${each.constructionName}" />
+                            </template>
+                        </combobox>
+                    </div>
+                    <label hflex="3"/>
+                </hbox>
+                <hbox >
+                    <label hflex="3"/>
+                    <div hflex="3">
+                        <label value="${c:l('report.param.fromdate')}"/>
+                        <datebox id="dteFromDate" cols="12" format="dd/MM/yyyy" onCreate="self.value = new Date()" name="p_from_date" />
+                    </div>
+                    <div hflex="3">
+                        <label value="${c:l('report.param.todate')}"/>
+                        <datebox id="dteToDate" cols="12" format="dd/MM/yyyy" onCreate="self.value = new Date()" name="p_to_date" />
+                    </div>
+                    <label hflex="3"/>
+                </hbox>
+                <div style="text-align:center">
+                    <button id="btnHtml" iconSclass="z-icon-html5" label="${c:l('report.action.view')}"/>
+                    <button id="btnExcel" iconSclass="z-icon-file-excel-o"  label="${c:l('report.action.excel')}"/>
+                </div>
+            </vlayout>
+        </groupbox>
+        <iframe id="ifrReportMonth" width="100%" height="800px"></iframe>
+    </window> 
+</zk>

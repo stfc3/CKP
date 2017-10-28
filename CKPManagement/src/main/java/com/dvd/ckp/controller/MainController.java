@@ -233,7 +233,7 @@ public class MainController extends SelectorComposer<Component> {
         List<Object> lstFunction = new ArrayList<>();
         if (lstObjects != null && !lstObjects.isEmpty()) {
             for (Object object : lstObjects) {
-                if (StringUtils.isValidString(object.getPath())) {
+                if (StringUtils.isValidString(object.getPath()) && StringUtils.isValidString(object.getIcon())) {
                     lstFunction.add(object);
                 }
             }
