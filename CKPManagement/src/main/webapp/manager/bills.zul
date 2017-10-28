@@ -51,7 +51,7 @@
                             </template>
                         </combobox>
                     </auxheader>
-                    <auxheader colspan="6">
+                    <auxheader colspan="2">
                         <a iconSclass="z-icon-filter" />
                         <datebox id="dtFilterDate" hflex="1" />
                     </auxheader>
@@ -67,13 +67,6 @@
                     <column hflex="2">${c:l('bills.prd.id')}</column>
                     <column hflex="4">${c:l('bills.file')}</column>
                     <column hflex="3">${c:l('bills.cost')} (VNĐ)</column>
-                    <column hflex="2" visible="false">${c:l('bills.from.date')}</column>
-                    <column hflex="2" visible="false">
-                        ${c:l('bills.start.time')}
-                    </column>
-                    <column hflex="2" visible="false">${c:l('bills.end.time')}</column>
-                    <column hflex="2" visible="false">${c:l('bills.to.date')}</column>
-                    <!-- 					<column hflex="1">${c:l('pump.status')}</column> -->
                     <column hflex="2">${c:l('pump.action')}</column>
                 </columns>
                 <template name="model">
