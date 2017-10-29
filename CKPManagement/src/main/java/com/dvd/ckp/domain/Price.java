@@ -39,6 +39,7 @@ public class Price implements Serializable {
     private Double priceM3;
     private Double priceShift;
     private Double priceWait;
+    private Double priceRent;
     private Long convertType;
     private Double convertValue;
     private Integer status;
@@ -146,5 +147,14 @@ public class Price implements Serializable {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+    @Column(name = "price_rent")
+	public Double getPriceRent() {
+		return priceRent;
+	}
+
+	public void setPriceRent(Double priceRent) {
+		this.priceRent = priceRent;
+	}
 
 }
