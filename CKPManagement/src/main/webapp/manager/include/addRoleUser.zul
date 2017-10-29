@@ -1,37 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<zk xmlns="http://www.zkoss.org/2005/zul">
-    <!--<zk xmlns:n="native">-->
-    <style>
-        .z-a{
-        color: green;
-        cursor: auto;
-        text-decoration: none;
-        margin-right: 5px;
-        }
-        .z-auxheader-content{
-        line-height: 14px;
-        text-align:right;
-        }
-        a [class^="z-icon-"]{
-        margin-right: 5px;
-        }
-    </style>
-    <window  id="mainContract" apply="com.dvd.ckp.controller.RoleController">
+<zk>
+    <window id="windowAddRoleInUser"
+            apply="com.dvd.ckp.controller.AddRoleInUserController"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp" border="normal" width="70%"
+            height="60%" maximizable="false" title="${c:l('role.category')}"
+            onCancel="windowViewBillDetail.detach();"
+            contentStyle="overflow:auto">
+        <style src="/css/style.css" />
+
         <groupbox>
+            <longbox id="lgbUserId" value="${arg.userSelectId}" visible="false"/>
             <caption label="${c:l('role.category')}" />
-            <grid id="lstRole">
-                <auxhead sclass="category-center">
-                    <auxheader colspan="10">
-                        <a id="add" class="btn-cursor" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
-                        <!--
-                        <space width="10px"/>
-                        <a class="btn-cursor" iconSclass="z-icon-file-excel-o" label="${c:l('import')}" />
-                        <space width="10px"/>
-                        <a class="btn-cursor" iconSclass="z-icon-file-excel-o" label="${c:l('export')}"/>
-                        -->
-                    </auxheader>
-                </auxhead>
+            <grid id="lstRoleNotOwnUser">
                 <auxhead sclass="category-center">
                     <auxheader colspan="1">
                     </auxheader>
@@ -67,14 +49,12 @@
                         </cell>
                         
                         <cell style="text-align:center">
-                            <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
-                            <a class="btn-cursor" iconSclass="z-icon-trash-o" forward="onClick=onDelete" tooltiptext="${c:l('delete')}"/>
-                            <a class="btn-cursor" iconSclass="z-icon-check" forward="onClick=onSave" visible="false" tooltiptext="${c:l('save')}" />
-                            <a class="btn-cursor" iconSclass="z-icon-ban" forward="onClick=onCancel" visible="false" tooltiptext="${c:l('cancel')}"/>
+                            <a class="btn-cursor" iconSclass="z-icon-plus-circle" forward="onClick=onAddRoleInUser" tooltiptext="${c:l('edit')}"/>
                         </cell>
                     </row>
                 </template>
             </grid>
         </groupbox>
-    </window>  
+
+    </window>
 </zk>

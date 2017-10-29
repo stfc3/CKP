@@ -24,7 +24,7 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "roles")
 @NamedQueries({
-    @NamedQuery(name = "Role.getAllRole", query = "FROM Role r ORDER BY createDate")
+    @NamedQuery(name = "Role.getAllRole", query = "FROM Role r WHERE status = 1 ORDER BY createDate desc")
 })
 public class Role implements Serializable {
 

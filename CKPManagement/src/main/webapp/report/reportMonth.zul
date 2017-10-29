@@ -5,19 +5,19 @@
         <groupbox>
             <caption label="${c:l('report.reportMass')}" />
             <vlayout>
-                <hbox>
+                <hbox class="control-report-fix-margin">
                     <label hflex="3"/>
-                    <div hflex="3">
-                        <label value="${c:l('report.param.customer')}"/>
-                        <combobox id="cbxCustomer" name="p_customer" >
+                    <div class="control-report" hflex="3">
+                        <label class="label-control-report" value="${c:l('report.param.customer')}"/>
+                        <combobox class="control-report-input" id="cbxCustomer" name="p_customer" >
                             <template name="model">
                                 <comboitem value="${each.customerId}" label="${each.customerName}" />
                             </template>
                         </combobox>
                     </div>
-                    <div hflex="3">
-                        <label value="${c:l('report.param.construction')}"/>
-                        <combobox id="cbxConstruction" name="p_construction" >
+                    <div class="control-report" hflex="3">
+                        <label class="label-control-report" value="${c:l('report.param.construction')}"/>
+                        <combobox class="control-report-input" id="cbxConstruction" name="p_construction" >
                             <template name="model">
                                 <comboitem value="${each.constructionId}" label="${each.constructionName}" />
                             </template>
@@ -25,21 +25,21 @@
                     </div>
                     <label hflex="3"/>
                 </hbox>
-                <hbox >
+                <hbox class="control-report-fix-margin">
                     <label hflex="3"/>
-                    <div hflex="3">
-                        <label value="${c:l('report.param.fromdate')}"/>
-                        <datebox id="dteFromDate" cols="12" format="dd/MM/yyyy" onCreate="self.value = new Date()" name="p_from_date" />
+                    <div class="control-report" hflex="3">
+                        <label class="label-control-report" value="${c:l('report.param.fromdate')}"/>
+                        <datebox class="control-report-input" id="dteFromDate" cols="12" format="dd/MM/yyyy" onCreate="self.value = new Date()" name="p_from_date" />
                     </div>
-                    <div hflex="3">
-                        <label value="${c:l('report.param.todate')}"/>
-                        <datebox id="dteToDate" cols="12" format="dd/MM/yyyy" onCreate="self.value = new Date()" name="p_to_date" />
+                    <div class="control-report" hflex="3">
+                        <label class="label-control-report" value="${c:l('report.param.todate')}"/>
+                        <datebox class="control-report-input" id="dteToDate" cols="12" format="dd/MM/yyyy" onCreate="self.value = new Date()" name="p_to_date" />
                     </div>
                     <label hflex="3"/>
                 </hbox>
                 <div style="text-align:center">
-                    <button id="btnHtml" iconSclass="z-icon-html5" label="${c:l('report.action.view')}"/>
-                    <button id="btnExcel" iconSclass="z-icon-file-excel-o"  label="${c:l('report.action.excel')}"/>
+                    <button class="view-report" id="btnHtml" iconSclass="z-icon-html5" label="${c:l('report.action.view')}"/>
+                    <button class="view-report" id="btnExcel" iconSclass="z-icon-file-excel-o"  label="${c:l('report.action.excel')}"/>
                 </div>
             </vlayout>
         </groupbox>
