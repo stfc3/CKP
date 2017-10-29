@@ -26,4 +26,20 @@ public interface BirtConstant {
     String BIRT_AND="&";
     String PRD_ID="yyyyMMdd";
     
+    
+    Integer TYPE_ANY = 0;
+    Integer TYPE_STRING = 1;
+    Integer TYPE_FLOAT = 2;
+    Integer TYPE_DECIMAL = 3;
+    Integer TYPE_DATE_TIME = 4;
+    Integer TYPE_BOOLEAN = 5;
+    Integer TYPE_INTEGER = 6;
+    Integer TYPE_DATE = 7;
+    Integer TYPE_TIME = 8;
+    
+    Integer TYPE_PARAM = 1;
+    Integer TYPE_DISPLAY_TEXT = 2;
+    
+    String PARAM_SEPERATOR = ":_:";
+    
 }

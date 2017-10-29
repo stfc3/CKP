@@ -1,6 +1,7 @@
 package com.dvd.ckp.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +37,6 @@ public class DateTimeUtils {
 	 * @param: pstrDate
 	 * 
 	 * @param: pstrPattern
-<<<<<<< HEAD
 	 */
 	public static Date convertStringToTime(String pstrDate, String pstrPattern) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(pstrPattern);
@@ -68,38 +68,4 @@ public class DateTimeUtils {
 			e.printStackTrace();
 		}
 	}
-=======
-     */
-    public static Date convertStringToTime(String pstrDate, String pstrPattern) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(pstrPattern);
-        try {
-            return dateFormat.parse(pstrDate);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return null;
-        }
-    }
-
-    public static java.sql.Date convertStringToDateSql(String pstrDate, String pstrPattern) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(pstrPattern);
-        try {
-            Date date = dateFormat.parse(pstrDate);
-            java.sql.Date dateSql = new java.sql.Date(date.getTime());
-            return dateSql;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return null;
-        }
-    }
-
-    public static void main(String[] arg) {
-        try {
-            System.out.println(convertDateToString(new Date(), "dd/MM/yyyy HH:MM:ss"));
-            System.out.println(convertStringToTime("20170922110926", "HH:MM:ss"));
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
->>>>>>> 2a7e67d571f490733647ef86fb3ce791726b6a54
 }

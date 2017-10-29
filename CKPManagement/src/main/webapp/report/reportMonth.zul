@@ -43,6 +43,7 @@
                 </div>
             </vlayout>
         </groupbox>
+        <space height="20px"/>
         <iframe id="ifrReportMonth" width="100%" height="800px"></iframe>
     </window> 
 </zk>
