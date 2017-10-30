@@ -10,13 +10,15 @@ import com.dvd.ckp.business.service.ConstructionService;
 import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Customer;
+import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.SpringConstant;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import com.dvd.ckp.utils.StringUtils;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
@@ -61,7 +63,17 @@ public class ReportMonth extends GenericForwardComposer {
         constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
 
         lstCustomers = customerService.getCustomerActive();
-        cbxCustomer.setModel(new ListModelList<>(lstCustomers));
+
+        Customer customerOption = new Customer();
+        customerOption.setCustomerId(null);
+        customerOption.setCustomerName(Labels.getLabel("option"));
+        if (lstCustomers == null) {
+            lstCustomers = new ArrayList<>();
+        }
+        lstCustomers.add(Constants.FIRST_INDEX, customerOption);
+        ListModelList listCustomerModel = new ListModelList<>(lstCustomers);
+        listCustomerModel.addToSelection(customerOption);
+        cbxCustomer.setModel(listCustomerModel);
 
     }
 
@@ -97,8 +109,10 @@ public class ReportMonth extends GenericForwardComposer {
     private HashMap getParam() {
         HashMap paramMap = new HashMap();
         paramMap.put(BirtConstant.PARAM_REPORT, reportName);
-        paramMap.put(cbxCustomer.getName(), cbxCustomer.getSelectedItem().getValue());
-        if (cbxConstruction.getSelectedItem() != null) {
+        if (StringUtils.isValidString(cbxCustomer.getValue()) && !Labels.getLabel("option").equals(cbxCustomer.getValue())) {
+            paramMap.put(cbxCustomer.getName(), cbxCustomer.getSelectedItem().getValue());
+        }
+        if (StringUtils.isValidString(cbxConstruction.getValue()) && !Labels.getLabel("option").equals(cbxConstruction.getValue())) {
             paramMap.put(cbxConstruction.getName(), cbxConstruction.getSelectedItem().getValue());
         }
         paramMap.put(dteFromDate.getName(), DateTimeUtils.convertDateToString(dteFromDate.getValue(), BirtConstant.PRD_ID));
@@ -107,9 +121,26 @@ public class ReportMonth extends GenericForwardComposer {
     }
 
     public void onSelect$cbxCustomer() {
-        cbxConstruction.setValue("");
-        lstConstructions = constructionService.getConstructionByCustomer(cbxCustomer.getSelectedItem().getValue());
-        cbxConstruction.setModel(new ListModelList<>(lstConstructions));
+
+        Long customerId = null;
+        if (StringUtils.isValidString(cbxCustomer.getValue()) && !Labels.getLabel("option").equals(cbxCustomer.getValue())) {
+            customerId = cbxCustomer.getSelectedItem().getValue();
+        }
+        lstConstructions = constructionService.getConstructionByCustomer(customerId);
+
+        Construction constructionOption = new Construction();
+        constructionOption.setConstructionId(null);
+        constructionOption.setConstructionName(Labels.getLabel("option"));
+        if (lstConstructions == null) {
+            lstConstructions = new ArrayList<>();
+        }
+        lstConstructions.add(Constants.FIRST_INDEX, constructionOption);
+
+        ListModelList listContructionModel = new ListModelList<>(lstConstructions);
+        listContructionModel.addToSelection(constructionOption);
+
+        cbxConstruction.setModel(listContructionModel);
+
     }
 
 }

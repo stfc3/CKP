@@ -7,22 +7,25 @@ package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.RoleService;
 import com.dvd.ckp.domain.Role;
+import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
+import com.dvd.ckp.utils.StyleUtils;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
-import org.zkoss.zul.A;
-import org.zkoss.zul.Cell;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Textbox;
 
@@ -66,65 +69,7 @@ public class RoleController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        setEnableComponent(lstCell);
-    }
-
-    /**
-     * Set style enable edit
-     *
-     * @param lstCell
-     */
-    private void setEnableComponent(List<Component> lstCell) {
-        if (lstCell != null && !lstCell.isEmpty()) {
-            for (Component c : lstCell) {
-                if (c instanceof Cell) {
-                    Component child = c.getChildren().get(0);
-                    if (child instanceof Combobox) {
-                        ((Combobox) child).setButtonVisible(true);
-                        ((Combobox) child).setInplace(false);
-                    } else if (child instanceof Textbox) {
-                        ((Textbox) child).setReadonly(false);
-                        ((Textbox) child).setInplace(false);
-                    } else if (child instanceof A) {
-                        A edit = (A) child;
-                        edit.setVisible(false);
-                        A save = (A) c.getChildren().get(1);
-                        A cancel = (A) c.getChildren().get(2);
-                        save.setVisible(true);
-                        cancel.setVisible(true);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Set style disable edit
-     *
-     * @param lstCell
-     */
-    private void setDisableComponent(List<Component> lstCell) {
-        if (lstCell != null && !lstCell.isEmpty()) {
-            for (Component c : lstCell) {
-                if (c instanceof Cell) {
-                    Component child = c.getChildren().get(0);
-                    if (child instanceof Combobox) {
-                        ((Combobox) child).setButtonVisible(false);
-                        ((Combobox) child).setInplace(true);
-                    } else if (child instanceof Textbox) {
-                        ((Textbox) child).setReadonly(true);
-                        ((Textbox) child).setInplace(true);
-                    } else if (child instanceof A) {
-                        A edit = (A) child;
-                        edit.setVisible(true);
-                        A save = (A) c.getChildren().get(1);
-                        A cancel = (A) c.getChildren().get(2);
-                        save.setVisible(false);
-                        cancel.setVisible(false);
-                    }
-                }
-            }
-        }
+        StyleUtils.setEnableComponent(lstCell, 4);
     }
 
     /**
@@ -136,7 +81,7 @@ public class RoleController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
 
     }
@@ -152,8 +97,9 @@ public class RoleController extends GenericForwardComposer {
         Role c = rowSelected.getValue();
         Role role = getDataInRow(lstCell);
         role.setRoleId(c.getRoleId());
+        role.setStatus(Constants.STATUS_ACTIVE);
         roleService.insertOrUpdateRole(role);
-        setDisableComponent(lstCell);
+        StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
     }
 
@@ -166,7 +112,7 @@ public class RoleController extends GenericForwardComposer {
         lstRole.setModel(listDataModel);
         lstRole.renderAll();
         List<Component> lstCell = lstRole.getRows().getChildren().get(0).getChildren();
-        setEnableComponent(lstCell);
+        StyleUtils.setEnableComponent(lstCell, 4);
     }
 
     /**
@@ -180,13 +126,9 @@ public class RoleController extends GenericForwardComposer {
         Textbox txtRoleCode = (Textbox) lstCell.get(1).getFirstChild();
         Textbox txtRoleName = (Textbox) lstCell.get(2).getFirstChild();
         Textbox txtDes = (Textbox) lstCell.get(3).getFirstChild();
-        Combobox cbxStatus = (Combobox) lstCell.get(4).getFirstChild();
-
         role.setRoleCode(txtRoleCode.getValue());
         role.setRoleName(txtRoleName.getValue());
         role.setDescription(txtDes.getValue());
-
-        role.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
         return role;
     }
 
@@ -248,5 +190,24 @@ public class RoleController extends GenericForwardComposer {
         listDataModel = new ListModelList(vlstRole);
         lstRole.setModel(listDataModel);
 
+    }
+    
+    /**
+     * Delete
+     *
+     * @param event
+     */
+    public void onDelete(ForwardEvent event) {
+        Messagebox.show("Bạn có chắc chắn muốn xóa không?", "Xác nhận", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+            public void onEvent(Event e) {
+                if (Messagebox.ON_YES.equals(e.getName())) {
+                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    Role c = rowSelected.getValue();
+                    c.setStatus(Constants.STATUS_INACTIVE);
+                    roleService.insertOrUpdateRole(c);
+                    reloadGrid();
+                }
+            }
+        });
     }
 }

@@ -5,18 +5,20 @@
  */
 package com.dvd.ckp.controller;
 
+import com.dvd.ckp.business.service.RoleService;
 import com.dvd.ckp.business.service.UserService;
+import com.dvd.ckp.domain.Role;
 import com.dvd.ckp.domain.User;
-import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.EncryptUtil;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
@@ -31,7 +33,6 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
@@ -48,28 +49,35 @@ public class UserController extends GenericForwardComposer {
     private static final Logger logger = Logger.getLogger(UserController.class);
     @WireVariable
     protected UserService userService;
+    @WireVariable
+    protected RoleService roleService;
     @Wire
     private Grid lstUser;
-//    @Wire
-//    private Textbox txtFilterUserName;
-//    @Wire
-//    private Textbox txtFilterFullName;
-//    @Wire
-//    private Textbox txtFilterEmail;
     @Wire
     private Textbox txtFilterPhone;
     ListModelList<User> listDataModel;
     private List<User> lstUsers;
-    private Window user;
+    private Window mainUser;
     private boolean blnAddOrEdit = false;
-
     @Wire
     private Combobox cbxUserFilter;
+
+    @Wire
+    private Grid lstRole;
+    ListModelList<Role> listDataModelRole;
+    private List<Role> lstRoles;
+    @Wire
+    private Textbox txtFilterRoleCode;
+    @Wire
+    private Textbox txtFilterRoleName;
+
+    Long userIdSelect;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         userService = (UserService) SpringUtil.getBean(SpringConstant.USER_SERVICES);
+        roleService = (RoleService) SpringUtil.getBean(SpringConstant.ROLE_SERVICES);
         lstUsers = new ArrayList<>();
         List<User> vlstUser = userService.getAllUser();
         if (vlstUser != null) {
@@ -78,6 +86,18 @@ public class UserController extends GenericForwardComposer {
         listDataModel = new ListModelList(lstUsers);
         lstUser.setModel(listDataModel);
         cbxUserFilter.setModel(listDataModel);
+
+        lstRoles = new ArrayList<>();
+        if (vlstUser != null && !vlstUser.isEmpty() && vlstUser.get(0) != null) {
+            User user = vlstUser.get(0);
+            userIdSelect = user.getUserId();
+            List<Role> vlstRole = userService.getRoleByUser(String.valueOf(userIdSelect), 1);
+            if (vlstRole != null && !vlstRole.isEmpty() && vlstRole.size() > 0) {
+                lstRoles.addAll(vlstRole);
+            }
+            listDataModelRole = new ListModelList(lstRoles);
+            lstRole.setModel(listDataModelRole);
+        }
     }
 
     /**
@@ -144,7 +164,7 @@ public class UserController extends GenericForwardComposer {
     }
 
     /**
-     * Delate
+     * Delete
      *
      * @param event
      */
@@ -244,8 +264,7 @@ public class UserController extends GenericForwardComposer {
                         if (user.getUserId().equals(c.getUserId()) && c.getPhone().toLowerCase().contains(user.getPhone().toLowerCase())) {
                             vlstCustomer.add(c);
                         }
-                    }
-                    else if ((!Constants.DEFAULT_ID.equals(user.getUserId()) || user.getUserId() != null) && user.getPhone().equalsIgnoreCase("")) {
+                    } else if ((!Constants.DEFAULT_ID.equals(user.getUserId()) || user.getUserId() != null) && user.getPhone().equalsIgnoreCase("")) {
                         if (user.getUserId().equals(c.getUserId())) {
                             vlstCustomer.add(c);
                         }
@@ -280,147 +299,117 @@ public class UserController extends GenericForwardComposer {
         Messagebox.show(Labels.getLabel("login.change.password.content.message", new String[]{vstrPassword}), Labels.getLabel("login.change.password.title.message"), Messagebox.OK, Messagebox.INFORMATION);
     }
 
-    public void onClick$btnExport(Event event) {
-        ExcelWriter<User> excelWriter = new ExcelWriter<User>();
-        try {
-            int index = 0;
-            for (User user : lstUsers) {
-                index++;
-                user.setIndex(index);
-            }
-            String pathFileInput = com.dvd.ckp.common.Constants.PATH_FILE + "file/template/export/bills_data_export.xlsx";
-            String pathFileOut = com.dvd.ckp.common.Constants.PATH_FILE + "file/export/bills_data_export.xlsx";
+    /**
+     * Reload grid Role
+     */
+    private void reloadGridRole(String userId) {
+        List<Role> vlstRole = userService.getRoleByUser(userId, 1);
+        listDataModelRole = new ListModelList(vlstRole);
+        lstRole.setModel(listDataModelRole);
+    }
 
-            excelWriter.write(lstUsers, pathFileInput, pathFileOut);
-            File file = new File(pathFileOut);
-            Filedownload.save(file, null);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            logger.error(e.getMessage(), e);
+    public void onChange$txtFilterRoleCode() {
+        Role role = new Role();
+        String vstrRoleCode = txtFilterRoleCode.getValue();
+        role.setRoleCode(vstrRoleCode);
+        String vstrRoleName = txtFilterRoleName.getValue();
+        role.setRoleName(vstrRoleName);
+        filter(role);
+    }
+
+    public void onChange$txtFilterRoleName() {
+        Role role = new Role();
+        String vstrRoleCode = txtFilterRoleCode.getValue();
+        role.setRoleCode(vstrRoleCode);
+        String vstrRoleName = txtFilterRoleName.getValue();
+        role.setRoleName(vstrRoleName);
+        filter(role);
+    }
+
+    private void filter(Role role) {
+        List<Role> vlstRole = new ArrayList<>();
+        if (lstRoles != null && !lstRoles.isEmpty() && role != null) {
+            if (!StringUtils.isValidString(role.getRoleCode())
+                    && !StringUtils.isValidString(role.getRoleName())) {
+                vlstRole.addAll(lstRoles);
+            } else {
+                for (Role c : lstRoles) {
+                    //tim theo ma va ten
+                    if (StringUtils.isValidString(role.getRoleCode()) && StringUtils.isValidString(role.getRoleName())) {
+                        if ((StringUtils.isValidString(c.getRoleCode()) && c.getRoleCode().toLowerCase().contains(role.getRoleCode().toLowerCase()))
+                                && (StringUtils.isValidString(c.getRoleName()) && c.getRoleName().toLowerCase().contains(role.getRoleName().toLowerCase()))) {
+                            vlstRole.add(c);
+                        }
+                    } //tim theo role code
+                    else if (StringUtils.isValidString(role.getRoleCode()) && !StringUtils.isValidString(role.getRoleName())) {
+                        if (StringUtils.isValidString(c.getRoleCode()) && c.getRoleCode().toLowerCase().contains(role.getRoleCode().toLowerCase())) {
+                            vlstRole.add(c);
+                        }
+                    } //tim theo role name
+                    else if (!StringUtils.isValidString(role.getRoleCode()) && StringUtils.isValidString(role.getRoleName())) {
+                        if (StringUtils.isValidString(c.getRoleName()) && c.getRoleName().toLowerCase().contains(role.getRoleName().toLowerCase())) {
+                            vlstRole.add(c);
+                        }
+                    }
+                }
+            }
         }
+        listDataModelRole = new ListModelList(vlstRole);
+        lstRole.setModel(listDataModelRole);
 
     }
 
-    public void onImport(ForwardEvent event) {
-        final Window windownUpload = (Window) Executions.createComponents("/manager/uploadPumps.zul", user, null);
-        windownUpload.doModal();
-        windownUpload.setBorder(true);
-        windownUpload.setBorder("normal");
-        windownUpload.setClosable(true);
-        windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
-
-            @Override
-            public void onEvent(Event event) throws Exception {
-                reloadGrid();
-
+    /**
+     * Delate Role
+     *
+     * @param event
+     */
+    public void onDeleteRole(ForwardEvent event) {
+        Messagebox.show("Bạn có chắc chắn muốn xóa không?", "Xác nhận", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+            public void onEvent(Event e) {
+                if (Messagebox.ON_YES.equals(e.getName())) {
+                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    Role c = rowSelected.getValue();
+                    userService.deleteUserRole(userIdSelect, c.getRoleId());
+                    reloadGridRole(String.valueOf(userIdSelect));
+                }
             }
         });
     }
 
-    public void onDownloadFile(ForwardEvent event) {
-        try {
-            String pathFileInput = com.dvd.ckp.common.Constants.PATH_FILE + "file/template/import/import_pump_data.xlsx";
-
-            File file = new File(pathFileInput);
-            Filedownload.save(file, null);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            logger.error(e.getMessage(), e);
-        }
+    /**
+     * Ham reload grid Role by User khi click vao User tren grid User
+     *
+     * @param event
+     */
+    public void onViewRoleByUser(ForwardEvent event) {
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        User c = rowSelected.getValue();
+        userIdSelect = c.getUserId();
+        reloadGridRole(String.valueOf(c.getUserId()));
     }
 
-//    public void onDownloadFileError(ForwardEvent event) {
-//        ExcelWriter<com.dvd.ckp.excel.domain.Pumps> writer = new ExcelWriter<>();
-//        try {
-//            String pathFileOutput = com.dvd.ckp.common.Constants.PATH_FILE + "file/export/error/error_pumps_data.xlsx";
-//            String pathFileInput = com.dvd.ckp.common.Constants.PATH_FILE + "file/template/error/error_pumps_data.xlsx";
-//
-//            writer.write(lstError, pathFileInput, pathFileOutput);
-//            File file = new File(pathFileOutput);
-//            Filedownload.save(file, null);
-//        } catch (Exception e) {
-//            // TODO Auto-generated catch block
-//            logger.error(e.getMessage(), e);
-//        }
-//    }
-//    public void onUpload$uploadbtn(UploadEvent evt) {
-//        Media media = evt.getMedia();
-//
-//        if (media == null) {
-//            Messagebox.show(Labels.getLabel("uploadExcel.selectFile"), Labels.getLabel("ERROR"), Messagebox.OK,
-//                    Messagebox.ERROR);
-//            return;
-//        }
-//        final String vstrFileName = media.getName();
-//
-//        hdFileName.setValue(vstrFileName);
-//        linkFileName.setValue(vstrFileName);
-//        FileUtils fileUtils = new FileUtils();
-//        fileUtils.setSaveFilePath(SAVE_PATH);
-//        fileUtils.saveFile(media);
-//        hdFileName.setValue(fileUtils.getFileName());
-//        hiddenFileName.setValue(fileUtils.getFilePath());
-//    }
-//    public void onClick$btnSave() {
-//        int numberSucces = 0;
-//        int numberRowError = 1;
-//        lstError.clear();
-//        try {
-//            ExcelReader<com.dvd.ckp.excel.domain.Pumps> reader = new ExcelReader<>();
-//            String filePath = hiddenFileName.getValue();
-//            List<com.dvd.ckp.excel.domain.Pumps> listData = reader.read(filePath, com.dvd.ckp.excel.domain.Pumps.class);
-//            List<Pumps> vlstData = new ArrayList<>();
-//            if (listData != null && !listData.isEmpty()) {
-//                for (com.dvd.ckp.excel.domain.Pumps pumps : listData) {
-//
-//                    if (!NumberUtils.isNumber(pumps.getPumpsCapacity())) {
-//                        pumps.setDescription(
-//                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.capacity")}));
-//                        pumps.setIndex(numberRowError);
-//                        lstError.add(pumps);
-//                        numberRowError++;
-//                        continue;
-//                    }
-//
-//                    if (!NumberUtils.isNumber(pumps.getPumpsHight())) {
-//                        pumps.setDescription(
-//                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.hight")}));
-//                        pumps.setIndex(numberRowError);
-//                        lstError.add(pumps);
-//                        numberRowError++;
-//                        continue;
-//                    }
-//
-//                    if (!NumberUtils.isNumber(pumps.getPumpsFar())) {
-//                        pumps.setDescription(
-//                                Labels.getLabel("pump.not.number", new String[]{Labels.getLabel("pump.far")}));
-//                        pumps.setIndex(numberRowError);
-//                        lstError.add(pumps);
-//                        numberRowError++;
-//                        continue;
-//                    }
-//                    Pumps item = new Pumps();
-//                    item.setPumpsCode(pumps.getPumpsCode());
-//                    item.setPumpsName(pumps.getPumpsName());
-//                    item.setPumpsCapacity(Integer.valueOf(pumps.getPumpsCapacity()));
-//                    item.setPumpsHight(Integer.valueOf(pumps.getPumpsHight()));
-//                    item.setPumpsFar(Integer.valueOf(pumps.getPumpsFar()));
-//                    item.setStatus(1);
-//                    vlstData.add(item);
-//                    numberSucces++;
-//                }
-//            }
-//            txtTotalRow.setValue(String.valueOf(vlstData.size()));
-//            txtTotalRowSucces.setValue(String.valueOf(numberSucces));
-//
-//            if (lstError != null && !lstError.isEmpty()) {
-//                errorList.setVisible(true);
-//                txtTotalRowError.setValue(String.valueOf(lstError.size()));
-//            }
-//            pumpsService.importData(vlstData);
-//
-//        } catch (Exception e) {
-//            logger.error(e.getMessage(), e);
-//        }
-//    }
+    /**
+     * Open widow bill detail ol
+     *
+     * @param event
+     */
+    public void onClick$addRoleInUser() {
+        Map<String, Object> arguments = new HashMap<>();
+        arguments.put("userSelectId", userIdSelect);
+        final Window windownUpload = (Window) Executions.createComponents("/manager/include/addRoleUser.zul", mainUser, arguments);
+        windownUpload.doModal();
+        windownUpload.setBorder(true);
+        windownUpload.setBorder("normal");
+        windownUpload.setClosable(true);
+
+        windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                windownUpload.detach();
+                reloadGridRole(String.valueOf(userIdSelect));
+            }
+        });
+
+    }
 }

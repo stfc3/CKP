@@ -37,7 +37,6 @@ public class DateTimeUtils {
 	 * @param: pstrDate
 	 * 
 	 * @param: pstrPattern
-	 * 
 	 */
 	public static Date convertStringToTime(String pstrDate, String pstrPattern) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(pstrPattern);

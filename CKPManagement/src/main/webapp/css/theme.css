@@ -740,3 +740,34 @@ a [class^="z-icon-"]{
     border: none !important;
 }
 /*view bill detail*/
+/*report*/
+.control-report{
+    /*position: relative;*/
+}
+.label-control-report {
+    min-width: 100px;
+    float: left;
+    margin-top: 5px;
+}
+.control-report-input {
+    width: 150px;
+    float: left;
+}
+.control-report-input input {
+    width: 127px;
+    
+}
+.control-report-input .z-combobox-button {
+    height: 25px;
+}
+.control-report-input .z-datebox-button {
+    height: 25px;
+}
+.control-report-fix-margin {
+    margin-bottom: 0px;
+}
+.view-report {
+    width: 95px;
+    margin: 10px 0;
+}
+/*end report*/

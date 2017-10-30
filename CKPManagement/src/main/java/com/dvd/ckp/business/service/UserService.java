@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.business.service;
 
+import com.dvd.ckp.domain.Role;
 import com.dvd.ckp.domain.User;
 import java.util.List;
 
@@ -14,9 +15,16 @@ import java.util.List;
  */
 public interface UserService {
 
-     User getUserByName(String pstrUserName);
-     
-     List<User> getAllUser();
-     
-     void insertOrUpdateUser(User user);
+    User getUserByName(String pstrUserName);
+
+    List<User> getAllUser();
+
+    void insertOrUpdateUser(User user);
+    
+    List<Role> getRoleByUser(String userId, int type);
+    
+    int insertUserRole(Long userId, Long roleId);
+    
+    void deleteUserRole(Long userId, Long roleId);
+    
 }
