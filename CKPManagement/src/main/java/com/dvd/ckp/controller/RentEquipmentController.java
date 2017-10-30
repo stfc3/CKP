@@ -27,6 +27,7 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Grid;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Row;
@@ -115,7 +116,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 	private Datebox dtFilterEndDate;
 
 	Double price = null;
-	Textbox averagePrice = null;
+	Label averagePrice = null;
 	Combobox cbCustomer = null;
 	Combobox cbxConstruction = null;
 	Datebox startDate = null;
@@ -950,8 +951,8 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		Component component;
 
 		component = lstCell.get(aveagePrice).getFirstChild();
-		if (component != null && component instanceof Textbox) {
-			averagePrice = (Textbox) component;
+		if (component != null && component instanceof Label) {
+			averagePrice = (Label) component;
 		}
 
 		// Khach hang
