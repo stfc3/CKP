@@ -146,6 +146,7 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append(" pump_type = :pumpType, ");
 			builder.append(" location_id = :locationId, ");
 			builder.append(" location_type = :locationType, ");
+			builder.append(" is_auto = :isauto, ");
 			builder.append(" quantity = :quantity, ");
 			if (billsDetail.getQuantityApprove() != null) {
 				builder.append(" quantity_approve = :quantityApprove, ");
@@ -168,6 +169,7 @@ public class BillsDAOImpl implements BillDAO {
 			query.setParameter("pumpType", billsDetail.getPumpTypeId());
 			query.setParameter("locationId", billsDetail.getLocationId());
 			query.setParameter("locationType", billsDetail.getLocationType());
+			query.setParameter("isauto", billsDetail.getAutoConvert());
 			query.setParameter("quantity", billsDetail.getQuantity());
 			if (billsDetail.getQuantityApprove() != null) {
 				query.setParameter("quantityApprove", billsDetail.getQuantityApprove());
@@ -260,7 +262,7 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append(" left join location l ");
 			builder.append(" on d.location_id = l.location_id ");
 			builder.append(" left join pumps p ");
-			builder.append(" on d.pump_id = p.pump_id ");			
+			builder.append(" on d.pump_id = p.pump_id ");
 			builder.append(" where b.bill_id = :billID ");
 			builder.append(" and b.status = 1 ");
 			builder.append(" and d.status = 1 ");
@@ -271,8 +273,7 @@ public class BillsDAOImpl implements BillDAO {
 					.addScalar("endTime", StandardBasicTypes.DATE).addScalar("toDate", StandardBasicTypes.DATE)
 					.addScalar("quantity", StandardBasicTypes.DOUBLE)
 					.addScalar("quantityApprove", StandardBasicTypes.DOUBLE)
-					.addScalar("location", StandardBasicTypes.STRING)
-					.addScalar("pump", StandardBasicTypes.STRING)
+					.addScalar("location", StandardBasicTypes.STRING).addScalar("pump", StandardBasicTypes.STRING)
 					.setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));
 			query.setParameter("billID", billID);
 			List<BillViewDetail> lstData = query.list();
@@ -309,12 +310,12 @@ public class BillsDAOImpl implements BillDAO {
 		try {
 			StringBuilder builder = new StringBuilder("update bill_detail set ");
 			builder.append(" max_staff = :maxStaff, ");
-			builder.append(" is_far = :isFar, ");
+//			builder.append(" is_far = :isFar, ");
 			builder.append(" quantity_convert = :quantityConvert ");
 			builder.append(" where bill_detail_id = :billDetailId ");
 			Query query = getCurrentSession().createSQLQuery(builder.toString());
 			query.setParameter("maxStaff", maxStaff);
-			query.setParameter("isFar", isFar);
+//			query.setParameter("isFar", isFar);
 			query.setParameter("quantityConvert", quantityConvert);
 			query.setParameter("billDetailId", billDetail);
 			query.executeUpdate();

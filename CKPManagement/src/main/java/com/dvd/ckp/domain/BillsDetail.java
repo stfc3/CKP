@@ -17,6 +17,8 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 
+import com.dvd.ckp.utils.StringUtils;
+
 @Entity
 @Table(name = "bill_detail")
 @NamedQueries({
@@ -41,12 +43,13 @@ public class BillsDetail implements Serializable {
 	private Integer shift;
 	private Double total;
 	private Double totalApprove;
-	private Double totalView;
+	private String totalView;
 	private Integer maxStaff;
 	private Integer isFar;
 	private Integer status;
 	private Double quantityConvert;
 	private Date createDate;
+	private Integer autoConvert;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -218,17 +221,26 @@ public class BillsDetail implements Serializable {
 	}
 
 	@Transient
-	public Double getTotalView() {
-		if (totalApprove != null) {
-			totalView = totalApprove;
-		} else {
-			totalView = total;
-		}
+	public String getTotalView() {
+
 		return totalView;
 	}
 
-	public void setTotalView(Double totalView) {
-		this.totalView = totalView;
+	public void setTotalView(String totalView) {
+		if (totalApprove != null) {
+			this.totalView = StringUtils.formatPrice(totalApprove);
+		} else {
+			this.totalView = StringUtils.formatPrice(total);
+		}
+	}
+
+	@Column(name = "is_auto")
+	public Integer getAutoConvert() {
+		return autoConvert;
+	}
+
+	public void setAutoConvert(Integer autoconvert) {
+		this.autoConvert = autoconvert;
 	}
 
 }

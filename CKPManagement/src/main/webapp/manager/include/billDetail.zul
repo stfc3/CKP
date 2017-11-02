@@ -147,6 +147,10 @@
 				</column>
 				<!-- 				Vi tri bom -->
 				<column hflex="2">${c:l('bills.detail.place')}</column>
+				<!-- 				tu dong chuyen doi -->
+				<column hflex="2">
+					${c:l('bills.detail.is.auto')}
+				</column>
 				<!-- 				khoi luong bom -->
 				<column hflex="2">
 					${c:l('bills.detail.quantity')}
@@ -204,6 +208,10 @@
 							</template>
 						</combobox>
 					</cell>
+					<!--tu dong chuyen doi -->
+					<cell style="text-align: center;">
+						<checkbox disabled="true" hflex="1" />
+					</cell>
 
 					<!--khoi luong bom -->
 					<cell>
@@ -221,7 +229,9 @@
 					<!--Tong tien -->
 					<cell style="text-align: right;">
 						<label value="${each.total}"
-							style="text-align: right;" tooltiptext="${each.total}" hflex="1" />
+							style="text-align: right;"
+							tooltiptext="${each.totalView}"
+							hflex="1" />
 					</cell>
 
 
@@ -229,8 +239,9 @@
 						<a class="btn-cursor" iconSclass="z-icon-pencil"
 							forward="onClick=onEdit" tooltiptext="${c:l('edit')}" />
 
-						<a class="btn-cursor" iconSclass="z-icon-trash-o"
-							forward="onClick=onDelete" tooltiptext="${c:l('delete')}" />
+						<a class="btn-cursor"
+							iconSclass="z-icon-trash-o" forward="onClick=onDelete"
+							tooltiptext="${c:l('delete')}" />
 
 						<a class="btn-cursor" iconSclass="z-icon-check"
 							forward="onClick=onSave" visible="false"

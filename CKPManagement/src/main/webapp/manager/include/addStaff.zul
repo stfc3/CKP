@@ -14,44 +14,52 @@
 				<longbox id="txtBillID" value="${arg.billDetailID}"
 					visible="false">
 				</longbox>
-				<longbox id="txtPumpType" value="${arg.billDetai.pumpTypeId}"
-					visible="false">
+				<longbox id="txtPumpType"
+					value="${arg.billDetai.pumpTypeId}" visible="false">
 				</longbox>
+				<hlayout>
+					<!-- 					<hbox hflex="2"> -->
+					<!-- 						<hbox hflex="1" /> -->
+					<!-- 						<label hflex="1" -->
+					<!-- 							value="${c:l('bills.detail.is.far')}"> -->
+					<!-- 						</label> -->
+					<!-- 						<radiogroup id="isFar" /> -->
+					<!-- 						<radio hflex="1" id="yes" checked="true" -->
+					<!-- 							label="${c:l('yes')}" radiogroup="isFar" /> -->
+					<!-- 						<radio hflex="1" id="no" label="${c:l('no')}" -->
+					<!-- 							radiogroup="isFar" /> -->
+					<!-- 						<hbox hflex="1" /> -->
+					<!-- 					</hbox> -->
+					<hbox hflex="2">
+						<hbox hflex="1" />
+						<label>
+							${c:l('staff.quantity.staff.max')}
+						</label>
+						<intbox id="intMaxStaff"></intbox>
+						<hbox hflex="1" />
+					</hbox>
+					<hbox hflex="2">
+						<!-- 									<hbox hflex="1" /> -->
+						<label>
+							${c:l('staff.quantity.quantity.convert')}
+						</label>
+						<doublebox id="dbQuantityConvert" value="60">
+						</doublebox>
+						<hbox hflex="1" />
+					</hbox>
+				</hlayout>
 				<grid id="gridFullStaff" hflex="1">
 					<auxhead sclass="category-center">
 						<auxheader colspan="12">
-							<hlayout>
-								<hbox hflex="2">
-									<hbox hflex="1" />
-									<label hflex="1"
-										value="${c:l('bills.detail.is.far')}">
-									</label>
-									<radiogroup id="isFar" />
-									<radio hflex="1" id="yes"
-										checked="true" label="${c:l('yes')}" radiogroup="isFar" />
-									<radio hflex="1" id="no"
-										label="${c:l('no')}" radiogroup="isFar" />
-									<hbox hflex="1" />
-								</hbox>
-								<hbox hflex="2">
-									<!-- 									<hbox hflex="1" /> -->
-									<label>
-										${c:l('staff.quantity.staff.max')}
-									</label>
-									<intbox id="intMaxStaff"></intbox>
-									<hbox hflex="1" />
-								</hbox>
-								<hbox hflex="2">
-									<!-- 									<hbox hflex="1" /> -->
-									<label>
-										${c:l('staff.quantity.quantity.convert')}
-									</label>
-									<doublebox id="dbQuantityConvert"
-										value="60">
-									</doublebox>
-									<hbox hflex="1" />
-								</hbox>
-							</hlayout>
+							<a iconSclass="z-icon-filter" />
+							<combobox hflex="1" id="cbFilterName"
+								placeholder="${c:l('staff.filter')}" autodrop="true"
+								buttonVisible="false">
+								<template name="model">
+									<comboitem value="${each.staffId}"
+										label="${each.staffName}" />
+								</template>
+							</combobox>
 						</auxheader>
 					</auxhead>
 
@@ -112,6 +120,19 @@
 					${c:l('staff.quantity.selected')}
 				</label>
 				<grid id="gridSelectStaff" hflex="1">
+					<auxhead sclass="category-center">
+						<auxheader colspan="12">
+							<a iconSclass="z-icon-filter" />
+							<combobox hflex="1"
+								id="cbFilterNameSelected" placeholder="${c:l('staff.filter')}"
+								autodrop="true" buttonVisible="false">
+								<template name="model">
+									<comboitem value="${each.staffId}"
+										label="${each.staffName}" />
+								</template>
+							</combobox>
+						</auxheader>
+					</auxhead>
 					<columns style="text-align:center; ">
 						<column hflex="1">${c:l('pump.index')}</column>
 						<column hflex="2">${c:l('staff.code')}</column>
@@ -167,10 +188,12 @@
 			<hlayout>
 				<hbox hflex="3" />
 				<hbox hflex="2">
-					<button class="btn-cursor" forward="onClick=onAction"
-						iconSclass="z-icon-floppy-o" label="${c:l('save')}" />
-					<button class="btn-cursor" onClick="addStaff.detach();"
-						iconSclass="z-icon-times" label="${c:l('cancel')}" />
+					<button class="btn-cursor"
+						forward="onClick=onAction" iconSclass="z-icon-floppy-o"
+						label="${c:l('save')}" />
+					<button class="btn-cursor"
+						onClick="addStaff.detach();" iconSclass="z-icon-times"
+						label="${c:l('cancel')}" />
 				</hbox>
 				<hbox hflex="3" />
 			</hlayout>

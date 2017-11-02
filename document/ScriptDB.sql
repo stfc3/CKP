@@ -134,6 +134,7 @@ CREATE TABLE IF NOT EXISTS bill_detail
     pump_type INT COMMENT 'Loại máy bơm: bơm tĩnh, bơm qua cần phân phối,...',
     location_id BIGINT,
     location_type INT COMMENT 'Loại vị trí sàn, cột vách,...',
+    is_auto INT COMMENT 'xác định có tự động chuyển đổi từ m3->m3/ca không',
     quantity DOUBLE COMMENT 'Khối lượng bơm',
     quantity_approve DOUBLE COMMENT 'Khối lượng bơm đã duyệt',
     shift INT COMMENT 'Ca chờ',
