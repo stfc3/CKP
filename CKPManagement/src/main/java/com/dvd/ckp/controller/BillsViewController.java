@@ -123,7 +123,7 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 		Map<String, Object> arguments = new HashMap();
 		arguments.put("billDetailID", billDetailId);
 		arguments.put("bill", getBill());
-		arguments.put("billDetai", getPumpType(Long.valueOf(billDetailId)));
+		arguments.put("billDetai", getBillDetail(Long.valueOf(billDetailId)));
 		if (isApprove == 1) {
 			final Window windownUpload = (Window) Executions.createComponents("/manager/include/addStaff.zul",
 					windowViewBillDetail, arguments);
@@ -173,7 +173,7 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 
 	}
 
-	private BillsDetail getPumpType(Long billDetailID) {
+	private BillsDetail getBillDetail(Long billDetailID) {
 		if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
 			for (BillsDetail billsDetail : lstDataBill) {
 				if (billDetailID.equals(billsDetail.getBillDetailId())) {

@@ -65,6 +65,12 @@ public class ApproveQuantityController extends GenericForwardComposer {
 	@Wire
 	private Intbox txtMaxStaff;
 
+	@Wire
+	private Intbox txtIsAuto;
+
+	@Wire
+	private Intbox txtSwitch;
+
 	List<StaffQuantity> listQuantity;
 
 	@Override
@@ -93,14 +99,14 @@ public class ApproveQuantityController extends GenericForwardComposer {
 								return;
 							}
 							List<CalculatorRevenue> lstRevenue = billsServices.calculatorRevenue(
-									txtConstruction.getValue(), txtPumpTypeId.getValue(),
-									txtLocationID.getValue(), txtLocationTypeID.getValue(), quantityApproveValue,
-									txtShift.getValue());
-							totalApproveValue = lstRevenue.get(0).getTotal_revenue();
+									txtConstruction.getValue(), txtPumpTypeId.getValue(), txtLocationID.getValue(),
+									txtLocationTypeID.getValue(), quantityApproveValue, txtShift.getValue(),
+									txtSwitch.getValue(), txtIsAuto.getValue());
+							totalApproveValue = lstRevenue.get(0).getRevenue();
 							billsServices.upadte(quantityApproveValue, totalApproveValue, billDetail);
 							// totalApprove.setValue(totalApproveValue);
 							// approveQuantity.onClose();
-							logger.info("Value: " + lstRevenue.get(0).getTotal_revenue());
+							logger.info("Value: " + lstRevenue.get(0).getRevenue());
 							approveQuantity.onClose();
 							approveQuantity.detach();
 						}

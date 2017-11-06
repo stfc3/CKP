@@ -16,118 +16,141 @@ import javax.persistence.Transient;
 @Table(name = "staff")
 @NamedQuery(name = "Staff.getAllStaff", query = "select u FROM Staff u WHERE status = 1  order by createDate desc")
 public class Staff {
-	private int index;
-	private Long staffId;
-	private String staffCode;
-	private String staffName;
-	private String phone;
-	private String email;
-	private String address;
-	private Date birthday;
-	private String birthdayString;
-	private int status;
-	private Date createDate;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "staff_id")
-	public Long getStaffId() {
-		return staffId;
-	}
+    private int index;
+    private Long staffId;
+    private String staffCode;
+    private String staffName;
+    private String phone;
+    private String email;
+    private String address;
+    private Date birthday;
+    private String birthdayString;
 
-	public void setStaffId(Long staffId) {
-		this.staffId = staffId;
-	}
+    private Long department;
+    private Long position;
 
-	@Column(name = "staff_code")
-	public String getStaffCode() {
-		return staffCode;
-	}
+    private int status;
+    private Date createDate;
 
-	public void setStaffCode(String staffCode) {
-		this.staffCode = staffCode;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "staff_id")
+    public Long getStaffId() {
+        return staffId;
+    }
 
-	@Column(name = "staff_name")
-	public String getStaffName() {
-		return staffName;
-	}
+    public void setStaffId(Long staffId) {
+        this.staffId = staffId;
+    }
 
-	public void setStaffName(String staffName) {
-		this.staffName = staffName;
-	}
+    @Column(name = "staff_code")
+    public String getStaffCode() {
+        return staffCode;
+    }
 
-	@Column(name = "phone")
-	public String getPhone() {
-		return phone;
-	}
+    public void setStaffCode(String staffCode) {
+        this.staffCode = staffCode;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    @Column(name = "staff_name")
+    public String getStaffName() {
+        return staffName;
+    }
 
-	@Column(name = "email")
-	public String getEmail() {
-		return email;
-	}
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @Column(name = "phone")
+    public String getPhone() {
+        return phone;
+    }
 
-	@Column(name = "address")
-	public String getAddress() {
-		return address;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
 
-	@Column(name = "birthday")
-	public Date getBirthday() {
-		return birthday;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+    @Column(name = "address")
+    public String getAddress() {
+        return address;
+    }
 
-	@Column(name = "status")
-	public int getStatus() {
-		return status;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    @Column(name = "birthday")
+    public Date getBirthday() {
+        return birthday;
+    }
 
-	@Column(name = "create_date")
-	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    @Column(name = "department")
+    public Long getDepartment() {
+        return department;
+    }
 
-	@Transient
-	public String getBirthdayString() {
-		return birthdayString;
-	}
+    public void setDepartment(Long department) {
+        this.department = department;
+    }
 
-	public void setBirthdayString(String birthdayString) {
-		this.birthdayString = birthdayString;
-	}
+    @Column(name = "position")
+    public Long getPosition() {
+        return position;
+    }
 
-	@Transient
-	public int getIndex() {
-		return index;
-	}
+    public void setPosition(Long position) {
+        this.position = position;
+    }
 
-	public void setIndex(int index) {
-		this.index = index;
-	}
+    @Column(name = "status")
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    @Column(name = "create_date")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    @Transient
+    public String getBirthdayString() {
+        return birthdayString;
+    }
+
+    public void setBirthdayString(String birthdayString) {
+        this.birthdayString = birthdayString;
+    }
+
+    @Transient
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
 }

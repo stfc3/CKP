@@ -27,5 +27,7 @@ public interface SpringConstant {
     
     String RENT_SERVICES = "RentService";
     String DISTRIBUTE_SERVICES = "DistributeService";
+    
+    String PARAM_SERVICES = "ParamService";
 
 }

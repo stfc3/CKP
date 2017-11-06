@@ -59,4 +59,5 @@
         
     <bean id="RentService" class="com.dvd.ckp.business.service.RentServicesImpl" />
     <bean id="DistributeService" class="com.dvd.ckp.business.service.DistributeServiceImpl" />
+    <bean id="ParamService" class="com.dvd.ckp.business.service.ParamServiceImpl" />
 </beans>

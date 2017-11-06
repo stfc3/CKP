@@ -5,6 +5,10 @@
  */
 package com.dvd.ckp.utils;
 
+import com.dvd.ckp.domain.Param;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author dmin
@@ -35,7 +39,56 @@ public interface Constants {
     String PRAM_PRICE_TYPE = "PRICE_TYPE";
     String PRAM_OBJECT = "OBJECT";
     String RENT_TYPE = "RENT_PUMP";
-    
+    String PARAM_DEPARTMENT = "DEPARTMENT";
+    public static String PARAM_POSITION = "POSITION";
+
     Integer USER_ADMIN = 1;
     String ROLE_APPROVE = "approve";
+
+    String[] PARAM_TYPE = {PRAM_BANK, PRAM_PUMP_TYPE, PRAM_LOCATION_TYPE, PRAM_CONVERT_TYPE, RENT_TYPE, PARAM_DEPARTMENT, PARAM_POSITION};
+
+    public static String getParamFromType(String type) {
+        String result = "";
+        switch (type) {
+            case PRAM_BANK:
+                result = "Ngân hàng";
+                break;
+            case PRAM_PUMP_TYPE:
+                result = "Loại bơm";
+                break;
+            case PRAM_CONVERT_TYPE:
+                result = "Loại chuyển đổi";
+                break;
+            case PRAM_LOCATION_TYPE:
+                result = "Loại vị trí";
+                break;
+            case "RENT_PUMP":
+                result = "Cần phân phối";
+                break;
+            case PARAM_DEPARTMENT:
+                result = "Phòng ban";
+                break;
+            case PARAM_POSITION:
+                result = "Chức vụ";
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
+    public static List<Param> getParamKey() {
+        List<Param> vlstParam = new ArrayList<>();
+        Param p;
+        try {
+            for (int i = 0; i < PARAM_TYPE.length; i++) {
+                p = new Param();
+                p.setParamKey(PARAM_TYPE[i]);
+                p.setParamKeyName(getParamFromType(PARAM_TYPE[i]));
+                vlstParam.add(p);
+            }
+        } catch (Exception e) {
+        }
+        return vlstParam;
+    }
 }
