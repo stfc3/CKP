@@ -148,7 +148,7 @@ public class MainController extends SelectorComposer<Component> {
         List<Object> lstRootMenu = new ArrayList<>();
         if (lstObjects != null && !lstObjects.isEmpty()) {
             for (Object object : lstObjects) {
-                if (object.getParentId() == null) {
+                if (object.getParentId() == null && object.getObjectType()==1L) {
                     lstRootMenu.add(object);
                 }
             }
@@ -160,7 +160,7 @@ public class MainController extends SelectorComposer<Component> {
         List<Object> lstChilds = new ArrayList<>();
         if (lstObjects != null && !lstObjects.isEmpty()) {
             for (Object object : lstObjects) {
-                if (parentId.equals(object.getParentId())) {
+                if (parentId.equals(object.getParentId()) && object.getObjectType()==1L) {
                     lstChilds.add(object);
                 }
             }
@@ -232,7 +232,7 @@ public class MainController extends SelectorComposer<Component> {
         List<Object> lstFunction = new ArrayList<>();
         if (lstObjects != null && !lstObjects.isEmpty()) {
             for (Object object : lstObjects) {
-                if (StringUtils.isValidString(object.getPath()) && StringUtils.isValidString(object.getIcon())) {
+                if (StringUtils.isValidString(object.getPath()) && StringUtils.isValidString(object.getIcon()) && object.getObjectType()==1L) {
                     lstFunction.add(object);
                 }
             }

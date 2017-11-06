@@ -26,6 +26,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
@@ -55,6 +56,7 @@ public class ConstructionController extends GenericForwardComposer {
     private final int nameIndex = 2;
     private final int contractIndex = 3;
     private final int addressIndex = 4;
+    private final int farIndex = 5;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -162,7 +164,7 @@ public class ConstructionController extends GenericForwardComposer {
         Textbox txtConstructionName = null;
         Combobox cbxContract = null;
         Textbox txtConstructionAddress = null;
-//        Combobox cbxConstructionFar = null;
+        Checkbox ckbConstructionFar = null;
 //        Textbox txtConstructionConvert = null;
 //        Combobox cbxStatus = null;
         component = lstCell.get(codeIndex).getFirstChild();
@@ -184,6 +186,15 @@ public class ConstructionController extends GenericForwardComposer {
         if (component != null && component instanceof Textbox) {
             txtConstructionAddress = (Textbox) component;
             construction.setConstructionAddress(txtConstructionAddress.getValue());
+        }
+        component = lstCell.get(farIndex).getFirstChild();
+        if (component != null && component instanceof Checkbox) {
+            ckbConstructionFar = (Checkbox) component;
+            Integer isFar = 0;
+            if (ckbConstructionFar.isChecked()) {
+                isFar = 1;
+            }
+            construction.setIsFar(isFar);
         }
         return construction;
     }

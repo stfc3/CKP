@@ -35,6 +35,7 @@ public class Construction implements Serializable {
     private String constructionCode;
     private String constructionName;
     private String constructionAddress;
+    private Integer isFar;
     private Integer status;
     private Date createDate;
 
@@ -102,6 +103,15 @@ public class Construction implements Serializable {
 
     public void setConstructionAddress(String constructionAddress) {
         this.constructionAddress = constructionAddress;
+    }
+
+    @Column(name = "is_far")
+    public Integer getIsFar() {
+        return isFar;
+    }
+
+    public void setIsFar(Integer isFar) {
+        this.isFar = isFar;
     }
     
     

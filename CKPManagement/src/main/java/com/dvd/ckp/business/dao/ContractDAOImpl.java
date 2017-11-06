@@ -59,9 +59,10 @@ public class ContractDAOImpl implements ContractDAO {
     }
     @SuppressWarnings("unchecked")
     @Override
-    public List<Price> getPriceByContract(Long contractId) {
+    public List<Price> getPriceByContract(Long contractId, Integer priceType) {
         Query query = getCurrentSession().getNamedQuery("Price.fillPriceByContract");
         query.setParameter("contractId", contractId);
+        query.setParameter("priceType", priceType);
         return (List<Price>) query.list();
     }
 

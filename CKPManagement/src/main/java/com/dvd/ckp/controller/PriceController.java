@@ -22,9 +22,11 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 
 import com.dvd.ckp.business.service.ContractService;
+import com.dvd.ckp.business.service.DistributeService;
 import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
+import com.dvd.ckp.domain.Distribute;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.Price;
@@ -63,17 +65,25 @@ public class PriceController extends GenericForwardComposer {
     protected PumpServices pumpService;
     @WireVariable
     protected LocationServices locationService;
+    @WireVariable
+    protected DistributeService distributeService;
     @Wire
     private Grid lstPrice;
+    @Wire
+    private Grid lstPriceDistribute;
     @Wire
     private Longbox lgbContractId;
     @Wire
     private Window mainPrice;
 
     ListModelList<Price> listDataModelPrice;
+    ListModelList<Price> listDataModelPriceDistribute;
 
     Param defaultParam;
     List<Param> lstPumpType;
+    
+    Distribute defaultDistribute;
+    List<Distribute> lstDistributes;
 
     List<Param> lstLocationType;
 
@@ -93,11 +103,15 @@ public class PriceController extends GenericForwardComposer {
     private final int m3Index = 2;
     private final int shiftIndex = 3;
     private final int waitIndex = 4;
-    private final int convertTypeIndex = 5;
-    private final int convertValueIndex = 6;
+    private final int switchIndex = 5;
+    private final int convertTypeIndex = 6;
+    private final int convertValueIndex = 7;
 
     private Long lngContractId;
     private boolean isAdd;
+    
+    private final Integer pricePump=1;
+    private final Integer priceDistribute=2;
     ///
 
     @Override
@@ -108,6 +122,7 @@ public class PriceController extends GenericForwardComposer {
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
         pumpService = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
         locationService = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
+        distributeService = (DistributeService) SpringUtil.getBean(SpringConstant.DISTRIBUTE_SERVICES);
 
 //        price
         defaultParam = new Param();
@@ -144,6 +159,15 @@ public class PriceController extends GenericForwardComposer {
             lstPumps = new ArrayList<>();
         }
         lstPumps.add(Constants.FIRST_INDEX, defaultPump);
+        //list can phan phoi
+        defaultDistribute = new Distribute();
+        defaultDistribute.setDistributeId(Constants.DEFAULT_ID);
+        defaultDistribute.setDistributeName(Labels.getLabel("option"));
+        lstDistributes = distributeService.getDistributeActive();
+        if (lstDistributes == null) {
+            lstDistributes = new ArrayList<>();
+        }
+        lstDistributes.add(Constants.FIRST_INDEX, defaultDistribute);
 
         //list vi tri
         defaultLocation = new Location();
@@ -160,12 +184,19 @@ public class PriceController extends GenericForwardComposer {
         List<Price> vlstPrice = new ArrayList<>();
         lngContractId = lgbContractId.getValue();
         if (lgbContractId != null) {
-            vlstPrice = contractService.getPriceByContract(lngContractId);
+            vlstPrice = contractService.getPriceByContract(lngContractId, pricePump);
         }
         listDataModelPrice = new ListModelList<>(vlstPrice);
+        List<Price> vlstPriceDistribute = new ArrayList<>();
+        if (lgbContractId != null) {
+            vlstPriceDistribute = contractService.getPriceByContract(lngContractId, priceDistribute);
+        }
+        listDataModelPriceDistribute = new ListModelList<>(vlstPriceDistribute);
 
         lstPrice.setModel(listDataModelPrice);
+        lstPriceDistribute.setModel(listDataModelPriceDistribute);
         setDataDefaultInGrid();
+        setDataDefaultInGridDistribute();
 //        price
     }
 
@@ -181,7 +212,19 @@ public class PriceController extends GenericForwardComposer {
         Price price = rowSelected.getValue();
         setComboboxParam(lstCell, getParamDefault(price.getPumpType(), pumpTypeIndex), pumpTypeIndex);
         setComboboxParam(lstCell, getParamDefault(price.getConvertType(), convertTypeIndex), convertTypeIndex);
-//        setComboboxPump(lstCell, getPumpDefault(price.getPumpId()), pumpIndex);
+        StyleUtils.setEnableComponent(lstCell, 4);
+    }
+    /**
+     * Edit row
+     *
+     * @param event
+     */
+    public void onEditDistribute(ForwardEvent event) {
+        isAdd = false;
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        List<Component> lstCell = rowSelected.getChildren();
+        Price price = rowSelected.getValue();
+        setComboboxDistribute(lstCell, getDistributeDefault(price.getPumpType()), pumpTypeIndex);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 
@@ -199,6 +242,20 @@ public class PriceController extends GenericForwardComposer {
         reloadGrid();
 
     }
+    /**
+     * Cancel
+     *
+     * @param event
+     */
+    public void onCancelDistribute(ForwardEvent event) {
+
+        isAdd = false;
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        List<Component> lstCell = rowSelected.getChildren();
+        StyleUtils.setDisableComponent(lstCell, 4);
+        reloadGridDistribute();
+
+    }
 
     /**
      * Save
@@ -212,11 +269,26 @@ public class PriceController extends GenericForwardComposer {
         Price price = rowSelected.getValue();
         getDataInRow(lstCell, price);
         price.setContractId(lngContractId);
+        price.setPriceType(pricePump);
         price.setStatus(Constants.STATUS_ACTIVE);
         price.setCreateDate(new Date());
         contractService.insertOrUpdatePrice(price);
         StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
+    }
+    public void onSaveDistribute(ForwardEvent event) {
+        isAdd = false;
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        List<Component> lstCell = rowSelected.getChildren();
+        Price price = rowSelected.getValue();
+        getDataInRowDistribute(lstCell, price);
+        price.setContractId(lngContractId);
+        price.setPriceType(priceDistribute);
+        price.setStatus(Constants.STATUS_ACTIVE);
+        price.setCreateDate(new Date());
+        contractService.insertOrUpdatePrice(price);
+        StyleUtils.setDisableComponent(lstCell, 4);
+        reloadGridDistribute();
     }
 
     public void onDelete(ForwardEvent event) {
@@ -230,6 +302,21 @@ public class PriceController extends GenericForwardComposer {
                     price.setCreateDate(new Date());
                     contractService.insertOrUpdatePrice(price);
                     reloadGrid();
+                }
+            }
+        });
+    }
+    public void onDeleteDistribute(ForwardEvent event) {
+        Messagebox.show(Labels.getLabel("message.confirm.delete.content"), Labels.getLabel("message.confirm.delete.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+            @Override
+            public void onEvent(Event e) {
+                if (Messagebox.ON_YES.equals(e.getName())) {
+                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    Price price = rowSelected.getValue();
+                    price.setStatus(Constants.STATUS_INACTIVE);
+                    price.setCreateDate(new Date());
+                    contractService.insertOrUpdatePrice(price);
+                    reloadGridDistribute();
                 }
             }
         });
@@ -250,6 +337,21 @@ public class PriceController extends GenericForwardComposer {
             StyleUtils.setEnableComponent(lstCell, 4);
         }
     }
+    /**
+     * Add row
+     */
+    public void onClick$addDistribute() {
+        if (!isAdd) {
+            isAdd = true;
+            Price price = new Price();
+            listDataModelPriceDistribute.add(Constants.FIRST_INDEX, price);
+            lstPriceDistribute.setModel(listDataModelPriceDistribute);
+            lstPriceDistribute.renderAll();
+            List<Component> lstCell = lstPriceDistribute.getRows().getFirstChild().getChildren();
+            setDataDefaultInGridDistribute();
+            StyleUtils.setEnableComponent(lstCell, 4);
+        }
+    }
 
     /**
      * Get object customer
@@ -260,10 +362,10 @@ public class PriceController extends GenericForwardComposer {
     private void getDataInRow(List<Component> lstCell, Price price) {
         Component component;
         Combobox cbxPumpType = null;
-        Combobox cbxPump = null;
         Doublebox dbbM3 = null;
         Doublebox dbbShift = null;
         Doublebox dbbWait = null;
+        Doublebox dbbSwitch = null;
         Combobox cbxConvertType = null;
         Doublebox dbbConvertValue = null;
         component = lstCell.get(pumpTypeIndex).getFirstChild();
@@ -271,11 +373,6 @@ public class PriceController extends GenericForwardComposer {
             cbxPumpType = (Combobox) component;
             price.setPumpType(cbxPumpType.getSelectedItem().getValue());
         }
-//        component = lstCell.get(pumpIndex).getFirstChild();
-//        if (component != null && component instanceof Combobox) {
-//            cbxPump = (Combobox) component;
-//            price.setPumpId(cbxPump.getSelectedItem().getValue());
-//        }
         component = lstCell.get(m3Index).getFirstChild();
         if (component != null && component instanceof Doublebox) {
             dbbM3 = (Doublebox) component;
@@ -291,6 +388,11 @@ public class PriceController extends GenericForwardComposer {
             dbbWait = (Doublebox) component;
             price.setPriceWait(dbbWait.getValue());
         }
+        component = lstCell.get(switchIndex).getFirstChild();
+        if (component != null && component instanceof Doublebox) {
+            dbbSwitch = (Doublebox) component;
+            price.setPriceSwitch(dbbSwitch.getValue());
+        }
         component = lstCell.get(convertTypeIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             cbxConvertType = (Combobox) component;
@@ -302,14 +404,43 @@ public class PriceController extends GenericForwardComposer {
             price.setConvertValue(dbbConvertValue.getValue());
         }
     }
+    /**
+     * Get object customer
+     *
+     * @param lstCell
+     * @return
+     */
+    private void getDataInRowDistribute(List<Component> lstCell, Price price) {
+        Component component;
+        Combobox cbxPumpType = null;
+        Doublebox dbbRent = null;
+        component = lstCell.get(pumpTypeIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxPumpType = (Combobox) component;
+            price.setPumpType(cbxPumpType.getSelectedItem().getValue());
+        }
+        component = lstCell.get(m3Index).getFirstChild();
+        if (component != null && component instanceof Doublebox) {
+            dbbRent = (Doublebox) component;
+            price.setPriceRent(dbbRent.getValue());
+        }
+    }
 
     /**
      * Reload grid
      */
     private void reloadGrid() {
-        listDataModelPrice = new ListModelList(contractService.getPriceByContract(lngContractId));
+        listDataModelPrice = new ListModelList(contractService.getPriceByContract(lngContractId, pricePump));
         lstPrice.setModel(listDataModelPrice);
         setDataDefaultInGrid();
+    }
+    /**
+     * Reload grid distribute
+     */
+    private void reloadGridDistribute() {
+        listDataModelPriceDistribute = new ListModelList(contractService.getPriceByContract(lngContractId, priceDistribute));
+        lstPriceDistribute.setModel(listDataModelPriceDistribute);
+        setDataDefaultInGridDistribute();
     }
 
     private void setDataDefaultInGrid() {
@@ -322,7 +453,18 @@ public class PriceController extends GenericForwardComposer {
                 List<Component> lstCell = row.getChildren();
                 setComboboxParam(lstCell, getParamDefault(price.getPumpType(), pumpTypeIndex), pumpTypeIndex);
                 setComboboxParam(lstCell, getParamDefault(price.getConvertType(), convertTypeIndex), convertTypeIndex);
-//                setComboboxPump(lstCell, getPumpDefault(price.getPumpId()), pumpIndex);
+            }
+        }
+    }
+    private void setDataDefaultInGridDistribute() {
+        lstPriceDistribute.renderAll();
+        List<Component> lstRows = lstPriceDistribute.getRows().getChildren();
+        if (lstRows != null && !lstRows.isEmpty()) {
+            for (int i = 0; i < lstRows.size(); i++) {
+                Price price = listDataModelPriceDistribute.get(i);
+                Component row = lstRows.get(i);
+                List<Component> lstCell = row.getChildren();
+                setComboboxDistribute(lstCell, getDistributeDefault(price.getPumpType()), pumpTypeIndex);
             }
         }
     }
@@ -354,22 +496,6 @@ public class PriceController extends GenericForwardComposer {
         return paramSelected;
     }
 
-    private List<Pumps> getPumpDefault(Long pumpId) {
-        List<Pumps> pumpSelected = new ArrayList<>();
-        if (pumpId != null && lstPumps != null && !lstPumps.isEmpty()) {
-            for (Pumps vPump : lstPumps) {
-                if (pumpId.equals(vPump.getPumpsID())) {
-                    pumpSelected.add(vPump);
-                    break;
-                }
-            }
-        }
-        if (pumpSelected.isEmpty()) {
-            pumpSelected.add(defaultPump);
-        }
-        return pumpSelected;
-    }
-
     private void setComboboxParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
         Combobox cbxParam = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
@@ -392,24 +518,38 @@ public class PriceController extends GenericForwardComposer {
             cbxParam.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getParamName());
         }
     }
-
-    private void setComboboxPump(List<Component> lstCell, List<Pumps> selectedIndex, int columnIndex) {
-        Combobox cbxPump = null;
+    
+    private void setComboboxDistribute(List<Component> lstCell, List<Distribute> selectedIndex, int columnIndex) {
+        Combobox cbxDistribute = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
-            cbxPump = (Combobox) component;
-            ListModelList listDataModelParam = new ListModelList(lstPumps);
-            listDataModelParam.setSelection(selectedIndex);
-            cbxPump.setModel(listDataModelParam);
-            cbxPump.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getPumpsName());
+            cbxDistribute = (Combobox) component;
+            ListModelList listDataModelDistribute = new ListModelList(lstDistributes);
+            listDataModelDistribute.setSelection(selectedIndex);
+            cbxDistribute.setModel(listDataModelDistribute);
+            cbxDistribute.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getDistributeName());
         }
+
+    }
+    
+    private List<Distribute> getDistributeDefault(Long distributeId) {
+        List<Distribute> distributeSelected = new ArrayList<>();
+        if (distributeId != null && lstDistributes != null && !lstDistributes.isEmpty()) {
+            for (Distribute distribute : lstDistributes) {
+                if (distributeId.equals(distribute.getDistributeId())) {
+                    distributeSelected.add(distribute);
+                    break;
+                }
+            }
+        }
+        if (distributeSelected.isEmpty()) {
+            distributeSelected.add(defaultDistribute);
+        }
+        return distributeSelected;
     }
 
+
     public void onPriceLocation(ForwardEvent event) {
-//        Messagebox.show(Labels.getLabel("message.confirm.save.content"), Labels.getLabel("message.confirm.save.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
-//            @Override
-//            public void onEvent(Event e) {
-//                if (Messagebox.ON_YES.equals(e.getName())) {
         Map<String, Object> arguments = new HashMap<>();
         Price price;
         Long vlngPriceId = null;
@@ -438,8 +578,5 @@ public class PriceController extends GenericForwardComposer {
         winAddUser.setClosable(true);
 
         winAddUser.doModal();
-//                }
-//            }
-//        });
     }
 }

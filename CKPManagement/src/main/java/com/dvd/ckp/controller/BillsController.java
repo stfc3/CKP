@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.controller;
 
+import com.dvd.ckp.bean.UserToken;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -55,7 +56,6 @@ import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Construction;
-import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Pumps;
@@ -857,6 +857,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         }
         Construction construction = getConstruction(c.getConstructionID());
         arguments.put("construction", construction);
+        arguments.put("approve", getRoleApprove());
         final Window windownUpload = (Window) Executions.createComponents("/manager/include/billDetailView.zul", bills,
                 arguments);
         windownUpload.doModal();
@@ -1081,6 +1082,21 @@ public class BillsController extends GenericForwardComposer<Component> {
             }
         }
         return -1;
+    }
+
+    private boolean getRoleApprove() {
+        UserToken userToken = (UserToken) session.getAttribute(com.dvd.ckp.utils.Constants.USER_TOKEN);
+        if (userToken != null) {
+            List<com.dvd.ckp.domain.Object> lstObjects = userToken.getListObject();
+            if (lstObjects != null) {
+                for (com.dvd.ckp.domain.Object obj : lstObjects) {
+                    if (obj.getObjectType() == 3L && com.dvd.ckp.utils.Constants.ROLE_APPROVE.equals(obj.getObjectCode())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }

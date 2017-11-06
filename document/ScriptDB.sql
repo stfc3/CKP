@@ -25,10 +25,12 @@ CREATE TABLE IF NOT EXISTS prices
     price_m3 DOUBLE COMMENT 'Đơn giá theo m3',
     price_shift DOUBLE COMMENT 'Đơn giá theo ca',
     price_wait DOUBLE COMMENT 'Đơn giá theo ca chờ',
+    price_switch DOUBLE COMMENT 'Đơn giá theo ca chuyển chân',
     price_rent DOUBLE COMMENT 'Đơn giá thuê',
     convert_type INT COMMENT 'Loại chuyển đổi. 1: m3 sang m3; 2: m3 sang ca',
     convert_value DOUBLE COMMENT 'Giá trị tính chuyển đổi',
 	status INT DEFAULT 1 COMMENT '1: Hoạt động; 0: Không hoạt động',
+    price_type INT COMMENT '1: Giá bơm; 2: Giá cần phân phối',
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(price_id)
 )ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8 COMMENT 'Bảng giá';
@@ -74,6 +76,7 @@ CREATE TABLE IF NOT EXISTS construction
     construction_code VARCHAR(50),
     construction_name VARCHAR(100),
     construction_address VARCHAR(200),
+    is_far INT DEFAULT 0 COMMENT 'Công trình xa hay không: 1 Xa; 0: không xa',
     status INT DEFAULT 1,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(construction_id)
@@ -92,6 +95,20 @@ CREATE TABLE IF NOT EXISTS pumps
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(pump_id)
 ) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8 COMMENT 'Bảng máy bơm';
+
+DROP TABLE IF EXISTS distribute;
+CREATE TABLE IF NOT EXISTS distribute
+(
+    distribute_id BIGINT NOT NULL AUTO_INCREMENT,
+    distribute_code VARCHAR(50),
+    distribute_name VARCHAR(200),
+    distribute_year DATE COMMENT 'Năm sản xuất',
+    distribute_remote INT DEFAULT 0 COMMENT 'Điều khiển từ xa 0: không có; 1: có',
+    distribute_handheld INT DEFAULT 1 COMMENT 'Điều khiển cầm tay 0: không có; 1: có',
+    status INT DEFAULT 1,
+    create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(distribute_id)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8 COMMENT 'Bảng cần phân phối';
 
 DROP TABLE IF EXISTS location;
 CREATE TABLE IF NOT EXISTS location
@@ -137,10 +154,11 @@ CREATE TABLE IF NOT EXISTS bill_detail
     quantity DOUBLE COMMENT 'Khối lượng bơm',
     quantity_approve DOUBLE COMMENT 'Khối lượng bơm đã duyệt',
     shift INT COMMENT 'Ca chờ',
+    switch INT COMMENT 'Ca chuyển chân',
     total DOUBLE COMMENT 'Tổng tiền',
     total_approve DOUBLE COMMENT 'Tổng tiền đã duyệt',
     max_staff INT COMMENT 'Số công nhân tối đa. Mặc định là 3 đối với bơm CPP, 5 đối với bơm tĩnh, Có thể hơn nếu được GĐ duyệt',
-	is_far INT DEFAULT 0 COMMENT 'Công trình xa hay không: 1 Xa; 0: không xa',
+	is_auto INT DEFAULT 1 COMMENT 'Quy đổi tự động hay không: 1 - có; 0 - không',
     quantity_convert DOUBLE COMMENT 'Giới hạn quy đổi cho công nhân',
     status INT DEFAULT 1,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -159,6 +177,8 @@ CREATE TABLE IF NOT EXISTS staff
     email VARCHAR(50),
     address VARCHAR(200),
     birthday DATE,
+    department INT,
+    position INT,
     status INT DEFAULT 1,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(staff_id)

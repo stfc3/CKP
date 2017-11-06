@@ -37,4 +37,5 @@ public interface Constants {
     String RENT_TYPE = "RENT_PUMP";
     
     Integer USER_ADMIN = 1;
+    String ROLE_APPROVE = "approve";
 }

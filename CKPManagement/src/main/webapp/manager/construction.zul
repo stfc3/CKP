@@ -7,7 +7,7 @@
             <caption label="${c:l('construction.category')}" />
             <grid id="lstConstruction" mold="paging" pageSize="20" pagingPosition="bottom">
                 <auxhead sclass="category-center" >
-                    <auxheader colspan="6">
+                    <auxheader colspan="7">
                         <a class="btn-cursor" id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <!--
                         <space width="10px"/>
@@ -18,7 +18,7 @@
                     </auxheader>
                 </auxhead>
                 <auxhead sclass="category-center">
-                    <auxheader colspan="6">
+                    <auxheader colspan="7">
                         <a iconSclass="z-icon-filter"/>
                         <combobox  hflex="1" id="cbxConstructionFilter" autodrop="true" placeholder="Nhập tên công trình để tìm kiếm"
                                    buttonVisible="false">
@@ -34,6 +34,7 @@
                     <column hflex="6">${c:l('construction.name')}</column>
                     <column hflex="6">${c:l('construction.contract')}</column>
                     <column hflex="6">${c:l('construction.address')}</column>
+                    <column hflex="2">${c:l('construction.far')}</column>
                     <column hflex="2">${c:l('construction.action')}</column>
                 </columns>
                 <template name="model">
@@ -57,6 +58,9 @@
                         </cell>
                         <cell>
                             <textbox value="${each.constructionAddress}" tooltiptext="${each.constructionAddress}" hflex="1" inplace="true" readonly="true"/>
+                        </cell>
+                        <cell style="text-align:center" >
+                            <checkbox checked="${each.isFar == 1 ? true : false}" tooltiptext="${each.isFar == 1 ? c:l('yes') : c:l('no')}" hflex="1" disabled="true"/>
                         </cell>
                         <cell style="text-align:center">
                             <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>

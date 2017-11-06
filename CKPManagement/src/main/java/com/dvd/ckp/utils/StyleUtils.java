@@ -10,6 +10,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.A;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Cell;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Doublebox;
@@ -54,6 +55,8 @@ public class StyleUtils {
                     } else if (child instanceof Textbox) {
                         ((Textbox) child).setReadonly(false);
                         ((Textbox) child).setInplace(false);
+                    } else if (child instanceof Checkbox) {
+                        ((Checkbox) child).setDisabled(false);
                     } else if (child instanceof A && c.getChildren().size() == 1) {
                         ((A) child).setDisabled(false);
                     } else if (child instanceof A && c.getChildren().size() == 2) {
@@ -152,6 +155,8 @@ public class StyleUtils {
                     } else if (child instanceof Textbox) {
                         ((Textbox) child).setReadonly(true);
                         ((Textbox) child).setInplace(true);
+                    } else if (child instanceof Checkbox) {
+                        ((Checkbox) child).setDisabled(true);
                     } else if (child instanceof A && c.getChildren().size() == 1) {
                         ((A) child).setDisabled(true);
                     } else if (child instanceof A && c.getChildren().size() == 2) {
