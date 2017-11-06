@@ -216,7 +216,7 @@ public class BillsDAOImpl implements BillDAO {
 
 	@Override
 	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpType, Long locationType,
-			Long locationID, Double quantity, int shift, int numSwitch, int numAuto) {
+			Long locationID, Double quantity, Integer shift, Integer numSwitch, Integer numAuto) {
 		try {
 			logger.info("Call calculator_revenue :{constructionId:" + constructionId + ",pumpType:" + pumpType
 					+ ",locationType:" + locationType + ",locationID:" + locationID + ",quantity:" + quantity

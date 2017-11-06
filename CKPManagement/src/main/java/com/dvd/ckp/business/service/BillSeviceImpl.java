@@ -67,7 +67,7 @@ public class BillSeviceImpl implements BillsServices {
 
 	@Override
 	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpType, Long locationType,
-			Long locationID, Double quantity, Integer shift, int numSwitch, int numAuto) {
+			Long locationID, Double quantity, Integer shift, Integer numSwitch, Integer numAuto) {
 		// TODO Auto-generated method stub
 		return billDAO.calculatorRevenue(constructionId, pumpType, locationType, locationID, quantity, shift, numSwitch,
 				numAuto);
