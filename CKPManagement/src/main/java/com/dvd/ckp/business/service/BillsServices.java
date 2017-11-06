@@ -33,7 +33,7 @@ public interface BillsServices {
 	public void delete(BillsDetail billsDetail);
 
 	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpType, Long locationType,
-			Long locationID, Double quantity, Integer shift);
+			Long locationID, Double quantity, Integer shift, int numSwitch, int numAuto);
 
 	public List<BillViewDetail> getDataView(Long billID);
 

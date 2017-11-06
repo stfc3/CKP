@@ -59,7 +59,7 @@ public class Bills implements Serializable {
 	private String fileName;
 
 	// thanh tien
-	private Double cost;
+	private String cost;
 
 	// danh sach khach hang
 	private List<Customer> listCustomer;
@@ -183,11 +183,11 @@ public class Bills implements Serializable {
 	}
 
 	@Transient
-	public Double getCost() {
+	public String getCost() {	
 		return cost;
 	}
 
-	public void setCost(Double cost) {
+	public void setCost(String cost) {
 		this.cost = cost;
 	}
 

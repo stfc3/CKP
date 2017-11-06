@@ -1,23 +1,23 @@
 package com.dvd.ckp.domain;
 
 public class CalculatorRevenue {
-	private Double total_revenue;
-	private String description;
+	private Double revenue;
+	private String formula;
 
-	public Double getTotal_revenue() {
-		return total_revenue;
+	public Double getRevenue() {
+		return revenue;
 	}
 
-	public void setTotal_revenue(Double total_revenue) {
-		this.total_revenue = total_revenue;
+	public void setRevenue(Double revenue) {
+		this.revenue = revenue;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getFormula() {
+		return formula;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setFormula(String formula) {
+		this.formula = formula;
 	}
 
 }

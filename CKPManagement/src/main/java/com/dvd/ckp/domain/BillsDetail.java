@@ -50,6 +50,7 @@ public class BillsDetail implements Serializable {
 	private Double quantityConvert;
 	private Date createDate;
 	private Integer autoConvert;
+	private Integer numSwitch;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -241,6 +242,15 @@ public class BillsDetail implements Serializable {
 
 	public void setAutoConvert(Integer autoconvert) {
 		this.autoConvert = autoconvert;
+	}
+
+	@Column(name = "switch")
+	public Integer getNumSwitch() {
+		return numSwitch;
+	}
+
+	public void setNumSwitch(Integer numSwitch) {
+		this.numSwitch = numSwitch;
 	}
 
 }

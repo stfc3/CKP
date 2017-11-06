@@ -24,6 +24,7 @@
 							iconSclass="z-icon-file-excel-o" forward="onClick=onExport"
 							label="${c:l('export')}" />
 						-->
+
 					</auxheader>
 				</auxhead>
 				<auxhead sclass="category-center">
@@ -124,8 +125,7 @@
 						<!--thanh tien -->
 						<cell style="text-align: right;">
 							<label style="text-align: right;"
-								value="${each.cost!=null ? c:formatNumber(each.cost, '###,###,###.##') : '' }"
-								tooltiptext="${each.cost!=null ? c:formatNumber(each.cost, '###,###,###.##') : '' }" />
+								value="${each.cost}" tooltiptext="${each.cost}" />
 						</cell>
 						<!--thoi gian den cong trinh -->
 						<cell style="text-align: right;"

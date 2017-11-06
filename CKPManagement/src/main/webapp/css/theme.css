@@ -771,3 +771,7 @@ a [class^="z-icon-"]{
     margin: 10px 0;
 }
 /*end report*/
+
+.btn-add-pumps-detail{
+	float: left;
+}
