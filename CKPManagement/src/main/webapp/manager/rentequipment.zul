@@ -52,13 +52,15 @@
 					</auxheader>
 					<auxheader colspan="2">
 						<a iconSclass="z-icon-filter" />
-						<datebox id="dtFilterStartDate" format="dd/MM/yyyy"
-							placeholder="${c:l('rent.pump.from.date')}" hflex="1" />
+						<datebox id="dtFilterStartDate"
+							format="dd/MM/yyyy" placeholder="${c:l('rent.pump.from.date')}"
+							hflex="1" />
 					</auxheader>
 					<auxheader colspan="2">
 						<a iconSclass="z-icon-filter" />
-						<datebox id="dtFilterEndDate" format="dd/MM/yyyy"
-							placeholder="${c:l('rent.pump.end.date')}" hflex="1" />
+						<datebox id="dtFilterEndDate"
+							format="dd/MM/yyyy" placeholder="${c:l('rent.pump.end.date')}"
+							hflex="1" />
 					</auxheader>
 
 				</auxhead>
@@ -135,13 +137,14 @@
 
 						<!--thanh tien -->
 						<cell style="text-align: right;">
-							<textbox style="text-align: right;"
-								inplace="true" readonly="true" value="${each.averagePriceView}"
+							<label style="text-align: right;"
+								value="${each.averagePriceView}"
 								tooltiptext="${each.averagePriceView}" />
 						</cell>
 
 						<!--thanh tien -->
-						<cell style="text-align: right;" visible="false">
+						<cell style="text-align: right;"
+							visible="false">
 							<doublebox style="text-align: right;"
 								inplace="true" readonly="true" value="${each.averagePrice}"
 								tooltiptext="${each.averagePrice}" />
