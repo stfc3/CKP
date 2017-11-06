@@ -26,5 +26,7 @@ public interface SpringConstant {
     String OBJECT_SERVICES = "ObjectService";
     
     static final String RENT_SERVICES = "RentService";
+    
+    String PARAM_SERVICES = "ParamService";
 
 }
