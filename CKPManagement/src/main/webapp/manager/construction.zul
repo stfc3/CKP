@@ -49,7 +49,7 @@
                         </cell>
                         <cell>
                             <combobox hflex="1"  
-                            buttonVisible="false" inplace="true"  readonly="true">
+                                      buttonVisible="false" inplace="true"  readonly="true">
                                 <template name="model">
                                     <comboitem value="${each.contractId}" label="${each.contractName}" />
                                 </template>

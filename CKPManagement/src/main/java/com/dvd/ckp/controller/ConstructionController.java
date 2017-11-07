@@ -7,6 +7,7 @@ package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.ConstructionService;
 import com.dvd.ckp.business.service.ContractService;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.utils.Constants;
@@ -48,6 +49,7 @@ public class ConstructionController extends GenericForwardComposer {
     @Wire
     private Combobox cbxConstructionFilter;
     ListModelList<Construction> listDataModel;
+    MyListModel<Construction> listDataModelFilter;
     List<Contract> lstContract;
     private List<Construction> lstConstructions;
     Contract defaultContract;
@@ -71,7 +73,8 @@ public class ConstructionController extends GenericForwardComposer {
         defaultContract.setContractName(Labels.getLabel("option"));
         lstContract.add(Constants.FIRST_INDEX, defaultContract);
 
-        cbxConstructionFilter.setModel(listDataModel);
+        listDataModelFilter=new MyListModel(lstConstructions);
+        cbxConstructionFilter.setModel(listDataModelFilter);
         setDataDefaultInGrid();
     }
 
@@ -194,8 +197,9 @@ public class ConstructionController extends GenericForwardComposer {
     private void reloadGrid() {
         lstConstructions = constructionService.getConstructionActive();
         listDataModel = new ListModelList(lstConstructions);
+        listDataModelFilter = new MyListModel(lstConstructions);
         lstConstruction.setModel(listDataModel);
-        cbxConstructionFilter.setModel(listDataModel);
+        cbxConstructionFilter.setModel(listDataModelFilter);
         setDataDefaultInGrid();
     }
 
