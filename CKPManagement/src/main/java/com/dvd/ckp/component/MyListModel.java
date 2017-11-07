@@ -17,6 +17,11 @@ Copyright (C) 2006 Potix Corporation. All Rights Reserved.
 package com.dvd.ckp.component;
 
 import com.dvd.ckp.domain.Construction;
+import com.dvd.ckp.domain.Contract;
+import com.dvd.ckp.domain.Customer;
+import com.dvd.ckp.domain.Distribute;
+import com.dvd.ckp.domain.Location;
+import com.dvd.ckp.domain.Pumps;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -517,12 +522,8 @@ public class MyListModel<E> extends AbstractListModel<E> implements Sortable<E>,
 		final List<E> data = new LinkedList<E>();
 		nRows = getMaxNumberInSubModel(nRows);
 		for (int i = 0; i < _list.size(); i++) {
-                    Construction c = null;
-                    if(_list.get(i) instanceof Construction){
-                        c=(Construction) _list.get(i);
-                    }
 //			if (inSubModel(value, _list.get(i))) {
-			if (c!=null && inSubModel(value, c.getConstructionName())) {
+			if (inSubModel(value, getName(_list.get(i)))) {
 				data.add((E) _list.get(i));
 				if (--nRows <= 0)
 					break; //done
@@ -560,4 +561,26 @@ public class MyListModel<E> extends AbstractListModel<E> implements Sortable<E>,
 		final String s = value != null ? value.toString() : "";
 		return s != null ? s.toLowerCase() : "";
 	}
+        
+        private String getName(Object object){
+            if(object instanceof Construction){
+                return ((Construction) object).getConstructionName();
+            }
+            if(object instanceof Contract){
+                return ((Contract) object).getContractName();
+            }
+            if(object instanceof Customer){
+                return ((Customer) object).getCustomerName();
+            }
+            if(object instanceof Pumps){
+                return ((Pumps) object).getPumpsName();
+            }
+            if(object instanceof Distribute){
+                return ((Distribute) object).getDistributeName();
+            }
+            if(object instanceof Location){
+                return ((Location) object).getLocationName();
+            }
+            return "";
+        }
 }
