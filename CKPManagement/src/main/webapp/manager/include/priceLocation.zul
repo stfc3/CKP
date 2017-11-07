@@ -38,7 +38,7 @@
                         <!--Loai vi tri-->
                         <cell>
                             <combobox  hflex="1"  
-                                       buttonVisible="false" inplace="true"  readonly="true">
+                                       buttonVisible="false" inplace="true"  readonly="true" autodrop="true">
                                 <template name="model">
                                     <comboitem value="${each.paramValue}" label="${each.paramName}" />
                                 </template>
@@ -48,7 +48,7 @@
                         <!--Vi tri bat dau-->
                         <cell>
                             <combobox  hflex="1"  
-                                       buttonVisible="false" inplace="true"  readonly="true">
+                                       buttonVisible="false" inplace="true"  readonly="true" autodrop="true">
                                 <template name="model">
                                     <comboitem value="${each.locationID}" label="${each.locationName}" />
                                 </template>
@@ -57,7 +57,7 @@
                         <!--Vi tri ket thuc-->
                         <cell>
                             <combobox  hflex="1"  
-                                       buttonVisible="false" inplace="true"  readonly="true">
+                                       buttonVisible="false" inplace="true"  readonly="true" autodrop="true">
                                 <template name="model">
                                     <comboitem value="${each.locationID}" label="${each.locationName}" />
                                 </template>

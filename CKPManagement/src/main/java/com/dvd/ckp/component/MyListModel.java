@@ -21,6 +21,7 @@ import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Distribute;
 import com.dvd.ckp.domain.Location;
+import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.Pumps;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -551,8 +552,11 @@ public class MyListModel<E> extends AbstractListModel<E> implements Sortable<E>,
 	 * @since 5.0.4
 	 */
 	protected boolean inSubModel(Object key, Object value) {
-		String idx = objectToString(key);
-		return idx.length() > 0 && objectToString(value).contains(idx);
+            if (key == null || "".equals(key)) {
+                return true;
+            }
+            String idx = objectToString(key);
+            return idx.length() > 0 && objectToString(value).contains(idx);
 	}
         /**
 	 * @deprecated As of release 5.0.4, replaced with {@link #inSubModel}.
@@ -580,6 +584,9 @@ public class MyListModel<E> extends AbstractListModel<E> implements Sortable<E>,
             }
             if(object instanceof Location){
                 return ((Location) object).getLocationName();
+            }
+            if(object instanceof Param){
+                return ((Param) object).getParamName();
             }
             return "";
         }

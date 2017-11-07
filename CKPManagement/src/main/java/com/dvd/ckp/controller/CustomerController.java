@@ -7,6 +7,7 @@ package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.business.service.UtilsService;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.utils.Constants;
@@ -220,7 +221,7 @@ public class CustomerController extends GenericForwardComposer {
         listDataModel = new ListModelList(lstCustomers);
         lstCustomer.setModel(listDataModel);
 
-        cbxCustomerFilter.setModel(listDataModel);
+        cbxCustomerFilter.setModel(new MyListModel(lstCustomers));
         
         setDataDefaultInGrid();
     }
@@ -248,6 +249,7 @@ public class CustomerController extends GenericForwardComposer {
         }
         listDataModel = new ListModelList(vlstCustomer);
         lstCustomer.setModel(listDataModel);
+        setDataDefaultInGrid();
     }
 
     
@@ -299,7 +301,7 @@ public class CustomerController extends GenericForwardComposer {
         }
         if (component != null && component instanceof Combobox) {
             cbxParam = (Combobox) component;
-            ListModelList listDataModelParam = new ListModelList(lstParam);
+            MyListModel listDataModelParam = new MyListModel(lstParam);
             listDataModelParam.setSelection(selectedIndex);
             cbxParam.setModel(listDataModelParam);
             cbxParam.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getParamName());

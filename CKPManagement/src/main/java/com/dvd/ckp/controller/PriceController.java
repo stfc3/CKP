@@ -26,6 +26,7 @@ import com.dvd.ckp.business.service.DistributeService;
 import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Distribute;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Param;
@@ -512,7 +513,7 @@ public class PriceController extends GenericForwardComposer {
         }
         if (component != null && component instanceof Combobox) {
             cbxParam = (Combobox) component;
-            ListModelList listDataModelParam = new ListModelList(lstParam);
+            MyListModel listDataModelParam = new MyListModel(lstParam);
             listDataModelParam.setSelection(selectedIndex);
             cbxParam.setModel(listDataModelParam);
             cbxParam.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getParamName());
@@ -524,7 +525,7 @@ public class PriceController extends GenericForwardComposer {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             cbxDistribute = (Combobox) component;
-            ListModelList listDataModelDistribute = new ListModelList(lstDistributes);
+            MyListModel listDataModelDistribute = new MyListModel(lstDistributes);
             listDataModelDistribute.setSelection(selectedIndex);
             cbxDistribute.setModel(listDataModelDistribute);
             cbxDistribute.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getDistributeName());

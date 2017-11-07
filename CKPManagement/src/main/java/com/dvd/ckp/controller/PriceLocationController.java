@@ -24,6 +24,7 @@ import org.zkoss.zul.Row;
 import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.UtilsService;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.PriceLocation;
@@ -331,7 +332,7 @@ public class PriceLocationController extends GenericForwardComposer {
         }
         if (component != null && component instanceof Combobox) {
             cbxParam = (Combobox) component;
-            ListModelList listDataModelParam = new ListModelList(lstParam);
+            MyListModel listDataModelParam = new MyListModel(lstParam);
             listDataModelParam.setSelection(selectedIndex);
             cbxParam.setModel(listDataModelParam);
             cbxParam.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getParamName());
@@ -354,7 +355,7 @@ public class PriceLocationController extends GenericForwardComposer {
         }
         if (component != null && component instanceof Combobox) {
             cbxLocation = (Combobox) component;
-            ListModelList listDataModelParam = new ListModelList(lstLocation);
+            MyListModel listDataModelParam = new MyListModel(lstLocation);
             listDataModelParam.setSelection(selectedIndex);
             cbxLocation.setModel(listDataModelParam);
             cbxLocation.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getLocationName());

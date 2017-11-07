@@ -49,7 +49,7 @@
                                     <!--Loai may bom-->
                                     <cell>
                                         <combobox  hflex="1"  
-                                                  buttonVisible="false" inplace="true"  readonly="true">
+                                                  buttonVisible="false" inplace="true"  readonly="true" autodrop="true">
                                             <template name="model">
                                                 <comboitem value="${each.paramValue}" label="${each.paramName}" />
                                             </template>
@@ -79,7 +79,7 @@
                                     <!--Loai convert-->
                                     <cell>
                                         <combobox  hflex="1"  
-                                                  buttonVisible="false" inplace="true"  readonly="true">
+                                                  buttonVisible="false" inplace="true"  readonly="true" autodrop="true">
                                             <template name="model">
                                                 <comboitem value="${each.paramValue}" label="${each.paramName}" />
                                             </template>
@@ -131,7 +131,7 @@
                                     <!--Loai may bom-->
                                     <cell>
                                         <combobox  hflex="1"  
-                                                  buttonVisible="false" inplace="true"  readonly="true">
+                                                  buttonVisible="false" inplace="true"  readonly="true" autodrop="true">
                                             <template name="model">
                                                 <comboitem value="${each.distributeId}" label="${each.distributeName}" />
                                             </template>

@@ -28,6 +28,7 @@ import org.zkoss.zul.Window;
 import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.business.service.UtilsService;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.utils.Constants;
@@ -75,6 +76,7 @@ public class ContractController extends GenericForwardComposer {
     @Wire
     private Window mainContract;
     ListModelList<Contract> listDataModel;
+    MyListModel<Contract> listDataModelFilter;
     List<Contract> lstContracts;
 
     List<Customer> lstCustomers;
@@ -108,8 +110,9 @@ public class ContractController extends GenericForwardComposer {
 
         lstCustomers = customerService.getCustomerActive();
 
-        cbxContractFilter.setModel(listDataModel);
-        cbxCustomerFilter.setModel(new ListModelList<>(lstCustomers));
+        listDataModelFilter=new MyListModel<>(lstContracts);
+        cbxContractFilter.setModel(listDataModelFilter);
+        cbxCustomerFilter.setModel(new MyListModel<>(lstCustomers));
 
         defaultCustomer = new Customer();
         defaultCustomer.setCustomerId(Constants.DEFAULT_ID);
@@ -268,7 +271,8 @@ public class ContractController extends GenericForwardComposer {
         listDataModel = new ListModelList(lstContracts);
         lstContract.setModel(listDataModel);
 
-        cbxContractFilter.setModel(listDataModel);
+        listDataModelFilter=new MyListModel(lstContracts);
+        cbxContractFilter.setModel(listDataModelFilter);
 
         setDataDefaultInGrid();
     }
@@ -334,7 +338,7 @@ public class ContractController extends GenericForwardComposer {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             cbxCustomer = (Combobox) component;
-            ListModelList listDataModelCustomer = new ListModelList(lstCustomers);
+            MyListModel listDataModelCustomer = new MyListModel(lstCustomers);
             listDataModelCustomer.setSelection(selectedIndex);
             cbxCustomer.setModel(listDataModelCustomer);
             cbxCustomer.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getCustomerName());

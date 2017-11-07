@@ -246,7 +246,7 @@ public class ConstructionController extends GenericForwardComposer {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             cbxContract = (Combobox) component;
-            ListModelList listDataModelContract = new ListModelList(lstContract);
+            MyListModel listDataModelContract = new MyListModel(lstContract);
             listDataModelContract.setSelection(selectedIndex);
             cbxContract.setModel(listDataModelContract);
         }
