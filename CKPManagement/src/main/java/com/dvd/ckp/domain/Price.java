@@ -28,7 +28,7 @@ import javax.persistence.Temporal;
     ,
     @NamedQuery(name = "Price.fillPriceActive", query = "FROM Price p WHERE p.status = 1 ORDER BY p.createDate DESC")
     ,
-    @NamedQuery(name = "Price.fillPriceByContract", query = "FROM Price p WHERE p.status = 1 AND p.contractId = :contractId ORDER BY p.createDate DESC")
+    @NamedQuery(name = "Price.fillPriceByContract", query = "FROM Price p WHERE p.status = 1 AND p.contractId = :contractId AND p.priceType = :priceType ORDER BY p.createDate DESC")
 })
 public class Price implements Serializable {
 
@@ -40,9 +40,11 @@ public class Price implements Serializable {
     private Double priceShift;
     private Double priceWait;
     private Double priceRent;
+    private Double priceSwitch;
     private Long convertType;
     private Double convertValue;
     private Integer status;
+    private Integer priceType;
     private Date createDate;
 
     @Id
@@ -74,7 +76,6 @@ public class Price implements Serializable {
 //    public void setPumpId(Long pumpId) {
 //        this.pumpId = pumpId;
 //    }
-
     @Column(name = "pump_type")
     public Long getPumpType() {
         return pumpType;
@@ -137,7 +138,7 @@ public class Price implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
-    
+
     @Column(name = "create_date")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date getCreateDate() {
@@ -149,12 +150,30 @@ public class Price implements Serializable {
     }
 
     @Column(name = "price_rent")
-	public Double getPriceRent() {
-		return priceRent;
-	}
+    public Double getPriceRent() {
+        return priceRent;
+    }
 
-	public void setPriceRent(Double priceRent) {
-		this.priceRent = priceRent;
-	}
+    public void setPriceRent(Double priceRent) {
+        this.priceRent = priceRent;
+    }
+
+    @Column(name = "price_switch")
+    public Double getPriceSwitch() {
+        return priceSwitch;
+    }
+
+    public void setPriceSwitch(Double priceSwitch) {
+        this.priceSwitch = priceSwitch;
+    }
+
+    @Column(name = "price_type")
+    public Integer getPriceType() {
+        return priceType;
+    }
+
+    public void setPriceType(Integer priceType) {
+        this.priceType = priceType;
+    }
 
 }

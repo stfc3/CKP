@@ -30,9 +30,9 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public List<Role> getAllRole() {
         Query query = getCurrentSession().getNamedQuery("Role.getAllRole");
-        List<Role> lstUsers = query.list();
-        if (lstUsers != null && !lstUsers.isEmpty()) {
-            return lstUsers;
+        List<Role> lstRoles = query.list();
+        if (lstRoles != null && !lstRoles.isEmpty()) {
+            return lstRoles;
         }
         return null;
     }

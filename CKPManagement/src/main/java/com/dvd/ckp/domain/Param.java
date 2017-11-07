@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.domain;
 
+import com.dvd.ckp.utils.Constants;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -38,6 +40,7 @@ public class Param implements Serializable {
     private String paramName;
     private Integer status;
     private Date createDate;
+    private String paramKeyName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,6 +98,15 @@ public class Param implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    @Transient
+    public String getParamKeyName() {
+        return paramKeyName;
+    }
+
+    public void setParamKeyName(String paramKeyName) {
+        this.paramKeyName = Constants.getParamFromType(paramKey);
     }
 
 }

@@ -17,6 +17,8 @@
             <longbox id="txtConstruction" visible="false"
                      value="${arg.bill.constructionID}">
             </longbox>
+            <textbox id="role" visible="false" value="${arg.approve}"/>
+            <label onCreate="self.value=role.value"/>
             <hbox hflex="1" />
             <!-- 			<hbox hflex="1" /> -->
             <hbox hflex="2">
@@ -142,10 +144,10 @@
                                 <label class="pump-using"
                                     value="${each.pump}">
                                 </label>
-                                <a class="btn-cursor btn-staff"
+                                <a class="btn-cursor btn-staff" visible="role.value"
                                    forward="onClick=onAddStaff" iconSclass="z-icon-users"
                                    label="${c:l('staff.quantity.add')}" />
-                                <a class="btn-cursor btn-approve"
+                                <a class="btn-cursor btn-approve" visible="${arg.approve}"
                                    forward="onClick=onApprove" iconSclass="z-icon-check"
                                    label="${c:l('staff.quantity.approve')}" />	
                             </div>					

@@ -13,6 +13,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Intbox;
@@ -56,10 +57,10 @@ public class AddStaffController extends GenericForwardComposer {
 	private Grid gridSelectStaff;
 	@Wire
 	private Label titleStaffSelected;
-	@Wire
-	private Radio yes;
-	@Wire
-	private Radio no;
+//	@Wire
+//	private Radio yes;
+//	@Wire
+//	private Radio no;
 	@Wire
 	private Intbox intMaxStaff;
 	@Wire
@@ -68,7 +69,12 @@ public class AddStaffController extends GenericForwardComposer {
 	private Longbox txtBillID;
 	@Wire
 	private Longbox txtPumpType;
+	@Wire
+	private Combobox cbFilterName;
 
+	@Wire
+	private Combobox cbFilterNameSelected;
+	
 	private Long billID;
 	List<StaffQuantity> listQuantity;
 
@@ -112,6 +118,12 @@ public class AddStaffController extends GenericForwardComposer {
 		getDataSelected(lstStaffQuantity);
 		listDataModelSelected = new ListModelList<Staff>(lstStaffSelected);
 		gridSelectStaff.setModel(listDataModelSelected);
+		
+	
+		cbFilterName.setModel(listDataStaff);
+		
+		
+		cbFilterNameSelected.setModel(listDataModelSelected);
 
 	}
 
@@ -225,12 +237,12 @@ public class AddStaffController extends GenericForwardComposer {
 					@Override
 					public void onEvent(Event e) {
 						if (Messagebox.ON_YES.equals(e.getName())) {
-							int isFar;
-							if (yes.isChecked()) {
-								isFar = 1;
-							} else {
-								isFar = 0;
-							}
+							int isFar = 0;
+//							if (yes.isChecked()) {
+//								isFar = 1;
+//							} else {
+//								isFar = 0;
+//							}
 							Long pumpType = txtPumpType.getValue();
 							Integer maxStaff = intMaxStaff.getValue();
 							if (maxStaff == null) {
@@ -270,14 +282,63 @@ public class AddStaffController extends GenericForwardComposer {
 				});
 	}
 
-	private boolean isExist(Long staffId) {
-		if (listQuantity != null && !listQuantity.isEmpty()) {
-			for (StaffQuantity staffQuantity : listQuantity) {
-				if (staffId.equals(staffQuantity.getStaffId())) {
-					return true;
+	public void onChange$cbFilterName() {
+		Staff staff = new Staff();
+		Long staffID = null;
+		if (cbFilterName.getSelectedItem() != null) {
+			staffID = cbFilterName.getSelectedItem().getValue();
+		}
+
+		staff.setStaffId(staffID);
+
+		filter(staff);
+	}
+
+	
+	public void onChange$cbFilterNameSelected() {
+		Staff staff = new Staff();
+		Long staffID = null;
+		if (cbFilterNameSelected.getSelectedItem() != null) {
+			staffID = cbFilterNameSelected.getSelectedItem().getValue();
+		}
+
+		staff.setStaffId(staffID);
+
+		filterSelect(staff);
+	}
+	private void filter(Staff staff) {
+		List<Staff> vlstData = new ArrayList<>();
+		if (staff.getStaffId() == null) {
+			vlstData.addAll(lstStaff);
+
+		} else {
+			if (lstStaff != null && !lstStaff.isEmpty()) {
+				for (Staff item : lstStaff) {
+					if (staff.getStaffId() != null && staff.getStaffId().equals(item.getStaffId())) {
+						vlstData.add(item);
+					}
 				}
 			}
 		}
-		return false;
+		listDataModel = new ListModelList<Staff>(vlstData);
+		gridFullStaff.setModel(listDataModel);
+	}
+	
+	private void filterSelect(Staff staff) {
+		List<Staff> vlstData = new ArrayList<>();
+		if (staff.getStaffId() == null) {
+			vlstData.addAll(lstStaffSelected);
+
+		} else {
+			if (lstStaffSelected != null && !lstStaffSelected.isEmpty()) {
+				for (Staff item : lstStaffSelected) {
+					if (staff.getStaffId() != null && staff.getStaffId().equals(item.getStaffId())) {
+						vlstData.add(item);
+					}
+				}
+			}
+		}
+		listDataModelSelected = new ListModelList<Staff>(vlstData);
+		gridSelectStaff.setModel(listDataModelSelected);
 	}
 }

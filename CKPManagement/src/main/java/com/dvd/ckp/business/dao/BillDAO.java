@@ -25,18 +25,18 @@ public interface BillDAO {
 	public void save(BillsDetail billsDetail);
 
 	public void update(BillsDetail billsDetail);
-	
+
 	public void update(Integer isFar, Double quantityConvert, Integer maxStaff, Long billDetail);
-	
+
 	public void upadte(Double quantityApprove, Double totalApprove, Long billDetailID);
 
 	public void delete(BillsDetail billsDetail);
 
 	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpType, Long locationType,
-			Long locationID, Double quantity, int shift);
+			Long locationID, Double quantity, Integer shift, Integer numSwitch, Integer numAuto);
 
 	public List<BillViewDetail> getDataView(Long billID);
-	
+
 	public List<QuantityValue> getQuantity(Long billDetailId);
 
 }

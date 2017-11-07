@@ -15,16 +15,19 @@ public interface SpringConstant {
     String CUSTOMER_SERVICES = "CustomerService";
     String ROLE_SERVICES = "RoleService";
 
-    public static final String PUMPS_SERVICES = "PumpsService";
-    public static final String LOCATION_SERVICES = "LocationService";
-    public static final String STAFF_SERVICES = "StaffService";
-    public static final String BILL_SERVICES = "BillService";
+    String PUMPS_SERVICES = "PumpsService";
+    String LOCATION_SERVICES = "LocationService";
+    String STAFF_SERVICES = "StaffService";
+    String BILL_SERVICES = "BillService";
 
     String CONSTRUCTION_SERVICES = "ConstructionService";
     String CONTRACT_SERVICES = "ContractService";
     String UTILS_SERVICES = "UtilsService";
     String OBJECT_SERVICES = "ObjectService";
     
-    static final String RENT_SERVICES = "RentService";
+    String RENT_SERVICES = "RentService";
+    String DISTRIBUTE_SERVICES = "DistributeService";
+    
+    String PARAM_SERVICES = "ParamService";
 
 }

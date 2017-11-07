@@ -18,11 +18,21 @@ public class StringUtils {
 	}
 
 	public static String formatPrice(Double price) {
-		DecimalFormat formatter = new DecimalFormat("###,###,###.00");
+		DecimalFormat formatter = new DecimalFormat("###,###,###");
 		if (price == null || price == 0d) {
 			return "0";
 		}
 		return formatter.format(price);
+	}
+	public static Double reFormatTotal(String value){
+		value = value.replace(",", "").replace(".", "");
+		Double valueReturn = Double.valueOf(value);
+		return valueReturn;
+		
+	}
+	
+	public static void main(String[] arg){
+		System.out.println("Value: " + reFormatTotal("8,500,000"));
 	}
 
 }

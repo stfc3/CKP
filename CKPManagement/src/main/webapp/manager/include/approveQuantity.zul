@@ -31,8 +31,14 @@
 			<intbox id="txtShift" value="${arg.billDetai.shift}"
 				visible="false">
 			</intbox>
-			<intbox id="txtMaxStaff" value="${arg.billDetai.maxStaff}"
+			<intbox id="txtIsAuto" value="${arg.billDetai.shift}"
 				visible="false">
+			</intbox>
+			<intbox id="txtMaxStaff"
+				value="${arg.billDetai.autoConvert}" visible="false">
+			</intbox>
+			<intbox id="txtSwitch"
+				value="${arg.billDetai.numSwitch}" visible="false">
 			</intbox>
 			<vlayout>
 				<hbox>
@@ -55,8 +61,9 @@
 			<hlayout>
 				<hbox hflex="3" />
 				<hbox hflex="2">
-					<button class="btn-cursor" forward="onClick=onAction"
-						iconSclass="z-icon-floppy-o" label="${c:l('save')}" />
+					<button class="btn-cursor"
+						forward="onClick=onAction" iconSclass="z-icon-floppy-o"
+						label="${c:l('save')}" />
 					<button class="btn-cursor"
 						onClick="approveQuantity.detach();" iconSclass="z-icon-times"
 						label="${c:l('cancel')}" />
