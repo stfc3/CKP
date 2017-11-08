@@ -17,12 +17,12 @@
 					<auxheader colspan="20">
 						<a class="btn-cursor" forward="onClick=onAdd"
 							iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
-						<a class="btn-cursor"
-							iconSclass="z-icon-file-excel-o" forward="onClick=onImport"
-							label="${c:l('import')}" />
-						<a class="btn-cursor"
-							iconSclass="z-icon-file-excel-o" forward="onClick=onExport"
-							label="${c:l('export')}" />
+						<!-- 						<a class="btn-cursor" -->
+						<!-- 							iconSclass="z-icon-file-excel-o" forward="onClick=onImport" -->
+						<!-- 							label="${c:l('import')}" /> -->
+						<!-- 						<a class="btn-cursor" -->
+						<!-- 							iconSclass="z-icon-file-excel-o" forward="onClick=onExport" -->
+						<!-- 							label="${c:l('export')}" /> -->
 					</auxheader>
 				</auxhead>
 				<auxhead sclass="category-center">
@@ -72,6 +72,12 @@
 					<column hflex="2">
 						${c:l('bills.construction.name')}
 					</column>
+					<column hflex="2">
+						${c:l('rent.pump.majority')}
+					</column>
+					<column hflex="2">
+						${c:l('rent.pump.monitoring')}
+					</column>
 
 					<column hflex="2">
 						${c:l('rent.pump.from.date')}
@@ -117,6 +123,28 @@
 									<comboitem
 										value="${each.constructionId}"
 										label="${each.constructionName}" />
+								</template>
+							</combobox>
+						</cell>
+
+						<!--to truong -->
+						<cell>
+							<combobox hflex="1" buttonVisible="false"
+								inplace="true" readonly="true">
+								<template name="model">
+									<comboitem value="${each.staffId}"
+										label="${each.staffName}" />
+								</template>
+							</combobox>
+						</cell>
+
+						<!--giam sat -->
+						<cell>
+							<combobox hflex="1" buttonVisible="false"
+								inplace="true" readonly="true">
+								<template name="model">
+									<comboitem value="${each.staffId}"
+										label="${each.staffName}" />
 								</template>
 							</combobox>
 						</cell>

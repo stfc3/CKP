@@ -37,6 +37,7 @@ import com.dvd.ckp.business.service.ConstructionService;
 import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.business.service.RentServices;
+import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Contract;
@@ -44,6 +45,7 @@ import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.Price;
 import com.dvd.ckp.domain.RentEquiment;
+import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
@@ -65,6 +67,8 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 	protected ConstructionService constructionService;
 	@WireVariable
 	protected CustomerService customerService;
+	@WireVariable
+	protected StaffServices staffServices;
 
 	@WireVariable
 	protected RentServices rentServices;
@@ -87,20 +91,25 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 	private List<Contract> listContact;
 	private List<Param> listRentType;
 
+	private List<Staff> listStaff;
+
 	List<Price> listPriceByContact;
 
 	private Construction defaultConstruction;
 	private Customer defaultCustomer;
 	private Param defaultParam;
+	private Staff defaultStaff;
 	// Vi tri cac column trong grid
 
 	private final int rentType = 1;
 	private final int customer = 2;
 	private final int construction = 3;
-	private final int indexStartDate = 4;
-	private final int indexEndDate = 5;
-	private final int aveagePrice = 6;
-	private final int aveageValue = 7;
+	private final int majority = 4;
+	private final int monitoring = 5;
+	private final int indexStartDate = 6;
+	private final int indexEndDate = 7;
+	private final int aveagePrice = 8;
+	private final int aveageValue = 9;
 
 	private static boolean isInsert = false;
 
@@ -119,6 +128,8 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 	Label averagePrice = null;
 	Combobox cbCustomer = null;
 	Combobox cbxConstruction = null;
+	Combobox cbxMajority = null;
+	Combobox cbxMonitoring = null;
 	Datebox startDate = null;
 	Datebox endDate = null;
 	Doublebox averageValue = null;
@@ -133,6 +144,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		rentServices = (RentServices) SpringUtil.getBean(SpringConstant.RENT_SERVICES);
 		contractServices = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
 		utilsServices = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
+		staffServices = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
 
 		// list danh sach cong trinh
 		lstConstructions = new ArrayList<>();
@@ -155,6 +167,12 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 			listRentType.addAll(listType);
 		}
 
+		// list nhan vien
+		listStaff = new ArrayList<>();
+		List<Staff> lstStaff = staffServices.getAllData();
+		if (lstStaff != null && !lstStaff.isEmpty()) {
+			listStaff.addAll(lstStaff);
+		}
 		listPriceByContact = contractServices.getAllPrice();
 		modelListCustomer = new ListModelList<>(lstCustomer);
 		cbFilterCustomer.setModel(modelListCustomer);
@@ -194,6 +212,12 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		defaultParam.setParamValue(-1l);
 		defaultParam.setParamName(Labels.getLabel("option"));
 		listRentType.add(0, defaultParam);
+
+		// staff type default
+		defaultStaff = new Staff();
+		defaultStaff.setStaffId(-1l);
+		defaultStaff.setStaffName(Labels.getLabel("option"));
+		listStaff.add(0, defaultStaff);
 		// set model
 		listDataModel = new ListModelList(lstRents);
 		gridRent.setModel(listDataModel);
@@ -313,6 +337,8 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		Combobox cbrentType = null;
 		Combobox cbCustomer = null;
 		Combobox cbxConstruction = null;
+		Combobox cbxMajority = null;
+		Combobox cbxMonitoring = null;
 		Datebox startDate = null;
 		Datebox endDate = null;
 
@@ -337,6 +363,30 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 			cbxConstruction = (Combobox) component;
 			Long constructtion = cbxConstruction.getSelectedItem().getValue();
 			value.setConstructionID(constructtion);
+
+		}
+		// To truong
+		component = lstCell.get(majority).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbxMajority = (Combobox) component;
+			Long lnMajority = null;
+			if (cbxMajority.getSelectedItem() != null) {
+				lnMajority = cbxMajority.getSelectedItem().getValue();
+			}
+			value.setMajority(lnMajority);
+
+		}
+
+		// Giam sat
+		component = lstCell.get(monitoring).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			cbxMonitoring = (Combobox) component;
+			Long lnMonitoring = null;
+			if (cbxMonitoring.getSelectedItem() != null) {
+				lnMonitoring = cbxMonitoring.getSelectedItem().getValue();
+
+			}
+			value.setMonitoring(lnMonitoring);
 
 		}
 
@@ -805,6 +855,8 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 				setDataCustomer(lstCell, getCustomerDefault(rentID.getCustomerID()), customer);
 				setDataConstruction(lstCell, getConstructionDefault(rentID.getConstructionID()), construction);
 				setDataRentType(lstCell, getRentTypeDefault(rentID.getRentType()), rentType);
+				setDataMajority(lstCell, getMajorityDefault(rentID.getMajority()), majority);
+				setDataMonitoring(lstCell, getMonitoringDefault(rentID.getMonitoring()), monitoring);
 			}
 		}
 	}
@@ -925,6 +977,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		if (endDate != null) {
 			dtEndDate = endDate.getValue();
 		}
+		logger.debug("{customerID:" + customerID + "," + "}");
 		if (customerID == -1 || constructtion == -1 || dtStartDate == null || dtEndDate == null) {
 			return 0d;
 		}
@@ -935,10 +988,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		Construction item = getConstruction(constructtion);
 		if (item != null) {
 			Price price = getPrices(item.getContractId());
-			if (listPriceByContact != null && !listPriceByContact.isEmpty()) {
-				if (listPriceByContact.get(0).getPriceRent() != null) {
-					priceOfContact = price.getPriceRent();
-				}
+			if (price != null) {
+				priceOfContact = price.getPriceRent();
+
 			}
 		}
 		Double price = diff * priceOfContact / lastDayOfMonth;
@@ -978,17 +1030,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 			endDate = (Datebox) component;
 		}
 
-		// cbCustomer.addEventListener(Events.ON_CHANGE, new
-		// EventListener<Event>() {
-		//
-		// @Override
-		// public void onEvent(Event event) throws Exception {
-		// // TODO Auto-generated method stub
-		// price = calculateAveragePriceOfDay();
-		// averagePrice.setValue(StringUtils.formatPrice(price));
-		//
-		// }
-		// });
 		cbxConstruction.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
 
 			@Override
@@ -1033,6 +1074,70 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 			}
 		}
 		return null;
+	}
+
+	private void setDataMajority(List<Component> lstCell, List<Staff> selectedIndex, int columnIndex) {
+		Combobox combobox = null;
+		Component component = lstCell.get(columnIndex).getFirstChild();
+		if (component != null && component instanceof Combobox) {
+			combobox = (Combobox) component;
+
+			ListModelList listDataModel = new ListModelList(listStaff);
+			listDataModel.setSelection(selectedIndex);
+			combobox.setModel(listDataModel);
+
+		}
+
+	}
+
+	// get pump type default
+	private List<Staff> getMajorityDefault(Long majorityId) {
+		List<Staff> paramSelected = new ArrayList<>();
+
+		if (majorityId != null && listStaff != null && !listStaff.isEmpty()) {
+			for (Staff param : listStaff) {
+				if (majorityId.equals(param.getStaffId())) {
+					paramSelected.add(param);
+					break;
+				}
+			}
+		}
+//		if (paramSelected.isEmpty()) {
+//			paramSelected.add(defaultStaff);
+//		}
+		return paramSelected;
+	}
+
+	private void setDataMonitoring(List<Component> lstCell, List<Staff> selectedIndex, int columnIndex) {
+		Combobox combobox = null;
+		Component component = lstCell.get(columnIndex).getFirstChild();
+
+		if (component != null && component instanceof Combobox) {
+			combobox = (Combobox) component;
+			ListModelList listDataModel = new ListModelList(listStaff);
+			listDataModel.setSelection(selectedIndex);
+			combobox.setModel(listDataModel);
+
+		}
+
+	}
+
+	// get pump type default
+	private List<Staff> getMonitoringDefault(Long monitoringId) {
+		List<Staff> paramSelected = new ArrayList<>();
+		// List<Staff> lstData = getListMajority();
+		if (monitoringId != null && listStaff != null && !listStaff.isEmpty()) {
+			for (Staff param : listStaff) {
+				if (monitoringId.equals(param.getStaffId())) {
+					paramSelected.add(param);
+					break;
+				}
+			}
+		}
+//		if (paramSelected.isEmpty()) {
+//			paramSelected.add(defaultStaff);
+//		}
+		return paramSelected;
 	}
 
 }

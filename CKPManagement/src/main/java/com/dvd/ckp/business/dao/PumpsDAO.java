@@ -15,5 +15,8 @@ public interface PumpsDAO {
 	public int delete(Pumps pumps);
 
 	public void importData(List<Pumps> vlstData);
+	
+	
+	
 
 }

@@ -41,6 +41,8 @@ public class RentEquiment implements Serializable {
 	private String averagePriceView;
 	private Integer status;
 	private Date createDate;
+	private Long majority;
+	private Long monitoring;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -162,6 +164,24 @@ public class RentEquiment implements Serializable {
 
 	public void setAveragePriceView(String averagePriceView) {
 		this.averagePriceView = averagePriceView;
+	}
+
+	@Column(name = "majority")
+	public Long getMajority() {
+		return majority;
+	}
+
+	public void setMajority(Long majority) {
+		this.majority = majority;
+	}
+
+	@Column(name = "monitoring")
+	public Long getMonitoring() {
+		return monitoring;
+	}
+
+	public void setMonitoring(Long monitoring) {
+		this.monitoring = monitoring;
 	}
 	
 

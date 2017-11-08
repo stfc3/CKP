@@ -58,6 +58,8 @@ public class RentEquipmentDAOImpl implements RentEquimentDAO {
 			builder.append("update rent_equipment set rent_type = :rentType, ");
 			builder.append("customers_id = :customer, ");
 			builder.append("construction_id = :construction, ");
+			builder.append("monitoring = :monitoring, ");
+			builder.append("majority = :majority, ");
 			builder.append("start_date = :startDate, ");
 			builder.append("end_date = :endDate, ");
 			builder.append("average_price = :averagePrice, ");
@@ -67,6 +69,8 @@ public class RentEquipmentDAOImpl implements RentEquimentDAO {
 			query.setParameter("rentType", value.getRentType());
 			query.setParameter("customer", value.getCustomerID());
 			query.setParameter("construction", value.getConstructionID());
+			query.setParameter("monitoring", value.getMonitoring());
+			query.setParameter("majority", value.getMajority());
 			query.setParameter("startDate", value.getStartDate());
 			query.setParameter("endDate", value.getEndDate());
 			query.setParameter("averagePrice", value.getAveragePrice());
