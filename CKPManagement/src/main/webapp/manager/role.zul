@@ -22,20 +22,18 @@
             <caption label="${c:l('role.category')}" />
             <grid id="lstRole">
                 <auxhead sclass="category-center">
-                    <auxheader colspan="10">
+                    <auxheader colspan="5">
                         <a id="add" class="btn-cursor" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                     </auxheader>
                 </auxhead>
                 <auxhead sclass="category-center">
-                    <auxheader colspan="1">
-                    </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="2">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterRoleCode" hflex="1"/>
+                        <textbox id="txtFilterRoleCode" hflex="1" placeholder="Mã vai trò"/>
                     </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="3">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterRoleName" hflex="1"/>
+                        <textbox id="txtFilterRoleName" hflex="1" placeholder="Tên vai trò"/>
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">
@@ -76,7 +74,7 @@
             <!--grid Object-->
             <grid id="lstObject">
                 <auxhead sclass="category-center">
-                    <auxheader colspan="10">
+                    <auxheader colspan="4">
                         <a id="addObject" class="btn-cursor" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                     </auxheader>
                 </auxhead>

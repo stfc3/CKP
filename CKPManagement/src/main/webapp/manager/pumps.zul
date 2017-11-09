@@ -14,9 +14,9 @@
             <caption label="${c:l('pump')}" />
             <grid id="gridPumps">
                 <auxhead sclass="category-center">
-                    <auxheader colspan="10">
+                    <auxheader colspan="7">
                         <a class="btn-cursor" forward="onClick=onAdd"
-                                                   iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
+                           iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <!--
                         <a class="btn-cursor"
                         iconSclass="z-icon-file-excel-o" forward="onClick=onImport"
@@ -29,11 +29,11 @@
                 </auxhead>
                 <auxhead sclass="category-center">
 
-                    <auxheader colspan="10">
+                    <auxheader colspan="7">
                         <a iconSclass="z-icon-filter" />
                         <combobox hflex="1" id="cbFilterName"
-                                                          placeholder="${c:l('pump.filter')}" autodrop="true"
-                                                          buttonVisible="false">
+                                  placeholder="${c:l('pump.filter')}" autodrop="true"
+                                  buttonVisible="false">
                             <template name="model">
                                 <comboitem
                                     value="${each.pumpsID}"
@@ -61,43 +61,43 @@
                         </cell>
                         <cell>
                             <textbox value="${each.pumpsCode}"
-                                                                 tooltiptext="${each.pumpsCode}" hflex="1" inplace="true"
-                                                                 readonly="true" />
+                                     tooltiptext="${each.pumpsCode}" hflex="1" inplace="true"
+                                     readonly="true" />
                         </cell>
                         <cell>
                             <textbox value="${each.pumpsName}"
-                                                                 tooltiptext="${each.pumpsName}" hflex="1" inplace="true"
-                                                                 readonly="true" />
+                                     tooltiptext="${each.pumpsName}" hflex="1" inplace="true"
+                                     readonly="true" />
                         </cell>
                         <cell>
                             <textbox value="${each.pumpsCapacity}"
-                                                                 style="text-align: right;"
-                                                                 tooltiptext="${each.pumpsCapacity}(m3)" hflex="1" inplace="true"
-                                                                 readonly="true" />
+                                     style="text-align: right;"
+                                     tooltiptext="${each.pumpsCapacity}(m3)" hflex="1" inplace="true"
+                                     readonly="true" />
                         </cell>
                         <cell>
                             <textbox value="${each.pumpsHight}"
-                                                                 style="text-align: right;" tooltiptext="${each.pumpsHight}(m)"
-                                                                 hflex="1" inplace="true" readonly="true" />
+                                     style="text-align: right;" tooltiptext="${each.pumpsHight}(m)"
+                                     hflex="1" inplace="true" readonly="true" />
                         </cell>
                         <cell>
                             <textbox style="text-align: right;"
-                                                                 value="${each.pumpsFar}" tooltiptext="${each.pumpsFar}(m)"
-                                                                 hflex="1" inplace="true" readonly="true" />
+                                     value="${each.pumpsFar}" tooltiptext="${each.pumpsFar}(m)"
+                                     hflex="1" inplace="true" readonly="true" />
                         </cell>
                         <cell style="text-align:center">
                             <a class="btn-cursor"
-                                                           iconSclass="z-icon-pencil" forward="onClick=onEdit"
-                                                           tooltiptext="${c:l('edit')}" />
+                               iconSclass="z-icon-pencil" forward="onClick=onEdit"
+                               tooltiptext="${c:l('edit')}" />
                             <a class="btn-cursor"
-                                                           iconSclass="z-icon-trash-o" forward="onClick=onDelete"
-                                                           tooltiptext="${c:l('delete')}" />
+                               iconSclass="z-icon-trash-o" forward="onClick=onDelete"
+                               tooltiptext="${c:l('delete')}" />
                             <a class="btn-cursor"
-                                                           iconSclass="z-icon-check" forward="onClick=onSave"
-                                                           visible="false" tooltiptext="${c:l('save')}" />
+                               iconSclass="z-icon-check" forward="onClick=onSave"
+                               visible="false" tooltiptext="${c:l('save')}" />
                             <a class="btn-cursor"
-                                                           iconSclass="z-icon-ban" forward="onClick=onCancel"
-                                                           visible="false" tooltiptext="${c:l('cancel')}" />
+                               iconSclass="z-icon-ban" forward="onClick=onCancel"
+                               visible="false" tooltiptext="${c:l('cancel')}" />
 
                         </cell>
                     </row>

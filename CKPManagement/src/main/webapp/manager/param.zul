@@ -22,14 +22,12 @@
             <caption label="${c:l('param.category')}" />
             <grid id="lstParam">
                 <auxhead sclass="category-center">
-                    <auxheader colspan="10">
+                    <auxheader colspan="5">
                         <a id="add" class="btn-cursor" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                     </auxheader>
                 </auxhead>
                 <auxhead sclass="category-center">
-                    <auxheader colspan="1">
-                    </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="2">
                         <combobox  hflex="1" id="cbxParamFilter" autodrop="true" placeholder="${c:l('param.key.search')}"
                                    buttonVisible="false">
                             <template name="model">
@@ -37,9 +35,9 @@
                             </template>
                         </combobox>
                     </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="3">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterParamName" hflex="1"/>
+                        <textbox id="txtFilterParamName" hflex="1" placeholder="Tên cấu hình"/>
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">
@@ -58,7 +56,7 @@
                             <textbox value="${each.paramKey}" tooltiptext="${each.paramKey}" hflex="1" inplace="true" readonly="true"/>
                         </cell>-->
                         <cell>
-                            <combobox hflex="1" buttonVisible="false"
+                            <combobox hflex="1" buttonVisible="false" autodrop="true"
                                       inplace="true" readonly="true">
                                 <template name="model">
                                     <comboitem

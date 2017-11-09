@@ -38,6 +38,7 @@ import org.zkoss.zul.Window;
 import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.common.Constants;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.excel.ExcelReader;
@@ -67,7 +68,7 @@ public class StaffController extends GenericForwardComposer {
     private Grid gridStaff;
     @Wire
     private Combobox cbFilterName;
-    ListModelList<Staff> listDataStaff;
+    MyListModel<Staff> listDataStaff;
 
     private ListModelList<Staff> listDataModel;
     private List<Staff> lstStaff;
@@ -110,7 +111,7 @@ public class StaffController extends GenericForwardComposer {
         }
         listDataModel = new ListModelList<>(lstStaff);
         gridStaff.setModel(listDataModel);
-        listDataStaff = new ListModelList<>(lstStaff);
+        listDataStaff = new MyListModel<>(lstStaff);
         cbFilterName.setModel(listDataStaff);
 
         lstDepartment = new ArrayList<>();
@@ -530,7 +531,7 @@ public class StaffController extends GenericForwardComposer {
         lstParam = lstPosition;
         if (component != null && component instanceof Combobox) {
             cbxParam = (Combobox) component;
-            ListModelList listDataModelParam = new ListModelList(lstParam);
+            MyListModel listDataModelParam = new MyListModel(lstParam);
             listDataModelParam.setSelection(selectedIndex);
             cbxParam.setModel(listDataModelParam);
 //            cbxParam.setTooltiptext(selectedIndex.get(com.dvd.ckp.utils.Constants.FIRST_INDEX).getParamName());
@@ -546,7 +547,7 @@ public class StaffController extends GenericForwardComposer {
 
         if (component != null && component instanceof Combobox) {
             cbxParam = (Combobox) component;
-            ListModelList listDataModelParam = new ListModelList(lstParam);
+            MyListModel listDataModelParam = new MyListModel(lstParam);
             listDataModelParam.setSelection(selectedIndex);
             cbxParam.setModel(listDataModelParam);
 //            cbxParam.setTooltiptext(selectedIndex.get(com.dvd.ckp.utils.Constants.FIRST_INDEX).getParamName());

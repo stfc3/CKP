@@ -43,13 +43,13 @@
                 <columns style="text-align:center; ">
                     <column hflex="1">${c:l('pump.index')}</column>
                     <column hflex="2">${c:l('staff.code')}</column>
-                    <column hflex="6">${c:l('staff.name')}</column>
+                    <column hflex="4">${c:l('staff.name')}</column>
                     <column hflex="3">${c:l('staff.birthday')}</column>
                     <column hflex="2">${c:l('staff.phone')}</column>
-                    <column hflex="2">${c:l('staff.email')}</column>
+                    <column hflex="4">${c:l('staff.email')}</column>
                     <column hflex="2">${c:l('staff.address')}</column>
-                    <column hflex="3">${c:l('param.key.position')}</column>
-                    <column hflex="3">${c:l('param.key.department')}</column>
+                    <column hflex="2">${c:l('param.key.position')}</column>
+                    <column hflex="2">${c:l('param.key.department')}</column>
                     <column hflex="2">${c:l('pump.action')}</column>
                 </columns>
                 <template name="model">
@@ -68,8 +68,8 @@
                                      readonly="true" />
                         </cell>
                         <cell>
-                            <datebox value="${each.birthday}"
-                                     style="text-align: right;" hflex="1" inplace="true"
+                            <datebox value="${each.birthday}" format="dd/MM/yyyy" 
+                                     style="text-align: right;" hflex="1" inplace="true" buttonVisible="false"
                                      readonly="true" />
                         </cell>
                         <cell>
@@ -88,7 +88,7 @@
                                      inplace="true" readonly="true" />
                         </cell>
                         <cell>
-                            <combobox hflex="1" buttonVisible="false"
+                            <combobox hflex="1" buttonVisible="false" autodrop="true"
                                       inplace="true" readonly="true">
                                 <template name="model">
                                     <comboitem
@@ -98,7 +98,7 @@
                             </combobox>
                         </cell>
                         <cell>
-                            <combobox hflex="1" buttonVisible="false"
+                            <combobox hflex="1" buttonVisible="false" autodrop="true"
                                       inplace="true" readonly="true">
                                 <template name="model">
                                     <comboitem

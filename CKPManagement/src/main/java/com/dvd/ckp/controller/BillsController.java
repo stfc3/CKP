@@ -53,6 +53,7 @@ import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.common.Constants;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Construction;
@@ -141,10 +142,10 @@ public class BillsController extends GenericForwardComposer<Component> {
     private Window bills;
     @Wire
     private Combobox cbFilterCustomer;
-    private ListModelList<Customer> modelListCustomer;
+    private MyListModel<Customer> modelListCustomer;
     @Wire
     private Combobox cbFilterConstruction;
-    private ListModelList<Construction> modelListConstruction;
+    private MyListModel<Construction> modelListConstruction;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -199,10 +200,10 @@ public class BillsController extends GenericForwardComposer<Component> {
         // if(lstCont != null && !lstCont.isEmpty()){
         //
         // }
-        modelListCustomer = new ListModelList<>(lstCustomer);
+        modelListCustomer = new MyListModel(lstCustomer);
         cbFilterCustomer.setModel(modelListCustomer);
 
-        modelListConstruction = new ListModelList<>(lstConstructions);
+        modelListConstruction = new MyListModel(lstConstructions);
         cbFilterConstruction.setModel(modelListConstruction);
         // list danh sach hoa don
         lstBills = new ArrayList<>();
@@ -692,9 +693,9 @@ public class BillsController extends GenericForwardComposer<Component> {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
-            ListModelList listDataModel = new ListModelList(lstConstructions);
-            listDataModel.setSelection(selectedIndex);
-            combobox.setModel(listDataModel);
+            MyListModel listDataModelConstruction = new MyListModel(lstConstructions);
+            listDataModelConstruction.setSelection(selectedIndex);
+            combobox.setModel(listDataModelConstruction);
         }
 
     }
@@ -705,9 +706,9 @@ public class BillsController extends GenericForwardComposer<Component> {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
-            ListModelList listDataModel = new ListModelList(lstCustomer);
-            listDataModel.setSelection(selectedIndex);
-            combobox.setModel(listDataModel);
+            MyListModel listDataModelCustomer = new MyListModel(lstCustomer);
+            listDataModelCustomer.setSelection(selectedIndex);
+            combobox.setModel(listDataModelCustomer);
         }
 
     }

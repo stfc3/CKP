@@ -39,6 +39,7 @@ import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.business.service.RentServices;
 import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.business.service.UtilsService;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
@@ -115,10 +116,10 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 
 	@Wire
 	private Combobox cbFilterCustomer;
-	private ListModelList<Customer> modelListCustomer;
+	private MyListModel<Customer> modelListCustomer;
 	@Wire
 	private Combobox cbFilterConstruction;
-	private ListModelList<Construction> modelListConstruction;
+	private MyListModel<Construction> modelListConstruction;
 	@Wire
 	private Datebox dtFilterStartDate;
 	@Wire
@@ -174,10 +175,10 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 			listStaff.addAll(lstStaff);
 		}
 		listPriceByContact = contractServices.getAllPrice();
-		modelListCustomer = new ListModelList<>(lstCustomer);
+		modelListCustomer = new MyListModel<>(lstCustomer);
 		cbFilterCustomer.setModel(modelListCustomer);
 
-		modelListConstruction = new ListModelList<>(lstConstructions);
+		modelListConstruction = new MyListModel<>(lstConstructions);
 		cbFilterConstruction.setModel(modelListConstruction);
 
 		// list danh sach thue
@@ -790,9 +791,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		Component component = lstCell.get(columnIndex).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			combobox = (Combobox) component;
-			ListModelList listDataModel = new ListModelList(lstConstructions);
-			listDataModel.setSelection(selectedIndex);
-			combobox.setModel(listDataModel);
+			MyListModel listDataModelContruction = new MyListModel(lstConstructions);
+			listDataModelContruction.setSelection(selectedIndex);
+			combobox.setModel(listDataModelContruction);
 		}
 
 	}
@@ -803,9 +804,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		Component component = lstCell.get(columnIndex).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			combobox = (Combobox) component;
-			ListModelList listDataModel = new ListModelList(lstCustomer);
-			listDataModel.setSelection(selectedIndex);
-			combobox.setModel(listDataModel);
+			MyListModel listDataModelCustomer = new MyListModel(lstCustomer);
+			listDataModelCustomer.setSelection(selectedIndex);
+			combobox.setModel(listDataModelCustomer);
 		}
 
 	}
@@ -935,9 +936,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		Component component = lstCell.get(columnIndex).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			combobox = (Combobox) component;
-			ListModelList listDataModel = new ListModelList(listRentType);
-			listDataModel.setSelection(selectedIndex);
-			combobox.setModel(listDataModel);
+			MyListModel listDataModelType = new MyListModel(listRentType);
+			listDataModelType.setSelection(selectedIndex);
+			combobox.setModel(listDataModelType);
 
 		}
 
@@ -1082,9 +1083,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		if (component != null && component instanceof Combobox) {
 			combobox = (Combobox) component;
 
-			ListModelList listDataModel = new ListModelList(listStaff);
-			listDataModel.setSelection(selectedIndex);
-			combobox.setModel(listDataModel);
+			MyListModel listDataModelMajority = new MyListModel(listStaff);
+			listDataModelMajority.setSelection(selectedIndex);
+			combobox.setModel(listDataModelMajority);
 
 		}
 
@@ -1114,9 +1115,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 
 		if (component != null && component instanceof Combobox) {
 			combobox = (Combobox) component;
-			ListModelList listDataModel = new ListModelList(listStaff);
-			listDataModel.setSelection(selectedIndex);
-			combobox.setModel(listDataModel);
+			MyListModel listDataModelMonitor = new MyListModel(listStaff);
+			listDataModelMonitor.setSelection(selectedIndex);
+			combobox.setModel(listDataModelMonitor);
 
 		}
 

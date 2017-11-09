@@ -32,6 +32,7 @@ import com.dvd.ckp.business.service.BillsServices;
 import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.CalculatorRevenue;
 import com.dvd.ckp.domain.Location;
@@ -173,7 +174,7 @@ public class BillsDetailController extends GenericForwardComposer {
 		Component component = lstCell.get(columnIndex).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			combobox = (Combobox) component;
-			ListModelList listDataModel = new ListModelList(lstPumps);
+			MyListModel listDataModel = new MyListModel(lstPumps);
 			listDataModel.setSelection(selectedIndex);
 			combobox.setModel(listDataModel);
 
@@ -227,7 +228,7 @@ public class BillsDetailController extends GenericForwardComposer {
 		Component component = lstCell.get(columnIndex).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			combobox = (Combobox) component;
-			ListModelList listDataModel = new ListModelList(lstTypePump);
+			MyListModel listDataModel = new MyListModel(lstTypePump);
 			listDataModel.setSelection(selectedIndex);
 			combobox.setModel(listDataModel);
 
@@ -264,7 +265,7 @@ public class BillsDetailController extends GenericForwardComposer {
 		Component component = lstCell.get(columnIndex).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			combobox = (Combobox) component;
-			ListModelList listDataModel = new ListModelList(lstTypeLocation);
+			MyListModel listDataModel = new MyListModel(lstTypeLocation);
 			listDataModel.setSelection(selectedIndex);
 			combobox.setModel(listDataModel);
 
@@ -301,7 +302,7 @@ public class BillsDetailController extends GenericForwardComposer {
 		Component component = lstCell.get(columnIndex).getFirstChild();
 		if (component != null && component instanceof Combobox) {
 			combobox = (Combobox) component;
-			ListModelList listDataModel = new ListModelList(lstLocation);
+			MyListModel listDataModel = new MyListModel(lstLocation);
 			listDataModel.setSelection(selectedIndex);
 			combobox.setModel(listDataModel);
 

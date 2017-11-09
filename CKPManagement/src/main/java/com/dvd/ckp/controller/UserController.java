@@ -7,6 +7,7 @@ package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.RoleService;
 import com.dvd.ckp.business.service.UserService;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Role;
 import com.dvd.ckp.domain.User;
 import com.dvd.ckp.utils.Constants;
@@ -56,6 +57,7 @@ public class UserController extends GenericForwardComposer {
     @Wire
     private Textbox txtFilterPhone;
     ListModelList<User> listDataModel;
+    MyListModel<User> listDataModelFilter;
     private List<User> lstUsers;
     private Window mainUser;
     private boolean blnAddOrEdit = false;
@@ -84,8 +86,9 @@ public class UserController extends GenericForwardComposer {
             lstUsers.addAll(vlstUser);
         }
         listDataModel = new ListModelList(lstUsers);
+        listDataModelFilter = new MyListModel(lstUsers);
         lstUser.setModel(listDataModel);
-        cbxUserFilter.setModel(listDataModel);
+        cbxUserFilter.setModel(listDataModelFilter);
 
         lstRoles = new ArrayList<>();
         if (vlstUser != null && !vlstUser.isEmpty() && vlstUser.get(0) != null) {

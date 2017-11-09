@@ -6,6 +6,7 @@
 package com.dvd.ckp.controller;
 
 import com.dvd.ckp.business.service.ParamService;
+import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.SpringConstant;
@@ -48,7 +49,7 @@ public class ParamController extends GenericForwardComposer {
     private List<Param> lstParams;
     @Wire
     private Combobox cbxParamFilter;
-    ListModelList<Param> listModelParamKey;
+    MyListModel<Param> listModelParamKey;
 
     private List<Param> lstKeyParams;
 
@@ -66,7 +67,7 @@ public class ParamController extends GenericForwardComposer {
 
         getDistinctParamKeyName();
 
-        listModelParamKey = new ListModelList(lstKeyParams);
+        listModelParamKey = new MyListModel(lstKeyParams);
         cbxParamFilter.setModel(listModelParamKey);
         setDataDefaultInGrid();
     }
@@ -150,7 +151,7 @@ public class ParamController extends GenericForwardComposer {
         lstParams = paramService.getAllParam();
         listDataModel = new ListModelList(getParamKeyName(lstParams));
         lstParam.setModel(listDataModel);
-        listModelParamKey = new ListModelList(lstKeyParams);
+        listModelParamKey = new MyListModel(lstKeyParams);
         cbxParamFilter.setModel(listModelParamKey);
         setDataDefaultInGrid();
     }
@@ -285,9 +286,9 @@ public class ParamController extends GenericForwardComposer {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
-            ListModelList listDataModel = new ListModelList(lstKeyParams);
-            listDataModel.setSelection(selectedIndex);
-            combobox.setModel(listDataModel);
+            MyListModel listDataModelParam = new MyListModel(lstKeyParams);
+            listDataModelParam.setSelection(selectedIndex);
+            combobox.setModel(listDataModelParam);
         }
 
     }

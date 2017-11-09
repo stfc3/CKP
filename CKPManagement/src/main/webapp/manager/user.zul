@@ -22,14 +22,12 @@
             <caption label="${c:l('user.category')}" />
             <grid id="lstUser">
                 <auxhead sclass="category-center">
-                    <auxheader colspan="10">
+                    <auxheader colspan="8">
                         <a id="add" class="btn-cursor" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                     </auxheader>
                 </auxhead>
                 <auxhead sclass="category-center">
-                    <auxheader colspan="1">
-                    </auxheader>
-                    <auxheader colspan="3">
+                    <auxheader colspan="4">
                         <a iconSclass="z-icon-filter"/>
                         <combobox  hflex="1" id="cbxUserFilter" autodrop="true" placeholder="Nhập tên tài khoản để tìm kiếm"
                                    buttonVisible="false">
@@ -38,17 +36,17 @@
                             </template>
                         </combobox>
                     </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="4">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterPhone" hflex="1" placeholder="Nhập SĐT để tìm kiếm"/>
+                        <textbox id="txtFilterPhone" hflex="1" placeholder="Nhập SĐT"/>
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">
                     <column hflex="1">${c:l('customer.index')}</column>
-                    <column hflex="3">${c:l('user.username')}</column>
-                    <column hflex="4">${c:l('user.fullname')}</column>
-                    <column hflex="5">${c:l('user.email')}</column>
-                    <column hflex="4">${c:l('user.phone')}</column>
+                    <column hflex="2">${c:l('user.username')}</column>
+                    <column hflex="3">${c:l('user.fullname')}</column>
+                    <column hflex="4">${c:l('user.email')}</column>
+                    <column hflex="3">${c:l('user.phone')}</column>
                     <column hflex="5">${c:l('user.address')}</column>
                     <column hflex="3">${c:l('user.card')}</column>
                     <column hflex="2">${c:l('customer.action')}</column>
@@ -93,20 +91,18 @@
             <caption label="${c:l('role.category')}" />
             <grid id="lstRole">
                 <auxhead sclass="category-center">
-                    <auxheader colspan="10">
+                    <auxheader colspan="5">
                         <a id="addRoleInUser" class="btn-cursor" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                     </auxheader>
                 </auxhead>
                 <auxhead sclass="category-center">
-                    <auxheader colspan="1">
-                    </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="2">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterRoleCode" hflex="1"/>
+                        <textbox id="txtFilterRoleCode" hflex="1" placeholder="Mã vai trò"/>
                     </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="3">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterRoleName" hflex="1"/>
+                        <textbox id="txtFilterRoleName" hflex="1" placeholder="Tên vai trò"/>
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">

@@ -15,15 +15,13 @@
             <caption label="${c:l('role.category')}" />
             <grid id="lstRoleNotOwnUser">
                 <auxhead sclass="category-center">
-                    <auxheader colspan="1">
-                    </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="2">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterRoleCode" hflex="1"/>
+                        <textbox id="txtFilterRoleCode" hflex="1" placeholder="Mã vai trò"/>
                     </auxheader>
-                    <auxheader colspan="1">
+                    <auxheader colspan="3">
                         <a iconSclass="z-icon-filter"/>
-                        <textbox id="txtFilterRoleName" hflex="1"/>
+                        <textbox id="txtFilterRoleName" hflex="1" placeholder="Tên vai trò"/>
                     </auxheader>
                 </auxhead>
                 <columns style="text-align:center; ">

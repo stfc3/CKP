@@ -15,7 +15,7 @@
             <caption label="${c:l('location')}" />
             <grid id="gridLocation">
                 <auxhead sclass="category-center">
-                    <auxheader colspan="10">
+                    <auxheader colspan="6">
                         <a class="btn-cursor" forward="onClick=onAdd"
                                                    iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <!--
@@ -30,7 +30,7 @@
                 </auxhead>
                 <auxhead sclass="category-center">
 
-                    <auxheader colspan="10">
+                    <auxheader colspan="6">
                         <a iconSclass="z-icon-filter" />
                         <combobox hflex="1" id="cbFilterName"
                                                           placeholder="${c:l('location.filter')}" autodrop="true"
