@@ -144,10 +144,10 @@
                                 <label class="pump-using"
                                     value="${each.pump}">
                                 </label>
-                                <a class="btn-cursor btn-staff" visible="role.value"
+                                <a class="btn-cursor btn-staff"
                                    forward="onClick=onAddStaff" iconSclass="z-icon-users"
                                    label="${c:l('staff.quantity.add')}" />
-                                <a class="btn-cursor btn-approve" visible="${arg.approve}"
+                                <a class="btn-cursor btn-approve"
                                    forward="onClick=onApprove" iconSclass="z-icon-check"
                                    label="${c:l('staff.quantity.approve')}" />	
                             </div>					
