@@ -6,6 +6,7 @@
 package com.dvd.ckp.business.service;
 
 import com.dvd.ckp.business.dao.RoleDAO;
+import com.dvd.ckp.domain.Object;
 import com.dvd.ckp.domain.Role;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +35,16 @@ public class RoleServiceImpl implements RoleService {
         roleDAO.insertOrUpdateRole(role);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<Object> getObjectsByRole(String roleId) {
+        return roleDAO.getObjectsByRole(roleId);
+    }
+
+    @Transactional
+    @Override
+    public void deleteRoleObject(Long roleId, Long objectId) {
+        roleDAO.deleteRoleObject(roleId, objectId);
+    }
+    
 }

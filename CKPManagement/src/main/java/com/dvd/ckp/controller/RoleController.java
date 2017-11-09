@@ -5,8 +5,10 @@
  */
 package com.dvd.ckp.controller;
 
+import com.dvd.ckp.business.service.ObjectService;
 import com.dvd.ckp.business.service.RoleService;
 import com.dvd.ckp.domain.Role;
+import com.dvd.ckp.domain.Object;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
@@ -37,6 +39,8 @@ public class RoleController extends GenericForwardComposer {
     private static final Logger logger = Logger.getLogger(RoleController.class);
     @WireVariable
     protected RoleService roleService;
+    @WireVariable
+    protected ObjectService objectService;
     @Wire
     private Grid lstRole;
     @Wire
@@ -45,18 +49,36 @@ public class RoleController extends GenericForwardComposer {
     private Textbox txtFilterRoleName;
     ListModelList<Role> listDataModel;
     private List<Role> lstRoles;
+    @Wire
+    private Grid lstObject;
+    ListModelList<Object> listObjectDataModel;
+    private List<Object> lstObjects;
+
+    Long roleIdSelect;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         roleService = (RoleService) SpringUtil.getBean(SpringConstant.ROLE_SERVICES);
+        objectService = (ObjectService) SpringUtil.getBean(SpringConstant.OBJECT_SERVICES);
         lstRoles = new ArrayList<>();
+        lstObjects = new ArrayList<>();
         List<Role> vlstRole = roleService.getAllRole();
-        if (vlstRole != null) {
+        if (vlstRole != null && !vlstRole.isEmpty()) {
             lstRoles.addAll(vlstRole);
         }
         listDataModel = new ListModelList(lstRoles);
         lstRole.setModel(listDataModel);
+        if (vlstRole != null && !vlstRole.isEmpty() && vlstRole.get(0) != null) {
+            Role role = vlstRole.get(0);
+            roleIdSelect = role.getRoleId();
+            List<Object> vlstObject = roleService.getObjectsByRole(String.valueOf(roleIdSelect));
+            if (vlstObject != null && !vlstObject.isEmpty() && vlstObject.size() > 0) {
+                lstObjects.addAll(vlstObject);
+            }
+            listObjectDataModel = new ListModelList(lstObjects);
+            lstObject.setModel(listObjectDataModel);
+        }
     }
 
     /**
@@ -68,7 +90,7 @@ public class RoleController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        StyleUtils.setEnableComponent(lstCell, 4);
+        StyleUtils.setEnableComponent(lstCell, 5);
     }
 
     /**
@@ -80,7 +102,7 @@ public class RoleController extends GenericForwardComposer {
 
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        StyleUtils.setDisableComponent(lstCell, 4);
+        StyleUtils.setDisableComponent(lstCell, 5);
         reloadGrid();
 
     }
@@ -98,7 +120,7 @@ public class RoleController extends GenericForwardComposer {
         role.setRoleId(c.getRoleId());
         role.setStatus(Constants.STATUS_ACTIVE);
         roleService.insertOrUpdateRole(role);
-        StyleUtils.setDisableComponent(lstCell, 4);
+        StyleUtils.setDisableComponent(lstCell, 5);
         reloadGrid();
     }
 
@@ -111,7 +133,7 @@ public class RoleController extends GenericForwardComposer {
         lstRole.setModel(listDataModel);
         lstRole.renderAll();
         List<Component> lstCell = lstRole.getRows().getChildren().get(0).getChildren();
-        StyleUtils.setEnableComponent(lstCell, 4);
+        StyleUtils.setEnableComponent(lstCell, 5);
     }
 
     /**
@@ -190,7 +212,26 @@ public class RoleController extends GenericForwardComposer {
         lstRole.setModel(listDataModel);
 
     }
-    
+
+    /**
+     *
+     *
+     * @param event
+     */
+    public void onViewObjectByRole(ForwardEvent event) {
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        Role c = rowSelected.getValue();
+        roleIdSelect = c.getRoleId();
+        reloadGridObject(String.valueOf(roleIdSelect));
+    }
+
+    /*Reload grid Object*/
+    private void reloadGridObject(String roleId) {
+        List<Object> vlstObject = roleService.getObjectsByRole(roleId);
+        listObjectDataModel = new ListModelList(vlstObject);
+        lstObject.setModel(listObjectDataModel);
+    }
+
     /**
      * Delete
      *
@@ -205,6 +246,32 @@ public class RoleController extends GenericForwardComposer {
                     c.setStatus(Constants.STATUS_INACTIVE);
                     roleService.insertOrUpdateRole(c);
                     reloadGrid();
+                    if (c.getRoleId() == roleIdSelect) {
+                        if (lstRoles != null && !lstRoles.isEmpty() && lstRoles.get(0) != null) {
+                            Role role = lstRoles.get(0);
+                            roleIdSelect = role.getRoleId();
+                            reloadGridObject(String.valueOf(roleIdSelect));
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Delete
+     *
+     * @param event
+     */
+    public void onDeleteObject(ForwardEvent event) {
+        Messagebox.show("Bạn có chắc chắn muốn xóa không?", "Xác nhận", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+            public void onEvent(Event e) {
+                if (Messagebox.ON_YES.equals(e.getName())) {
+                    Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+                    Object c = rowSelected.getValue();
+                    c.setStatus(Constants.STATUS_INACTIVE);
+                    roleService.deleteRoleObject(roleIdSelect, c.getObjectId());
+                    reloadGridObject(String.valueOf(roleIdSelect));
                 }
             }
         });

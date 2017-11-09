@@ -177,6 +177,13 @@ public class UserController extends GenericForwardComposer {
                     c.setStatus(Constants.STATUS_INACTIVE);
                     userService.insertOrUpdateUser(c);
                     reloadGrid();
+                    if (c.getUserId() == userIdSelect) {
+                        if (lstUsers != null && !lstUsers.isEmpty() && lstUsers.get(0) != null) {
+                            User role = lstUsers.get(0);
+                            userIdSelect = role.getUserId();
+                            reloadGridRole(String.valueOf(userIdSelect));
+                        }
+                    }
                 }
             }
         });

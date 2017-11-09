@@ -6,6 +6,7 @@
 package com.dvd.ckp.business.dao;
 
 import com.dvd.ckp.domain.Role;
+import com.dvd.ckp.domain.Object;
 import java.util.List;
 
 /**
@@ -15,7 +16,11 @@ import java.util.List;
 public interface RoleDAO {
 
     List<Role> getAllRole();
-    
+
     void insertOrUpdateRole(Role role);
-    
+
+    List<Object> getObjectsByRole(String roleId);
+
+    void deleteRoleObject(Long roleId, Long objectId);
+
 }
