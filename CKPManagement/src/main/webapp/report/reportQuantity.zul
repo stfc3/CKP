@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
-    <window  id="mainReportMonth" apply="com.dvd.ckp.report.ReportMonth">
+    <window  id="mainReportQuantity" apply="com.dvd.ckp.report.ReportQuantity">
         <groupbox>
-            <caption label="${c:l('report.reportMass')}" />
+            <caption label="${c:l('report.reportQuantity')}" />
             <vlayout>
                 <hbox class="control-report-fix-margin">
                     <label hflex="3"/>
-                    <div class="control-report" hflex="3">
-                        <label class="label-control-report" value="${c:l('report.param.customer')}"/>
-                        <combobox class="control-report-input" autodrop="true" id="cbxCustomer" name="p_customer" >
-                            <template name="model">
-                                <comboitem value="${each.customerId}" label="${each.customerName}" />
-                            </template>
-                        </combobox>
-                    </div>
                     <div class="control-report" hflex="3">
                         <label class="label-control-report" value="${c:l('report.param.construction')}"/>
                         <combobox class="control-report-input" autodrop="true" id="cbxConstruction" name="p_construction" >
@@ -23,6 +15,16 @@
                             </template>
                         </combobox>
                     </div>
+                    
+                    <div class="control-report" hflex="3">
+                        <label class="label-control-report" value="${c:l('report.param.pump')}"/>
+                        <combobox class="control-report-input" autodrop="true" id="cbxPump" name="p_pumps" >
+                            <template name="model">
+                                <comboitem value="${each.pumpsID}" label="${each.pumpsName}" />
+                            </template>
+                        </combobox>
+                    </div>
+                    
                     <label hflex="3"/>
                 </hbox>
                 <hbox class="control-report-fix-margin">
