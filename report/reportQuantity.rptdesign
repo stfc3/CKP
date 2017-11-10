@@ -1285,6 +1285,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 <property name="hideDetail">false</property>
                 <header>
                     <row id="280">
+                        <property name="backgroundColor">#DADADA</property>
                         <cell id="281">
                             <property name="colSpan">7</property>
                             <property name="rowSpan">1</property>
@@ -1316,9 +1317,11 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="borderTopColor">#C0C0C0</property>
                             <property name="borderTopStyle">solid</property>
                             <property name="borderTopWidth">1px</property>
+                            <property name="paddingLeft">10pt</property>
                             <data id="323">
                                 <property name="fontWeight">bold</property>
                                 <property name="fontStyle">italic</property>
+                                <property name="paddingLeft">20pt</property>
                                 <property name="resultSetColumn">staff_name</property>
                             </data>
                         </cell>
