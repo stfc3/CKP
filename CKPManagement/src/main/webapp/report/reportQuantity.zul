@@ -9,7 +9,7 @@
                     <label hflex="3"/>
                     <div class="control-report" hflex="3">
                         <label class="label-control-report" value="${c:l('report.param.construction')}"/>
-                        <combobox class="control-report-input" autodrop="true" id="cbxConstruction" name="p_construction" >
+                        <combobox class="control-report-input" autodrop="true" id="cbxConstruction" name="p_contruction" >
                             <template name="model">
                                 <comboitem value="${each.constructionId}" label="${each.constructionName}" />
                             </template>
