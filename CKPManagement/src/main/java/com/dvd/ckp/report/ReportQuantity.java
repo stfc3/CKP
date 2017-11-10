@@ -56,7 +56,7 @@ public class ReportQuantity extends GenericForwardComposer {
 
     private List<Pumps> lstPumps;
     private List<Construction> lstConstructions;
-    private String reportName = "reportMass.rptdesign";
+    private String reportName = "reportQuantity.rptdesign";
     private String fileName = "BaoCaoKhoiLuongCongNhan";
 
     @Override
