@@ -155,7 +155,8 @@ public class UserController extends GenericForwardComposer {
                 }
             }
         }
-        user.setStatus(1);
+        user.setStatus(Constants.STATUS_ACTIVE);
+        user.setType(Constants.USER_TYPE);
         user.setCreateDate(new Date());
         userService.insertOrUpdateUser(user);
         StyleUtils.setDisableComponent(lstCell, 5);
