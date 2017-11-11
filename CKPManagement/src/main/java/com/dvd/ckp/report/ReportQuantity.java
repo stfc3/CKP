@@ -7,11 +7,9 @@ package com.dvd.ckp.report;
 
 import com.dvd.ckp.birt.BirtConstant;
 import com.dvd.ckp.business.service.ConstructionService;
-import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Construction;
-import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.DateTimeUtils;
@@ -30,7 +28,6 @@ import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Iframe;
-import org.zkoss.zul.ListModelList;
 
 /**
  *
@@ -38,7 +35,7 @@ import org.zkoss.zul.ListModelList;
  */
 public class ReportQuantity extends GenericForwardComposer {
 
-    private static final Logger logger = Logger.getLogger(ReportMonth.class);
+    private static final Logger logger = Logger.getLogger(ReportQuantity.class);
     @WireVariable
     protected PumpServices pumpsService;
     @WireVariable

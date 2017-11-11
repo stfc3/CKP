@@ -30,8 +30,10 @@ import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.utils.SpringConstant;
-import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zul.A;
+import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Row;
+import org.zkoss.zul.Rows;
 
 public class BillsViewController extends GenericForwardComposer<Component> {
 
@@ -45,6 +47,8 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 
     @Wire
     private Grid gridBillsDetail;
+    @Wire
+    private Intbox roleApprove;
 
     // Danh sach hoa don chi tiet
     private List<BillViewDetail> lstBillDetail;
@@ -82,7 +86,10 @@ public class BillsViewController extends GenericForwardComposer<Component> {
         gridBillsDetail.setModel(listDataModelDetail);
 
         lstBill = billsServices.getAllData();
-        hideAction(comp);
+
+        if (roleApprove.getValue() == 0) {
+            hideActionApprove();
+        }
     }
 
     private void reload() {
@@ -198,19 +205,22 @@ public class BillsViewController extends GenericForwardComposer<Component> {
         return null;
     }
 
-    private void hideAction(Component comp) {
-        List<Component> addStaffs= Selectors.find(gridBillsDetail, ".btn-staff");
-//        Iterable<Component> addStaffs = comp.queryAll("btn-staff");
-        for (Component c : addStaffs) {
-            if (c instanceof A) {
-                ((A) c).setVisible(false);
-            }
-        }
-        List<Component> approves= Selectors.find(gridBillsDetail, ".btn-approve");
-//        Iterable<Component> approves = comp.queryAll("btn-approve");
-        for (Component c : approves) {
-            if (c instanceof A) {
-                ((A) c).setVisible(false);
+    private void hideActionApprove() {
+        gridBillsDetail.renderAll();
+        Rows vrows = gridBillsDetail.getRows();
+        List<Component> lstRows = vrows.getChildren();
+        if (lstRows != null && !lstRows.isEmpty()) {
+            for (Component row : lstRows) {
+                if (row instanceof Row) {
+                    Component btnStaff = row.getFirstChild().getChildren().get(1).getFirstChild().getChildren().get(2);
+                    if (btnStaff instanceof A) {
+                        ((A) btnStaff).setVisible(false);
+                    }
+                    Component btnApprove = row.getFirstChild().getChildren().get(1).getFirstChild().getChildren().get(3);
+                    if (btnApprove instanceof A) {
+                        ((A) btnApprove).setVisible(false);
+                    }
+                }
             }
         }
     }

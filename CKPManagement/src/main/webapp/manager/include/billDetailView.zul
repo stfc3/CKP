@@ -17,8 +17,7 @@
             <longbox id="txtConstruction" visible="false"
                      value="${arg.bill.constructionID}">
             </longbox>
-            <textbox id="role" visible="false" value="${arg.approve}"/>
-            <label onCreate="self.value=role.value"/>
+            <intbox id="roleApprove" visible="false" value="${arg.approve}"/>
             <hbox hflex="1" />
             <!-- 			<hbox hflex="1" /> -->
             <hbox hflex="2">

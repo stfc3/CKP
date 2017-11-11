@@ -858,6 +858,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         }
         Construction construction = getConstruction(c.getConstructionID());
         arguments.put("construction", construction);
+        arguments.put("approve", getRoleApprove());
         final Window windownUpload = (Window) Executions.createComponents("/manager/include/billDetailView.zul", bills,
                 arguments);
         windownUpload.doModal();
@@ -1085,18 +1086,18 @@ public class BillsController extends GenericForwardComposer<Component> {
         return -1;
     }
 
-    private boolean getRoleApprove() {
+    private int getRoleApprove() {
         UserToken userToken = (UserToken) session.getAttribute(com.dvd.ckp.utils.Constants.USER_TOKEN);
         if (userToken != null) {
             List<com.dvd.ckp.domain.Object> lstObjects = userToken.getListObject();
             if (lstObjects != null) {
                 for (com.dvd.ckp.domain.Object obj : lstObjects) {
                     if (obj.getObjectType() == 3L && com.dvd.ckp.utils.Constants.ROLE_APPROVE.equals(obj.getObjectCode())) {
-                        return true;
+                        return 1;
                     }
                 }
             }
         }
-        return false;
+        return 0;
     }
 }
