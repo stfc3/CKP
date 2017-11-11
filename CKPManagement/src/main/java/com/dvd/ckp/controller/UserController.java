@@ -179,6 +179,7 @@ public class UserController extends GenericForwardComposer {
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
                     User c = rowSelected.getValue();
                     c.setStatus(Constants.STATUS_INACTIVE);
+                    c.setType(Constants.USER_TYPE);
                     userService.insertOrUpdateUser(c);
                     reloadGrid();
                     if (c.getUserId() == userIdSelect) {
@@ -306,6 +307,8 @@ public class UserController extends GenericForwardComposer {
         User user = getDataInRow(lstCell);
         user.setUserId(c.getUserId());
         user.setPassword(EncryptUtil.encrypt(vstrPassword));
+        user.setStatus(Constants.STATUS_ACTIVE);
+        user.setType(Constants.USER_TYPE);
         userService.insertOrUpdateUser(user);
         Messagebox.show(Labels.getLabel("login.change.password.content.message", new String[]{vstrPassword}), Labels.getLabel("login.change.password.title.message"), Messagebox.OK, Messagebox.INFORMATION);
     }
