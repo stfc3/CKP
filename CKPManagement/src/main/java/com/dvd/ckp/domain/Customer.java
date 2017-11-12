@@ -27,6 +27,8 @@ import javax.persistence.Temporal;
     @NamedQuery(name = "Customer.fillAllCustomer", query = "FROM Customer c")
     ,
     @NamedQuery(name = "Customer.fillCustomerActive", query = "FROM Customer c WHERE c.status=1 ORDER BY c.createDate DESC")
+    ,
+    @NamedQuery(name = "Customer.fillCustomerById", query = "FROM Customer c WHERE c.status=1 AND c.customerId = :customerId")
 })
 public class Customer implements Serializable {
 

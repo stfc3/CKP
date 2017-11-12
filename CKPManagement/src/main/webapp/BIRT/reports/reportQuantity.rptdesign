@@ -118,9 +118,9 @@
                 </ex-property>
             </list-property>
             <property name="odaDriverClass">com.mysql.jdbc.Driver</property>
-            <property name="odaURL">jdbc:mysql://35.198.222.156:3306/ckp</property>
-            <property name="odaUser">ckp</property>
-            <encrypted-property name="odaPassword" encryptionID="base64">Q2twQFN0ZmNAMjAxNw==</encrypted-property>
+            <property name="odaURL">jdbc:mysql://127.0.0.1:3306/ckp</property>
+            <property name="odaUser">root</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">YWRtaW4=</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>

@@ -19,5 +19,7 @@ public interface CustomerDAO {
     List<Customer> getCustomerActive();
 
     void insertOrUpdateCustomer(Customer customer);
+    
+    Customer getCustomerById(Long customerId);
 
 }

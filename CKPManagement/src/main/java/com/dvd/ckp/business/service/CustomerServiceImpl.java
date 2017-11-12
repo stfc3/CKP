@@ -39,5 +39,11 @@ public class CustomerServiceImpl implements CustomerService {
     public void insertOrUpdateCustomer(Customer customer) {
         CustomerDAO.insertOrUpdateCustomer(customer);
     }
+    @Transactional(readOnly = true)
+    @Override
+    public Customer getCustomerById(Long customerId) {
+        return CustomerDAO.getCustomerById(customerId);
+    }
+    
 
 }

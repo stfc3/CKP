@@ -48,5 +48,18 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public void insertOrUpdateCustomer(Customer customer) {
 		getCurrentSession().saveOrUpdate(customer);
 	}
+        
+        @SuppressWarnings("unchecked")
+	@Override
+	public Customer getCustomerById(Long customerId) {
+
+		Query query = getCurrentSession().getNamedQuery("Customer.fillCustomerById");
+                query.setParameter("customerId", customerId);
+                List lstCustomer=query.list();
+                if(lstCustomer!=null && !lstCustomer.isEmpty()){
+                   return (Customer) lstCustomer.get(0);
+                }
+		return  null;
+	}
 
 }
