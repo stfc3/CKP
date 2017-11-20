@@ -651,10 +651,10 @@ public class BillsController extends GenericForwardComposer<Component> {
     }
 
     private String getCustomerByID(Long customerId) {
-        List<String> lstDataReturn = new ArrayList<>();
+
         if (lstCustomer != null && !lstCustomer.isEmpty()) {
             for (Customer customer : lstCustomer) {
-                if (customerId != null && customerId.equals(customer.getCustomerId())) {
+                if (customerId.equals(customer.getCustomerId())) {
                     return customer.getCustomerName();
                 }
             }
@@ -663,7 +663,6 @@ public class BillsController extends GenericForwardComposer<Component> {
     }
 
     private String getConstructionByID(Long constructionId) {
-        List<String> lstDataReturn = new ArrayList<>();
         if (lstConstructions != null && !lstConstructions.isEmpty()) {
             for (Construction construction : lstConstructions) {
                 if (constructionId != null && constructionId.equals(construction.getConstructionId())) {
@@ -706,7 +705,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
-            MyListModel listDataModelCustomer = new MyListModel(lstCustomer);
+            ListModelList listDataModelCustomer = new ListModelList(lstCustomer);
             listDataModelCustomer.setSelection(selectedIndex);
             combobox.setModel(listDataModelCustomer);
         }
@@ -773,6 +772,8 @@ public class BillsController extends GenericForwardComposer<Component> {
         if (customerId != null && lstCustomer != null && !lstCustomer.isEmpty()) {
             for (Customer customer : lstCustomer) {
                 if (customerId.equals(customer.getCustomerId())) {
+                    logger.info("Customer name: " + customer.getCustomerName());
+                    logger.info("Customer id: " + customer.getCustomerId());
                     customerSelected.add(customer);
                     break;
                 }
@@ -792,6 +793,7 @@ public class BillsController extends GenericForwardComposer<Component> {
                 Bills bills = listDataModel.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
+                logger.info("Customer id: " + bills.getCustomerID());
                 setDataCustomer(lstCell, getCustomerDefault(bills.getCustomerID()), customerID);
                 setDataConstruction(lstCell, getConstructionDefault(bills.getConstructionID()), constructionID);
             }
@@ -1092,7 +1094,8 @@ public class BillsController extends GenericForwardComposer<Component> {
             List<com.dvd.ckp.domain.Object> lstObjects = userToken.getListObject();
             if (lstObjects != null) {
                 for (com.dvd.ckp.domain.Object obj : lstObjects) {
-                    if (obj.getObjectType() == 3L && com.dvd.ckp.utils.Constants.ROLE_APPROVE.equals(obj.getObjectCode())) {
+                    if (obj.getObjectType() == 3L
+                            && com.dvd.ckp.utils.Constants.ROLE_APPROVE.equals(obj.getObjectCode())) {
                         return 1;
                     }
                 }
