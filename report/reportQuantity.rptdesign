@@ -226,7 +226,7 @@
     c.construction_name contruction,
     ppt.param_name pump_type,
     p.pump_name pump_name,
-    l.location_name location_name,
+    concat(plt.param_name,' ', lower(l.location_name)) location_name,
     DATE_FORMAT(b.prd_id, "%d/%c/%Y") prd_id,
     s.staff_name staff_name,
     ps.param_name position,
@@ -240,7 +240,8 @@ FROM
     params ppt,
     pumps p,
     location l,
-    params ps
+    params ps,
+    params plt
 WHERE
     c.construction_id = b.construction_id
         AND c.status = 1
@@ -260,6 +261,9 @@ WHERE
         AND p.status = 1
         AND bd.location_id = l.location_id
         AND l.status = 1
+        AND bd.location_type = plt.param_value
+        AND plt.status = 1
+        AND plt.param_key = 'LOCATION_TYPE'
         AND b.prd_id >= ?
         AND b.prd_id <= ?
         AND (c.construction_id=? or ? is null)
