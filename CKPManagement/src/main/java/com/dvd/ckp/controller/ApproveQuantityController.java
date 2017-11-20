@@ -93,11 +93,11 @@ public class ApproveQuantityController extends GenericForwardComposer {
 							Double totalApproveValue = null;
 							// billsServices.upadte(quantityApproveValue,
 							// totalApproveValue, billDetail);
-							if (listQuantity == null || listQuantity.isEmpty()) {
-								Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message.max.staff"),
-										Labels.getLabel("comfirm"), Messagebox.OK, Messagebox.ERROR);
-								return;
-							}
+//							if (listQuantity == null || listQuantity.isEmpty()) {
+//								Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message.max.staff"),
+//										Labels.getLabel("comfirm"), Messagebox.OK, Messagebox.ERROR);
+//								return;
+//							}
 							List<CalculatorRevenue> lstRevenue = billsServices.calculatorRevenue(
 									txtConstruction.getValue(), txtPumpTypeId.getValue(), txtLocationID.getValue(),
 									txtLocationTypeID.getValue(), quantityApproveValue, txtShift.getValue(),

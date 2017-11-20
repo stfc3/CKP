@@ -171,7 +171,7 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 
                             }
                         });
-                    } else {
+                    } else if (Messagebox.ON_YES.equals(e.getName())) {
                         Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message.ok"),
                                 Labels.getLabel("comfirm"), Messagebox.OK, Messagebox.INFORMATION);
                     }
