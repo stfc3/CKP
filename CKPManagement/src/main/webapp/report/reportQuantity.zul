@@ -7,20 +7,21 @@
             <vlayout>
                 <hbox class="control-report-fix-margin">
                     <label hflex="3"/>
-                    <div class="control-report" hflex="3">
-                        <label class="label-control-report" value="${c:l('report.param.construction')}"/>
-                        <combobox class="control-report-input" autodrop="true" id="cbxConstruction" name="p_contruction" >
-                            <template name="model">
-                                <comboitem value="${each.constructionId}" label="${each.constructionName}" />
-                            </template>
-                        </combobox>
-                    </div>
+                    
                     
                     <div class="control-report" hflex="3">
                         <label class="label-control-report" value="${c:l('report.param.pump')}"/>
                         <combobox class="control-report-input" autodrop="true" id="cbxPump" name="p_pumps" >
                             <template name="model">
                                 <comboitem value="${each.pumpsID}" label="${each.pumpsName}" />
+                            </template>
+                        </combobox>
+                    </div>
+                    <div class="control-report" hflex="3">
+                        <label class="label-control-report" value="${c:l('report.param.staff')}"/>
+                        <combobox class="control-report-input" autodrop="true" id="cbxStaff" name="p_staff" >
+                            <template name="model">
+                                <comboitem value="${each.staffId}" label="${each.staffName}" />
                             </template>
                         </combobox>
                     </div>

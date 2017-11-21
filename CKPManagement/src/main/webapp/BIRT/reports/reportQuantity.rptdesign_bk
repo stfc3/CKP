@@ -6,28 +6,31 @@
     <property name="bidiLayoutOrientation">ltr</property>
     <property name="imageDPI">96</property>
     <parameters>
-        <scalar-parameter name="p_staff" id="240">
-            <text-property name="promptText">Nhân viên</text-property>
+        <scalar-parameter name="p_contruction" id="240">
+            <text-property name="promptText">Công trình</text-property>
             <property name="valueType">static</property>
             <property name="isRequired">false</property>
             <property name="dataType">string</property>
             <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1</value>
+            </simple-property-list>
             <list-property name="selectionList">
                 <structure>
                     <property name="value">1</property>
-                    <property name="label">NV 1</property>
+                    <property name="label">Công trình 1</property>
                 </structure>
                 <structure>
                     <property name="value">2</property>
-                    <property name="label">NV 2</property>
+                    <property name="label">Công trình 2</property>
                 </structure>
                 <structure>
                     <property name="value">3</property>
-                    <property name="label">NV 3</property>
+                    <property name="label">Công trình 3</property>
                 </structure>
                 <structure>
                     <property name="value">4</property>
-                    <property name="label">NV 4</property>
+                    <property name="label">Công trình 4</property>
                 </structure>
             </list-property>
             <property name="paramType">simple</property>
@@ -44,6 +47,9 @@
             <property name="isRequired">false</property>
             <property name="dataType">string</property>
             <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1</value>
+            </simple-property-list>
             <list-property name="selectionList">
                 <structure>
                     <property name="value">1</property>
@@ -112,13 +118,14 @@
                 </ex-property>
             </list-property>
             <property name="odaDriverClass">com.mysql.jdbc.Driver</property>
-            <property name="odaURL">jdbc:mysql://35.198.222.156:3306/ckp</property>
-            <property name="odaUser">ckp</property>
-            <encrypted-property name="odaPassword" encryptionID="base64">Q2twQFN0ZmNAMjAxNw==</encrypted-property>
+            <property name="odaURL">jdbc:mysql://127.0.0.1:3306/ckp</property>
+            <property name="odaUser">root</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">YWRtaW4=</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>
         <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Data Set" id="8">
+            <list-property name="columnHints"/>
             <list-property name="parameters">
                 <structure>
                     <property name="name">fromdate</property>
@@ -137,16 +144,16 @@
                     <property name="isOutput">false</property>
                 </structure>
                 <structure>
-                    <property name="name">staff1</property>
-                    <property name="paramName">p_staff</property>
+                    <property name="name">contruction</property>
+                    <property name="paramName">p_contruction</property>
                     <property name="dataType">string</property>
                     <property name="position">3</property>
                     <property name="isInput">true</property>
                     <property name="isOutput">false</property>
                 </structure>
                 <structure>
-                    <property name="name">staff2</property>
-                    <property name="paramName">p_staff</property>
+                    <property name="name">param_1</property>
+                    <property name="paramName">p_contruction</property>
                     <property name="dataType">string</property>
                     <property name="position">4</property>
                     <property name="isInput">true</property>
@@ -173,12 +180,12 @@
                 <list-property name="resultSet">
                     <structure>
                         <property name="position">1</property>
-                        <property name="name">construction_name</property>
+                        <property name="name">contruction</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">param_name</property>
+                        <property name="name">pump_type</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -203,7 +210,7 @@
                     </structure>
                     <structure>
                         <property name="position">7</property>
-                        <property name="name">param_name_7</property>
+                        <property name="name">position</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -214,65 +221,16 @@
                 </list-property>
             </structure>
             <property name="dataSource">Data Source</property>
-            <list-property name="resultSet">
-                <structure>
-                    <property name="position">1</property>
-                    <property name="name">construction_name</property>
-                    <property name="nativeName">construction_name</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">2</property>
-                    <property name="name">param_name</property>
-                    <property name="nativeName">param_name</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">3</property>
-                    <property name="name">pump_name</property>
-                    <property name="nativeName">pump_name</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">4</property>
-                    <property name="name">location_name</property>
-                    <property name="nativeName">location_name</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">5</property>
-                    <property name="name">prd_id</property>
-                    <property name="nativeName">prd_id</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">6</property>
-                    <property name="name">staff_name</property>
-                    <property name="nativeName">staff_name</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">7</property>
-                    <property name="name">param_name_7</property>
-                    <property name="nativeName">param_name</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">8</property>
-                    <property name="name">quantity</property>
-                    <property name="nativeName">quantity</property>
-                    <property name="dataType">float</property>
-                </structure>
-            </list-property>
+            <list-property name="resultSet"/>
             <xml-property name="queryText"><![CDATA[SELECT 
-    c.construction_name as contruction,
-    ppt.param_name as pump_type,
-    p.pump_name as pump_name,
-    concat(plt.param_name,' ', lower(l.location_name)) as location_name,
-    DATE_FORMAT(b.prd_id, "%d/%c/%Y") as prd_id,
-    s.staff_name as staff_name,
-    ps.param_name as position,
-    qs.quantity as quantity
+    c.construction_name contruction,
+    ppt.param_name pump_type,
+    p.pump_name pump_name,
+    l.location_name location_name,
+    DATE_FORMAT(b.prd_id, "%d/%c/%Y") prd_id,
+    s.staff_name staff_name,
+    ps.param_name position,
+    qs.quantity
 FROM
     construction c,
     bills b,
@@ -282,8 +240,7 @@ FROM
     params ppt,
     pumps p,
     location l,
-    params ps,
-    params plt
+    params ps
 WHERE
     c.construction_id = b.construction_id
         AND c.status = 1
@@ -303,12 +260,9 @@ WHERE
         AND p.status = 1
         AND bd.location_id = l.location_id
         AND l.status = 1
-        AND bd.location_type = plt.param_value
-        AND plt.status = 1
-        AND plt.param_key = 'LOCATION_TYPE'
         AND b.prd_id >= ?
         AND b.prd_id <= ?
-        AND (s.staff_id=? or ? is null)
+        AND (c.construction_id=? or ? is null)
         and (p.pump_id=? or ? is null)]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
@@ -526,16 +480,14 @@ WHERE
                 <structure>
                     <property name="name">contruction</property>
                     <text-property name="displayName">contruction</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["construction_name"]</expression>
+                    <expression name="expression" type="javascript">dataSetRow["contruction"]</expression>
                     <property name="dataType">string</property>
-                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
                     <property name="name">pump_type</property>
                     <text-property name="displayName">pump_type</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["param_name"]</expression>
+                    <expression name="expression" type="javascript">dataSetRow["pump_type"]</expression>
                     <property name="dataType">string</property>
-                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
                     <property name="name">pump_name</property>
@@ -564,9 +516,8 @@ WHERE
                 <structure>
                     <property name="name">position</property>
                     <text-property name="displayName">position</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["param_name_7"]</expression>
+                    <expression name="expression" type="javascript">dataSetRow["position"]</expression>
                     <property name="dataType">string</property>
-                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
                     <property name="name">quantity</property>
@@ -611,18 +562,6 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
 "Từ ngày: " +fromDay+"/"+fromMonth+"/"+fromYear+ " đến ngày: " +toDay+"/"+toMonth+"/"+toYear</expression>
                     <property name="dataType">string</property>
                     <property name="allowExport">true</property>
-                </structure>
-                <structure>
-                    <property name="name">construction_name</property>
-                    <text-property name="displayName">construction_name</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["construction_name"]</expression>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="name">param_name</property>
-                    <text-property name="displayName">param_name</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["param_name"]</expression>
-                    <property name="dataType">string</property>
                 </structure>
             </list-property>
             <column id="40">

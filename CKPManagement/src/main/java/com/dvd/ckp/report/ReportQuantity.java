@@ -6,11 +6,12 @@
 package com.dvd.ckp.report;
 
 import com.dvd.ckp.birt.BirtConstant;
-import com.dvd.ckp.business.service.ConstructionService;
 import com.dvd.ckp.business.service.PumpServices;
+import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Pumps;
+import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.SpringConstant;
@@ -39,20 +40,20 @@ public class ReportQuantity extends GenericForwardComposer {
     @WireVariable
     protected PumpServices pumpsService;
     @WireVariable
-    protected ConstructionService constructionService;
+    protected StaffServices staffService;
     @Wire
     private Iframe ifrReportMonth;
     @Wire
     private Combobox cbxPump;
     @Wire
-    private Combobox cbxConstruction;
+    private Combobox cbxStaff;
     @Wire
     private Datebox dteFromDate;
     @Wire
     private Datebox dteToDate;
 
     private List<Pumps> lstPumps;
-    private List<Construction> lstConstructions;
+    private List<Staff> lstStaff;
     private String reportName = "reportQuantity.rptdesign";
     private String fileName = "BaoCaoKhoiLuongCongNhan";
 
@@ -60,7 +61,7 @@ public class ReportQuantity extends GenericForwardComposer {
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         pumpsService = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
-        constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
+        staffService = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
 
         lstPumps = pumpsService.getAllListData();
 
@@ -75,19 +76,19 @@ public class ReportQuantity extends GenericForwardComposer {
         listCustomerModel.addToSelection(customerOption);
         cbxPump.setModel(listCustomerModel);
 
-        lstConstructions = constructionService.getConstructionActive();
-        Construction constructionOption = new Construction();
-        constructionOption.setConstructionId(null);
-        constructionOption.setConstructionName(Labels.getLabel("option"));
-        if (lstConstructions == null) {
-            lstConstructions = new ArrayList<>();
+        lstStaff = staffService.getAllData();
+        Staff staffOption = new Staff();
+        staffOption.setStaffId(null);
+        staffOption.setStaffName(Labels.getLabel("option"));
+        if (lstStaff == null) {
+            lstStaff = new ArrayList<>();
         }
-        lstConstructions.add(Constants.FIRST_INDEX, constructionOption);
+        lstStaff.add(Constants.FIRST_INDEX, staffOption);
 
-        MyListModel listContructionModel = new MyListModel<>(lstConstructions);
-        listContructionModel.addToSelection(constructionOption);
+        MyListModel listStaffModel = new MyListModel<>(lstStaff);
+        listStaffModel.addToSelection(staffOption);
 
-        cbxConstruction.setModel(listContructionModel);
+        cbxStaff.setModel(listStaffModel);
 
     }
 
@@ -126,8 +127,8 @@ public class ReportQuantity extends GenericForwardComposer {
         if (StringUtils.isValidString(cbxPump.getValue()) && !Labels.getLabel("option").equals(cbxPump.getValue())) {
             paramMap.put(cbxPump.getName(), cbxPump.getSelectedItem().getValue());
         }
-        if (StringUtils.isValidString(cbxConstruction.getValue()) && !Labels.getLabel("option").equals(cbxConstruction.getValue())) {
-            paramMap.put(cbxConstruction.getName(), cbxConstruction.getSelectedItem().getValue());
+        if (StringUtils.isValidString(cbxStaff.getValue()) && !Labels.getLabel("option").equals(cbxStaff.getValue())) {
+            paramMap.put(cbxStaff.getName(), cbxStaff.getSelectedItem().getValue());
         }
         paramMap.put(dteFromDate.getName(), DateTimeUtils.convertDateToString(dteFromDate.getValue(), BirtConstant.PRD_ID));
         paramMap.put(dteToDate.getName(), DateTimeUtils.convertDateToString(dteToDate.getValue(), BirtConstant.PRD_ID));

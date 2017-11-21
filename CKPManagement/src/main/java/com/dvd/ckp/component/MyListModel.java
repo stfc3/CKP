@@ -23,6 +23,7 @@ import com.dvd.ckp.domain.Distribute;
 import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.Pumps;
+import com.dvd.ckp.domain.Staff;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -587,6 +588,9 @@ public class MyListModel<E> extends AbstractListModel<E> implements Sortable<E>,
             }
             if(object instanceof Param){
                 return ((Param) object).getParamName();
+            }
+            if(object instanceof Staff){
+                return ((Staff) object).getStaffName();
             }
             return "";
         }
