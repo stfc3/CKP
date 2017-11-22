@@ -338,7 +338,7 @@ public class ContractController extends GenericForwardComposer {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             cbxCustomer = (Combobox) component;
-            ListModelList listDataModelCustomer = new ListModelList(lstCustomers);
+            MyListModel listDataModelCustomer = new MyListModel(lstCustomers);
             listDataModelCustomer.setSelection(selectedIndex);
             cbxCustomer.setModel(listDataModelCustomer);
             cbxCustomer.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getCustomerName());

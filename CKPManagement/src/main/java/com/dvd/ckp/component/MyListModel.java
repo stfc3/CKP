@@ -539,7 +539,7 @@ public class MyListModel<E> extends AbstractListModel<E> implements Sortable<E>,
 	 * @since 5.0.4
 	 */
 	protected int getMaxNumberInSubModel(int nRows) {
-		return nRows < 0 ? 15 : nRows;
+		return nRows < 0 ? 10000 : nRows;
 	}
         /** Compares if the given value shall belong to the submodel represented
 	 * by the key.

@@ -9,7 +9,6 @@ import com.dvd.ckp.birt.BirtConstant;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.component.MyListModel;
-import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.utils.Constants;
