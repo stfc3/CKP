@@ -22,8 +22,8 @@ import com.dvd.ckp.utils.StringUtils;
 @Entity
 @Table(name = "bill_detail")
 @NamedQueries({
-		@NamedQuery(name = "BillsDetail.getAllBillDetail", query = "FROM BillsDetail u where status=1 order by createDate desc"),
-		@NamedQuery(name = "BillsDetail.getAllBillDetailByID", query = "FROM BillsDetail u where billId = :billId and status=1 order by createDate desc") })
+		@NamedQuery(name = "BillsDetail.getAllBillDetail", query = "FROM BillsDetail u where status in (1,2) order by createDate desc"),
+		@NamedQuery(name = "BillsDetail.getAllBillDetailByID", query = "FROM BillsDetail u where billId = :billId and status in (1,2) order by createDate desc") })
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "callCalculatorRevenue", query = "CALL calculator_revenue(:construction,:pump,:pump_type,:location_type,:location_id,:quantity,:shift)", resultClass = BillsDetail.class) })
 public class BillsDetail implements Serializable {

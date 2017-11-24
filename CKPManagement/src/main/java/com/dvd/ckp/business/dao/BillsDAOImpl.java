@@ -273,8 +273,8 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append(" left join pumps p ");
 			builder.append(" on d.pump_id = p.pump_id ");
 			builder.append(" where b.bill_id = :billID ");
-			builder.append(" and b.status in (1,2) ");
-			builder.append(" and d.status = 1 ");
+			builder.append(" and b.status = 1 ");
+			builder.append(" and d.status in (1,2) ");
 			builder.append(" and l.status = 1 ");
 			Query query = getCurrentSession().createSQLQuery(builder.toString())
 					.addScalar("billID", StandardBasicTypes.LONG).addScalar("billDetailID", StandardBasicTypes.LONG)
@@ -343,7 +343,8 @@ public class BillsDAOImpl implements BillDAO {
 		try {
 			StringBuilder builder = new StringBuilder("update bill_detail set ");
 			builder.append(" quantity_approve = :quantityApprove, ");
-			builder.append(" total_approve = :totalApprove ");
+			builder.append(" total_approve = :totalApprove, ");
+			builder.append(" status = 2 ");
 			builder.append(" where bill_detail_id = :billDetailId ");
 			Query query = getCurrentSession().createSQLQuery(builder.toString());
 			query.setParameter("quantityApprove", quantityApprove);
