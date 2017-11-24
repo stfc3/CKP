@@ -273,7 +273,7 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append(" left join pumps p ");
 			builder.append(" on d.pump_id = p.pump_id ");
 			builder.append(" where b.bill_id = :billID ");
-			builder.append(" and b.status = 1 ");
+			builder.append(" and b.status in (1,2) ");
 			builder.append(" and d.status = 1 ");
 			builder.append(" and l.status = 1 ");
 			Query query = getCurrentSession().createSQLQuery(builder.toString())

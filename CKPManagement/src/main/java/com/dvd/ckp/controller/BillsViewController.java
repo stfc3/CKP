@@ -66,6 +66,7 @@ public class BillsViewController extends GenericForwardComposer<Component> {
 
     private Window windowViewBillDetail;
 
+
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         // TODO Auto-generated method stub

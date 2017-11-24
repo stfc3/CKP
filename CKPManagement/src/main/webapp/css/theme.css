@@ -720,6 +720,13 @@ a [class^="z-icon-"]{
     padding-right: 0px !important;
     width: auto !important;
 }
+.vlayout-bill-detail-approve {
+    color: #0070c0;
+    background: url(../images/images.jpg) repeat 0 0;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+
 .vlayout-bill-detail {
     color: #0070c0;
 }

@@ -705,7 +705,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
-            ListModelList listDataModelCustomer = new ListModelList(lstCustomer);
+            MyListModel listDataModelCustomer = new MyListModel(lstCustomer);
             listDataModelCustomer.setSelection(selectedIndex);
             combobox.setModel(listDataModelCustomer);
         }

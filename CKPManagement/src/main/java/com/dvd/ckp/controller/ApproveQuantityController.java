@@ -21,6 +21,7 @@ import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
 import com.dvd.ckp.business.service.StaffServices;
+import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.CalculatorRevenue;
 import com.dvd.ckp.domain.StaffQuantity;
 import com.dvd.ckp.utils.SpringConstant;
@@ -32,12 +33,15 @@ public class ApproveQuantityController extends GenericForwardComposer {
 	private static final long serialVersionUID = -278079129703470694L;
 	private static final Logger logger = Logger.getLogger(ApproveQuantityController.class);
 	private Long billDetail;
+	private Long bill;
 
 	@WireVariable
 	protected StaffServices staffService;
 
 	@WireVariable
 	protected BillsServices billsServices;
+	@Wire
+	private Longbox billID;
 	@Wire
 	private Longbox txtBillID;
 	@Wire
@@ -77,6 +81,7 @@ public class ApproveQuantityController extends GenericForwardComposer {
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
 		billDetail = txtBillID.getValue();
+		bill= billID.getValue();
 		billsServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
 		staffService = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
 
@@ -104,6 +109,10 @@ public class ApproveQuantityController extends GenericForwardComposer {
 									txtSwitch.getValue(), txtIsAuto.getValue());
 							totalApproveValue = lstRevenue.get(0).getRevenue();
 							billsServices.upadte(quantityApproveValue, totalApproveValue, billDetail);
+							Bills bills = new Bills();
+							bills.setBillID(bill);
+							bills.setStatus(2);
+							billsServices.delete(bills);
 							// totalApprove.setValue(totalApproveValue);
 							// approveQuantity.onClose();
 							logger.info("Value: " + lstRevenue.get(0).getRevenue());

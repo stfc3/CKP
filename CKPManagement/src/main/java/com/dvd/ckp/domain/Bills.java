@@ -21,7 +21,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "bills")
-@NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u where status = 1 order by createDate desc")
+@NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u where status in (1,2) order by createDate desc")
 public class Bills implements Serializable {
 	private static final Logger LOGGER = Logger.getLogger(Bills.class);
 	private int index;

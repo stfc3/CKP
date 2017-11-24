@@ -10,6 +10,9 @@
 		<style src="/css/style.css" />
 		<style src="/css/theme.css" />
 		<groupbox>
+			<longbox id="billID"
+				value="${arg.bill.billID}" visible="false">
+			</longbox>
 			<longbox id="txtConstruction"
 				value="${arg.bill.constructionID}" visible="false">
 			</longbox>
