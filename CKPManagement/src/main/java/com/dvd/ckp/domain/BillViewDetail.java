@@ -8,187 +8,189 @@ import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.utils.DateTimeUtils;
 
 public class BillViewDetail {
-	private static final Logger LOGGER = Logger.getLogger(BillViewDetail.class);
-	private Long billID;
-	private Long billDetailID;
-	private Date fromDate;
-	private String strFromDate;	
-	private Date startTime;
-	private String strStartTime;
-	private Date endTime;
-	private String strEndTime;
-	private Date toDate;
-	private String strToDate;
-	private Double quantity;
-	private Double quantityApprove;
-	private Double quantityView;
-	private String location;
-	private String note;
-	private String pump;
 
-	public Long getBillID() {
-		return billID;
-	}
+    private static final Logger LOGGER = Logger.getLogger(BillViewDetail.class);
+    private Long billID;
+    private Long billDetailID;
+    private Date fromDate;
+    private String strFromDate;
+    private Date startTime;
+    private String strStartTime;
+    private Date endTime;
+    private String strEndTime;
+    private Date toDate;
+    private String strToDate;
+    private Double quantity;
+    private Double quantityApprove;
+    private Double quantityView;
+    private String location;
+    private String note;
+    private String pump;
+    private Integer status;
 
-	public void setBillID(Long billID) {
-		this.billID = billID;
-	}
+    public Long getBillID() {
+        return billID;
+    }
 
-	public Long getBillDetailID() {
-		return billDetailID;
-	}
+    public void setBillID(Long billID) {
+        this.billID = billID;
+    }
 
-	public void setBillDetailID(Long billDetailID) {
-		this.billDetailID = billDetailID;
-	}
+    public Long getBillDetailID() {
+        return billDetailID;
+    }
 
-	public Date getFromDate() {
-		return fromDate;
-	}
+    public void setBillDetailID(Long billDetailID) {
+        this.billDetailID = billDetailID;
+    }
 
-	public void setFromDate(Date fromDate) {
-		this.fromDate = fromDate;
-	}
+    public Date getFromDate() {
+        return fromDate;
+    }
 
-	public Date getStartTime() {
-		return startTime;
-	}
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
+    public Date getStartTime() {
+        return startTime;
+    }
 
-	public Date getEndTime() {
-		return endTime;
-	}
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
 
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
+    public Date getEndTime() {
+        return endTime;
+    }
 
-	public Date getToDate() {
-		return toDate;
-	}
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 
-	public void setToDate(Date toDate) {
-		this.toDate = toDate;
-	}
+    public Date getToDate() {
+        return toDate;
+    }
 
-	public Double getQuantity() {
-		return quantity;
-	}
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
+    }
 
-	public void setQuantity(Double quantity) {
-		this.quantity = quantity;
-	}
+    public Double getQuantity() {
+        return quantity;
+    }
 
-	public Double getQuantityApprove() {
-		return quantityApprove;
-	}
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
 
-	public void setQuantityApprove(Double quantityApprove) {
-		this.quantityApprove = quantityApprove;
-	}
+    public Double getQuantityApprove() {
+        return quantityApprove;
+    }
 
-	public String getLocation() {
-		return location;
-	}
+    public void setQuantityApprove(Double quantityApprove) {
+        this.quantityApprove = quantityApprove;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    public String getLocation() {
+        return location;
+    }
 
-	public String getNote() {
-		return note;
-	}
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	
-	
-	
-	public String getStrFromDate() {
-		try {
-			return DateTimeUtils.convertDateToString(fromDate, Constants.FORMAT_DATE_DD_MM_YYY);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			LOGGER.error(e.getMessage(), e);
-		}
-		return "";
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public void setStrFromDate(String strFromDate) {
-		this.strFromDate = strFromDate;
-	}
+    public String getStrFromDate() {
+        try {
+            return DateTimeUtils.convertDateToString(fromDate, Constants.FORMAT_DATE_DD_MM_YYY);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            LOGGER.error(e.getMessage(), e);
+        }
+        return "";
+    }
 
-	
-	public String getStrToDate() {
-		try {
-			return DateTimeUtils.convertDateToString(toDate, Constants.FORMAT_DATE_DD_MM_YYY);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			LOGGER.error(e.getMessage(), e);
-		}
-		return "";
-	}
+    public void setStrFromDate(String strFromDate) {
+        this.strFromDate = strFromDate;
+    }
 
-	public void setStrToDate(String strToDate) {
-		this.strToDate = strToDate;
-	}
+    public String getStrToDate() {
+        try {
+            return DateTimeUtils.convertDateToString(toDate, Constants.FORMAT_DATE_DD_MM_YYY);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            LOGGER.error(e.getMessage(), e);
+        }
+        return "";
+    }
 
-	
-	public String getStrStartTime() {
-		try {
-			return DateTimeUtils.convertDateToString(startTime, Constants.FORMAT_HOUR);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			LOGGER.error(e.getMessage(), e);
-		}
-		return "";
-	}
+    public void setStrToDate(String strToDate) {
+        this.strToDate = strToDate;
+    }
 
-	public void setStrStartTime(String strStartTime) {
-		this.strStartTime = strStartTime;
-	}
+    public String getStrStartTime() {
+        try {
+            return DateTimeUtils.convertDateToString(startTime, Constants.FORMAT_HOUR);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            LOGGER.error(e.getMessage(), e);
+        }
+        return "";
+    }
 
-	
-	public String getStrEndTime() {
-		try {
-			return DateTimeUtils.convertDateToString(endTime, Constants.FORMAT_HOUR);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			LOGGER.error(e.getMessage(), e);
-		}
-		return "";
-	}
+    public void setStrStartTime(String strStartTime) {
+        this.strStartTime = strStartTime;
+    }
 
-	public void setStrEndTime(String strEndTime) {
-		this.strEndTime = strEndTime;
-	}
+    public String getStrEndTime() {
+        try {
+            return DateTimeUtils.convertDateToString(endTime, Constants.FORMAT_HOUR);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            LOGGER.error(e.getMessage(), e);
+        }
+        return "";
+    }
 
-	public Double getQuantityView() {
-		if(quantityApprove != null){
-			quantityView = quantityApprove; 
-		}else{
-			quantityView = quantity;
-		}
-		return quantityView;
-	}
+    public void setStrEndTime(String strEndTime) {
+        this.strEndTime = strEndTime;
+    }
 
-	public void setQuantityView(Double quantityView) {
-		this.quantityView = quantityView;
-	}
+    public Double getQuantityView() {
+        if (quantityApprove != null) {
+            quantityView = quantityApprove;
+        } else {
+            quantityView = quantity;
+        }
+        return quantityView;
+    }
 
-	public String getPump() {
-		return pump;
-	}
+    public void setQuantityView(Double quantityView) {
+        this.quantityView = quantityView;
+    }
 
-	public void setPump(String pump) {
-		this.pump = pump;
-	}
-	
-	
+    public String getPump() {
+        return pump;
+    }
+
+    public void setPump(String pump) {
+        this.pump = pump;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
 }

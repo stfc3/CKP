@@ -131,7 +131,7 @@
             <template name="model">
                 <row value="${each}">
 
-                    <vlayout class="vlayout-bill-detail"
+                    <vlayout class="${each.status == 2 ? 'vlayout-bill-detail-approve' : 'vlayout-bill-detail'}"
                              style="border: 1px solid silver !important;text-align: center;">
                         <!-- 				an bill detail id -->
                         <textbox value="${each.billDetailID}" visible="false"> </textbox>

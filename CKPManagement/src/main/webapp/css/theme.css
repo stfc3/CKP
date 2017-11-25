@@ -724,7 +724,7 @@ a [class^="z-icon-"]{
     color: #0070c0;
     background: url(../images/images.jpg) repeat 0 0;
     background-repeat: no-repeat;
-    text-align: center;
+    background-position: center;
 }
 
 .vlayout-bill-detail {
