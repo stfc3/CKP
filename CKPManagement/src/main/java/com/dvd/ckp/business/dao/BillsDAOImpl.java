@@ -16,6 +16,7 @@ import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.CalculatorRevenue;
+import org.zkoss.zk.ui.util.Clients;
 
 @Repository
 public class BillsDAOImpl implements BillDAO {
@@ -209,6 +210,8 @@ public class BillsDAOImpl implements BillDAO {
             query.setParameter("status", billsDetail.getStatus());
             query.setParameter("id", billsDetail.getBillDetailId());
             query.executeUpdate();
+            String billDetailIdApprove = "bill_detail_" + billsDetail.getBillDetailId();
+            Clients.evalJavaScript("approveBilDetail('" + billDetailIdApprove + "');");
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -353,6 +356,8 @@ public class BillsDAOImpl implements BillDAO {
             query.setParameter("totalApprove", totalApprove);
             query.setParameter("billDetailId", billDetailID);
             query.executeUpdate();
+            String billDetailIdApprove = "bill_detail_" + billDetailID;
+            Clients.evalJavaScript("approveBilDetail('" + billDetailIdApprove + "');");
         } catch (Exception e) {
             // TODO: handle exception
             logger.error(e.getMessage(), e);

@@ -722,7 +722,7 @@ a [class^="z-icon-"]{
 }
 .vlayout-bill-detail-approve {
     color: #0070c0;
-    background: url(../images/images.jpg) repeat 0 0;
+    background: url(../images/approve.png) repeat 0 0;
     background-repeat: no-repeat;
     background-position: center;
 }
