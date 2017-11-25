@@ -282,7 +282,7 @@ CREATE TABLE IF NOT EXISTS params
 INSERT INTO users (user_name, full_name, password) VALUE ('admin','Admin', 'BIiUXiXpQAGjPulwa9L5Rg==');
 
 DELIMITER $$
-CREATE DEFINER=`ckp`@`%` PROCEDURE `calculator_revenue`(IN p_construction_id BIGINT, IN p_pump_type INT, 
+CREATE PROCEDURE `calculator_revenue`(IN p_construction_id BIGINT, IN p_pump_type INT, 
 IN p_location_type INT, IN p_location_id BIGINT, IN p_quantity DOUBLE, IN p_num_wait INT, IN p_num_switch INT, IN p_auto_convert INT)
 BEGIN
 #biến dừng lặp cursor
@@ -514,3 +514,60 @@ CREATE TABLE IF NOT EXISTS rent_equipment(
     create_date timestamp default current_timestamp,
     PRIMARY KEY(rent_id)
 ) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8 COMMENT 'Bảng quan ly cho thue can phan phoi';
+
+
+DELIMITER $$
+CREATE PROCEDURE `proc_report_quantity`(IN p_pump_id VARCHAR(10), IN p_staff_id VARCHAR(10), IN p_from_date VARCHAR(10), IN p_to_date VARCHAR(10))
+BEGIN
+
+SELECT 
+    c.construction_name as contruction,
+    ppt.param_value as pump_type_value,
+    ppt.param_name as pump_type,
+    p.pump_name as pump_name,
+    plt.param_value as location_type,
+    concat(plt.param_name,' ', lower(l.location_name)) as location_name,
+    DATE_FORMAT(b.prd_id, "%d/%c/%Y") as prd_id,
+    s.staff_name as staff_name,
+    ps.param_name as position,
+    qs.quantity as quantity
+FROM
+    construction c,
+    bills b,
+    bill_detail bd,
+    quantity_staff qs,
+    staff s,
+    params ppt,
+    pumps p,
+    location l,
+    params ps,
+    params plt
+WHERE
+    c.construction_id = b.construction_id
+        AND c.status = 1
+        AND b.status = 1
+        AND b.bill_id = bd.bill_id
+        AND bd.status in (1,2)
+        AND bd.bill_detail_id = qs.bill_detail_id
+        AND qs.staff_id = s.staff_id
+        AND s.status = 1
+        AND bd.pump_type = ppt.param_value
+        AND ppt.status = 1
+        AND ppt.param_key = 'PUMP_TYPE'
+        AND s.position = ps.param_value
+        AND ps.status = 1
+        AND ps.param_key = 'POSITION'
+        AND bd.pump_id = p.pump_id
+        AND p.status = 1
+        AND bd.location_id = l.location_id
+        AND l.status = 1
+        AND bd.location_type = plt.param_value
+        AND plt.status = 1
+        AND plt.param_key = 'LOCATION_TYPE'
+        AND b.prd_id >= p_from_date
+        AND b.prd_id <= p_to_date
+        AND (s.staff_id = p_staff_id or p_staff_id is null)
+        and (p.pump_id = p_pump_id or p_pump_id is null);
+
+END$$
+DELIMITER ;

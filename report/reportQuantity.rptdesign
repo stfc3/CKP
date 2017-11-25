@@ -121,10 +121,26 @@
         <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Data Set" id="8">
             <list-property name="parameters">
                 <structure>
+                    <property name="name">pumps</property>
+                    <property name="paramName">p_pumps</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">staff</property>
+                    <property name="paramName">p_staff</property>
+                    <property name="dataType">string</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
                     <property name="name">fromdate</property>
                     <property name="paramName">p_from_date</property>
                     <property name="dataType">string</property>
-                    <property name="position">1</property>
+                    <property name="position">3</property>
                     <property name="isInput">true</property>
                     <property name="isOutput">false</property>
                 </structure>
@@ -132,39 +148,7 @@
                     <property name="name">toDate</property>
                     <property name="paramName">p_to_date</property>
                     <property name="dataType">string</property>
-                    <property name="position">2</property>
-                    <property name="isInput">true</property>
-                    <property name="isOutput">false</property>
-                </structure>
-                <structure>
-                    <property name="name">staff1</property>
-                    <property name="paramName">p_staff</property>
-                    <property name="dataType">string</property>
-                    <property name="position">3</property>
-                    <property name="isInput">true</property>
-                    <property name="isOutput">false</property>
-                </structure>
-                <structure>
-                    <property name="name">staff2</property>
-                    <property name="paramName">p_staff</property>
-                    <property name="dataType">string</property>
                     <property name="position">4</property>
-                    <property name="isInput">true</property>
-                    <property name="isOutput">false</property>
-                </structure>
-                <structure>
-                    <property name="name">pumps</property>
-                    <property name="paramName">p_pumps</property>
-                    <property name="dataType">string</property>
-                    <property name="position">5</property>
-                    <property name="isInput">true</property>
-                    <property name="isOutput">false</property>
-                </structure>
-                <structure>
-                    <property name="name">param_2</property>
-                    <property name="paramName">p_pumps</property>
-                    <property name="dataType">string</property>
-                    <property name="position">6</property>
                     <property name="isInput">true</property>
                     <property name="isOutput">false</property>
                 </structure>
@@ -178,36 +162,46 @@
                     </structure>
                     <structure>
                         <property name="position">2</property>
+                        <property name="name">param_value</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
                         <property name="name">param_name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">3</property>
+                        <property name="position">4</property>
                         <property name="name">pump_name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">4</property>
+                        <property name="position">5</property>
+                        <property name="name">param_value_5</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
                         <property name="name">location_name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">5</property>
+                        <property name="position">7</property>
                         <property name="name">prd_id</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">6</property>
+                        <property name="position">8</property>
                         <property name="name">staff_name</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">7</property>
-                        <property name="name">param_name_7</property>
+                        <property name="position">9</property>
+                        <property name="name">param_name_9</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">8</property>
+                        <property name="position">10</property>
                         <property name="name">quantity</property>
                         <property name="dataType">float</property>
                     </structure>
@@ -223,93 +217,60 @@
                 </structure>
                 <structure>
                     <property name="position">2</property>
+                    <property name="name">param_value</property>
+                    <property name="nativeName">param_value</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
                     <property name="name">param_name</property>
                     <property name="nativeName">param_name</property>
                     <property name="dataType">string</property>
                 </structure>
                 <structure>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                     <property name="name">pump_name</property>
                     <property name="nativeName">pump_name</property>
                     <property name="dataType">string</property>
                 </structure>
                 <structure>
-                    <property name="position">4</property>
+                    <property name="position">5</property>
+                    <property name="name">param_value_5</property>
+                    <property name="nativeName">param_value</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
                     <property name="name">location_name</property>
                     <property name="nativeName">location_name</property>
                     <property name="dataType">string</property>
                 </structure>
                 <structure>
-                    <property name="position">5</property>
+                    <property name="position">7</property>
                     <property name="name">prd_id</property>
                     <property name="nativeName">prd_id</property>
                     <property name="dataType">string</property>
                 </structure>
                 <structure>
-                    <property name="position">6</property>
+                    <property name="position">8</property>
                     <property name="name">staff_name</property>
                     <property name="nativeName">staff_name</property>
                     <property name="dataType">string</property>
                 </structure>
                 <structure>
-                    <property name="position">7</property>
-                    <property name="name">param_name_7</property>
+                    <property name="position">9</property>
+                    <property name="name">param_name_9</property>
                     <property name="nativeName">param_name</property>
                     <property name="dataType">string</property>
                 </structure>
                 <structure>
-                    <property name="position">8</property>
+                    <property name="position">10</property>
                     <property name="name">quantity</property>
                     <property name="nativeName">quantity</property>
                     <property name="dataType">float</property>
                 </structure>
             </list-property>
-            <xml-property name="queryText"><![CDATA[SELECT 
-    c.construction_name as contruction,
-    ppt.param_name as pump_type,
-    p.pump_name as pump_name,
-    concat(plt.param_name,' ', lower(l.location_name)) as location_name,
-    DATE_FORMAT(b.prd_id, "%d/%c/%Y") as prd_id,
-    s.staff_name as staff_name,
-    ps.param_name as position,
-    qs.quantity as quantity
-FROM
-    construction c,
-    bills b,
-    bill_detail bd,
-    quantity_staff qs,
-    staff s,
-    params ppt,
-    pumps p,
-    location l,
-    params ps,
-    params plt
-WHERE
-    c.construction_id = b.construction_id
-        AND c.status = 1
-        AND b.status = 1
-        AND b.bill_id = bd.bill_id
-        AND bd.status = 1
-        AND bd.bill_detail_id = qs.bill_detail_id
-        AND qs.staff_id = s.staff_id
-        AND s.status = 1
-        AND bd.pump_type = ppt.param_value
-        AND ppt.status = 1
-        AND ppt.param_key = 'PUMP_TYPE'
-        AND s.position = ps.param_value
-        AND ps.status = 1
-        AND ps.param_key = 'POSITION'
-        AND bd.pump_id = p.pump_id
-        AND p.status = 1
-        AND bd.location_id = l.location_id
-        AND l.status = 1
-        AND bd.location_type = plt.param_value
-        AND plt.status = 1
-        AND plt.param_key = 'LOCATION_TYPE'
-        AND b.prd_id >= ?
-        AND b.prd_id <= ?
-        AND (s.staff_id=? or ? is null)
-        and (p.pump_id=? or ? is null)]]></xml-property>
+            <xml-property name="queryText"><![CDATA[CALL proc_report_quantity(?,?,?,?)]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
@@ -524,24 +485,34 @@ WHERE
             <property name="dataSet">Data Set</property>
             <list-property name="boundDataColumns">
                 <structure>
-                    <property name="name">contruction</property>
-                    <text-property name="displayName">contruction</text-property>
+                    <property name="name">construction_name</property>
+                    <text-property name="displayName">construction_name</text-property>
                     <expression name="expression" type="javascript">dataSetRow["construction_name"]</expression>
                     <property name="dataType">string</property>
-                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
-                    <property name="name">pump_type</property>
-                    <text-property name="displayName">pump_type</text-property>
+                    <property name="name">param_value</property>
+                    <text-property name="displayName">param_value</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["param_value"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">param_name</property>
+                    <text-property name="displayName">param_name</text-property>
                     <expression name="expression" type="javascript">dataSetRow["param_name"]</expression>
                     <property name="dataType">string</property>
-                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
                     <property name="name">pump_name</property>
                     <text-property name="displayName">pump_name</text-property>
                     <expression name="expression" type="javascript">dataSetRow["pump_name"]</expression>
                     <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">param_value_5</property>
+                    <text-property name="displayName">param_value_5</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["param_value_5"]</expression>
+                    <property name="dataType">decimal</property>
                 </structure>
                 <structure>
                     <property name="name">location_name</property>
@@ -562,11 +533,10 @@ WHERE
                     <property name="dataType">string</property>
                 </structure>
                 <structure>
-                    <property name="name">position</property>
-                    <text-property name="displayName">position</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["param_name_7"]</expression>
+                    <property name="name">param_name_9</property>
+                    <text-property name="displayName">param_name_9</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["param_name_9"]</expression>
                     <property name="dataType">string</property>
-                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
                     <property name="name">quantity</property>
@@ -575,8 +545,51 @@ WHERE
                     <property name="dataType">float</property>
                 </structure>
                 <structure>
-                    <property name="name">Aggregation</property>
-                    <text-property name="displayName">TotalQuantity</text-property>
+                    <property name="name">index</property>
+                    <text-property name="displayName">index</text-property>
+                    <expression name="expression" type="javascript">row.__rownum+1</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Time</property>
+                    <text-property name="displayName">Time</text-property>
+                    <expression name="expression" type="javascript">var fromDay= params["p_from_date"].value.substr(6,2);&#13;
+var fromMonth=params["p_from_date"].value.substr(4,2);&#13;
+var fromYear=params["p_from_date"].value.substr(0,4);&#13;
+&#13;
+var toDay=params["p_to_date"].value.substr(6,2);&#13;
+var toMonth=params["p_to_date"].value.substr(4,2);&#13;
+var toYear=params["p_to_date"].value.substr(0,4);&#13;
+&#13;
+"Từ ngày: " +fromDay+"/"+fromMonth+"/"+fromYear+ " đến ngày: " +toDay+"/"+toMonth+"/"+toYear</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">construction</property>
+                    <text-property name="displayName">construction</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["construction_name"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">pump_type</property>
+                    <text-property name="displayName">pump_type</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["param_name"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">position</property>
+                    <text-property name="displayName">position</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["param_name_9"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">total_quantity</property>
+                    <text-property name="displayName">total_quantity</text-property>
                     <property name="dataType">float</property>
                     <simple-property-list name="aggregateOn">
                         <value>GroupStaff</value>
@@ -591,38 +604,87 @@ WHERE
                     <property name="allowExport">true</property>
                 </structure>
                 <structure>
-                    <property name="name">Index</property>
-                    <text-property name="displayName">Index</text-property>
-                    <expression name="expression" type="javascript">row.__rownum+1</expression>
-                    <property name="dataType">string</property>
+                    <property name="name">cpp_quantity</property>
+                    <text-property name="displayName">cpp_quantity</text-property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>GroupStaff</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["quantity"]</expression>
+                        </structure>
+                    </list-property>
+                    <expression name="filterExpr" type="javascript">if(dataSetRow["param_value"]==3){&#13;
+	true;&#13;
+}else{&#13;
+	false;&#13;
+}</expression>
                     <property name="allowExport">true</property>
                 </structure>
                 <structure>
-                    <property name="name">Title</property>
-                    <text-property name="displayName">Title</text-property>
-                    <expression name="expression" type="javascript">var fromDay= params["p_from_date"].value.substr(6,2);&#13;
-var fromMonth=params["p_from_date"].value.substr(4,2);&#13;
-var fromYear=params["p_from_date"].value.substr(0,4);&#13;
-&#13;
-var toDay=params["p_to_date"].value.substr(6,2);&#13;
-var toMonth=params["p_to_date"].value.substr(4,2);&#13;
-var toYear=params["p_to_date"].value.substr(0,4);&#13;
-&#13;
-"Từ ngày: " +fromDay+"/"+fromMonth+"/"+fromYear+ " đến ngày: " +toDay+"/"+toMonth+"/"+toYear</expression>
-                    <property name="dataType">string</property>
+                    <property name="name">static_quantity</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>GroupStaff</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["quantity"]</expression>
+                        </structure>
+                    </list-property>
+                    <expression name="filterExpr" type="javascript">if(dataSetRow["param_value"]==1 &amp;&amp; dataSetRow["param_value_5"]==1){&#13;
+	true;&#13;
+}else{&#13;
+	false;&#13;
+}</expression>
                     <property name="allowExport">true</property>
                 </structure>
                 <structure>
-                    <property name="name">construction_name</property>
-                    <text-property name="displayName">construction_name</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["construction_name"]</expression>
-                    <property name="dataType">string</property>
+                    <property name="name">other_quantity</property>
+                    <text-property name="displayName">other_quantity</text-property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>GroupStaff</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["quantity"]</expression>
+                        </structure>
+                    </list-property>
+                    <expression name="filterExpr" type="javascript">if(dataSetRow["param_value"]==1 &amp;&amp; (dataSetRow["param_value_5"]==2 || dataSetRow["param_value_5"]==3 || dataSetRow["param_value_5"]==4)){&#13;
+	true;&#13;
+}else{&#13;
+	false;&#13;
+}</expression>
+                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
-                    <property name="name">param_name</property>
-                    <text-property name="displayName">param_name</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["param_name"]</expression>
-                    <property name="dataType">string</property>
+                    <property name="name">foundation_quantity</property>
+                    <text-property name="displayName">foundation_quantity</text-property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>GroupStaff</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["quantity"]</expression>
+                        </structure>
+                    </list-property>
+                    <expression name="filterExpr" type="javascript">if(dataSetRow["param_value"]==1 &amp;&amp; dataSetRow["param_value_5"]==5){&#13;
+	true;&#13;
+}else{&#13;
+	false;&#13;
+}</expression>
+                    <property name="allowExport">true</property>
                 </structure>
             </list-property>
             <column id="40">
@@ -924,7 +986,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="rowSpan">1</property>
                         <data id="378">
                             <property name="fontStyle">italic</property>
-                            <property name="resultSetColumn">Title</property>
+                            <property name="resultSetColumn">Time</property>
                         </data>
                     </cell>
                 </row>
@@ -1361,6 +1423,57 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <cell id="316">
                             <property name="colSpan">6</property>
                             <property name="rowSpan">1</property>
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundImageType">url</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="backgroundSizeHeight">auto</property>
+                            <property name="backgroundSizeWidth">auto</property>
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">normal</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">black</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <property name="textIndent">0em</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">false</property>
+                            <property name="overflow">hidden</property>
                             <label id="237">
                                 <property name="backgroundAttachment">scroll</property>
                                 <property name="backgroundPositionX">0%</property>
@@ -1415,13 +1528,25 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         </cell>
                         <cell id="322">
                             <property name="fontWeight">bold</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
                             <property name="textAlign">right</property>
-                            <data id="375">
+                            <data id="463">
                                 <structure name="numberFormat">
                                     <property name="category">Currency</property>
                                     <property name="pattern">#,##0.00{RoundingMode=HALF_UP}</property>
                                 </structure>
-                                <property name="resultSetColumn">Aggregation</property>
+                                <property name="resultSetColumn">total_quantity</property>
                             </data>
                         </cell>
                     </row>
@@ -1429,6 +1554,18 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <cell id="417">
                             <property name="colSpan">6</property>
                             <property name="rowSpan">1</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
                             <label id="448">
                                 <property name="backgroundAttachment">scroll</property>
                                 <property name="backgroundPositionX">0%</property>
@@ -1482,14 +1619,131 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             </label>
                         </cell>
                         <cell id="423">
-                            <property name="fontWeight">bold</property>
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundImageType">url</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="backgroundSizeHeight">auto</property>
+                            <property name="backgroundSizeWidth">auto</property>
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">normal</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">black</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
                             <property name="textAlign">right</property>
+                            <property name="textIndent">0em</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">false</property>
+                            <property name="overflow">hidden</property>
+                            <data id="464">
+                                <property name="backgroundAttachment">scroll</property>
+                                <property name="backgroundPositionX">0%</property>
+                                <property name="backgroundPositionY">0%</property>
+                                <property name="backgroundRepeat">repeat</property>
+                                <property name="fontFamily">sans-serif</property>
+                                <property name="fontSize">10pt</property>
+                                <property name="fontWeight">bold</property>
+                                <property name="fontStyle">normal</property>
+                                <property name="fontVariant">normal</property>
+                                <property name="color">black</property>
+                                <property name="textLineThrough">none</property>
+                                <property name="textOverline">none</property>
+                                <property name="textUnderline">none</property>
+                                <property name="borderBottomColor">black</property>
+                                <property name="borderBottomStyle">none</property>
+                                <property name="borderBottomWidth">medium</property>
+                                <property name="borderLeftColor">black</property>
+                                <property name="borderLeftStyle">none</property>
+                                <property name="borderLeftWidth">medium</property>
+                                <property name="borderRightColor">black</property>
+                                <property name="borderRightStyle">none</property>
+                                <property name="borderRightWidth">medium</property>
+                                <property name="borderTopColor">black</property>
+                                <property name="borderTopStyle">none</property>
+                                <property name="borderTopWidth">medium</property>
+                                <property name="marginTop">0pt</property>
+                                <property name="marginLeft">0pt</property>
+                                <property name="marginBottom">0pt</property>
+                                <property name="marginRight">0pt</property>
+                                <property name="paddingTop">1pt</property>
+                                <property name="paddingLeft">1pt</property>
+                                <property name="paddingBottom">1pt</property>
+                                <property name="paddingRight">1pt</property>
+                                <structure name="numberFormat">
+                                    <property name="category">Currency</property>
+                                    <property name="pattern">#,##0.00{RoundingMode=HALF_UP}</property>
+                                </structure>
+                                <property name="textAlign">right</property>
+                                <property name="letterSpacing">normal</property>
+                                <property name="lineHeight">normal</property>
+                                <property name="orphans">2</property>
+                                <property name="textTransform">none</property>
+                                <property name="whiteSpace">normal</property>
+                                <property name="widows">2</property>
+                                <property name="wordSpacing">normal</property>
+                                <property name="display">block</property>
+                                <property name="pageBreakAfter">auto</property>
+                                <property name="pageBreakBefore">auto</property>
+                                <property name="pageBreakInside">auto</property>
+                                <property name="showIfBlank">false</property>
+                                <property name="canShrink">false</property>
+                                <property name="overflow">hidden</property>
+                                <property name="resultSetColumn">cpp_quantity</property>
+                            </data>
                         </cell>
                     </row>
                     <row id="440">
                         <cell id="441">
                             <property name="colSpan">6</property>
                             <property name="rowSpan">1</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
                             <label id="449">
                                 <property name="backgroundAttachment">scroll</property>
                                 <property name="backgroundPositionX">0%</property>
@@ -1544,13 +1798,44 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         </cell>
                         <cell id="447">
                             <property name="fontWeight">bold</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
                             <property name="textAlign">right</property>
+                            <data id="466">
+                                <structure name="numberFormat">
+                                    <property name="category">Currency</property>
+                                    <property name="pattern">#,##0.00{RoundingMode=HALF_UP}</property>
+                                </structure>
+                                <property name="resultSetColumn">static_quantity</property>
+                            </data>
                         </cell>
                     </row>
                     <row id="432">
                         <cell id="433">
                             <property name="colSpan">6</property>
                             <property name="rowSpan">1</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
                             <label id="450">
                                 <property name="backgroundAttachment">scroll</property>
                                 <property name="backgroundPositionX">0%</property>
@@ -1605,13 +1890,128 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         </cell>
                         <cell id="439">
                             <property name="fontWeight">bold</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
                             <property name="textAlign">right</property>
+                            <data id="467">
+                                <property name="resultSetColumn">other_quantity</property>
+                            </data>
+                        </cell>
+                    </row>
+                    <row id="452">
+                        <cell id="453">
+                            <property name="colSpan">6</property>
+                            <property name="rowSpan">1</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
+                            <label id="460">
+                                <property name="backgroundAttachment">scroll</property>
+                                <property name="backgroundPositionX">0%</property>
+                                <property name="backgroundPositionY">0%</property>
+                                <property name="backgroundRepeat">repeat</property>
+                                <property name="fontFamily">sans-serif</property>
+                                <property name="fontSize">9pt</property>
+                                <property name="fontWeight">bold</property>
+                                <property name="fontStyle">normal</property>
+                                <property name="fontVariant">normal</property>
+                                <property name="color">black</property>
+                                <property name="textLineThrough">none</property>
+                                <property name="textOverline">none</property>
+                                <property name="textUnderline">none</property>
+                                <property name="borderBottomColor">black</property>
+                                <property name="borderBottomStyle">none</property>
+                                <property name="borderBottomWidth">medium</property>
+                                <property name="borderLeftColor">black</property>
+                                <property name="borderLeftStyle">none</property>
+                                <property name="borderLeftWidth">medium</property>
+                                <property name="borderRightColor">black</property>
+                                <property name="borderRightStyle">none</property>
+                                <property name="borderRightWidth">medium</property>
+                                <property name="borderTopColor">black</property>
+                                <property name="borderTopStyle">none</property>
+                                <property name="borderTopWidth">medium</property>
+                                <property name="marginTop">0pt</property>
+                                <property name="marginLeft">0pt</property>
+                                <property name="marginBottom">0pt</property>
+                                <property name="marginRight">0pt</property>
+                                <property name="paddingTop">1pt</property>
+                                <property name="paddingLeft">1pt</property>
+                                <property name="paddingBottom">1pt</property>
+                                <property name="paddingRight">1pt</property>
+                                <property name="textAlign">right</property>
+                                <property name="letterSpacing">normal</property>
+                                <property name="lineHeight">normal</property>
+                                <property name="orphans">2</property>
+                                <property name="textTransform">none</property>
+                                <property name="whiteSpace">normal</property>
+                                <property name="widows">2</property>
+                                <property name="wordSpacing">normal</property>
+                                <property name="display">block</property>
+                                <property name="pageBreakAfter">auto</property>
+                                <property name="pageBreakBefore">auto</property>
+                                <property name="pageBreakInside">auto</property>
+                                <property name="showIfBlank">false</property>
+                                <property name="canShrink">false</property>
+                                <property name="overflow">hidden</property>
+                                <text-property name="text">Bơm đài móng</text-property>
+                            </label>
+                        </cell>
+                        <cell id="459">
+                            <property name="fontWeight">bold</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
+                            <property name="textAlign">right</property>
+                            <data id="468">
+                                <property name="resultSetColumn">foundation_quantity</property>
+                            </data>
                         </cell>
                     </row>
                     <row id="424">
                         <cell id="425">
                             <property name="colSpan">6</property>
                             <property name="rowSpan">1</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
                             <label id="451">
                                 <property name="backgroundAttachment">scroll</property>
                                 <property name="backgroundPositionX">0%</property>
@@ -1666,6 +2066,18 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         </cell>
                         <cell id="431">
                             <property name="fontWeight">bold</property>
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
                             <property name="textAlign">right</property>
                         </cell>
                     </row>
@@ -1689,7 +2101,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopWidth">1px</property>
                         <data id="377">
                             <property name="textAlign">center</property>
-                            <property name="resultSetColumn">Index</property>
+                            <property name="resultSetColumn">index</property>
                         </data>
                     </cell>
                     <cell id="22">
@@ -1723,7 +2135,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
                         <data id="366">
-                            <property name="resultSetColumn">contruction</property>
+                            <property name="resultSetColumn">construction</property>
                         </data>
                     </cell>
                     <cell id="24">
