@@ -65,16 +65,16 @@
                                         </combobox>
                                     </cell>-->
                                     <cell>
-                                        <doublebox value="${each.priceM3}" tooltiptext="${each.priceM3}" hflex="1" inplace="true" readonly="true"/>
+                                        <doublebox value="${each.priceM3 == null ? 0:each.priceM3}" format="###,###,###.##" tooltiptext="${c:formatNumber(each.priceM3 == null ? 0:each.priceM3, '###,###,###.##')}" hflex="1" inplace="true" readonly="true"/>
                                     </cell>
                                     <cell>
-                                        <doublebox value="${each.priceShift}" tooltiptext="${each.priceShift}" hflex="1" inplace="true" readonly="true"/>
+                                        <doublebox value="${each.priceShift == null ? 0:each.priceShift}"  format="###,###,###.##" tooltiptext="${c:formatNumber(each.priceShift == null ? 0:each.priceShift, '###,###,###.##')}" hflex="1" inplace="true" readonly="true"/>
                                     </cell>
                                     <cell>
-                                        <doublebox value="${each.priceWait}" tooltiptext="${each.priceWait}" hflex="1" inplace="true" readonly="true"/>
+                                        <doublebox value="${each.priceWait == null ? 0:each.priceWait}"  format="###,###,###.##" tooltiptext="${c:formatNumber(each.priceWait == null ? 0:each.priceWait, '###,###,###.##')}" hflex="1" inplace="true" readonly="true"/>
                                     </cell>
                                     <cell>
-                                        <doublebox value="${each.priceSwitch}" tooltiptext="${each.priceSwitch}" hflex="1" inplace="true" readonly="true"/>
+                                        <doublebox value="${each.priceSwitch == null ? 0:each.priceSwitch}"  format="###,###,###.##" tooltiptext="${c:formatNumber(each.priceSwitch == null ? 0:each.priceSwitch, '###,###,###.##')}" hflex="1" inplace="true" readonly="true"/>
                                     </cell>
                                     <!--Loai convert-->
                                     <cell>
@@ -138,7 +138,7 @@
                                         </combobox>
                                     </cell>
                                     <cell>
-                                        <doublebox value="${each.priceRent}" tooltiptext="${each.priceRent}" hflex="1" inplace="true" readonly="true"/>
+                                        <doublebox value="${each.priceRent == null ? 0:each.priceRent}" format="###,###,###.##" tooltiptext="${c:formatNumber(each.priceRent == null ? 0:each.priceRent, '###,###,###.##')}" hflex="1" inplace="true" readonly="true"/>
                                     </cell>
                                     <cell style="text-align:center">
                                         <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEditDistribute" tooltiptext="${c:l('edit')}"/>

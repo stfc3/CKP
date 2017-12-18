@@ -558,6 +558,7 @@ public class PriceController extends GenericForwardComposer {
         price = rowSelected.getValue();
         List<Component> lstCell = rowSelected.getChildren();
         getDataInRow(lstCell, price);
+        price.setPriceType(pricePump);
         price.setContractId(lngContractId);
         price.setStatus(Constants.STATUS_ACTIVE);
         price.setCreateDate(new Date());

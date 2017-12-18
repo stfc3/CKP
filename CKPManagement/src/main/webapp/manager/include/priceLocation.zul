@@ -64,10 +64,10 @@
                             </combobox>
                         </cell>
                         <cell>
-                            <doublebox value="${each.priceLocation}" tooltiptext="${each.priceLocation}" hflex="1" inplace="true" readonly="true"/>
+                            <doublebox value="${each.priceLocation == null ? 0:each.priceLocation}" format="###,###,###.##" tooltiptext="${c:formatNumber(each.priceLocation == null ? 0:each.priceLocation, '###,###,###.##')}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
-                            <doublebox value="${each.priceLocationShift}" tooltiptext="${each.priceLocationShift}" hflex="1" inplace="true" readonly="true"/>
+                            <doublebox value="${each.priceLocationShift == null ? 0:each.priceLocationShift}" format="###,###,###.##" tooltiptext="${c:formatNumber(each.priceLocationShift == null ? 0:each.priceLocationShift, '###,###,###.##')}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell style="text-align:center">
                             <a class="btn-cursor" iconSclass="z-icon-pencil" forward="onClick=onEdit" tooltiptext="${c:l('edit')}"/>
