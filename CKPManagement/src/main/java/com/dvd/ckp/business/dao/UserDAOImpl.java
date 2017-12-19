@@ -71,7 +71,7 @@ public class UserDAOImpl implements UserDAO {
         } else {
             vstrSql.append(" where r.role_id not in (select ur.role_id from user_role ur where ur.user_id = :userId and ur.status = 1)");
         }
-
+        vstrSql.append(" and r.status <> 0");
         Query query = getCurrentSession()
                 .createSQLQuery(vstrSql.toString())
                 .addScalar("roleId", StandardBasicTypes.LONG)
