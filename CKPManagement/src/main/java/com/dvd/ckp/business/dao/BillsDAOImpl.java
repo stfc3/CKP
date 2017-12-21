@@ -366,4 +366,57 @@ public class BillsDAOImpl implements BillDAO {
         }
     }
 
+    @Override
+	public List<BillViewDetail> getApproveBill() {
+		// TODO Auto-generated method stub
+		try {
+			StringBuilder builder = new StringBuilder("SELECT ");
+			builder.append(" a.bill_id as billID, ");
+			builder.append(" a.bill_code as billCode, ");
+			builder.append(" a.bill_detail_id as billDetailID, ");
+			builder.append(" c.construction_name as contructionName, ");
+			builder.append(" c.construction_id as contruction, ");
+			builder.append(" a.prd_id as prdID, ");
+			builder.append(" p.pump_name as pump, ");
+			builder.append(" p.pump_id as pumpID, ");
+			builder.append(" l.location_name as location, ");
+			builder.append(" l.location_id as locationID, ");
+			builder.append(" a.quantity as quantity, ");
+			builder.append(" a.quantity_approve as quantityApprove, ");
+			builder.append(" a.total as total");
+			builder.append(" FROM ");
+			builder.append(" (SELECT  ");
+			builder.append(" b.bill_id,b.bill_code,bd.bill_detail_id,b.construction_id,b.prd_id, ");
+			builder.append(" bd.pump_id,bd.location_id,bd.quantity,bd.quantity_approve,bd.total ");
+			builder.append(" FROM bills b, bill_detail bd ");
+			builder.append(" WHERE ");
+			builder.append("  b.bill_id = bd.bill_id AND b.status = 1 AND bd.status IN (1 , 2)) a ");
+			builder.append(" LEFT JOIN construction c ON a.construction_id = c.construction_id ");
+			builder.append(" LEFT JOIN pumps p ON a.pump_id = p.pump_id ");
+			builder.append(" LEFT JOIN location l ON a.location_id = l.location_id ");
+			Query query = getCurrentSession().createSQLQuery(builder.toString())
+					.addScalar("billID", StandardBasicTypes.LONG)
+					.addScalar("billCode", StandardBasicTypes.STRING)
+					.addScalar("billDetailID", StandardBasicTypes.LONG)
+					.addScalar("contructionName", StandardBasicTypes.STRING)
+					.addScalar("contruction", StandardBasicTypes.LONG)
+					.addScalar("prdID", StandardBasicTypes.DATE)
+					.addScalar("pump", StandardBasicTypes.STRING)
+					.addScalar("pumpID", StandardBasicTypes.LONG)
+					.addScalar("location", StandardBasicTypes.STRING)
+					.addScalar("locationID", StandardBasicTypes.LONG)
+					.addScalar("quantity", StandardBasicTypes.DOUBLE)
+					.addScalar("quantityApprove", StandardBasicTypes.DOUBLE)
+					.addScalar("total", StandardBasicTypes.DOUBLE)
+					.setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));
+			List<BillViewDetail> listData = query.list();
+
+			return listData;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
 }

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.domain.StaffQuantity;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 
 @Repository
 public class StaffDAOImpl implements StaffDAO {
@@ -184,6 +186,31 @@ public class StaffDAOImpl implements StaffDAO {
             logger.error(e.getMessage(), e);
         }
 
+    }
+
+    @Override
+    public List<StaffQuantity> getAll() {
+        try {
+            StringBuilder builder = new StringBuilder("select q.id as id, q.bill_detail_id as billId,s.staff_id as staffId,s.staff_code as staffCode ");
+            builder.append(" ,s.staff_name as staffName,q.quantity as quantity from quantity_staff q, staff s ");
+            builder.append(" where q.staff_id=s.staff_id  order by q.bill_detail_id,s.staff_id,s.staff_name");
+            Query query = getCurrentSession().createSQLQuery(builder.toString())
+                    .addScalar("id", StandardBasicTypes.LONG)
+                    .addScalar("billId", StandardBasicTypes.LONG)
+                    .addScalar("staffId", StandardBasicTypes.LONG)
+                    .addScalar("staffCode", StandardBasicTypes.STRING)
+                    .addScalar("staffName", StandardBasicTypes.STRING)
+                    .addScalar("quantity", StandardBasicTypes.DOUBLE)
+                    .setResultTransformer(Transformers.aliasToBean(StaffQuantity.class));;
+            List<StaffQuantity> lstData = query.list();
+            if (lstData != null && !lstData.isEmpty()) {
+                return lstData;
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return null;
     }
 
 }

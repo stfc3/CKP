@@ -26,5 +26,7 @@ public interface StaffDAO {
 	public void delete(Long billDetailId);
 
 	public int update(StaffQuantity quantity);
+        
+        public List<StaffQuantity> getAll();
 
 }
