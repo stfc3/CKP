@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:n="native">
+	<window id="approveQuantity"
+		apply="com.dvd.ckp.controller.ApproveQuantityController"
+		position="center,center" closable="true" border="normal" width="30%"
+		title="${c:l('staff.quantity.approve')}" height="30%"
+		maximizable="false" onCancel="approveQuantity.detach();"
+		contentStyle="overflow:auto">
+		<style src="/css/style.css" />
+		<style src="/css/theme.css" />
+		<groupbox>
+			<longbox id="billID"
+				value="${arg.bill.billID}" visible="false">
+			</longbox>
+			<longbox id="txtConstruction"
+				value="${arg.bill.constructionID}" visible="false">
+			</longbox>
+			<longbox id="txtBillID" value="${arg.billDetailID}"
+				visible="false">
+			</longbox>
+			<longbox id="txtPumpId" value="${arg.billDetai.pumpID}"
+				visible="false">
+			</longbox>
+			<longbox id="txtPumpTypeId"
+				value="${arg.billDetai.pumpTypeId}" visible="false">
+			</longbox>
+			<longbox id="txtLocationID"
+				value="${arg.billDetai.locationId}" visible="false">
+			</longbox>
+			<longbox id="txtLocationTypeID"
+				value="${arg.billDetai.locationType}" visible="false">
+			</longbox>
+			<intbox id="txtShift" value="${arg.billDetai.shift}"
+				visible="false">
+			</intbox>
+			<intbox id="txtIsAuto" value="${arg.billDetai.shift}"
+				visible="false">
+			</intbox>
+			<intbox id="txtMaxStaff"
+				value="${arg.billDetai.autoConvert}" visible="false">
+			</intbox>
+			<intbox id="txtSwitch"
+				value="${arg.billDetai.numSwitch}" visible="false">
+			</intbox>
+			<vlayout>
+				<hbox>
+					<hbox hflex="2" />
+					<label>
+						${c:l('staff.quantity.approve.quantity')}
+					</label>
+					<doublebox id="quantityApprove"></doublebox>
+					<hbox hflex="2" />
+				</hbox>
+				<hbox visible="false">
+					<hbox hflex="2" />
+					<label>
+						${c:l('staff.quantity.approve.total')}
+					</label>
+					<doublebox readonly="true" id="totalApprove"></doublebox>
+					<hbox hflex="2" />
+				</hbox>
+			</vlayout>
+			<hlayout>
+				<hbox hflex="3" />
+				<hbox hflex="2">
+					<button class="btn-cursor"
+						forward="onClick=onAction" iconSclass="z-icon-floppy-o"
+						label="${c:l('save')}" />
+					<button class="btn-cursor"
+						onClick="approveQuantity.detach();" iconSclass="z-icon-times"
+						label="${c:l('cancel')}" />
+				</hbox>
+				<hbox hflex="3" />
+			</hlayout>
+		</groupbox>
+	</window>
+</zk>
