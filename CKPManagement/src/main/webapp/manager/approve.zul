@@ -2,127 +2,128 @@
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
 
-	<!--<zk xmlns:n="native">-->
-	<style>
-		.z-a{ color: green; cursor: auto; text-decoration: none;
-		margin-right: 5px; } .z-auxheader-content{ line-height: 14px;
-		text-align:right; } a [class^="z-icon-"]{ margin-right: 5px; }
-	</style>
-	<window id="approve"
-		apply="com.dvd.ckp.controller.ApproveController">
-		<style src="/css/theme.css" />
-		<groupbox>
-			<caption label="${c:l('approve.title')}" />
-			<grid id="gridApprove">
+    <!--<zk xmlns:n="native">-->
+    <style>
+        .z-a{ color: green; cursor: auto; text-decoration: none;
+        margin-right: 5px; } .z-auxheader-content{ line-height: 14px;
+        text-align:right; } a [class^="z-icon-"]{ margin-right: 5px; }
+    </style>
+    <window id="approve"
+                apply="com.dvd.ckp.controller.ApproveController">
+        <style src="/css/theme.css" />
+        <groupbox>
+            <caption label="${c:l('approve.title')}" />
+            <grid id="gridApprove">
 				
-				<auxhead sclass="category-center">
+                <auxhead sclass="category-center">
 
-					<auxheader colspan="2">
-						<a iconSclass="z-icon-filter" />
-						<combobox hflex="1" id="cbBillCode"
-							placeholder="${c:l('bills.code')}" autodrop="true"
-							buttonVisible="false">
-<!-- 							<template name="model"> -->
-<!-- 								<comboitem value="${each.billCode}" -->
-<!-- 									label="${each.billCode}" /> -->
-<!-- 							</template> -->
-						</combobox>
-					</auxheader>
-					<auxheader colspan="2">
-						<a iconSclass="z-icon-filter" />
-						<combobox hflex="1" id="cbContruction"
-							placeholder="${c:l('construction.name')}" autodrop="true"
-							buttonVisible="false">
-							<template name="model">
-								<comboitem value="${each.constructionId}"
-									label="${each.constructionName}" />
-							</template>
-						</combobox>
-					</auxheader>
-					<auxheader colspan="3">
-						<a iconSclass="z-icon-filter" />
-						<datebox id="dtFilterDate" hflex="1"
-							placeholder="${c:l('bills.prd.id')}" format="dd/MM/yyyy" />
-					</auxheader>
-					<auxheader colspan="3">
-						<a iconSclass="z-icon-filter" />
-						<combobox hflex="1" id="cbPump"
-							placeholder="${c:l('pump.name')}" autodrop="true"
-							buttonVisible="false">
-							<template name="model">
-								<comboitem value="${each.pumpsID}"
-									label="${each.pumpsName}" />
-							</template>
-						</combobox>
-					</auxheader>
+                    <auxheader colspan="2">
+                        <a iconSclass="z-icon-filter" />
+                        <combobox hflex="1" id="cbBillCode"
+                                                          placeholder="${c:l('bills.code')}" autodrop="true"
+                                                          buttonVisible="false">
+                            <!-- 							<template name="model"> -->
+                            <!-- 								<comboitem value="${each.billCode}" -->
+                            <!-- 									label="${each.billCode}" /> -->
+                            <!-- 							</template> -->
+                        </combobox>
+                    </auxheader>
+                    <auxheader colspan="2">
+                        <a iconSclass="z-icon-filter" />
+                        <combobox hflex="1" id="cbContruction"
+                                                          placeholder="${c:l('construction.name')}" autodrop="true"
+                                                          buttonVisible="false">
+                            <template name="model">
+                                <comboitem value="${each.constructionId}"
+                                                                           label="${each.constructionName}" />
+                            </template>
+                        </combobox>
+                    </auxheader>
+                    <auxheader colspan="3">
+                        <a iconSclass="z-icon-filter" />
+                        <datebox id="dtFilterDate" hflex="1"
+                                                         placeholder="${c:l('bills.prd.id')}" format="dd/MM/yyyy" />
+                    </auxheader>
+                    <auxheader colspan="3">
+                        <a iconSclass="z-icon-filter" />
+                        <combobox hflex="1" id="cbPump"
+                                                          placeholder="${c:l('pump.name')}" autodrop="true"
+                                                          buttonVisible="false">
+                            <template name="model">
+                                <comboitem value="${each.pumpsID}"
+                                                                           label="${each.pumpsName}" />
+                            </template>
+                        </combobox>
+                    </auxheader>
 
-				</auxhead>
-				<columns style="text-align:center; ">
-					<column hflex="1">${c:l('pump.index')}</column>
-					<column hflex="2">
-						${c:l('approve.bill.code')}
-					</column>
-					<column hflex="2">
-						${c:l('approve.contruction')}
-					</column>
-					<column hflex="2">${c:l('approve.date')}</column>
-					<column hflex="2">${c:l('approve.pump')}</column>
-					<column hflex="2">
-						${c:l('approve.location')}
-					</column>
-					<column hflex="2">
-						${c:l('approve.quantity')}
-					</column>
-					<column hflex="2">${c:l('approve.total')}</column>
-					<column hflex="3">${c:l('approve.staff')}</column>
-					<column hflex="2">${c:l('pump.action')}</column>
-				</columns>
-				<template name="model">
-					<row value="${each}">
-						<cell style="text-align: center;">
-							<label value="${forEachStatus.index+1}" />
-						</cell>
-						<cell>
-							<label value="${each.billCode}" />
-						</cell>
-						<cell>
-							<label value="${each.contructionName}" />
-						</cell>
-						<cell style="text-align: right;">
-							<label value="${each.formatDate}" />
-						</cell>
-						<cell>
-							<label value="${each.pump}" />
-						</cell>
-						<cell >
-							<label value="${each.location}" />
-						</cell>
-						<cell style="text-align: right;">
-							<label value="${each.quantityView}" />
-						</cell>
-						<cell style="text-align: right;">
-							<label value="${c:formatNumber(each.total, '###,###,###.##')}" />
-						</cell>
-						<cell>
-							<label value="${each.staff}" />
-						</cell>
-						<cell style="text-align:center">
-<!-- 							<a class="btn-cursor" -->
-<!-- 								iconSclass="z-icon-newspaper-o" forward="onClick=onEdit" -->
-<!-- 								tooltiptext="${c:l('edit')}" /> -->
-							<a class="btn-cursor"
-								iconSclass="z-icon-check-circle-o" forward="onClick=onApprove"
-								tooltiptext="${c:l('delete')}" />
-							<a class="btn-cursor"
-								iconSclass="z-icon-user-plus" forward="onClick=onAddStaff"
-								visible="true" tooltiptext="${c:l('save')}" />
+                </auxhead>
+                <columns style="text-align:center; ">
+                    <column hflex="1">${c:l('pump.index')}</column>
+                    <column hflex="2">
+                        ${c:l('approve.bill.code')}
+                    </column>
+                    <column hflex="2">
+                        ${c:l('approve.contruction')}
+                    </column>
+                    <column hflex="2">${c:l('approve.date')}</column>
+                    <column hflex="2">${c:l('approve.pump')}</column>
+                    <column hflex="2">
+                        ${c:l('approve.location')}
+                    </column>
+                    <column hflex="2">
+                        ${c:l('approve.quantity')}
+                    </column>
+                    <column hflex="2">${c:l('approve.total')}</column>
+                    <column hflex="3">${c:l('approve.staff')}</column>
+                    <column hflex="2">${c:l('pump.action')}</column>
+                </columns>
+                <template name="model">
+                    <row value="${each}" >
+                        <cell style="text-align: center;">
+                            <label value="${forEachStatus.index+1}" />
+                        </cell>
+                        <cell >
+                            <label value="${each.billCode}" />
+                        </cell>
+                        <cell>
+                            <label value="${each.contructionName}" />
+                        </cell>
+                        <cell style="text-align: right;">
+                            <label value="${each.formatDate}" />
+                        </cell>
+                        <cell>
+                            <label value="${each.pump}" />
+                        </cell>
+                        <cell >
+                            <label value="${each.location}" />
+                        </cell>
+                        <cell style="text-align: right;">
+                            <label value="${each.quantityView}" />
+                        </cell>
+                        <cell style="text-align: right;">
+                            <label value="${c:formatNumber(each.total, '###,###,###.##')}" />
+                        </cell>
+                        <cell>
+                            <label value="${each.staff}" />
+                        </cell>
+                        <cell style="text-align:center">
+                            <!-- 							<a class="btn-cursor" -->
+                            <!-- 								iconSclass="z-icon-newspaper-o" forward="onClick=onEdit" -->
+                            <!-- 								tooltiptext="${c:l('edit')}" /> -->
+                            <a class="btn-cursor"
+                                                           iconSclass="z-icon-check-circle-o" forward="onClick=onApprove"
+                                                           tooltiptext="${c:l('delete')}" />
+                            <a class="btn-cursor"
+                                                           iconSclass="z-icon-user-plus" forward="onClick=onAddStaff"
+                                                           visible="true" tooltiptext="${c:l('save')}" />
 							
 
-						</cell>
-					</row>
-				</template>
-			</grid>
-		</groupbox>
-	</window>
+                        </cell>
+                    </row>
+                </template>
+            </grid>
+        </groupbox>
+        <button id="reloadData" visible="false"/>
+    </window>
 
 </zk>

@@ -386,7 +386,7 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append(" a.total as total");
 			builder.append(" FROM ");
 			builder.append(" (SELECT  ");
-			builder.append(" b.bill_id,b.bill_code,bd.bill_detail_id,b.construction_id,b.prd_id, ");
+			builder.append(" b.bill_id,b.bill_code,bd.bill_detail_id,b.construction_id,STR_TO_DATE(b.prd_id, '%Y%m%d') as prd_id, ");
 			builder.append(" bd.pump_id,bd.location_id,bd.quantity,bd.quantity_approve,bd.total ");
 			builder.append(" FROM bills b, bill_detail bd ");
 			builder.append(" WHERE ");

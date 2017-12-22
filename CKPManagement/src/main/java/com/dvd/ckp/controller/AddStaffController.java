@@ -21,7 +21,6 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Radio;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Textbox;
 
@@ -31,6 +30,10 @@ import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.domain.StaffQuantity;
 import com.dvd.ckp.utils.SpringConstant;
+import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zul.Button;
+import org.zkoss.zul.Vbox;
+import org.zkoss.zul.Window;
 
 public class AddStaffController extends GenericForwardComposer {
 
@@ -54,6 +57,8 @@ public class AddStaffController extends GenericForwardComposer {
     private List<Staff> lstStaffSelected;
     @Wire
     private Grid gridFullStaff;
+    @Wire
+    private Window addStaff;
 
     @Wire
     private Grid gridSelectStaff;
@@ -278,6 +283,9 @@ public class AddStaffController extends GenericForwardComposer {
                     logger.info("Bill detail id: " + billID);
                     billsServices.getQuantity(billID).get(0).getV_quantity();
                     onReloadSelectGrid();
+                    
+                    //reload data
+                    Events.sendEvent("onClick", (Button) ((Window) addStaff.getParent()).getFellow("reloadData"), null);
                 }
             }
         });
