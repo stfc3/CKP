@@ -78,7 +78,8 @@
                     <column hflex="2">${c:l('pump.action')}</column>
                 </columns>
                 <template name="model">
-                    <row value="${each}" >
+                    <!--<row value="${each}" class="${each.status == 2 ? 'vlayout-bill-detail-approve' : 'vlayout-bill-detail'} bill_detail_${each.billDetailID}">-->
+                    <row value="${each}" style="${each.status ==2 ? 'color:green':''}">
                         <cell style="text-align: center;">
                             <label value="${forEachStatus.index+1}" />
                         </cell>

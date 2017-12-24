@@ -114,10 +114,10 @@ public class ApproveQuantityController extends GenericForwardComposer {
                     // totalApprove.setValue(totalApproveValue);
                     // approveQuantity.onClose();
                     logger.info("Value: " + lstRevenue.get(0).getRevenue());
-                    approveQuantity.onClose();
-                    approveQuantity.detach();
                     //reload data
                     Events.sendEvent("onClick", (Button) ((Window) approveQuantity.getParent()).getFellow("reloadData"), null);
+                    approveQuantity.onClose();
+                    approveQuantity.detach();
                 }
             }
         });

@@ -383,11 +383,12 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append(" l.location_id as locationID, ");
 			builder.append(" a.quantity as quantity, ");
 			builder.append(" a.quantity_approve as quantityApprove, ");
-			builder.append(" a.total as total");
+			builder.append(" a.total as total, ");
+                        builder.append(" a.status as status");
 			builder.append(" FROM ");
 			builder.append(" (SELECT  ");
 			builder.append(" b.bill_id,b.bill_code,bd.bill_detail_id,b.construction_id,STR_TO_DATE(b.prd_id, '%Y%m%d') as prd_id, ");
-			builder.append(" bd.pump_id,bd.location_id,bd.quantity,bd.quantity_approve,bd.total ");
+			builder.append(" bd.pump_id,bd.location_id,bd.quantity,bd.quantity_approve,bd.total, bd.status ");
 			builder.append(" FROM bills b, bill_detail bd ");
 			builder.append(" WHERE ");
 			builder.append("  b.bill_id = bd.bill_id AND b.status = 1 AND bd.status IN (1 , 2)) a ");
@@ -408,6 +409,7 @@ public class BillsDAOImpl implements BillDAO {
 					.addScalar("quantity", StandardBasicTypes.DOUBLE)
 					.addScalar("quantityApprove", StandardBasicTypes.DOUBLE)
 					.addScalar("total", StandardBasicTypes.DOUBLE)
+					.addScalar("status", StandardBasicTypes.INTEGER)
 					.setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));
 			List<BillViewDetail> listData = query.list();
 

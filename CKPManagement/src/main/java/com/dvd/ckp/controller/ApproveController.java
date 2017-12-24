@@ -45,6 +45,8 @@ import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.domain.StaffQuantity;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.SpringConstant;
+import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Rows;
 
 /**
  *
@@ -201,9 +203,9 @@ public class ApproveController extends GenericForwardComposer {
         getDataInRow(view, 2);
     }
 
-    public void onCloseWindown(ForwardEvent event) {
-        reload();
-    }
+//    public void onCloseWindown(ForwardEvent event) {
+//        reload();
+//    }
 
     private void getDataInRow(BillViewDetail data, int isApprove) {
 
@@ -224,17 +226,17 @@ public class ApproveController extends GenericForwardComposer {
             windownUpload.setBorder(true);
             windownUpload.setBorder("normal");
             windownUpload.setClosable(true);
-            windownUpload.addForward("onDetach", windownUpload, "onCloseWindown");
-            windownUpload.addEventListener(Events.ON_DROP, new EventListener<Event>() {
-
-                @Override
-                public void onEvent(Event event) throws Exception {
-                    reload();
-                    windownUpload.detach();
-
-                }
-            });
-            reload();
+//            windownUpload.addForward("onDetach", windownUpload, "onCloseWindown");
+//            windownUpload.addEventListener(Events.ON_DROP, new EventListener<Event>() {
+//
+//                @Override
+//                public void onEvent(Event event) throws Exception {
+//                    reload();
+//                    windownUpload.detach();
+//
+//                }
+//            });
+//            reload();
 
         } else if (isApprove == 2) {
             Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message"), Labels.getLabel("comfirm"),
@@ -248,16 +250,16 @@ public class ApproveController extends GenericForwardComposer {
                         windownUpload.setBorder(true);
                         windownUpload.setBorder("normal");
                         windownUpload.setClosable(true);
-                        windownUpload.addEventListener(Events.ON_DROP, new EventListener<Event>() {
-
-                            @Override
-                            public void onEvent(Event event) throws Exception {
-                                reload();
-                                windownUpload.detach();
-
-                            }
-                        });
-                        reload();
+//                        windownUpload.addEventListener(Events.ON_DROP, new EventListener<Event>() {
+//
+//                            @Override
+//                            public void onEvent(Event event) throws Exception {
+//                                reload();
+//                                windownUpload.detach();
+//
+//                            }
+//                        });
+//                        reload();
                     } else if (Messagebox.ON_YES.equals(e.getName())) {
                         try {
                             BillsDetail billsDetail = new BillsDetail();
@@ -265,6 +267,7 @@ public class ApproveController extends GenericForwardComposer {
                             billsDetail.setStatus(2);
 
                             billServices.delete(billsDetail);
+                            reload();
                         } catch (Exception e2) {
                             logger.error(e2.getMessage(), e2);
                         }
@@ -490,4 +493,5 @@ public class ApproveController extends GenericForwardComposer {
     public void onClick$reloadData() {
         reload();
     }
+
 }
