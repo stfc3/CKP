@@ -115,14 +115,14 @@ public class ApproveController extends GenericForwardComposer {
         listData = billServices.getApproveBill();
         if (listData != null && !listData.isEmpty()) {
             for (BillViewDetail viewDetail : listData) {
-                viewDetail.setStaff(getStaffList(viewDetail.getBillDetailID(), listStaff));
+//                viewDetail.setStaff(getStaffList(viewDetail.getBillDetailID(), listStaff));
                 viewDetail.setFormatDate(
                         DateTimeUtils.convertDateToString(viewDetail.getPrdID(), Constants.FORMAT_DATE_DD_MM_YYY));
-                if (viewDetail.getQuantityApprove() != null) {
-                    viewDetail.setQuantityView(viewDetail.getQuantityApprove());
-                } else {
-                    viewDetail.setQuantityView(viewDetail.getQuantity());
-                }
+//                if (viewDetail.getQuantityApprove() != null) {
+//                    viewDetail.setQuantityView(viewDetail.getQuantityApprove());
+//                } else {
+//                    viewDetail.setQuantityView(viewDetail.getQuantity());
+//                }
             }
 
         }
@@ -176,14 +176,14 @@ public class ApproveController extends GenericForwardComposer {
         listData = billServices.getApproveBill();
         if (listData != null && !listData.isEmpty()) {
             for (BillViewDetail viewDetail : listData) {
-                viewDetail.setStaff(getStaffList(viewDetail.getBillDetailID(), listStaff));
+//                viewDetail.setStaff(getStaffList(viewDetail.getBillDetailID(), listStaff));
                 viewDetail.setFormatDate(
                         DateTimeUtils.convertDateToString(viewDetail.getPrdID(), Constants.FORMAT_DATE_DD_MM_YYY));
-                if (viewDetail.getQuantityApprove() != null) {
-                    viewDetail.setQuantityView(viewDetail.getQuantityApprove());
-                } else {
-                    viewDetail.setQuantityView(viewDetail.getQuantity());
-                }
+//                if (viewDetail.getQuantityApprove() != null) {
+//                    viewDetail.setQuantityView(viewDetail.getQuantityApprove());
+//                } else {
+//                    viewDetail.setQuantityView(viewDetail.getQuantity());
+//                }
             }
 
         }
