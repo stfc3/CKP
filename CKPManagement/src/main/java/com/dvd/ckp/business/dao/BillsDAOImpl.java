@@ -403,6 +403,7 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append(
 					" (select q.bill_detail_id,GROUP_CONCAT(s.staff_name SEPARATOR ', ') staff from quantity_staff q , staff s where q.staff_id = s.staff_id group by q.bill_detail_id) s ");
 			builder.append(" on a.bill_detail_id = s.bill_detail_id ");
+			builder.append("order by prd_id");
 			Query query = getCurrentSession().createSQLQuery(builder.toString())
 					.addScalar("billID", StandardBasicTypes.LONG).addScalar("billCode", StandardBasicTypes.STRING)
 					.addScalar("billDetailID", StandardBasicTypes.LONG)
