@@ -30,7 +30,7 @@ public class BillViewDetail {
     private Integer status;
     private Long contruction;
     private String contructionName;
-    private Date prdID;
+    private String prdID;
     
     private Long pumpID;
     private Long locationID;
@@ -173,11 +173,13 @@ public class BillViewDetail {
 		this.contruction = contruction;
 	}
 
-	public Date getPrdID() {
+
+
+	public String getPrdID() {
 		return prdID;
 	}
 
-	public void setPrdID(Date prdID) {
+	public void setPrdID(String prdID) {
 		this.prdID = prdID;
 	}
 

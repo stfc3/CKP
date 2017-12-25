@@ -376,7 +376,7 @@ public class BillsDAOImpl implements BillDAO {
 			builder.append(" a.bill_detail_id as billDetailID, ");
 			builder.append(" c.construction_name as contructionName, ");
 			builder.append(" c.construction_id as contruction, ");
-			builder.append(" a.prd_id as prdID, ");
+			builder.append(" DATE_FORMAT(a.prd_id, '%d/%m/%Y') as prdID, ");
 			builder.append(" p.pump_name as pump, ");
 			builder.append(" p.pump_id as pumpID, ");
 			builder.append(" l.location_name as location, ");
@@ -407,7 +407,7 @@ public class BillsDAOImpl implements BillDAO {
 					.addScalar("billID", StandardBasicTypes.LONG).addScalar("billCode", StandardBasicTypes.STRING)
 					.addScalar("billDetailID", StandardBasicTypes.LONG)
 					.addScalar("contructionName", StandardBasicTypes.STRING)
-					.addScalar("contruction", StandardBasicTypes.LONG).addScalar("prdID", StandardBasicTypes.DATE)
+					.addScalar("contruction", StandardBasicTypes.LONG).addScalar("prdID", StandardBasicTypes.STRING)
 					.addScalar("pump", StandardBasicTypes.STRING).addScalar("pumpID", StandardBasicTypes.LONG)
 					.addScalar("location", StandardBasicTypes.STRING).addScalar("locationID", StandardBasicTypes.LONG)
 					.addScalar("quantity", StandardBasicTypes.DOUBLE).addScalar("staff", StandardBasicTypes.STRING)

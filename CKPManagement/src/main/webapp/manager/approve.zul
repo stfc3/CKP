@@ -92,7 +92,7 @@
 							<label value="${each.contructionName}" />
 						</cell>
 						<cell style="text-align: right;">
-							<label value="${each.formatDate}" />
+							<label value="${each.prdID}" />
 						</cell>
 						<cell>
 							<label value="${each.pump}" />
