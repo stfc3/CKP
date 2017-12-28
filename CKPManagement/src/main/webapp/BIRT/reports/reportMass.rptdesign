@@ -518,7 +518,9 @@
                 <structure>
                     <property name="name">quantity</property>
                     <text-property name="displayName">quantity</text-property>
-                    <expression name="expression" type="javascript">if(dataSetRow["convert_type"]==1 &amp;&amp; dataSetRow["quantity"]&lt;dataSetRow["convert_value"]){&#13;
+                    <expression name="expression" type="javascript">if(dataSetRow["convert_type"]==2 &amp;&amp; dataSetRow["quantity"]&lt;dataSetRow["convert_value"]){&#13;
+	1;&#13;
+}else if(dataSetRow["convert_type"]==1 &amp;&amp; dataSetRow["quantity"]&lt;dataSetRow["convert_value"]){&#13;
 	dataSetRow["convert_value"];&#13;
 }else{&#13;
 	dataSetRow["quantity"];&#13;
@@ -635,10 +637,10 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 <structure>
                     <property name="name">unit</property>
                     <text-property name="displayName">unit</text-property>
-                    <expression name="expression" type="javascript">if(dataSetRow["convert_type"]==1){&#13;
-	"m3";&#13;
-}else{&#13;
+                    <expression name="expression" type="javascript">if(dataSetRow["convert_type"]==2 &amp;&amp; dataSetRow["quantity"]&lt;dataSetRow["convert_value"]){&#13;
 	"Ca";&#13;
+}else{&#13;
+	"m3";&#13;
 }</expression>
                     <property name="dataType">string</property>
                     <property name="allowExport">true</property>
