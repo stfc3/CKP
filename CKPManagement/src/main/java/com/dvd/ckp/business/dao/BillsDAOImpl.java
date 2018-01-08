@@ -21,6 +21,7 @@ import org.zkoss.zk.ui.util.Clients;
 @Repository
 public class BillsDAOImpl implements BillDAO {
 
+
     private static final Logger logger = Logger.getLogger(BillsDAOImpl.class);
     @Autowired
     SessionFactory sessionFactory;
@@ -465,4 +466,5 @@ public class BillsDAOImpl implements BillDAO {
         }
         return null;
     }
+
 }

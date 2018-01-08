@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -30,8 +29,6 @@ import org.zkoss.zul.Grid;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Row;
-import org.zkoss.zul.Textbox;
-import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
@@ -44,11 +41,12 @@ import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Construction;
-import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.domain.StaffQuantity;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.SpringConstant;
+import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Rows;
 
 /**
  *
@@ -115,19 +113,21 @@ public class ApproveController extends GenericForwardComposer {
 		lstBill = billServices.getAllData();
 
 		listData = billServices.getApproveBill();
-		if (listData != null && !listData.isEmpty()) {
-			for (BillViewDetail viewDetail : listData) {
-				viewDetail.setStaff(getStaffList(viewDetail.getBillDetailID(), listStaff));
-				viewDetail.setFormatDate(
-						DateTimeUtils.convertDateToString(viewDetail.getPrdID(), Constants.FORMAT_DATE_DD_MM_YYY));
-				if (viewDetail.getQuantityApprove() != null) {
-					viewDetail.setQuantityView(viewDetail.getQuantityApprove());
-				} else {
-					viewDetail.setQuantityView(viewDetail.getQuantity());
-				}
-			}
-
-		}
+		// if (listData != null && !listData.isEmpty()) {
+		// for (BillViewDetail viewDetail : listData) {
+		//// viewDetail.setStaff(getStaffList(viewDetail.getBillDetailID(),
+		// listStaff));
+		// viewDetail.setFormatDate(
+		// DateTimeUtils.convertDateToString(viewDetail.getPrdID(),
+		// Constants.FORMAT_DATE_DD_MM_YYY));
+		//// if (viewDetail.getQuantityApprove() != null) {
+		//// viewDetail.setQuantityView(viewDetail.getQuantityApprove());
+		//// } else {
+		//// viewDetail.setQuantityView(viewDetail.getQuantity());
+		//// }
+		// }
+		//
+		// }
 		listApprove = new ListModelList<>(listData);
 		gridApprove.setModel(listApprove);
 
@@ -176,19 +176,21 @@ public class ApproveController extends GenericForwardComposer {
 		listStaff = staffServices.getAll();
 		listData.clear();
 		listData = billServices.getApproveBill();
-		if (listData != null && !listData.isEmpty()) {
-			for (BillViewDetail viewDetail : listData) {
-				viewDetail.setStaff(getStaffList(viewDetail.getBillDetailID(), listStaff));
-				viewDetail.setFormatDate(
-						DateTimeUtils.convertDateToString(viewDetail.getPrdID(), Constants.FORMAT_DATE_DD_MM_YYY));
-				if (viewDetail.getQuantityApprove() != null) {
-					viewDetail.setQuantityView(viewDetail.getQuantityApprove());
-				} else {
-					viewDetail.setQuantityView(viewDetail.getQuantity());
-				}
-			}
-
-		}
+		// if (listData != null && !listData.isEmpty()) {
+		// for (BillViewDetail viewDetail : listData) {
+		//// viewDetail.setStaff(getStaffList(viewDetail.getBillDetailID(),
+		// listStaff));
+		// viewDetail.setFormatDate(
+		// DateTimeUtils.convertDateToString(viewDetail.getPrdID(),
+		// Constants.FORMAT_DATE_DD_MM_YYY));
+		//// if (viewDetail.getQuantityApprove() != null) {
+		//// viewDetail.setQuantityView(viewDetail.getQuantityApprove());
+		//// } else {
+		//// viewDetail.setQuantityView(viewDetail.getQuantity());
+		//// }
+		// }
+		//
+		// }
 		listApprove = new ListModelList<>(listData);
 		gridApprove.setModel(listApprove);
 	}
@@ -204,9 +206,11 @@ public class ApproveController extends GenericForwardComposer {
 		BillViewDetail view = rowSelected.getValue();
 		getDataInRow(view, 2);
 	}
-	public void onCloseWindown(ForwardEvent event){
-		reload();
-	}
+
+	// public void onCloseWindown(ForwardEvent event) {
+	// reload();
+	// }
+
 	private void getDataInRow(BillViewDetail data, int isApprove) {
 
 		List<BillsDetail> lstDetail = billServices.getBillDetail(data.getBillID());
@@ -226,17 +230,19 @@ public class ApproveController extends GenericForwardComposer {
 			windownUpload.setBorder(true);
 			windownUpload.setBorder("normal");
 			windownUpload.setClosable(true);
-			windownUpload.addForward("onDetach", windownUpload, "onCloseWindown");
-			windownUpload.addEventListener(Events.ON_DROP, new EventListener<Event>() {
-
-				@Override
-				public void onEvent(Event event) throws Exception {
-					reload();
-					windownUpload.detach();
-
-				}
-			});
-			reload();
+			// windownUpload.addForward("onDetach", windownUpload,
+			// "onCloseWindown");
+			// windownUpload.addEventListener(Events.ON_DROP, new
+			// EventListener<Event>() {
+			//
+			// @Override
+			// public void onEvent(Event event) throws Exception {
+			// reload();
+			// windownUpload.detach();
+			//
+			// }
+			// });
+			// reload();
 
 		} else if (isApprove == 2) {
 			Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message"), Labels.getLabel("comfirm"),
@@ -250,16 +256,18 @@ public class ApproveController extends GenericForwardComposer {
 								windownUpload.setBorder(true);
 								windownUpload.setBorder("normal");
 								windownUpload.setClosable(true);
-								windownUpload.addEventListener(Events.ON_DROP, new EventListener<Event>() {
-
-									@Override
-									public void onEvent(Event event) throws Exception {
-										reload();
-										windownUpload.detach();
-
-									}
-								});
-								reload();
+								// windownUpload.addEventListener(Events.ON_DROP,
+								// new EventListener<Event>() {
+								//
+								// @Override
+								// public void onEvent(Event event) throws
+								// Exception {
+								// reload();
+								// windownUpload.detach();
+								//
+								// }
+								// });
+								// reload();
 							} else if (Messagebox.ON_YES.equals(e.getName())) {
 								try {
 									BillsDetail billsDetail = new BillsDetail();
@@ -267,6 +275,7 @@ public class ApproveController extends GenericForwardComposer {
 									billsDetail.setStatus(2);
 
 									billServices.delete(billsDetail);
+									reload();
 								} catch (Exception e2) {
 									logger.error(e2.getMessage(), e2);
 								}
@@ -277,7 +286,7 @@ public class ApproveController extends GenericForwardComposer {
 					});
 
 		}
-		
+
 	}
 
 	private BillsDetail getBillDetail(Long billDetailID) {
@@ -407,8 +416,7 @@ public class ApproveController extends GenericForwardComposer {
 					} // tim theo ngay bom
 					else if (bill == null && contruction == null && date != null && pump == null) {
 						String dateInput = DateTimeUtils.convertDateToString(date, Constants.FORMAT_DATE);
-						String dateData = DateTimeUtils.convertDateToString(c.getPrdID(), Constants.FORMAT_DATE);
-						if (dateInput.equals(dateData)) {
+						if (dateInput.equals(c.getPrdID())) {
 							vlstData.add(c);
 						}
 					} // Tim theo may bom
@@ -424,8 +432,7 @@ public class ApproveController extends GenericForwardComposer {
 						// Tim theo bill code va ngay bom
 					} else if (bill != null && contruction == null && date != null && pump == null) {
 						String dateInput = DateTimeUtils.convertDateToString(date, Constants.FORMAT_DATE);
-						String dateData = DateTimeUtils.convertDateToString(c.getPrdID(), Constants.FORMAT_DATE);
-						if (bill.equals(c.getBillCode()) && dateInput.equals(dateData)) {
+						if (bill.equals(c.getBillCode()) && dateInput.equals(c.getPrdID())) {
 							vlstData.add(c);
 						}
 						// Tim theo bill code va may bom
@@ -436,8 +443,7 @@ public class ApproveController extends GenericForwardComposer {
 						// Tim theo cong trinh va ngay bom
 					} else if (bill == null && contruction != null && date != null && pump == null) {
 						String dateInput = DateTimeUtils.convertDateToString(date, Constants.FORMAT_DATE);
-						String dateData = DateTimeUtils.convertDateToString(c.getPrdID(), Constants.FORMAT_DATE);
-						if (contruction.equals(c.getContruction()) && dateInput.equals(dateData)) {
+						if (contruction.equals(c.getContruction()) && dateInput.equals(c.getPrdID())) {
 							vlstData.add(c);
 						}
 						// tim theo cong trinh va may bom
@@ -448,15 +454,13 @@ public class ApproveController extends GenericForwardComposer {
 						// tim theo ngay bom va may bom
 					} else if (bill == null && contruction == null && date != null && pump != null) {
 						String dateInput = DateTimeUtils.convertDateToString(date, Constants.FORMAT_DATE);
-						String dateData = DateTimeUtils.convertDateToString(c.getPrdID(), Constants.FORMAT_DATE);
-						if (dateInput.equals(dateData) && pump.equals(c.getPumpID())) {
+						if (dateInput.equals(c.getPrdID()) && pump.equals(c.getPumpID())) {
 							vlstData.add(c);
 						}
 						// tim theo bill code va cong trinh va ngay bom
 					} else if (bill != null && contruction != null && date != null && pump == null) {
 						String dateInput = DateTimeUtils.convertDateToString(date, Constants.FORMAT_DATE);
-						String dateData = DateTimeUtils.convertDateToString(c.getPrdID(), Constants.FORMAT_DATE);
-						if (bill.equals(c.getBillCode()) && dateInput.equals(dateData)
+						if (bill.equals(c.getBillCode()) && dateInput.equals(c.getPrdID())
 								&& contruction.equals(c.getContruction())) {
 							vlstData.add(c);
 						}
@@ -468,15 +472,13 @@ public class ApproveController extends GenericForwardComposer {
 						}
 					} else if (bill == null && contruction != null && date != null && pump != null) {
 						String dateInput = DateTimeUtils.convertDateToString(date, Constants.FORMAT_DATE);
-						String dateData = DateTimeUtils.convertDateToString(c.getPrdID(), Constants.FORMAT_DATE);
-						if (dateInput.equals(dateData) && contruction.equals(c.getContruction())
+						if (dateInput.equals(c.getPrdID()) && contruction.equals(c.getContruction())
 								&& pump.equals(c.getPumpID())) {
 							vlstData.add(c);
 						}
 					} else if (bill != null && contruction != null && date != null && pump != null) {
 						String dateInput = DateTimeUtils.convertDateToString(date, Constants.FORMAT_DATE);
-						String dateData = DateTimeUtils.convertDateToString(c.getPrdID(), Constants.FORMAT_DATE);
-						if (bill.equals(c.getBillCode()) && dateInput.equals(dateData)
+						if (bill.equals(c.getBillCode()) && dateInput.equals(c.getPrdID())
 								&& contruction.equals(c.getContruction()) && pump.equals(c.getPumpID())) {
 							vlstData.add(c);
 						}
@@ -488,4 +490,9 @@ public class ApproveController extends GenericForwardComposer {
 		gridApprove.setModel(listApprove);
 
 	}
+
+	public void onClick$reloadData() {
+		reload();
+	}
+
 }

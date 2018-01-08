@@ -14,9 +14,13 @@ public class BillViewDetail {
     private String billCode;
     private Long billDetailID;
     private Date fromDate;
+    private String strFromDate;
     private Date startTime;
+    private String strStartTime;
     private Date endTime;
+    private String strEndTime;
     private Date toDate;
+    private String strToDate;
     private Double quantity;
     private Double quantityApprove;
     private Double quantityView;
@@ -26,7 +30,7 @@ public class BillViewDetail {
     private Integer status;
     private Long contruction;
     private String contructionName;
-    private Date prdID;
+    private String prdID;
     
     private Long pumpID;
     private Long locationID;
@@ -169,11 +173,13 @@ public class BillViewDetail {
 		this.contruction = contruction;
 	}
 
-	public Date getPrdID() {
+
+
+	public String getPrdID() {
 		return prdID;
 	}
 
-	public void setPrdID(Date prdID) {
+	public void setPrdID(String prdID) {
 		this.prdID = prdID;
 	}
 
@@ -223,6 +229,34 @@ public class BillViewDetail {
 
 	public void setFormatDate(String formatDate) {
 		this.formatDate = formatDate;
+	}
+
+	public String getStrStartTime() {
+		return strStartTime;
+	}
+
+	public void setStrStartTime(String strStartTime) {
+		this.strStartTime = strStartTime;
+	}
+
+	public String getStrEndTime() {
+		return strEndTime;
+	}
+
+	public void setStrEndTime(String strEndTime) {
+		this.strEndTime = strEndTime;
+	}
+
+	public String getStrToDate() {
+		return strToDate;
+	}
+
+	public void setStrToDate(String strToDate) {
+		this.strToDate = strToDate;
+	}
+
+	public void setStrFromDate(String strFromDate) {
+		this.strFromDate = strFromDate;
 	}
     
     

@@ -14,7 +14,7 @@
 		<groupbox>
 			<caption label="${c:l('approve.title')}" />
 			<grid id="gridApprove">
-				
+
 				<auxhead sclass="category-center">
 
 					<auxheader colspan="2">
@@ -22,10 +22,10 @@
 						<combobox hflex="1" id="cbBillCode"
 							placeholder="${c:l('bills.code')}" autodrop="true"
 							buttonVisible="false">
-<!-- 							<template name="model"> -->
-<!-- 								<comboitem value="${each.billCode}" -->
-<!-- 									label="${each.billCode}" /> -->
-<!-- 							</template> -->
+							<!-- 							<template name="model"> -->
+							<!-- 								<comboitem value="${each.billCode}" -->
+							<!-- 									label="${each.billCode}" /> -->
+							<!-- 							</template> -->
 						</combobox>
 					</auxheader>
 					<auxheader colspan="2">
@@ -34,7 +34,8 @@
 							placeholder="${c:l('construction.name')}" autodrop="true"
 							buttonVisible="false">
 							<template name="model">
-								<comboitem value="${each.constructionId}"
+								<comboitem
+									value="${each.constructionId}"
 									label="${each.constructionName}" />
 							</template>
 						</combobox>
@@ -78,7 +79,9 @@
 					<column hflex="2">${c:l('pump.action')}</column>
 				</columns>
 				<template name="model">
-					<row value="${each}">
+					<!--<row value="${each}" class="${each.status == 2 ? 'vlayout-bill-detail-approve' : 'vlayout-bill-detail'} bill_detail_${each.billDetailID}">-->
+					<row value="${each}"
+						style="${each.status ==2 ? 'color:green':''}">
 						<cell style="text-align: center;">
 							<label value="${forEachStatus.index+1}" />
 						</cell>
@@ -89,40 +92,42 @@
 							<label value="${each.contructionName}" />
 						</cell>
 						<cell style="text-align: right;">
-							<label value="${each.formatDate}" />
+							<label value="${each.prdID}" />
 						</cell>
 						<cell>
 							<label value="${each.pump}" />
 						</cell>
-						<cell >
+						<cell>
 							<label value="${each.location}" />
 						</cell>
 						<cell style="text-align: right;">
-							<label value="${each.quantityView}" />
+							<label value="${each.quantity}" />
 						</cell>
 						<cell style="text-align: right;">
-							<label value="${c:formatNumber(each.total, '###,###,###.##')}" />
+							<label
+								value="${c:formatNumber(each.total, '###,###,###.##')}" />
 						</cell>
 						<cell>
 							<label value="${each.staff}" />
 						</cell>
 						<cell style="text-align:center">
-<!-- 							<a class="btn-cursor" -->
-<!-- 								iconSclass="z-icon-newspaper-o" forward="onClick=onEdit" -->
-<!-- 								tooltiptext="${c:l('edit')}" /> -->
+							<!-- 							<a class="btn-cursor" -->
+							<!-- 								iconSclass="z-icon-newspaper-o" forward="onClick=onEdit" -->
+							<!-- 								tooltiptext="${c:l('edit')}" /> -->
 							<a class="btn-cursor"
 								iconSclass="z-icon-check-circle-o" forward="onClick=onApprove"
 								tooltiptext="${c:l('delete')}" />
 							<a class="btn-cursor"
 								iconSclass="z-icon-user-plus" forward="onClick=onAddStaff"
 								visible="true" tooltiptext="${c:l('save')}" />
-							
+
 
 						</cell>
 					</row>
 				</template>
 			</grid>
 		</groupbox>
+		<button id="reloadData" visible="false" />
 	</window>
 
 </zk>
