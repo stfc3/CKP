@@ -21,6 +21,7 @@ import org.zkoss.zk.ui.util.Clients;
 @Repository
 public class BillsDAOImpl implements BillDAO {
 
+
     private static final Logger logger = Logger.getLogger(BillsDAOImpl.class);
     @Autowired
     SessionFactory sessionFactory;
@@ -32,16 +33,62 @@ public class BillsDAOImpl implements BillDAO {
     @Override
     public List<Bills> getData() {
         // TODO Auto-generated method stub
+//        try {
+//            Query query = getCurrentSession().getNamedQuery("Bills.getAllBills");
+//            List<Bills> lstData = query.list();
+//            if (lstData != null && !lstData.isEmpty()) {
+//                return lstData;
+//            }
+//        } catch (Exception e) {
+//            logger.error(e.getMessage(), e);
+//        }
+
         try {
-            Query query = getCurrentSession().getNamedQuery("Bills.getAllBills");
+            StringBuilder sql = new StringBuilder("SELECT ");
+            sql.append(" b.bill_id AS billID, ");
+            sql.append(" b.bill_code AS billCode, ");
+            sql.append(" b.customer_id AS customerID, ");
+            sql.append(" c.customer_name AS customerName, ");
+            sql.append(" DATE_FORMAT(b.prd_id, \"%d %M %Y\") AS dateInput, ");
+            
+            sql.append(" b.from_time AS fromDate, ");
+            sql.append(" b.to_time AS toDate, ");
+            sql.append(" b.start_time AS startTime, ");
+            sql.append(" b.end_time AS endTime, ");
+            sql.append(" b.construction_id AS constructionID, ");
+            sql.append(" ct.construction_name AS constructionName, ");
+            sql.append(" b.file_name AS fileName, ");
+            sql.append(" b.path AS filePath, ");
+            sql.append(" b.status AS status ");
+            sql.append(" FROM bills b ");
+            sql.append(" LEFT JOIN ");
+            sql.append(" customers c ON b.customer_id = c.customer_id ");
+            sql.append(" LEFT JOIN ");
+            sql.append(" construction ct ON b.construction_id = ct.construction_id ");
+            sql.append(" WHERE ");
+            sql.append(" b.status = 1 ");
+            sql.append(" order by b.create_date desc ");
+            Query query = getCurrentSession().createSQLQuery(sql.toString())
+                    .addScalar("billID", StandardBasicTypes.LONG)
+                    .addScalar("billCode", StandardBasicTypes.STRING)
+                    .addScalar("customerID", StandardBasicTypes.LONG)
+                    .addScalar("customerName", StandardBasicTypes.STRING)
+                    .addScalar("dateInput", StandardBasicTypes.DATE)
+                    .addScalar("fromDate", StandardBasicTypes.DATE)
+                    .addScalar("toDate", StandardBasicTypes.DATE)
+                    .addScalar("startTime", StandardBasicTypes.DATE)
+                    .addScalar("endTime", StandardBasicTypes.DATE)
+                    .addScalar("constructionID", StandardBasicTypes.LONG)
+                    .addScalar("constructionName", StandardBasicTypes.STRING)
+                    .addScalar("fileName", StandardBasicTypes.STRING)
+                    .addScalar("filePath", StandardBasicTypes.STRING)
+                    .addScalar("status", StandardBasicTypes.LONG)
+                    .setResultTransformer(Transformers.aliasToBean(Bills.class));
             List<Bills> lstData = query.list();
-            if (lstData != null && !lstData.isEmpty()) {
-                return lstData;
-            }
+            return lstData;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-
         return null;
     }
 
@@ -364,6 +411,60 @@ public class BillsDAOImpl implements BillDAO {
         } finally {
             // TODO: handle finally clause
         }
+    }
+
+    @Override
+    public List<BillViewDetail> getApproveBill() {
+        // TODO Auto-generated method stub
+        try {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            builder.append(" a.bill_id as billID, ");
+            builder.append(" a.bill_code as billCode, ");
+            builder.append(" a.bill_detail_id as billDetailID, ");
+            builder.append(" c.construction_name as contructionName, ");
+            builder.append(" c.construction_id as contruction, ");
+            builder.append(" a.prd_id as prdID, ");
+            builder.append(" p.pump_name as pump, ");
+            builder.append(" p.pump_id as pumpID, ");
+            builder.append(" l.location_name as location, ");
+            builder.append(" l.location_id as locationID, ");
+            builder.append(" a.quantity as quantity, ");
+            builder.append(" a.quantity_approve as quantityApprove, ");
+            builder.append(" a.total as total");
+            builder.append(" FROM ");
+            builder.append(" (SELECT  ");
+            builder.append(" b.bill_id,b.bill_code,bd.bill_detail_id,b.construction_id,b.prd_id, ");
+            builder.append(" bd.pump_id,bd.location_id,bd.quantity,bd.quantity_approve,bd.total ");
+            builder.append(" FROM bills b, bill_detail bd ");
+            builder.append(" WHERE ");
+            builder.append("  b.bill_id = bd.bill_id AND b.status = 1 AND bd.status IN (1 , 2)) a ");
+            builder.append(" LEFT JOIN construction c ON a.construction_id = c.construction_id ");
+            builder.append(" LEFT JOIN pumps p ON a.pump_id = p.pump_id ");
+            builder.append(" LEFT JOIN location l ON a.location_id = l.location_id ");
+            Query query = getCurrentSession().createSQLQuery(builder.toString())
+                    .addScalar("billID", StandardBasicTypes.LONG)
+                    .addScalar("billCode", StandardBasicTypes.STRING)
+                    .addScalar("billDetailID", StandardBasicTypes.LONG)
+                    .addScalar("contructionName", StandardBasicTypes.STRING)
+                    .addScalar("contruction", StandardBasicTypes.LONG)
+                    .addScalar("prdID", StandardBasicTypes.DATE)
+                    .addScalar("pump", StandardBasicTypes.STRING)
+                    .addScalar("pumpID", StandardBasicTypes.LONG)
+                    .addScalar("location", StandardBasicTypes.STRING)
+                    .addScalar("locationID", StandardBasicTypes.LONG)
+                    .addScalar("quantity", StandardBasicTypes.DOUBLE)
+                    .addScalar("quantityApprove", StandardBasicTypes.DOUBLE)
+                    .addScalar("total", StandardBasicTypes.DOUBLE)
+                    .setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));
+            List<BillViewDetail> listData = query.list();
+
+            return listData;
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            logger.error(e.getMessage(), e);
+        }
+        return null;
     }
 
 }

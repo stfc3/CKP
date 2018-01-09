@@ -11,7 +11,6 @@ public class BillViewDetail {
 
     private static final Logger LOGGER = Logger.getLogger(BillViewDetail.class);
     private Long billID;
-    private String billCode;
     private Long billDetailID;
     private Date fromDate;
     private String strFromDate;
@@ -28,15 +27,6 @@ public class BillViewDetail {
     private String note;
     private String pump;
     private Integer status;
-    private Long contruction;
-    private String contructionName;
-    private String prdID;
-    
-    private Long pumpID;
-    private Long locationID;
-    private Double total;
-    private String staff;
-    private String formatDate;
 
     public Long getBillID() {
         return billID;
@@ -128,6 +118,52 @@ public class BillViewDetail {
         return "";
     }
 
+    public void setStrFromDate(String strFromDate) {
+        this.strFromDate = strFromDate;
+    }
+
+    public String getStrToDate() {
+        try {
+            return DateTimeUtils.convertDateToString(toDate, Constants.FORMAT_DATE_DD_MM_YYY);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            LOGGER.error(e.getMessage(), e);
+        }
+        return "";
+    }
+
+    public void setStrToDate(String strToDate) {
+        this.strToDate = strToDate;
+    }
+
+    public String getStrStartTime() {
+        try {
+            return DateTimeUtils.convertDateToString(startTime, Constants.FORMAT_HOUR);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            LOGGER.error(e.getMessage(), e);
+        }
+        return "";
+    }
+
+    public void setStrStartTime(String strStartTime) {
+        this.strStartTime = strStartTime;
+    }
+
+    public String getStrEndTime() {
+        try {
+            return DateTimeUtils.convertDateToString(endTime, Constants.FORMAT_HOUR);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            LOGGER.error(e.getMessage(), e);
+        }
+        return "";
+    }
+
+    public void setStrEndTime(String strEndTime) {
+        this.strEndTime = strEndTime;
+    }
+
     public Double getQuantityView() {
         if (quantityApprove != null) {
             quantityView = quantityApprove;
@@ -156,109 +192,5 @@ public class BillViewDetail {
     public void setStatus(Integer status) {
         this.status = status;
     }
-
-	public String getBillCode() {
-		return billCode;
-	}
-
-	public void setBillCode(String billCode) {
-		this.billCode = billCode;
-	}
-
-	public Long getContruction() {
-		return contruction;
-	}
-
-	public void setContruction(Long contruction) {
-		this.contruction = contruction;
-	}
-
-
-
-	public String getPrdID() {
-		return prdID;
-	}
-
-	public void setPrdID(String prdID) {
-		this.prdID = prdID;
-	}
-
-	public Long getPumpID() {
-		return pumpID;
-	}
-
-	public void setPumpID(Long pumpID) {
-		this.pumpID = pumpID;
-	}
-
-	public Long getLocationID() {
-		return locationID;
-	}
-
-	public void setLocationID(Long locationID) {
-		this.locationID = locationID;
-	}
-
-	public Double getTotal() {
-		return total;
-	}
-
-	public void setTotal(Double total) {
-		this.total = total;
-	}
-
-	public String getContructionName() {
-		return contructionName;
-	}
-
-	public void setContructionName(String contructionName) {
-		this.contructionName = contructionName;
-	}
-
-	public String getStaff() {
-		return staff;
-	}
-
-	public void setStaff(String staff) {
-		this.staff = staff;
-	}
-
-	public String getFormatDate() {
-		return formatDate;
-	}
-
-	public void setFormatDate(String formatDate) {
-		this.formatDate = formatDate;
-	}
-
-	public String getStrStartTime() {
-		return strStartTime;
-	}
-
-	public void setStrStartTime(String strStartTime) {
-		this.strStartTime = strStartTime;
-	}
-
-	public String getStrEndTime() {
-		return strEndTime;
-	}
-
-	public void setStrEndTime(String strEndTime) {
-		this.strEndTime = strEndTime;
-	}
-
-	public String getStrToDate() {
-		return strToDate;
-	}
-
-	public void setStrToDate(String strToDate) {
-		this.strToDate = strToDate;
-	}
-
-	public void setStrFromDate(String strFromDate) {
-		this.strFromDate = strFromDate;
-	}
-    
-    
 
 }

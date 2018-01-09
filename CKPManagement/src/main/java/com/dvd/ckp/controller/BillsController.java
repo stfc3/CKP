@@ -212,15 +212,15 @@ public class BillsController extends GenericForwardComposer<Component> {
         List<Bills> lstData = billsServices.getAllData();
         if (lstData != null && !lstData.isEmpty()) {
             for (Bills bills : lstData) {
-                if (bills.getPrdID() != 0) {
-                    bills.setDateInput(
-                            DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
-                } else {
-                    bills.setDateInput(null);
-                }
-
-                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
-                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
+//                if (bills.getPrdID() != 0) {
+//                    bills.setDateInput(
+//                            DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
+//                } else {
+//                    bills.setDateInput(null);
+//                }
+//
+//                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
+//                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
                 bills.setCost(StringUtils.formatPrice(getTotalPrice(bills.getBillID())));
 
             }

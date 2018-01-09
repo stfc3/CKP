@@ -38,5 +38,7 @@ public interface BillsServices {
 	public List<BillViewDetail> getDataView(Long billID);
 
 	public List<QuantityValue> getQuantity(Long billDetailId);
+        
+        public List<BillViewDetail> getApproveBill();
 
 }
