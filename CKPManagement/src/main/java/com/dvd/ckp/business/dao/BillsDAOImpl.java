@@ -21,7 +21,6 @@ import org.zkoss.zk.ui.util.Clients;
 @Repository
 public class BillsDAOImpl implements BillDAO {
 
-
     private static final Logger logger = Logger.getLogger(BillsDAOImpl.class);
     @Autowired
     SessionFactory sessionFactory;
@@ -50,7 +49,7 @@ public class BillsDAOImpl implements BillDAO {
             sql.append(" b.customer_id AS customerID, ");
             sql.append(" c.customer_name AS customerName, ");
             sql.append(" b.prd_id AS prdID, ");
-            
+
             sql.append(" b.from_time AS fromDate, ");
             sql.append(" b.to_time AS toDate, ");
             sql.append(" b.start_time AS startTime, ");
@@ -417,43 +416,55 @@ public class BillsDAOImpl implements BillDAO {
     public List<BillViewDetail> getApproveBill() {
         // TODO Auto-generated method stub
         try {
+
             StringBuilder builder = new StringBuilder("SELECT ");
             builder.append(" a.bill_id as billID, ");
             builder.append(" a.bill_code as billCode, ");
             builder.append(" a.bill_detail_id as billDetailID, ");
             builder.append(" c.construction_name as contructionName, ");
             builder.append(" c.construction_id as contruction, ");
-            builder.append(" a.prd_id as prdID, ");
+            builder.append(" DATE_FORMAT(a.prd_id, '%d/%m/%Y') as prdID, ");
             builder.append(" p.pump_name as pump, ");
             builder.append(" p.pump_id as pumpID, ");
             builder.append(" l.location_name as location, ");
             builder.append(" l.location_id as locationID, ");
-            builder.append(" a.quantity as quantity, ");
-            builder.append(" a.quantity_approve as quantityApprove, ");
-            builder.append(" a.total as total");
+            // builder.append(" a.quantity as quantity, ");
+            builder.append(
+                    " case when a.quantity_approve is not null then a.quantity_approve else a.quantity end quantity, ");
+            builder.append(" case when a.total_approve is not null then a.total_approve else a.total end total, ");
+            builder.append(" a.status as status,");
+            builder.append(" s.staff");
             builder.append(" FROM ");
             builder.append(" (SELECT  ");
-            builder.append(" b.bill_id,b.bill_code,bd.bill_detail_id,b.construction_id,b.prd_id, ");
-            builder.append(" bd.pump_id,bd.location_id,bd.quantity,bd.quantity_approve,bd.total ");
+            builder.append(
+                    " b.bill_id,b.bill_code,bd.bill_detail_id,b.construction_id,STR_TO_DATE(b.prd_id, '%Y%m%d') as prd_id, ");
+            builder.append(
+                    " bd.pump_id,bd.location_id,bd.quantity,bd.quantity_approve,bd.total,bd.total_approve, bd.status ");
             builder.append(" FROM bills b, bill_detail bd ");
             builder.append(" WHERE ");
             builder.append("  b.bill_id = bd.bill_id AND b.status = 1 AND bd.status IN (1 , 2)) a ");
             builder.append(" LEFT JOIN construction c ON a.construction_id = c.construction_id ");
             builder.append(" LEFT JOIN pumps p ON a.pump_id = p.pump_id ");
             builder.append(" LEFT JOIN location l ON a.location_id = l.location_id ");
+            builder.append(" left join  ");
+            builder.append(
+                    " (select q.bill_detail_id,GROUP_CONCAT(s.staff_name SEPARATOR ', ') staff from quantity_staff q , staff s where q.staff_id = s.staff_id group by q.bill_detail_id) s ");
+            builder.append(" on a.bill_detail_id = s.bill_detail_id ");
+            builder.append("order by prd_id desc");
             Query query = getCurrentSession().createSQLQuery(builder.toString())
                     .addScalar("billID", StandardBasicTypes.LONG)
                     .addScalar("billCode", StandardBasicTypes.STRING)
                     .addScalar("billDetailID", StandardBasicTypes.LONG)
                     .addScalar("contructionName", StandardBasicTypes.STRING)
                     .addScalar("contruction", StandardBasicTypes.LONG)
-                    .addScalar("prdID", StandardBasicTypes.DATE)
+                    .addScalar("prdID", StandardBasicTypes.STRING)
                     .addScalar("pump", StandardBasicTypes.STRING)
                     .addScalar("pumpID", StandardBasicTypes.LONG)
                     .addScalar("location", StandardBasicTypes.STRING)
                     .addScalar("locationID", StandardBasicTypes.LONG)
                     .addScalar("quantity", StandardBasicTypes.DOUBLE)
-                    .addScalar("quantityApprove", StandardBasicTypes.DOUBLE)
+                    //                    .addScalar("quantityApprove", StandardBasicTypes.DOUBLE)
+                    .addScalar("staff", StandardBasicTypes.STRING)
                     .addScalar("total", StandardBasicTypes.DOUBLE)
                     .setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));
             List<BillViewDetail> listData = query.list();

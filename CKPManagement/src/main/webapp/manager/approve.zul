@@ -9,7 +9,7 @@
         text-align:right; } a [class^="z-icon-"]{ margin-right: 5px; }
     </style>
     <window id="approve"
-                apply="com.dvd.ckp.controller.ApproveController">
+            apply="com.dvd.ckp.controller.ApproveController">
         <style src="/css/theme.css" />
         <groupbox>
             <caption label="${c:l('approve.title')}" />
@@ -20,8 +20,8 @@
                     <auxheader colspan="2">
                         <a iconSclass="z-icon-filter" />
                         <combobox hflex="1" id="cbBillCode"
-                                                          placeholder="${c:l('bills.code')}" autodrop="true"
-                                                          buttonVisible="false">
+                                  placeholder="${c:l('bills.code')}" autodrop="true"
+                                  buttonVisible="false">
                             <!-- 							<template name="model"> -->
                             <!-- 								<comboitem value="${each.billCode}" -->
                             <!-- 									label="${each.billCode}" /> -->
@@ -31,8 +31,8 @@
                     <auxheader colspan="2">
                         <a iconSclass="z-icon-filter" />
                         <combobox hflex="1" id="cbContruction"
-                                                          placeholder="${c:l('construction.name')}" autodrop="true"
-                                                          buttonVisible="false">
+                                  placeholder="${c:l('construction.name')}" autodrop="true"
+                                  buttonVisible="false">
                             <template name="model">
                                 <comboitem
                                     value="${each.constructionId}"
@@ -43,16 +43,16 @@
                     <auxheader colspan="3">
                         <a iconSclass="z-icon-filter" />
                         <datebox id="dtFilterDate" hflex="1"
-                                                         placeholder="${c:l('bills.prd.id')}" format="dd/MM/yyyy" />
+                                 placeholder="${c:l('bills.prd.id')}" format="dd/MM/yyyy" />
                     </auxheader>
                     <auxheader colspan="3">
                         <a iconSclass="z-icon-filter" />
                         <combobox hflex="1" id="cbPump"
-                                                          placeholder="${c:l('pump.name')}" autodrop="true"
-                                                          buttonVisible="false">
+                                  placeholder="${c:l('pump.name')}" autodrop="true"
+                                  buttonVisible="false">
                             <template name="model">
                                 <comboitem value="${each.pumpsID}"
-                                                                           label="${each.pumpsName}" />
+                                           label="${each.pumpsName}" />
                             </template>
                         </combobox>
                     </auxheader>
@@ -81,7 +81,7 @@
                 <template name="model">
                     <!--<row value="${each}" class="${each.status == 2 ? 'vlayout-bill-detail-approve' : 'vlayout-bill-detail'} bill_detail_${each.billDetailID}">-->
                     <row value="${each}"
-                                             style="${each.status ==2 ? 'color:green':''}">
+                         style="${each.status ==2 ? 'color:green':''}">
                         <cell style="text-align: center;">
                             <label value="${forEachStatus.index+1}" />
                         </cell>
@@ -115,11 +115,11 @@
                             <!-- 								iconSclass="z-icon-newspaper-o" forward="onClick=onEdit" -->
                             <!-- 								tooltiptext="${c:l('edit')}" /> -->
                             <a class="btn-cursor"
-                                                           iconSclass="z-icon-check-circle-o" forward="onClick=onApprove"
-                                                           tooltiptext="${c:l('delete')}" />
+                               iconSclass="z-icon-check-circle-o" forward="onClick=onApprove"
+                               tooltiptext="${c:l('delete')}" />
                             <a class="btn-cursor"
-                                                           iconSclass="z-icon-user-plus" forward="onClick=onAddStaff"
-                                                           visible="true" tooltiptext="${c:l('save')}" />
+                               iconSclass="z-icon-user-plus" forward="onClick=onAddStaff"
+                               visible="true" tooltiptext="${c:l('save')}" />
 
 
                         </cell>
