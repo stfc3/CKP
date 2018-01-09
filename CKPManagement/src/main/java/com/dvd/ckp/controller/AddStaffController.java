@@ -286,7 +286,9 @@ public class AddStaffController extends GenericForwardComposer {
                     
                     //reload data
                     Events.sendEvent("onClick", (Button) ((Window) addStaff.getParent()).getFellow("reloadData"), null);
+                    
                 }
+                addStaff.detach();
             }
         });
     }

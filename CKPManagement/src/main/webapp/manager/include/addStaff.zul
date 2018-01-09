@@ -48,7 +48,7 @@
                         <hbox hflex="1" />
                     </hbox>
                 </hlayout>
-                <grid id="gridFullStaff" hflex="1">
+                <grid id="gridFullStaff" hflex="1" mold="paging" pageSize="5" pagingPosition="both">
                     <auxhead sclass="category-center">
                         <auxheader colspan="7">
                             <a iconSclass="z-icon-filter" />
@@ -119,7 +119,7 @@
                 <label id="titleStaffSelected">
                     ${c:l('staff.quantity.selected')}
                 </label>
-                <grid id="gridSelectStaff" hflex="1">
+                <grid id="gridSelectStaff" hflex="1" mold="paging" pageSize="5" pagingPosition="both">
                     <auxhead sclass="category-center">
                         <auxheader colspan="12">
                             <a iconSclass="z-icon-filter" />

@@ -13,7 +13,7 @@
         <groupbox>
             <longbox id="lgbUserId" value="${arg.userSelectId}" visible="false"/>
             <caption label="${c:l('role.category')}" />
-            <grid id="lstRoleNotOwnUser">
+            <grid id="lstRoleNotOwnUser" mold="paging" pageSize="10" pagingPosition="both">
                 <auxhead sclass="category-center">
                     <auxheader colspan="2">
                         <a iconSclass="z-icon-filter"/>

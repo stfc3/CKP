@@ -16,7 +16,7 @@
                     <groupbox>
                         <longbox id="lgbContractId" value="${arg.contractId}" visible="false"/>
                         <caption label="${c:l('price.category')}" />
-                        <grid id="lstPrice" mold="paging" pageSize="20" pagingPosition="both">
+                        <grid id="lstPrice" mold="paging" pageSize="10" pagingPosition="both">
                             <auxhead sclass="category-center" >
                                 <auxheader colspan="10">
                                     <a class="btn-cursor" id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
@@ -105,7 +105,7 @@
                 <tabpanel>
                     <groupbox>
                         <caption label="${c:l('price.category')}" />
-                        <grid id="lstPriceDistribute" mold="paging" pageSize="20" pagingPosition="both">
+                        <grid id="lstPriceDistribute" mold="paging" pageSize="10" pagingPosition="both">
                             <auxhead sclass="category-center" >
                                 <auxheader colspan="10">
                                     <a class="btn-cursor" id="addDistribute" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />

@@ -21,7 +21,7 @@
         <groupbox>
             <caption label="${c:l('param.category')}" />
             <grid id="lstParam">
-                <auxhead sclass="category-center">
+                <auxhead sclass="category-center" mold="paging" pageSize="10" pagingPosition="both">
                     <auxheader colspan="5">
                         <a id="add" class="btn-cursor" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                     </auxheader>

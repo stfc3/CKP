@@ -13,7 +13,7 @@
         <style src="/css/theme.css" />
         <groupbox>
             <caption label="${c:l('location')}" />
-            <grid id="gridLocation">
+            <grid id="gridLocation" mold="paging" pageSize="10" pagingPosition="both">
                 <auxhead sclass="category-center">
                     <auxheader colspan="6">
                         <a class="btn-cursor" forward="onClick=onAdd"

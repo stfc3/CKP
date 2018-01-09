@@ -87,7 +87,7 @@ public class BillsDAOImpl implements BillDAO {
                     .addScalar("fileName", StandardBasicTypes.STRING)
                     .addScalar("filePath", StandardBasicTypes.STRING)
                     .addScalar("status", StandardBasicTypes.INTEGER)
-                    .addScalar("cost", StandardBasicTypes.STRING)
+                    .addScalar("cost", StandardBasicTypes.DOUBLE)
                     .setResultTransformer(Transformers.aliasToBean(Bills.class));
             List<Bills> lstData = query.list();
             return lstData;
@@ -470,6 +470,7 @@ public class BillsDAOImpl implements BillDAO {
                     .addScalar("locationID", StandardBasicTypes.LONG)
                     .addScalar("quantity", StandardBasicTypes.DOUBLE)
                     //                    .addScalar("quantityApprove", StandardBasicTypes.DOUBLE)
+                    .addScalar("status", StandardBasicTypes.INTEGER)
                     .addScalar("staff", StandardBasicTypes.STRING)
                     .addScalar("total", StandardBasicTypes.DOUBLE)
                     .setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));

@@ -279,8 +279,8 @@ public class ApproveController extends GenericForwardComposer {
                         } catch (Exception e2) {
                             logger.error(e2.getMessage(), e2);
                         }
-                        Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message.ok"),
-                                Labels.getLabel("comfirm"), Messagebox.OK, Messagebox.INFORMATION);
+//                        Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message.ok"),
+//                                Labels.getLabel("comfirm"), Messagebox.OK, Messagebox.INFORMATION);
                     }
                 }
             });
@@ -494,6 +494,7 @@ public class ApproveController extends GenericForwardComposer {
 
     public void onClick$reloadData() {
         reload();
+        onChange$cbBillCode();
     }
 
 }

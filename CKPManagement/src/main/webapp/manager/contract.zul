@@ -5,7 +5,7 @@
     <window  id="mainContract" apply="com.dvd.ckp.controller.ContractController">
         <groupbox>
             <caption label="${c:l('contract.category')}"/>
-            <grid id="lstContract" mold="paging" pageSize="20" pagingPosition="both">
+            <grid id="lstContract" mold="paging" pageSize="10" pagingPosition="both">
                 <auxhead sclass="category-center" >
                     <auxheader colspan="12">
                         <a class="btn-cursor" id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />

@@ -20,7 +20,7 @@
     <window  id="mainUser" apply="com.dvd.ckp.controller.UserController">
         <groupbox>
             <caption label="${c:l('user.category')}" />
-            <grid id="lstUser">
+            <grid id="lstUser" mold="paging" pageSize="10" pagingPosition="both">
                 <auxhead sclass="category-center">
                     <auxheader colspan="8">
                         <a id="add" class="btn-cursor" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />

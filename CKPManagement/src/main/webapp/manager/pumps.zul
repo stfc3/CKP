@@ -12,7 +12,7 @@
         <style src="/css/theme.css" />
         <groupbox>
             <caption label="${c:l('pump')}" />
-            <grid id="gridPumps">
+            <grid id="gridPumps" mold="paging" pageSize="10" pagingPosition="both">
                 <auxhead sclass="category-center">
                     <auxheader colspan="7">
                         <a class="btn-cursor" forward="onClick=onAdd"

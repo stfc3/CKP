@@ -11,7 +11,7 @@
         <style src="/css/theme.css" />
         <groupbox>
             <caption label="${c:l('bills')}" />
-            <grid id="gridBills" mold="paging" pageSize="10">
+            <grid id="gridBills" mold="paging" pageSize="10" pagingPosition="both">
                 <auxhead sclass="category-center">
                     <auxheader colspan="20">
                         <a class="btn-cursor" forward="onClick=onAdd"
@@ -124,8 +124,9 @@
                         </cell>
                         <!--thanh tien -->
                         <cell style="text-align: right;">
-                            <label style="text-align: right;"
-                                   value="${c:formatNumber(each.cost, '###,###,###.##')}" />
+<!--                            <label style="text-align: right;"
+                                   value="${c:formatNumber(each.cost, '###,###,###.##')}" />-->
+                                   <doublebox value="${each.cost == null ? 0:each.cost}"  format="###,###,###.##" tooltiptext="${c:formatNumber(each.cost == null ? 0:each.cost, '###,###,###.##')}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <!--thoi gian den cong trinh -->
                         <cell style="text-align: right;"
