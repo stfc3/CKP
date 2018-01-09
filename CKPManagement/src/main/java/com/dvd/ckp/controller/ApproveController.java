@@ -476,7 +476,8 @@ public class ApproveController extends GenericForwardComposer {
                                 && pump.equals(c.getPumpID())) {
                             vlstData.add(c);
                         }
-                    } else if (StringUtils.isValidString(bill) && contruction != null && date != null && pump != null) {
+                    } else if (StringUtils.isValidString(bill) && contruction != null && 
+                            date != null && pump != null) {
                         String dateInput = DateTimeUtils.convertDateToString(date, Constants.FORMAT_DATE_DD_MM_YYY);
                         if (bill.equals(c.getBillCode()) && dateInput.equals(c.getPrdID())
                                 && contruction.equals(c.getContruction()) && pump.equals(c.getPumpID())) {
