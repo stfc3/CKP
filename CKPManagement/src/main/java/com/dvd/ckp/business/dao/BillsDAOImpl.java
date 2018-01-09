@@ -49,7 +49,7 @@ public class BillsDAOImpl implements BillDAO {
             sql.append(" b.customer_id AS customerID, ");
             sql.append(" c.customer_name AS customerName, ");
             sql.append(" b.prd_id AS prdID, ");
-
+            sql.append(" STR_TO_DATE(b.prd_id, '%Y%m%d') AS dateInput, ");
             sql.append(" b.from_time AS fromDate, ");
             sql.append(" b.to_time AS toDate, ");
             sql.append(" b.start_time AS startTime, ");
@@ -58,12 +58,16 @@ public class BillsDAOImpl implements BillDAO {
             sql.append(" ct.construction_name AS constructionName, ");
             sql.append(" b.file_name AS fileName, ");
             sql.append(" b.path AS filePath, ");
-            sql.append(" b.status AS status ");
+            sql.append(" b.status AS status, ");
+            sql.append(" e.total AS cost ");
             sql.append(" FROM bills b ");
             sql.append(" LEFT JOIN ");
             sql.append(" customers c ON b.customer_id = c.customer_id ");
             sql.append(" LEFT JOIN ");
             sql.append(" construction ct ON b.construction_id = ct.construction_id ");
+            sql.append(" LEFT JOIN ");
+            sql.append(" (select bill_id,case when sum(total_approve) is not null then sum(total_approve) else sum(total) end total from bill_detail where status in (1,2) group by bill_id) e ");
+            sql.append(" on b.bill_id = e.bill_id ");
             sql.append(" WHERE ");
             sql.append(" b.status = 1 ");
             sql.append(" order by b.create_date desc ");
@@ -73,6 +77,7 @@ public class BillsDAOImpl implements BillDAO {
                     .addScalar("customerID", StandardBasicTypes.LONG)
                     .addScalar("customerName", StandardBasicTypes.STRING)
                     .addScalar("prdID", StandardBasicTypes.STRING)
+                    .addScalar("dateInput", StandardBasicTypes.DATE)
                     .addScalar("fromDate", StandardBasicTypes.DATE)
                     .addScalar("toDate", StandardBasicTypes.DATE)
                     .addScalar("startTime", StandardBasicTypes.DATE)
@@ -82,6 +87,7 @@ public class BillsDAOImpl implements BillDAO {
                     .addScalar("fileName", StandardBasicTypes.STRING)
                     .addScalar("filePath", StandardBasicTypes.STRING)
                     .addScalar("status", StandardBasicTypes.INTEGER)
+                    .addScalar("cost", StandardBasicTypes.STRING)
                     .setResultTransformer(Transformers.aliasToBean(Bills.class));
             List<Bills> lstData = query.list();
             return lstData;

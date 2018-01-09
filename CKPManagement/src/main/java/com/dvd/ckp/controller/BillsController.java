@@ -211,19 +211,19 @@ public class BillsController extends GenericForwardComposer<Component> {
         lstBillsFilter = new ArrayList<>();
         List<Bills> lstData = billsServices.getAllData();
         if (lstData != null && !lstData.isEmpty()) {
-            for (Bills bills : lstData) {
-                if (StringUtils.isValidString(bills.getPrdID())) {
-                    bills.setDateInput(
-                            DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
-                } else {
-                    bills.setDateInput(null);
-                }
+//            for (Bills bills : lstData) {
+////                if (StringUtils.isValidString(bills.getPrdID())) {
+////                    bills.setDateInput(
+////                            DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
+////                } else {
+////                    bills.setDateInput(null);
+////                }
+////
+////                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
+////                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
+//                bills.setCost(StringUtils.formatPrice(getTotalPrice(bills.getBillID())));
 //
-//                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
-//                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
-                bills.setCost(StringUtils.formatPrice(getTotalPrice(bills.getBillID())));
-
-            }
+//            }
             lstBills.addAll(lstData);
             lstBillsFilter.addAll(lstData);
         }
@@ -443,19 +443,19 @@ public class BillsController extends GenericForwardComposer<Component> {
         lstBills.clear();
         List<Bills> lstData = billsServices.getAllData();
         if (lstData != null && !lstData.isEmpty()) {
-            for (Bills bills : lstData) {
-                if (StringUtils.isValidString(bills.getPrdID())) {
-                    bills.setDateInput(
-                            DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
-                } else {
-                    bills.setDateInput(null);
-                }
-
-//                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
-//                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
-                bills.setCost(StringUtils.formatPrice(getTotalPrice(bills.getBillID())));
-
-            }
+//            for (Bills bills : lstData) {
+//                if (StringUtils.isValidString(bills.getPrdID())) {
+//                    bills.setDateInput(
+//                            DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
+//                } else {
+//                    bills.setDateInput(null);
+//                }
+//
+////                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
+////                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
+//                bills.setCost(StringUtils.formatPrice(getTotalPrice(bills.getBillID())));
+//
+//            }
             lstBills.addAll(lstData);
             lstBillsFilter.addAll(lstData);
         }
