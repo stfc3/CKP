@@ -49,7 +49,7 @@ public class BillsDAOImpl implements BillDAO {
             sql.append(" b.bill_code AS billCode, ");
             sql.append(" b.customer_id AS customerID, ");
             sql.append(" c.customer_name AS customerName, ");
-            sql.append(" DATE_FORMAT(b.prd_id, \"%d %M %Y\") AS dateInput, ");
+            sql.append(" b.prd_id AS prdID, ");
             
             sql.append(" b.from_time AS fromDate, ");
             sql.append(" b.to_time AS toDate, ");
@@ -73,7 +73,7 @@ public class BillsDAOImpl implements BillDAO {
                     .addScalar("billCode", StandardBasicTypes.STRING)
                     .addScalar("customerID", StandardBasicTypes.LONG)
                     .addScalar("customerName", StandardBasicTypes.STRING)
-                    .addScalar("dateInput", StandardBasicTypes.DATE)
+                    .addScalar("prdID", StandardBasicTypes.STRING)
                     .addScalar("fromDate", StandardBasicTypes.DATE)
                     .addScalar("toDate", StandardBasicTypes.DATE)
                     .addScalar("startTime", StandardBasicTypes.DATE)
@@ -82,7 +82,7 @@ public class BillsDAOImpl implements BillDAO {
                     .addScalar("constructionName", StandardBasicTypes.STRING)
                     .addScalar("fileName", StandardBasicTypes.STRING)
                     .addScalar("filePath", StandardBasicTypes.STRING)
-                    .addScalar("status", StandardBasicTypes.LONG)
+                    .addScalar("status", StandardBasicTypes.INTEGER)
                     .setResultTransformer(Transformers.aliasToBean(Bills.class));
             List<Bills> lstData = query.list();
             return lstData;

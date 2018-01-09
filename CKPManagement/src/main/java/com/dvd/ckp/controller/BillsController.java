@@ -212,12 +212,12 @@ public class BillsController extends GenericForwardComposer<Component> {
         List<Bills> lstData = billsServices.getAllData();
         if (lstData != null && !lstData.isEmpty()) {
             for (Bills bills : lstData) {
-//                if (bills.getPrdID() != 0) {
-//                    bills.setDateInput(
-//                            DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
-//                } else {
-//                    bills.setDateInput(null);
-//                }
+                if (StringUtils.isValidString(bills.getPrdID())) {
+                    bills.setDateInput(
+                            DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
+                } else {
+                    bills.setDateInput(null);
+                }
 //
 //                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
 //                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
@@ -395,7 +395,7 @@ public class BillsController extends GenericForwardComposer<Component> {
             try {
                 dtPrdID = (Datebox) component;
                 bills.setPrdID(
-                        Integer.valueOf(DateTimeUtils.convertDateToString(dtPrdID.getValue(), Constants.FORMAT_DATE)));
+                        DateTimeUtils.convertDateToString(dtPrdID.getValue(), Constants.FORMAT_DATE));
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }
@@ -444,15 +444,15 @@ public class BillsController extends GenericForwardComposer<Component> {
         List<Bills> lstData = billsServices.getAllData();
         if (lstData != null && !lstData.isEmpty()) {
             for (Bills bills : lstData) {
-                if (bills.getPrdID() != 0) {
+                if (StringUtils.isValidString(bills.getPrdID())) {
                     bills.setDateInput(
                             DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
                 } else {
                     bills.setDateInput(null);
                 }
 
-                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
-                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
+//                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
+//                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
                 bills.setCost(StringUtils.formatPrice(getTotalPrice(bills.getBillID())));
 
             }
@@ -479,11 +479,10 @@ public class BillsController extends GenericForwardComposer<Component> {
         bills.setConstructionID(constructionID);
         try {
             if (dtFilterDate.getValue() != null) {
-                int dateFilter = Integer
-                        .valueOf(DateTimeUtils.convertDateToString(dtFilterDate.getValue(), Constants.FORMAT_DATE));
+                String dateFilter = DateTimeUtils.convertDateToString(dtFilterDate.getValue(), Constants.FORMAT_DATE);
                 bills.setPrdID(dateFilter);
             } else {
-                bills.setPrdID(0);
+                bills.setPrdID(null);
             }
         } catch (WrongValueException e) {
             // TODO Auto-generated catch block
@@ -501,25 +500,24 @@ public class BillsController extends GenericForwardComposer<Component> {
 
     public void onChange$cbFilterConstruction() {
 
-        Bills bills = new Bills();
-        Long customerID = null;
+        Bills bill = new Bills();
+        Long customer = null;
         if (cbFilterCustomer.getSelectedItem() != null) {
-            customerID = cbFilterCustomer.getSelectedItem().getValue();
+            customer = cbFilterCustomer.getSelectedItem().getValue();
         }
-        bills.setCustomerID(customerID);
+        bill.setCustomerID(customer);
 
-        Long constructionID = null;
+        Long construction = null;
         if (cbFilterConstruction.getSelectedItem() != null) {
-            constructionID = cbFilterConstruction.getSelectedItem().getValue();
+            construction = cbFilterConstruction.getSelectedItem().getValue();
         }
-        bills.setConstructionID(constructionID);
+        bill.setConstructionID(construction);
         try {
             if (dtFilterDate.getValue() != null) {
-                int dateFilter = Integer
-                        .valueOf(DateTimeUtils.convertDateToString(dtFilterDate.getValue(), Constants.FORMAT_DATE));
-                bills.setPrdID(dateFilter);
+                String dateFilter = DateTimeUtils.convertDateToString(dtFilterDate.getValue(), Constants.FORMAT_DATE);
+                bill.setPrdID(dateFilter);
             } else {
-                bills.setPrdID(0);
+                bill.setPrdID(null);
             }
         } catch (WrongValueException e) {
             // TODO Auto-generated catch block
@@ -532,29 +530,28 @@ public class BillsController extends GenericForwardComposer<Component> {
             logger.error(e.getMessage(), e);
         }
 
-        filter(bills);
+        filter(bill);
     }
 
     public void onChange$dtFilterDate() {
-        Bills bills = new Bills();
-        Long customerID = null;
+        Bills bill = new Bills();
+        Long customer = null;
         if (cbFilterCustomer.getSelectedItem() != null) {
-            customerID = cbFilterCustomer.getSelectedItem().getValue();
+            customer = cbFilterCustomer.getSelectedItem().getValue();
         }
-        bills.setCustomerID(customerID);
+        bill.setCustomerID(customer);
 
-        Long constructionID = null;
+        Long construction = null;
         if (cbFilterConstruction.getSelectedItem() != null) {
-            constructionID = cbFilterConstruction.getSelectedItem().getValue();
+            construction = cbFilterConstruction.getSelectedItem().getValue();
         }
-        bills.setConstructionID(constructionID);
+        bill.setConstructionID(construction);
         try {
             if (dtFilterDate.getValue() != null) {
-                int dateFilter = Integer
-                        .valueOf(DateTimeUtils.convertDateToString(dtFilterDate.getValue(), Constants.FORMAT_DATE));
-                bills.setPrdID(dateFilter);
+                String dateFilter = DateTimeUtils.convertDateToString(dtFilterDate.getValue(), Constants.FORMAT_DATE);
+                bill.setPrdID(dateFilter);
             } else {
-                bills.setPrdID(0);
+                bill.setPrdID(null);
             }
         } catch (WrongValueException e) {
             // TODO Auto-generated catch block
@@ -567,14 +564,14 @@ public class BillsController extends GenericForwardComposer<Component> {
             logger.error(e.getMessage(), e);
         }
 
-        filter(bills);
+        filter(bill);
     }
 
     private void filter(Bills bills) {
         List<Bills> vlstBills = new ArrayList<>();
         lstBillsFilter.clear();
         if (lstBills != null && !lstBills.isEmpty() && bills != null) {
-            if (bills.getCustomerID() == null && bills.getConstructionID() == null && bills.getPrdID() == 0) {
+            if (bills.getCustomerID() == null && bills.getConstructionID() == null && bills.getPrdID() == null) {
                 vlstBills.addAll(lstBills);
 
             } else {
@@ -584,46 +581,46 @@ public class BillsController extends GenericForwardComposer<Component> {
                 // getConstructionByName(bills.getConstructionName());
                 for (Bills c : lstBills) {
                     // tim theo khach hang va cong trinh
-                    if (bills.getCustomerID() != null && bills.getConstructionID() != null && bills.getPrdID() == 0) {
+                    if (bills.getCustomerID() != null && bills.getConstructionID() != null && bills.getPrdID() == null) {
                         if (bills.getCustomerID().equals(c.getCustomerID())
                                 && bills.getConstructionID().equals(c.getConstructionID())) {
                             vlstBills.add(c);
                         }
                     } // tim theo khachs hang
                     else if (bills.getCustomerID() != null && bills.getConstructionID() == null
-                            && bills.getPrdID() == 0) {
+                            && bills.getPrdID() == null) {
                         if (bills.getCustomerID().equals(c.getCustomerID())) {
                             vlstBills.add(c);
                         }
                     } // tim theo cong trinh
                     else if (bills.getCustomerID() == null && bills.getConstructionID() != null
-                            && bills.getPrdID() == 0) {
+                            && bills.getPrdID() == null) {
                         if (bills.getConstructionID().equals(c.getConstructionID())) {
                             vlstBills.add(c);
                         }
                     } // Tim theo ngay
                     else if (bills.getCustomerID() == null && bills.getConstructionID() == null
-                            && bills.getPrdID() != 0) {
-                        if (bills.getPrdID() == c.getPrdID()) {
+                            && StringUtils.isValidString(bills.getPrdID())) {
+                        if (bills.getPrdID().equals(c.getPrdID())) {
                             vlstBills.add(c);
                         }
                     } // Tim theo khach hang va ngay in hoa don
                     else if (bills.getCustomerID() != null && bills.getConstructionID() == null
-                            && bills.getPrdID() != 0) {
-                        if (bills.getCustomerID().equals(c.getCustomerID()) && bills.getPrdID() == c.getPrdID()) {
+                            && StringUtils.isValidString(bills.getPrdID())) {
+                        if (bills.getCustomerID().equals(c.getCustomerID()) && bills.getPrdID().equals(c.getPrdID())) {
                             vlstBills.add(c);
                         }
                     } else if (bills.getCustomerID() == null && bills.getConstructionID() != null
-                            && bills.getPrdID() != 0) {
+                            && StringUtils.isValidString(bills.getPrdID())) {
                         if (bills.getConstructionID().equals(c.getConstructionID())
-                                && bills.getPrdID() == c.getPrdID()) {
+                                && bills.getPrdID().equals(c.getPrdID())) {
                             vlstBills.add(c);
                         }
                     } else if (bills.getCustomerID() != null && bills.getConstructionID() != null
-                            && bills.getPrdID() != 0) {
+                            && StringUtils.isValidString(bills.getPrdID())) {
                         if (bills.getCustomerID().equals(c.getCustomerID())
                                 && bills.getConstructionID().equals(c.getConstructionID())
-                                && bills.getPrdID() == c.getPrdID()) {
+                                && bills.getPrdID().equals(c.getPrdID())) {
                             vlstBills.add(c);
                         }
                     }

@@ -11,7 +11,7 @@
         <style src="/css/theme.css" />
         <groupbox>
             <caption label="${c:l('bills')}" />
-            <grid id="gridBills">
+            <grid id="gridBills" mold="paging" pageSize="10">
                 <auxhead sclass="category-center">
                     <auxheader colspan="20">
                         <a class="btn-cursor" forward="onClick=onAdd"
