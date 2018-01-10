@@ -70,7 +70,7 @@ public class BillsDAOImpl implements BillDAO {
             sql.append(" on b.bill_id = e.bill_id ");
             sql.append(" WHERE ");
             sql.append(" b.status = 1 ");
-            sql.append(" order by b.create_date desc ");
+            sql.append(" order by b.prd_id desc ");
             Query query = getCurrentSession().createSQLQuery(sql.toString())
                     .addScalar("billID", StandardBasicTypes.LONG)
                     .addScalar("billCode", StandardBasicTypes.STRING)
