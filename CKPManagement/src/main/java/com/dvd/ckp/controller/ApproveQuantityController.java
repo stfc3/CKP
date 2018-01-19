@@ -105,8 +105,8 @@ public class ApproveQuantityController extends GenericForwardComposer {
 //								return;
 //							}
                     List<CalculatorRevenue> lstRevenue = billsServices.calculatorRevenue(
-                            txtConstruction.getValue(), txtPumpTypeId.getValue(), txtLocationID.getValue(),
-                            txtLocationTypeID.getValue(), quantityApproveValue, txtShift.getValue(),
+                            txtConstruction.getValue(), txtPumpTypeId.getValue(), txtLocationTypeID.getValue(),
+                            txtLocationID.getValue(),quantityApproveValue, txtShift.getValue(),
                             txtSwitch.getValue(), txtIsAuto.getValue());
                     totalApproveValue = lstRevenue.get(0).getRevenue();
                     billsServices.upadte(quantityApproveValue, totalApproveValue, billDetail);

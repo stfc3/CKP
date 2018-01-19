@@ -275,7 +275,7 @@ public class ApproveController extends GenericForwardComposer {
                             billsDetail.setStatus(2);
 
                             billServices.delete(billsDetail);
-                            reload();
+                            onClick$reloadData();
                         } catch (Exception e2) {
                             logger.error(e2.getMessage(), e2);
                         }

@@ -462,6 +462,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         listDataModel = new ListModelList(lstBills);
         gridBills.setModel(listDataModel);
         setDataDefaultInGrid();
+        onChange$cbFilterCustomer();
     }
 
     public void onChange$cbFilterCustomer() {
