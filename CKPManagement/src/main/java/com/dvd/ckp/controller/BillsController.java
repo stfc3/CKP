@@ -66,6 +66,7 @@ import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -147,9 +148,13 @@ public class BillsController extends GenericForwardComposer<Component> {
     private Combobox cbFilterConstruction;
     private MyListModel<Construction> modelListConstruction;
 
+    private Map<Long, Customer> mapCustomer;
+    private Map<Long, Construction> mapConstruction;
+
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
+        Long startTime = System.currentTimeMillis();
         context = Sessions.getCurrent().getWebApp().getServletContext();
         // khai bao services
         constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
@@ -195,35 +200,21 @@ public class BillsController extends GenericForwardComposer<Component> {
             lstPumps.addAll(lstPump);
         }
 
-        // listContact = new ArrayList<>();
-        // List<Contract> lstCont = contractService.getAllContract();
-        // if(lstCont != null && !lstCont.isEmpty()){
-        //
-        // }
         modelListCustomer = new MyListModel(lstCustomer);
         cbFilterCustomer.setModel(modelListCustomer);
 
+        mapCustomer = lstCustomer.stream().collect(Collectors.toMap(Customer::getCustomerId, vlstCustomer -> vlstCustomer));
+
         modelListConstruction = new MyListModel(lstConstructions);
         cbFilterConstruction.setModel(modelListConstruction);
+
+        mapConstruction = lstConstructions.stream().collect(Collectors.toMap(Construction::getConstructionId, vlstConstructions -> vlstConstructions));
         // list danh sach hoa don
         lstBills = new ArrayList<>();
         // list de export data theo du lieu filter
         lstBillsFilter = new ArrayList<>();
         List<Bills> lstData = billsServices.getAllData();
         if (lstData != null && !lstData.isEmpty()) {
-//            for (Bills bills : lstData) {
-////                if (StringUtils.isValidString(bills.getPrdID())) {
-////                    bills.setDateInput(
-////                            DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
-////                } else {
-////                    bills.setDateInput(null);
-////                }
-////
-////                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
-////                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
-//                bills.setCost(StringUtils.formatPrice(getTotalPrice(bills.getBillID())));
-//
-//            }
             lstBills.addAll(lstData);
             lstBillsFilter.addAll(lstData);
         }
@@ -243,7 +234,13 @@ public class BillsController extends GenericForwardComposer<Component> {
         // set model
         listDataModel = new ListModelList(lstBills);
         gridBills.setModel(listDataModel);
+
+        logger.info("TIME QUERY DB: " + (System.currentTimeMillis() - startTime));
+        startTime = System.currentTimeMillis();
+
         setDataDefaultInGrid();
+
+        logger.info("TIME QUERY FOR: " + (System.currentTimeMillis() - startTime));
 
     }
 
@@ -443,19 +440,6 @@ public class BillsController extends GenericForwardComposer<Component> {
         lstBills.clear();
         List<Bills> lstData = billsServices.getAllData();
         if (lstData != null && !lstData.isEmpty()) {
-//            for (Bills bills : lstData) {
-//                if (StringUtils.isValidString(bills.getPrdID())) {
-//                    bills.setDateInput(
-//                            DateTimeUtils.convertStringToTime(String.valueOf(bills.getPrdID()), Constants.FORMAT_DATE));
-//                } else {
-//                    bills.setDateInput(null);
-//                }
-//
-////                bills.setConstructionName(getConstructionByID(bills.getConstructionID()));
-////                bills.setCustomerName(getCustomerByID(bills.getCustomerID()));
-//                bills.setCost(StringUtils.formatPrice(getTotalPrice(bills.getBillID())));
-//
-//            }
             lstBills.addAll(lstData);
             lstBillsFilter.addAll(lstData);
         }
@@ -466,24 +450,24 @@ public class BillsController extends GenericForwardComposer<Component> {
     }
 
     public void onChange$cbFilterCustomer() {
-        Bills bills = new Bills();
-        Long customerID = null;
+        Bills vbills = new Bills();
+        Long vcustomerID = null;
         if (cbFilterCustomer.getSelectedItem() != null) {
-            customerID = cbFilterCustomer.getSelectedItem().getValue();
+            vcustomerID = cbFilterCustomer.getSelectedItem().getValue();
         }
-        bills.setCustomerID(customerID);
+        vbills.setCustomerID(vcustomerID);
 
-        Long constructionID = null;
+        Long vconstructionID = null;
         if (cbFilterConstruction.getSelectedItem() != null) {
-            constructionID = cbFilterConstruction.getSelectedItem().getValue();
+            vconstructionID = cbFilterConstruction.getSelectedItem().getValue();
         }
-        bills.setConstructionID(constructionID);
+        vbills.setConstructionID(vconstructionID);
         try {
             if (dtFilterDate.getValue() != null) {
                 String dateFilter = DateTimeUtils.convertDateToString(dtFilterDate.getValue(), Constants.FORMAT_DATE);
-                bills.setPrdID(dateFilter);
+                vbills.setPrdID(dateFilter);
             } else {
-                bills.setPrdID(null);
+                vbills.setPrdID(null);
             }
         } catch (WrongValueException e) {
             // TODO Auto-generated catch block
@@ -496,7 +480,7 @@ public class BillsController extends GenericForwardComposer<Component> {
             logger.error(e.getMessage(), e);
         }
 
-        filter(bills);
+        filter(vbills);
     }
 
     public void onChange$cbFilterConstruction() {
@@ -576,10 +560,6 @@ public class BillsController extends GenericForwardComposer<Component> {
                 vlstBills.addAll(lstBills);
 
             } else {
-                // List<Long> lstCustomerId =
-                // getCustomerByName(bills.getCustomerName());
-                // List<Long> lstConstructionId =
-                // getConstructionByName(bills.getConstructionName());
                 for (Bills c : lstBills) {
                     // tim theo khach hang va cong trinh
                     if (bills.getCustomerID() != null && bills.getConstructionID() != null && bills.getPrdID() == null) {
@@ -635,55 +615,6 @@ public class BillsController extends GenericForwardComposer<Component> {
 
     }
 
-    private List<Long> getCustomerByName(String customerName) {
-        List<Long> lstDataReturn = new ArrayList<>();
-        if (lstCustomer != null && !lstCustomer.isEmpty()) {
-            for (Customer customer : lstCustomer) {
-                if (StringUtils.isValidString(customerName)
-                        && customer.getCustomerName().toLowerCase().contains(customerName.toLowerCase())) {
-                    lstDataReturn.add(customer.getCustomerId());
-                }
-            }
-        }
-        return lstDataReturn;
-    }
-
-    private String getCustomerByID(Long customerId) {
-
-        if (lstCustomer != null && !lstCustomer.isEmpty()) {
-            for (Customer customer : lstCustomer) {
-                if (customerId.equals(customer.getCustomerId())) {
-                    return customer.getCustomerName();
-                }
-            }
-        }
-        return "";
-    }
-
-    private String getConstructionByID(Long constructionId) {
-        if (lstConstructions != null && !lstConstructions.isEmpty()) {
-            for (Construction construction : lstConstructions) {
-                if (constructionId != null && constructionId.equals(construction.getConstructionId())) {
-                    return construction.getConstructionName();
-                }
-            }
-        }
-        return "";
-    }
-
-    private List<Long> getConstructionByName(String constructionName) {
-        List<Long> lstDataReturn = new ArrayList<>();
-        if (lstConstructions != null && !lstConstructions.isEmpty()) {
-            for (Construction construction : lstConstructions) {
-                if (StringUtils.isValidString(constructionName)
-                        && construction.getConstructionName().toLowerCase().contains(constructionName.toLowerCase())) {
-                    lstDataReturn.add(construction.getConstructionId());
-                }
-            }
-        }
-        return lstDataReturn;
-    }
-
     // Set data for combobox construction
     private void setDataConstruction(List<Component> lstCell, List<Construction> selectedIndex, int columnIndex) {
         Combobox combobox = null;
@@ -737,49 +668,17 @@ public class BillsController extends GenericForwardComposer<Component> {
         }
     }
 
-    private void setPath(List<Component> lstCell, String fileName, int columnIndex) {
-        Button btnFileName = null;
-        Component component = lstCell.get(columnIndex).getFirstChild();
-        if (component != null && component instanceof Button) {
-            btnFileName = (Button) component;
-            btnFileName.setLabel(fileName);
-        }
-
-    }
-
     // get Construction default
     private List<Construction> getConstructionDefault(Long constructionId) {
         List<Construction> constructionSelected = new ArrayList<>();
-        if (constructionId != null && lstConstructions != null && !lstConstructions.isEmpty()) {
-            for (Construction construction : lstConstructions) {
-                if (constructionId.equals(construction.getConstructionId())) {
-                    constructionSelected.add(construction);
-                    break;
-                }
-            }
-        }
-        if (constructionSelected.isEmpty()) {
-            constructionSelected.add(defaultConstruction);
-        }
+        constructionSelected.add(mapConstruction.getOrDefault(constructionId, defaultConstruction));
         return constructionSelected;
     }
 
     // get Customer default
     private List<Customer> getCustomerDefault(Long customerId) {
         List<Customer> customerSelected = new ArrayList<>();
-        if (customerId != null && lstCustomer != null && !lstCustomer.isEmpty()) {
-            for (Customer customer : lstCustomer) {
-                if (customerId.equals(customer.getCustomerId())) {
-                    logger.info("Customer name: " + customer.getCustomerName());
-                    logger.info("Customer id: " + customer.getCustomerId());
-                    customerSelected.add(customer);
-                    break;
-                }
-            }
-        }
-        if (customerSelected.isEmpty()) {
-            customerSelected.add(defaultCustomer);
-        }
+        customerSelected.add(mapCustomer.getOrDefault(customerId, defaultCustomer));
         return customerSelected;
     }
 
@@ -791,7 +690,7 @@ public class BillsController extends GenericForwardComposer<Component> {
                 Bills bills = listDataModel.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                logger.info("Customer id: " + bills.getCustomerID());
+//                logger.info("Customer id: " + bills.getCustomerID());
                 setDataCustomer(lstCell, getCustomerDefault(bills.getCustomerID()), customerID);
                 setDataConstruction(lstCell, getConstructionDefault(bills.getConstructionID()), constructionID);
             }
@@ -834,47 +733,6 @@ public class BillsController extends GenericForwardComposer<Component> {
                 Messagebox.INFORMATION);
     }
 
-    /**
-     * Open widow bill detail view
-     *
-     * @param event
-     */
-    public void onView(ForwardEvent event) {
-        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-        Bills c = rowSelected.getValue();
-        Map<String, Object> arguments = new HashMap();
-        BillsDetail billsDetail = getBillsDetail(c.getBillID());
-        if (billsDetail != null) {
-            arguments.put("detail", billsDetail);
-        } else {
-            arguments.put("detail", new BillsDetail());
-        }
-        arguments.put("bill", c);
-        if (billsDetail != null) {
-            Pumps pumps = getPumps(billsDetail.getPumpID());
-            arguments.put("pumps", pumps);
-            Location location = getLocation(billsDetail.getLocationId());
-            arguments.put("location", location);
-        }
-        Construction construction = getConstruction(c.getConstructionID());
-        arguments.put("construction", construction);
-        arguments.put("approve", getRoleApprove());
-        final Window windownUpload = (Window) Executions.createComponents("/manager/include/billDetailView.zul", bills,
-                arguments);
-        windownUpload.doModal();
-        windownUpload.setBorder(true);
-        windownUpload.setBorder("normal");
-        windownUpload.setClosable(true);
-        windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
-
-            @Override
-            public void onEvent(Event event) throws Exception {
-                windownUpload.detach();
-
-            }
-        });
-
-    }
 
     /**
      * Lay thon tin cong trinh
@@ -902,13 +760,6 @@ public class BillsController extends GenericForwardComposer<Component> {
      */
     @SuppressWarnings({"unchecked", "unchecked"})
     public void onAddDetail(ForwardEvent event) {
-        // Messagebox.show(Labels.getLabel("bills.comfirm"),
-        // Labels.getLabel("comfirm"), Messagebox.YES | Messagebox.NO,
-        // Messagebox.QUESTION, new EventListener() {
-        //
-        // @Override
-        // public void onEvent(Event e) throws Exception {
-        // if (Messagebox.ON_YES.equals(e.getName())) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         Bills billsValue = rowSelected.getValue();
@@ -933,9 +784,6 @@ public class BillsController extends GenericForwardComposer<Component> {
         }
         Construction construction = getConstruction(billsValue.getConstructionID());
         arguments.put("construction", construction);
-        // List<BillsDetail> lstData = new ArrayList<>();
-        //
-        // lstData.addAll(getListBillsDetail(c.getBillID()));
 
         final Window windownUpload = (Window) Executions.createComponents("/manager/include/billDetail.zul", bills,
                 arguments);
@@ -951,73 +799,8 @@ public class BillsController extends GenericForwardComposer<Component> {
                 reloadGrid();
             }
         });
-        // }
-        //
-        // }
-        // });
     }
 
-    private List<BillsDetail> getListBillsDetail(Long billID) {
-        List<BillsDetail> billsDetails = new ArrayList<>();
-        if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
-            for (BillsDetail detail : lstBillDetail) {
-                if (billID != null && billID.equals(detail.getBillId())) {
-                    billsDetails.add(detail);
-                }
-            }
-        }
-        return billsDetails;
-
-    }
-
-    private double getTotalPrice(Long billID) {
-        double totalPrice = 0;
-        if (lstBillDetail != null && !lstBillDetail.isEmpty()) {
-            for (BillsDetail detail : lstBillDetail) {
-                if (billID != null && billID.equals(detail.getBillId())) {
-                    totalPrice = totalPrice + detail.getTotal();
-                }
-            }
-        }
-        return totalPrice;
-
-    }
-
-    /**
-     * lay danh sach hop dong theo khach hang
-     */
-    // private List<Contract> getContractByCustomer(Long customerID) {
-    // List<Contract> lstReturn = new ArrayList<>();
-    // if (listContact != null && !listContact.isEmpty()) {
-    // for (Contract contract : listContact) {
-    // if (customerID.equals(contract)) {
-    // lstReturn.add(contract);
-    // }
-    // }
-    // }
-    // return lstReturn;
-    // }
-    /**
-     * Lay danh sach cong trinh theo khach hang
-     */
-    // private List<Construction> getConstructionByContract(Long customerID) {
-    // List<Contract> lstContract = getContractByCustomer(customerID);
-    // List<Construction> lstConstruction = new ArrayList<>();
-    // if (lstConstructions != null && !lstConstructions.isEmpty()) {
-    // for (Construction construction : lstConstructions) {
-    // if (lstContract != null && !lstContract.isEmpty()) {
-    // for (Contract contract : lstContract) {
-    //
-    // if (construction.getContractId().equals(contract.getContractId())) {
-    // lstConstruction.add(construction);
-    // }
-    // }
-    // }
-    // }
-    // }
-    //
-    // return lstConstruction;
-    // }
     /**
      * Lay thong tin may bom len man hinh view bill detail
      *
@@ -1086,19 +869,4 @@ public class BillsController extends GenericForwardComposer<Component> {
         return -1;
     }
 
-    private int getRoleApprove() {
-        UserToken userToken = (UserToken) session.getAttribute(com.dvd.ckp.utils.Constants.USER_TOKEN);
-        if (userToken != null) {
-            List<com.dvd.ckp.domain.Object> lstObjects = userToken.getListObject();
-            if (lstObjects != null) {
-                for (com.dvd.ckp.domain.Object obj : lstObjects) {
-                    if (obj.getObjectType() == 3L
-                            && com.dvd.ckp.utils.Constants.ROLE_APPROVE.equals(obj.getObjectCode())) {
-                        return 1;
-                    }
-                }
-            }
-        }
-        return 0;
-    }
 }

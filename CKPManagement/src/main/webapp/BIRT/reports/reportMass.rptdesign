@@ -104,9 +104,9 @@
                 </ex-property>
             </list-property>
             <property name="odaDriverClass">com.mysql.jdbc.Driver</property>
-            <property name="odaURL">jdbc:mysql://127.0.0.1:3306/ckp</property>
-            <property name="odaUser">root</property>
-            <encrypted-property name="odaPassword" encryptionID="base64">YWRtaW4=</encrypted-property>
+            <property name="odaURL">jdbc:mysql://35.198.218.250:3306/ckp</property>
+            <property name="odaUser">ckp</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">Q2twQFN0ZmNAMjAxNw==</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -519,7 +519,7 @@
                     <property name="name">quantity</property>
                     <text-property name="displayName">quantity</text-property>
                     <expression name="expression" type="javascript">if(dataSetRow["convert_type"]==2 &amp;&amp; dataSetRow["quantity"]&lt;dataSetRow["convert_value"]){&#13;
-	1;&#13;
+	&#13;
 }else if(dataSetRow["convert_type"]==1 &amp;&amp; dataSetRow["quantity"]&lt;dataSetRow["convert_value"]){&#13;
 	dataSetRow["convert_value"];&#13;
 }else{&#13;
@@ -552,7 +552,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 </structure>
                 <structure>
                     <property name="name">shift</property>
-                    <text-property name="displayName">shift</text-property>
+                    <text-property name="displayName">wait</text-property>
                     <expression name="expression" type="javascript">dataSetRow["wait"]</expression>
                     <property name="dataType">integer</property>
                     <property name="allowExport">true</property>
@@ -776,27 +776,68 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     <property name="dataType">string</property>
                     <property name="allowExport">true</property>
                 </structure>
+                <structure>
+                    <property name="name">shift_count</property>
+                    <text-property name="displayName">shift_count</text-property>
+                    <expression name="expression" type="javascript">if(dataSetRow["convert_type"]==2 &amp;&amp; dataSetRow["quantity"]&lt;dataSetRow["convert_value"]){&#13;
+	1;&#13;
+}</expression>
+                    <property name="dataType">integer</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">sum_shift_count</property>
+                    <text-property name="displayName">sum_shift_count</text-property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>GroupConstruction</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["shift_count"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">sum_shift_count_total</property>
+                    <text-property name="displayName">sum_shift_count_total</text-property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["sum_shift_count"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
             </list-property>
             <column id="40">
                 <property name="width">0.5in</property>
             </column>
             <column id="41">
-                <property name="width">1.5in</property>
+                <property name="width">1in</property>
             </column>
             <column id="42">
-                <property name="width">3in</property>
+                <property name="width">2.5in</property>
             </column>
             <column id="43">
                 <property name="width">1.5in</property>
             </column>
             <column id="44">
-                <property name="width">1in</property>
+                <property name="width">0.75in</property>
             </column>
             <column id="421">
-                <property name="width">1in</property>
+                <property name="width">0.75in</property>
+            </column>
+            <column id="450">
+                <property name="width">0.75in</property>
             </column>
             <column id="45">
-                <property name="width">1in</property>
+                <property name="width">0.75in</property>
             </column>
             <column id="46">
                 <property name="width">0.5in</property>
@@ -841,6 +882,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     </cell>
                     <cell id="74"/>
                     <cell id="402"/>
+                    <cell id="431"/>
                     <cell id="75"/>
                     <cell id="76"/>
                     <cell id="77"/>
@@ -907,6 +949,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     </cell>
                     <cell id="94"/>
                     <cell id="403"/>
+                    <cell id="432"/>
                     <cell id="95"/>
                     <cell id="96"/>
                     <cell id="97"/>
@@ -973,6 +1016,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     </cell>
                     <cell id="104"/>
                     <cell id="404"/>
+                    <cell id="433"/>
                     <cell id="105"/>
                     <cell id="106"/>
                     <cell id="107"/>
@@ -1039,6 +1083,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     </cell>
                     <cell id="124"/>
                     <cell id="405"/>
+                    <cell id="434"/>
                     <cell id="125"/>
                     <cell id="126"/>
                     <cell id="127"/>
@@ -1048,7 +1093,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 </row>
                 <row id="109">
                     <cell id="110">
-                        <property name="colSpan">12</property>
+                        <property name="colSpan">13</property>
                         <property name="rowSpan">1</property>
                         <property name="borderTopColor">#000000</property>
                         <property name="borderTopStyle">solid</property>
@@ -1108,7 +1153,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 </row>
                 <row id="79">
                     <cell id="80">
-                        <property name="colSpan">12</property>
+                        <property name="colSpan">13</property>
                         <property name="rowSpan">1</property>
                         <data id="142">
                             <property name="backgroundAttachment">scroll</property>
@@ -1174,7 +1219,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         </label>
                     </cell>
                     <cell id="63">
-                        <property name="colSpan">9</property>
+                        <property name="colSpan">10</property>
                         <property name="rowSpan">1</property>
                         <data id="146">
                             <property name="backgroundAttachment">scroll</property>
@@ -1240,7 +1285,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         </label>
                     </cell>
                     <cell id="53">
-                        <property name="colSpan">9</property>
+                        <property name="colSpan">10</property>
                         <property name="rowSpan">1</property>
                         <label id="145">
                             <property name="fontWeight">bold</property>
@@ -1592,6 +1637,71 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="canShrink">false</property>
                             <property name="overflow">hidden</property>
                             <text-property name="text">Khối lượng thực tế</text-property>
+                        </label>
+                    </cell>
+                    <cell id="439">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="borderLeftColor">#C0C0C0</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">1px</property>
+                        <property name="borderRightColor">#C0C0C0</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">1px</property>
+                        <property name="borderTopColor">#C0C0C0</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">1px</property>
+                        <label id="451">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">9pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">black</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <property name="textAlign">center</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">false</property>
+                            <property name="overflow">hidden</property>
+                            <text-property name="text">Ca bơm</text-property>
                         </label>
                     </cell>
                     <cell id="16">
@@ -1996,7 +2106,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 <header>
                     <row id="212">
                         <cell id="213">
-                            <property name="colSpan">12</property>
+                            <property name="colSpan">13</property>
                             <property name="rowSpan">1</property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">center</property>
@@ -2091,8 +2201,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <data id="234">
                                 <property name="fontWeight">bold</property>
                                 <structure name="numberFormat">
-                                    <property name="category">Custom</property>
-                                    <property name="pattern">###,###.###</property>
+                                    <property name="category">Currency</property>
+                                    <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                                 </structure>
                                 <property name="textAlign">right</property>
                                 <property name="resultSetColumn">sum_quantity</property>
@@ -2146,8 +2256,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                                 <property name="paddingBottom">1pt</property>
                                 <property name="paddingRight">1pt</property>
                                 <structure name="numberFormat">
-                                    <property name="category">Custom</property>
-                                    <property name="pattern">###,###.###</property>
+                                    <property name="category">Currency</property>
+                                    <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                                 </structure>
                                 <property name="textAlign">right</property>
                                 <property name="letterSpacing">normal</property>
@@ -2167,6 +2277,75 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                                 <property name="resultSetColumn">sum_quantity_real</property>
                             </data>
                         </cell>
+                        <cell id="442">
+                            <property name="borderBottomColor">#C0C0C0</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                            <property name="borderLeftColor">#C0C0C0</property>
+                            <property name="borderLeftStyle">solid</property>
+                            <property name="borderLeftWidth">1px</property>
+                            <property name="borderRightColor">#C0C0C0</property>
+                            <property name="borderRightStyle">solid</property>
+                            <property name="borderRightWidth">1px</property>
+                            <property name="borderTopColor">#C0C0C0</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">1px</property>
+                            <data id="454">
+                                <property name="backgroundAttachment">scroll</property>
+                                <property name="backgroundPositionX">0%</property>
+                                <property name="backgroundPositionY">0%</property>
+                                <property name="backgroundRepeat">repeat</property>
+                                <property name="fontFamily">sans-serif</property>
+                                <property name="fontSize">10pt</property>
+                                <property name="fontWeight">bold</property>
+                                <property name="fontStyle">normal</property>
+                                <property name="fontVariant">normal</property>
+                                <property name="color">black</property>
+                                <property name="textLineThrough">none</property>
+                                <property name="textOverline">none</property>
+                                <property name="textUnderline">none</property>
+                                <property name="borderBottomColor">black</property>
+                                <property name="borderBottomStyle">none</property>
+                                <property name="borderBottomWidth">medium</property>
+                                <property name="borderLeftColor">black</property>
+                                <property name="borderLeftStyle">none</property>
+                                <property name="borderLeftWidth">medium</property>
+                                <property name="borderRightColor">black</property>
+                                <property name="borderRightStyle">none</property>
+                                <property name="borderRightWidth">medium</property>
+                                <property name="borderTopColor">black</property>
+                                <property name="borderTopStyle">none</property>
+                                <property name="borderTopWidth">medium</property>
+                                <property name="marginTop">0pt</property>
+                                <property name="marginLeft">0pt</property>
+                                <property name="marginBottom">0pt</property>
+                                <property name="marginRight">0pt</property>
+                                <property name="paddingTop">1pt</property>
+                                <property name="paddingLeft">1pt</property>
+                                <property name="paddingBottom">1pt</property>
+                                <property name="paddingRight">1pt</property>
+                                <structure name="numberFormat">
+                                    <property name="category">Currency</property>
+                                    <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
+                                </structure>
+                                <property name="textAlign">right</property>
+                                <property name="letterSpacing">normal</property>
+                                <property name="lineHeight">normal</property>
+                                <property name="orphans">2</property>
+                                <property name="textTransform">none</property>
+                                <property name="whiteSpace">normal</property>
+                                <property name="widows">2</property>
+                                <property name="wordSpacing">normal</property>
+                                <property name="display">block</property>
+                                <property name="pageBreakAfter">auto</property>
+                                <property name="pageBreakBefore">auto</property>
+                                <property name="pageBreakInside">auto</property>
+                                <property name="showIfBlank">false</property>
+                                <property name="canShrink">false</property>
+                                <property name="overflow">hidden</property>
+                                <property name="resultSetColumn">sum_shift_count</property>
+                            </data>
+                        </cell>
                         <cell id="228">
                             <property name="borderBottomColor">#C0C0C0</property>
                             <property name="borderBottomStyle">solid</property>
@@ -2181,8 +2360,58 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="borderTopStyle">solid</property>
                             <property name="borderTopWidth">1px</property>
                             <data id="236">
+                                <property name="backgroundAttachment">scroll</property>
+                                <property name="backgroundPositionX">0%</property>
+                                <property name="backgroundPositionY">0%</property>
+                                <property name="backgroundRepeat">repeat</property>
+                                <property name="fontFamily">sans-serif</property>
+                                <property name="fontSize">10pt</property>
                                 <property name="fontWeight">bold</property>
+                                <property name="fontStyle">normal</property>
+                                <property name="fontVariant">normal</property>
+                                <property name="color">black</property>
+                                <property name="textLineThrough">none</property>
+                                <property name="textOverline">none</property>
+                                <property name="textUnderline">none</property>
+                                <property name="borderBottomColor">black</property>
+                                <property name="borderBottomStyle">none</property>
+                                <property name="borderBottomWidth">medium</property>
+                                <property name="borderLeftColor">black</property>
+                                <property name="borderLeftStyle">none</property>
+                                <property name="borderLeftWidth">medium</property>
+                                <property name="borderRightColor">black</property>
+                                <property name="borderRightStyle">none</property>
+                                <property name="borderRightWidth">medium</property>
+                                <property name="borderTopColor">black</property>
+                                <property name="borderTopStyle">none</property>
+                                <property name="borderTopWidth">medium</property>
+                                <property name="marginTop">0pt</property>
+                                <property name="marginLeft">0pt</property>
+                                <property name="marginBottom">0pt</property>
+                                <property name="marginRight">0pt</property>
+                                <property name="paddingTop">1pt</property>
+                                <property name="paddingLeft">1pt</property>
+                                <property name="paddingBottom">1pt</property>
+                                <property name="paddingRight">1pt</property>
+                                <structure name="numberFormat">
+                                    <property name="category">Currency</property>
+                                    <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
+                                </structure>
                                 <property name="textAlign">right</property>
+                                <property name="letterSpacing">normal</property>
+                                <property name="lineHeight">normal</property>
+                                <property name="orphans">2</property>
+                                <property name="textTransform">none</property>
+                                <property name="whiteSpace">normal</property>
+                                <property name="widows">2</property>
+                                <property name="wordSpacing">normal</property>
+                                <property name="display">block</property>
+                                <property name="pageBreakAfter">auto</property>
+                                <property name="pageBreakBefore">auto</property>
+                                <property name="pageBreakInside">auto</property>
+                                <property name="showIfBlank">false</property>
+                                <property name="canShrink">false</property>
+                                <property name="overflow">hidden</property>
                                 <property name="resultSetColumn">sum_shift</property>
                             </data>
                         </cell>
@@ -2242,12 +2471,58 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="borderTopStyle">solid</property>
                             <property name="borderTopWidth">1px</property>
                             <data id="312">
+                                <property name="backgroundAttachment">scroll</property>
+                                <property name="backgroundPositionX">0%</property>
+                                <property name="backgroundPositionY">0%</property>
+                                <property name="backgroundRepeat">repeat</property>
+                                <property name="fontFamily">sans-serif</property>
+                                <property name="fontSize">10pt</property>
                                 <property name="fontWeight">bold</property>
+                                <property name="fontStyle">normal</property>
+                                <property name="fontVariant">normal</property>
+                                <property name="color">black</property>
+                                <property name="textLineThrough">none</property>
+                                <property name="textOverline">none</property>
+                                <property name="textUnderline">none</property>
+                                <property name="borderBottomColor">black</property>
+                                <property name="borderBottomStyle">none</property>
+                                <property name="borderBottomWidth">medium</property>
+                                <property name="borderLeftColor">black</property>
+                                <property name="borderLeftStyle">none</property>
+                                <property name="borderLeftWidth">medium</property>
+                                <property name="borderRightColor">black</property>
+                                <property name="borderRightStyle">none</property>
+                                <property name="borderRightWidth">medium</property>
+                                <property name="borderTopColor">black</property>
+                                <property name="borderTopStyle">none</property>
+                                <property name="borderTopWidth">medium</property>
+                                <property name="marginTop">0pt</property>
+                                <property name="marginLeft">0pt</property>
+                                <property name="marginBottom">0pt</property>
+                                <property name="marginRight">0pt</property>
+                                <property name="paddingTop">1pt</property>
+                                <property name="paddingLeft">1pt</property>
+                                <property name="paddingBottom">1pt</property>
+                                <property name="paddingRight">1pt</property>
                                 <structure name="numberFormat">
-                                    <property name="category">Custom</property>
-                                    <property name="pattern">###,###.###</property>
+                                    <property name="category">Currency</property>
+                                    <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                                 </structure>
                                 <property name="textAlign">right</property>
+                                <property name="letterSpacing">normal</property>
+                                <property name="lineHeight">normal</property>
+                                <property name="orphans">2</property>
+                                <property name="textTransform">none</property>
+                                <property name="whiteSpace">normal</property>
+                                <property name="widows">2</property>
+                                <property name="wordSpacing">normal</property>
+                                <property name="display">block</property>
+                                <property name="pageBreakAfter">auto</property>
+                                <property name="pageBreakBefore">auto</property>
+                                <property name="pageBreakInside">auto</property>
+                                <property name="showIfBlank">false</property>
+                                <property name="canShrink">false</property>
+                                <property name="overflow">hidden</property>
                                 <property name="resultSetColumn">sum_revenue</property>
                             </data>
                         </cell>
@@ -2356,8 +2631,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopWidth">1px</property>
                         <data id="162">
                             <structure name="numberFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">###,###.###</property>
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="textAlign">right</property>
                             <property name="resultSetColumn">quantity</property>
@@ -2411,8 +2686,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="paddingBottom">1pt</property>
                             <property name="paddingRight">1pt</property>
                             <structure name="numberFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">###,###.###</property>
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="textAlign">right</property>
                             <property name="letterSpacing">normal</property>
@@ -2432,6 +2707,75 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="resultSetColumn">quantity_real</property>
                         </data>
                     </cell>
+                    <cell id="441">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="borderLeftColor">#C0C0C0</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">1px</property>
+                        <property name="borderRightColor">#C0C0C0</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">1px</property>
+                        <property name="borderTopColor">#C0C0C0</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">1px</property>
+                        <data id="452">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">normal</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">black</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">false</property>
+                            <property name="overflow">hidden</property>
+                            <property name="resultSetColumn">shift_count</property>
+                        </data>
+                    </cell>
                     <cell id="26">
                         <property name="borderBottomColor">#C0C0C0</property>
                         <property name="borderBottomStyle">solid</property>
@@ -2446,7 +2790,58 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
                         <data id="164">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">normal</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">black</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
+                            </structure>
                             <property name="textAlign">right</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">false</property>
+                            <property name="overflow">hidden</property>
                             <property name="resultSetColumn">shift</property>
                         </data>
                     </cell>
@@ -2499,11 +2894,58 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
                         <data id="310">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">normal</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">black</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
                             <structure name="numberFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">###,###.###</property>
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="textAlign">right</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">false</property>
+                            <property name="overflow">hidden</property>
                             <property name="resultSetColumn">prices</property>
                         </data>
                     </cell>
@@ -2521,11 +2963,58 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
                         <data id="311">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">normal</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">black</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
                             <structure name="numberFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">###,###.###</property>
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="textAlign">right</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">false</property>
+                            <property name="overflow">hidden</property>
                             <property name="resultSetColumn">total_revenue</property>
                         </data>
                     </cell>
@@ -2630,10 +3119,58 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopWidth">1px</property>
                         <property name="textAlign">right</property>
                         <data id="238">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">black</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
                             <structure name="numberFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">###,###.###</property>
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                             </structure>
+                            <property name="textAlign">right</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">false</property>
+                            <property name="overflow">hidden</property>
                             <property name="resultSetColumn">sum_quantity_total</property>
                         </data>
                     </cell>
@@ -2687,8 +3224,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="paddingBottom">1pt</property>
                             <property name="paddingRight">1pt</property>
                             <structure name="numberFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">###,###.###</property>
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="textAlign">right</property>
                             <property name="letterSpacing">normal</property>
@@ -2708,6 +3245,77 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="resultSetColumn">sum_quantity_real_total</property>
                         </data>
                     </cell>
+                    <cell id="443">
+                        <property name="fontWeight">bold</property>
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="borderLeftColor">#C0C0C0</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">1px</property>
+                        <property name="borderRightColor">#C0C0C0</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">1px</property>
+                        <property name="borderTopColor">#C0C0C0</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">1px</property>
+                        <property name="textAlign">right</property>
+                        <data id="455">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">black</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">false</property>
+                            <property name="overflow">hidden</property>
+                            <property name="resultSetColumn">sum_shift_count_total</property>
+                        </data>
+                    </cell>
                     <cell id="36">
                         <property name="borderBottomColor">#C0C0C0</property>
                         <property name="borderBottomStyle">solid</property>
@@ -2722,8 +3330,58 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
                         <data id="239">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">sans-serif</property>
+                            <property name="fontSize">10pt</property>
                             <property name="fontWeight">bold</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">black</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
+                            </structure>
                             <property name="textAlign">right</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">false</property>
+                            <property name="overflow">hidden</property>
                             <property name="resultSetColumn">sum_shift_total</property>
                         </data>
                     </cell>
@@ -2817,8 +3475,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="paddingBottom">1pt</property>
                             <property name="paddingRight">1pt</property>
                             <structure name="numberFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">###,###.###</property>
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="textAlign">right</property>
                             <property name="letterSpacing">normal</property>
@@ -2953,6 +3611,22 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopWidth">1px</property>
                         <property name="textAlign">right</property>
                     </cell>
+                    <cell id="444">
+                        <property name="fontWeight">bold</property>
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="borderLeftColor">#C0C0C0</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">1px</property>
+                        <property name="borderRightColor">#C0C0C0</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">1px</property>
+                        <property name="borderTopColor">#C0C0C0</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">1px</property>
+                        <property name="textAlign">right</property>
+                    </cell>
                     <cell id="320">
                         <property name="borderBottomColor">#C0C0C0</property>
                         <property name="borderBottomStyle">solid</property>
@@ -3057,8 +3731,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="paddingBottom">1pt</property>
                             <property name="paddingRight">1pt</property>
                             <structure name="numberFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">###,###.###</property>
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="textAlign">right</property>
                             <property name="letterSpacing">normal</property>
@@ -3193,6 +3867,22 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopWidth">1px</property>
                         <property name="textAlign">right</property>
                     </cell>
+                    <cell id="445">
+                        <property name="fontWeight">bold</property>
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="borderLeftColor">#C0C0C0</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">1px</property>
+                        <property name="borderRightColor">#C0C0C0</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">1px</property>
+                        <property name="borderTopColor">#C0C0C0</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">1px</property>
+                        <property name="textAlign">right</property>
+                    </cell>
                     <cell id="333">
                         <property name="borderBottomColor">#C0C0C0</property>
                         <property name="borderBottomStyle">solid</property>
@@ -3297,8 +3987,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="paddingBottom">1pt</property>
                             <property name="paddingRight">1pt</property>
                             <structure name="numberFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">###,###.###</property>
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="textAlign">right</property>
                             <property name="letterSpacing">normal</property>
@@ -3335,7 +4025,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 </row>
                 <row id="345">
                     <cell id="346">
-                        <property name="colSpan">12</property>
+                        <property name="colSpan">13</property>
                         <property name="rowSpan">1</property>
                         <property name="borderBottomColor">#C0C0C0</property>
                         <property name="borderBottomStyle">solid</property>
@@ -3405,7 +4095,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 </row>
                 <row id="384">
                     <cell id="385">
-                        <property name="colSpan">12</property>
+                        <property name="colSpan">13</property>
                         <property name="rowSpan">1</property>
                         <property name="borderBottomColor">#C0C0C0</property>
                         <property name="borderBottomStyle">solid</property>
@@ -3561,6 +4251,22 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopWidth">1px</property>
                         <property name="textAlign">right</property>
                     </cell>
+                    <cell id="448">
+                        <property name="fontWeight">bold</property>
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="borderLeftColor">#C0C0C0</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">1px</property>
+                        <property name="borderRightColor">#C0C0C0</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">1px</property>
+                        <property name="borderTopColor">#C0C0C0</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">1px</property>
+                        <property name="textAlign">right</property>
+                    </cell>
                     <cell id="365">
                         <property name="borderBottomColor">#C0C0C0</property>
                         <property name="borderBottomStyle">solid</property>
@@ -3620,6 +4326,20 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         </data>
                     </cell>
                     <cell id="420">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="borderLeftColor">#C0C0C0</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">1px</property>
+                        <property name="borderRightColor">#C0C0C0</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">1px</property>
+                        <property name="borderTopColor">#C0C0C0</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">1px</property>
+                    </cell>
+                    <cell id="449">
                         <property name="borderBottomColor">#C0C0C0</property>
                         <property name="borderBottomStyle">solid</property>
                         <property name="borderBottomWidth">1px</property>

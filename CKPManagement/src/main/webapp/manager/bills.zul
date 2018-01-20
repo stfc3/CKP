@@ -179,7 +179,7 @@
 
                             <a class="btn-cursor"
                                iconSclass="z-icon-newspaper-o" forward="onClick=onView"
-                               tooltiptext="${c:l('view')}" />
+                               visible="false" tooltiptext="${c:l('view')}" />
                         </cell>
                     </row>
                 </template>

@@ -13,7 +13,7 @@
         <style src="/css/theme.css" />
         <groupbox>
             <caption label="${c:l('approve.title')}" />
-            <grid id="gridApprove" mold="paging" pageSize="10">
+            <grid id="gridApprove" mold="paging" pageSize="10" pagingPosition="both">
 
                 <auxhead sclass="category-center">
 

@@ -35,6 +35,7 @@ import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Grid;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Row;
@@ -215,14 +216,14 @@ public class UserController extends GenericForwardComposer {
      */
     private User getDataInRow(List<Component> lstCell) {
         User user = new User();
-        Textbox txtUserName = (Textbox) lstCell.get(1).getFirstChild();
+        Label lblUserName = (Label) lstCell.get(1).getFirstChild();
         Textbox txtFullName = (Textbox) lstCell.get(2).getFirstChild();
         Textbox txtEmail = (Textbox) lstCell.get(3).getFirstChild();
         Textbox txtPhone = (Textbox) lstCell.get(4).getFirstChild();
         Textbox txtAddress = (Textbox) lstCell.get(5).getFirstChild();
         Textbox txtCard = (Textbox) lstCell.get(6).getFirstChild();
 
-        user.setUserName(txtUserName.getValue());
+        user.setUserName(lblUserName.getValue());
         user.setFullName(txtFullName.getValue());
         user.setEmail(txtEmail.getValue());
         user.setPhone(txtPhone.getValue());
