@@ -2,20 +2,20 @@
 
 <zk xmlns:n="native">
     <window id="addStaff"
-                apply="com.dvd.ckp.controller.AddStaffController"
-                position="center,center" closable="true" border="normal" width="70%"
-                title="Thêm công nhân" height="70%" maximizable="false"
-                onCancel="addStaff.detach();" contentStyle="overflow:auto">
+            apply="com.dvd.ckp.controller.AddStaffController"
+            position="center,center" closable="true" border="normal" width="70%"
+            title="Thêm công nhân" height="100%" maximizable="false"
+            onCancel="addStaff.detach();" contentStyle="overflow:auto">
         <style src="/css/style.css" />
         <style src="/css/theme.css" />
         <groupbox>
             <vlayout>
                 <label>${c:l('staff.quantity.all')}</label>
                 <longbox id="txtBillID" value="${arg.billDetailID}"
-                                         visible="false">
+                         visible="false">
                 </longbox>
                 <longbox id="txtPumpType"
-                                         value="${arg.billDetai.pumpTypeId}" visible="false">
+                         value="${arg.billDetai.pumpTypeId}" visible="false">
                 </longbox>
                 <hlayout>
                     <!-- 					<hbox hflex="2"> -->
@@ -53,11 +53,11 @@
                         <auxheader colspan="7">
                             <a iconSclass="z-icon-filter" />
                             <combobox hflex="1" id="cbFilterName"
-                                                                  placeholder="${c:l('staff.filter')}" autodrop="true"
-                                                                  buttonVisible="false">
+                                      placeholder="${c:l('staff.filter')}" autodrop="true"
+                                      buttonVisible="false">
                                 <template name="model">
                                     <comboitem value="${each.staffId}"
-                                                                                   label="${each.staffName}" />
+                                               label="${each.staffName}" />
                                 </template>
                             </combobox>
                         </auxheader>
@@ -77,39 +77,39 @@
 
                     </columns>
                     <template name="model">
-                        <row value="${each}">
+                        <row value="${each}" forward="onClick=onAddRow">
 
                             <cell style="text-align: center;">
                                 <label value="${forEachStatus.index+1}" />
                             </cell>
                             <cell>
                                 <textbox value="${each.staffCode}"
-                                                                         tooltiptext="${each.staffCode}" hflex="1" inplace="true"
-                                                                         readonly="true" />
+                                         tooltiptext="${each.staffCode}" hflex="1" inplace="true"
+                                         readonly="true" />
                             </cell>
                             <cell>
                                 <textbox value="${each.staffName}"
-                                                                         tooltiptext="${each.staffName}" hflex="1" inplace="true"
-                                                                         readonly="true" />
+                                         tooltiptext="${each.staffName}" hflex="1" inplace="true"
+                                         readonly="true" />
                             </cell>
                             <cell>
                                 <textbox value="${each.phone}"
-                                                                         style="text-align: right;" tooltiptext="${each.phone}"
-                                                                         hflex="1" inplace="true" readonly="true" />
+                                         style="text-align: right;" tooltiptext="${each.phone}"
+                                         hflex="1" inplace="true" readonly="true" />
                             </cell>
                             <cell>
                                 <textbox style="text-align: right;"
-                                                                         value="${each.email}" tooltiptext="${each.email}" hflex="1"
-                                                                         inplace="true" readonly="true" />
+                                         value="${each.email}" tooltiptext="${each.email}" hflex="1"
+                                         inplace="true" readonly="true" />
                             </cell>
                             <cell>
                                 <textbox style="text-align: right;"
-                                                                         value="${each.address}" tooltiptext="${each.address}" hflex="1"
-                                                                         inplace="true" readonly="true" />
+                                         value="${each.address}" tooltiptext="${each.address}" hflex="1"
+                                         inplace="true" readonly="true" />
                             </cell>
                             <cell style="text-align: center;">
                                 <a class="btn-cursor"
-                                                                   forward="onClick=onAdd" iconSclass="z-icon-plus-circle" />
+                                   forward="onClick=onAdd" iconSclass="z-icon-plus-circle" />
                             </cell>
                         </row>
                     </template>
@@ -124,11 +124,11 @@
                         <auxheader colspan="12">
                             <a iconSclass="z-icon-filter" />
                             <combobox hflex="1"
-                                                                  id="cbFilterNameSelected" placeholder="${c:l('staff.filter')}"
-                                                                  autodrop="true" buttonVisible="false">
+                                      id="cbFilterNameSelected" placeholder="${c:l('staff.filter')}"
+                                      autodrop="true" buttonVisible="false">
                                 <template name="model">
                                     <comboitem value="${each.staffId}"
-                                                                                   label="${each.staffName}" />
+                                               label="${each.staffName}" />
                                 </template>
                             </combobox>
                         </auxheader>
@@ -152,32 +152,32 @@
                             </cell>
                             <cell>
                                 <textbox value="${each.staffCode}"
-                                                                         tooltiptext="${each.staffCode}" hflex="1" inplace="true"
-                                                                         readonly="true" />
+                                         tooltiptext="${each.staffCode}" hflex="1" inplace="true"
+                                         readonly="true" />
                             </cell>
                             <cell>
                                 <textbox value="${each.staffName}"
-                                                                         tooltiptext="${each.staffName}" hflex="1" inplace="true"
-                                                                         readonly="true" />
+                                         tooltiptext="${each.staffName}" hflex="1" inplace="true"
+                                         readonly="true" />
                             </cell>
                             <cell>
                                 <textbox value="${each.phone}"
-                                                                         style="text-align: right;" tooltiptext="${each.phone}"
-                                                                         hflex="1" inplace="true" readonly="true" />
+                                         style="text-align: right;" tooltiptext="${each.phone}"
+                                         hflex="1" inplace="true" readonly="true" />
                             </cell>
                             <cell>
                                 <textbox style="text-align: right;"
-                                                                         value="${each.email}" tooltiptext="${each.email}" hflex="1"
-                                                                         inplace="true" readonly="true" />
+                                         value="${each.email}" tooltiptext="${each.email}" hflex="1"
+                                         inplace="true" readonly="true" />
                             </cell>
                             <cell>
                                 <textbox style="text-align: right;"
-                                                                         value="${each.address}" tooltiptext="${each.address}" hflex="1"
-                                                                         inplace="true" readonly="true" />
+                                         value="${each.address}" tooltiptext="${each.address}" hflex="1"
+                                         inplace="true" readonly="true" />
                             </cell>
                             <cell style="text-align: center;">
                                 <a class="btn-cursor"
-                                                                   forward="onClick=onDelete" iconSclass="z-icon-trash-o" />
+                                   forward="onClick=onDelete" iconSclass="z-icon-trash-o" />
                             </cell>
                         </row>
                     </template>
@@ -189,11 +189,11 @@
                 <hbox hflex="3" />
                 <hbox hflex="2">
                     <button class="btn-cursor"
-                                                forward="onClick=onAction" iconSclass="z-icon-floppy-o"
-                                                label="${c:l('save')}" />
+                            forward="onClick=onAction" iconSclass="z-icon-floppy-o"
+                            label="${c:l('save')}" />
                     <button class="btn-cursor"
-                                                onClick="addStaff.detach();" iconSclass="z-icon-times"
-                                                label="${c:l('cancel')}" />
+                            onClick="addStaff.detach();" iconSclass="z-icon-times"
+                            label="${c:l('cancel')}" />
                 </hbox>
                 <hbox hflex="3" />
             </hlayout>

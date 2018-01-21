@@ -673,9 +673,23 @@ public class ApproveController extends GenericForwardComposer {
             txtBillCode = (Textbox) component;
 
             Label mesage = (Label) componentLast;
-            if (!ValidateUtils.validate(txtBillCode.getValue())) {
+            if (ValidateUtils.validate(txtBillCode.getValue())) {
                 txtBillCode.setHflex("1");
                 mesage.setValue(Labels.getLabel("validate.code.bills"));
+                mesage.setVisible(true);
+                mesage.setHflex("1");
+                txtBillCode.focus();
+                isFalse = true;
+            } else {
+                mesage.setVisible(false);
+                mesage.setHflex("0");
+                mesage.setValue("");
+
+            }
+
+            if (checkExits(txtBillCode.getValue(), lstBill)) {
+
+                mesage.setValue(Labels.getLabel("validate.code.duplicate"));
                 mesage.setVisible(true);
                 mesage.setHflex("1");
                 txtBillCode.focus();
@@ -690,5 +704,16 @@ public class ApproveController extends GenericForwardComposer {
         }
 
         return isFalse;
+    }
+
+    private boolean checkExits(String billCode, List<Bills> listData) {
+        if (listData != null && !listData.isEmpty()) {
+            for (Bills bills : listData) {
+                if (billCode.equals(bills.getBillCode())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

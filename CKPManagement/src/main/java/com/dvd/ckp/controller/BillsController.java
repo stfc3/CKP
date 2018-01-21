@@ -5,7 +5,6 @@
  */
 package com.dvd.ckp.controller;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -451,21 +450,30 @@ public class BillsController extends GenericForwardComposer<Component> {
 
         Combobox cbCustomer = null;
         Combobox cbxConstruction = null;
+        Textbox txtBillsCode;
         Datebox dtPrdID = null;
 
         boolean isFalse = false;
 
         // ma phieu bom
-//        component = lstCell.get(billsCode).getFirstChild();
-//        componentLast = lstCell.get(billsCode).getLastChild();
-//        if (component != null && component instanceof Textbox) {
-//            txtBillsCode = (Textbox) component;
-//            if (!ValidateUtils.validate(txtBillsCode.getValue())) {
-//                Label mesageBillCode = (Label) componentLast;
-//                mesageBillCode.setValue("Mã phiếu bơm không được để trống");
-//                isFalse = true;
-//            }
-//        }
+        component = lstCell.get(billsCode).getFirstChild();
+        componentLast = lstCell.get(billsCode).getLastChild();
+        if (component != null && component instanceof Textbox) {
+            txtBillsCode = (Textbox) component;
+            Label mesage = (Label) componentLast;
+            if (checkExits(txtBillsCode.getValue(), lstBills)) {
+
+                mesage.setValue(Labels.getLabel("validate.code.duplicate"));
+                mesage.setHflex("1");
+                txtBillsCode.focus();
+                isFalse = true;
+            } else {
+                mesage.setVisible(false);
+                mesage.setHflex("0");
+                mesage.setValue("");
+
+            }
+        }
         // Khach hang
         component = lstCell.get(customerID).getFirstChild();
         componentLast = lstCell.get(customerID).getLastChild();
@@ -542,6 +550,17 @@ public class BillsController extends GenericForwardComposer<Component> {
         }
 
         return isFalse;
+    }
+
+    private boolean checkExits(String billCode, List<Bills> listData) {
+        if (listData != null && !listData.isEmpty()) {
+            for (Bills bills : listData) {
+                if (billCode.equals(bills.getBillCode())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -978,7 +997,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         }
         return -1;
     }
-    
+
     public static void setDisableComponent(List<Component> lstCell, int numberAction) {
         if (lstCell != null && !lstCell.isEmpty()) {
             for (Component c : lstCell) {

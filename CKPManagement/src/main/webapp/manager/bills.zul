@@ -82,7 +82,7 @@
                             <textbox value="${each.billCode}"
                                      tooltiptext="${each.billCode}" hflex="1" inplace="true"
                                      readonly="true" />
-                            <!--<label hflex="0" style="color:red"/>-->
+                            <label hflex="0" style="color:red"/>
                         </cell>
                         <!--khach hang -->
                         <cell>

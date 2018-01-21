@@ -182,6 +182,20 @@ public class AddStaffController extends GenericForwardComposer {
         onReloadSelectGrid();
     }
 
+    public void onAddRow(ForwardEvent event) {
+        Row rowSelected = (Row) event.getOrigin().getTarget();
+        List<Component> lstCell = rowSelected.getChildren();
+        Staff c = rowSelected.getValue();
+        getDataInRow(lstCell, c);
+        lstStaffSelected.add(c);
+        if (lstStaffSelected != null && !lstStaffSelected.isEmpty()) {
+            gridSelectStaff.setVisible(true);
+            titleStaffSelected.setVisible(true);
+        }
+        lstStaff.remove(getIndexStaff(c.getStaffId()));
+        onReloadSelectGrid();
+    }
+
     private void getDataInRow(List<Component> lstCell, Staff staff) {
 
         Textbox txtStaffCode = (Textbox) lstCell.get(1).getFirstChild();
@@ -283,10 +297,10 @@ public class AddStaffController extends GenericForwardComposer {
                     logger.info("Bill detail id: " + billID);
                     billsServices.getQuantity(billID).get(0).getV_quantity();
                     onReloadSelectGrid();
-                    
+
                     //reload data
                     Events.sendEvent("onClick", (Button) ((Window) addStaff.getParent()).getFellow("reloadData"), null);
-                    
+
                 }
                 addStaff.detach();
             }
