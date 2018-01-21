@@ -5,7 +5,7 @@
     <window id="mainContract"
             apply="com.dvd.ckp.controller.CustomerController">
         <groupbox>
-            <caption label="${c:l('customer.category')}" />
+            <caption label="${c:l('customer.category')}"/>
             <grid id="lstCustomer" mold="paging" pageSize="10" pagingPosition="both">
                 <auxhead sclass="category-center">
                     <auxheader colspan="9">
@@ -24,7 +24,7 @@
                 <auxhead sclass="category-center">
                     <auxheader colspan="9">
                         <a iconSclass="z-icon-filter" />
-                        <combobox hflex="1" id="cbxCustomerFilter"
+                        <combobox hflex="1" id="cbxCustomerFilter" focus="true"
                                   autodrop="true" placeholder="Nhập tên khách hàng để tìm kiếm"
                                   buttonVisible="false">
                             <template name="model">

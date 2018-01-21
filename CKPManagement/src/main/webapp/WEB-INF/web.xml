@@ -29,6 +29,7 @@
             classpath:applicationContext.xml
             classpath:applicationContext_hib.xml
             classpath:springOrmContext.xml
+            classpath:dataMemory.xml
             <!--classpath:log4j.properties-->
         </param-value>
     </context-param>

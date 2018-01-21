@@ -31,32 +31,61 @@ public class StyleUtils {
      * @param numberAction
      */
     public static void setEnableComponent(List<Component> lstCell, int numberAction) {
+        int firstComponent = 0;
         if (lstCell != null && !lstCell.isEmpty()) {
             for (Component c : lstCell) {
                 if (c instanceof Cell) {
                     Component child = c.getFirstChild();
                     if (child instanceof Combobox) {
+                        firstComponent += 1;
                         ((Combobox) child).setButtonVisible(true);
                         ((Combobox) child).setInplace(false);
                         ((Combobox) child).setReadonly(false);
+                        if (firstComponent == 1) {
+                            ((Combobox) child).setFocus(true);
+                        }
                     } else if (child instanceof Datebox) {
+                        firstComponent += 1;
                         ((Datebox) child).setButtonVisible(true);
                         ((Datebox) child).setInplace(false);
                         ((Datebox) child).setReadonly(false);
+                        if (firstComponent == 1) {
+                            ((Datebox) child).setFocus(true);
+                        }
                     } else if (child instanceof Doublebox) {
+                        firstComponent += 1;
                         ((Doublebox) child).setReadonly(false);
                         ((Doublebox) child).setInplace(false);
+                        if (firstComponent == 1) {
+                            ((Doublebox) child).setFocus(true);
+                        }
                     } else if (child instanceof Intbox) {
+                        firstComponent += 1;
                         ((Intbox) child).setReadonly(false);
                         ((Intbox) child).setInplace(false);
+                        if (firstComponent == 1) {
+                            ((Intbox) child).setFocus(true);
+                        }
                     } else if (child instanceof Longbox) {
+                        firstComponent += 1;
                         ((Longbox) child).setReadonly(false);
                         ((Longbox) child).setInplace(false);
+                        if (firstComponent == 1) {
+                            ((Longbox) child).setFocus(true);
+                        }
                     } else if (child instanceof Textbox) {
+                        firstComponent += 1;
                         ((Textbox) child).setReadonly(false);
                         ((Textbox) child).setInplace(false);
+                        if (firstComponent == 1) {
+                            ((Textbox) child).setFocus(true);
+                        }
                     } else if (child instanceof Checkbox) {
+                        firstComponent += 1;
                         ((Checkbox) child).setDisabled(false);
+                        if (firstComponent == 1) {
+                            ((Checkbox) child).setFocus(true);
+                        }
                     } else if (child instanceof A && c.getChildren().size() == 1) {
                         ((A) child).setDisabled(false);
                     } else if (child instanceof A && c.getChildren().size() == 2) {

@@ -105,10 +105,11 @@ public class CustomerController extends GenericForwardComposer {
      */
     public void onCancel(ForwardEvent event) {
 
-        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-        List<Component> lstCell = rowSelected.getChildren();
-        StyleUtils.setDisableComponent(lstCell, 4);
+//        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+//        List<Component> lstCell = rowSelected.getChildren();
+//        StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
+        cbxCustomerFilter.setFocus(true);
 
     }
 
@@ -126,8 +127,9 @@ public class CustomerController extends GenericForwardComposer {
         customer.setStatus(Constants.STATUS_ACTIVE);
         customer.setCreateDate(new Date());
         customerService.insertOrUpdateCustomer(customer);
-        StyleUtils.setDisableComponent(lstCell, 4);
+//        StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
+        cbxCustomerFilter.setFocus(true);
     }
 
     public void onDelete(ForwardEvent event) {
@@ -142,8 +144,10 @@ public class CustomerController extends GenericForwardComposer {
                     customerService.insertOrUpdateCustomer(customer);
                     reloadGrid();
                 }
+                cbxCustomerFilter.setFocus(true);
             }
         });
+        
     }
 
     /**
