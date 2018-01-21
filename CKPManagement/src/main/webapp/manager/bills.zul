@@ -65,7 +65,7 @@
                     <column hflex="4">
                         ${c:l('bills.construction.name')}
                     </column>
-                    <column hflex="2">${c:l('bills.prd.id')}</column>
+                    <column hflex="4">${c:l('bills.prd.id')}</column>
                     <column hflex="4">${c:l('bills.file')}</column>
                     <column hflex="3">
                         ${c:l('bills.cost')} (VNĐ)
@@ -82,6 +82,7 @@
                             <textbox value="${each.billCode}"
                                      tooltiptext="${each.billCode}" hflex="1" inplace="true"
                                      readonly="true" />
+                            <!--<label hflex="0" style="color:red"/>-->
                         </cell>
                         <!--khach hang -->
                         <cell>
@@ -92,6 +93,7 @@
                                         value="${each.customerId}" label="${each.customerName}" />
                                 </template>
                             </combobox>
+                            <label hflex="0" style="color:red"/>
                         </cell>
                         <!--cong trinh -->
                         <cell>
@@ -103,12 +105,14 @@
                                         label="${each.constructionName}" />
                                 </template>
                             </combobox>
+                            <label hflex="0" style="color:red"/>
                         </cell>
                         <!--ngay bom -->
                         <cell>
                             <datebox value="${each.dateInput}" format="dd/MM/yyyy" 
                                      buttonVisible="false" style="text-align: right;" hflex="1"
                                      inplace="true" readonly="true" />
+                            <label hflex="0" style="color:red"/>
                         </cell>
 
                         <!--file dinh kem -->

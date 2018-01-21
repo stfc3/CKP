@@ -2,26 +2,26 @@
 
 <zk xmlns:n="native">
     <window id="windowAddDetail"
-                apply="com.dvd.ckp.controller.BillsDetailController"
-                position="center,center" closable="true"
-                action="show: slideDown;hide: slideUp" border="normal" width="90%"
-                height="90%" maximizable="false" title="${c:l('bills.view.detail')}"
-                onCancel="windowAddDetail.detach();" contentStyle="overflow:auto">
+            apply="com.dvd.ckp.controller.BillsDetailController"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp" border="normal" width="90%"
+            height="90%" maximizable="false" title="${c:l('bills.view.detail')}"
+            onCancel="windowAddDetail.detach();" contentStyle="overflow:auto">
         <style src="/css/style.css" />
 
         <hlayout>
             <longbox id="txtBillID" visible="false"
-                                 value="${arg.bill.billID}">
+                     value="${arg.bill.billID}">
             </longbox>
 
             <longbox id="txtConstruction" visible="false"
-                                 value="${arg.bill.constructionID}">
+                     value="${arg.bill.constructionID}">
             </longbox>
             <hbox hflex="1" />
             <!-- 			<hbox hflex="1" /> -->
             <hbox hflex="2">
                 <image id="image" src="images/logo-slogan.png"
-                                       width="100%" height="100%" />
+                       width="100%" height="100%" />
             </hbox>
             <hbox hflex="2">
                 <vbox>
@@ -132,8 +132,8 @@
                     <hbox hflex="1" class="action-staff-approve">
                         <div>
                             <a class="btn-cursor btn-add-pumps-detail"
-                                                           forward="onClick=onAdd" iconSclass="z-icon-plus-circle"
-                                                           label="${c:l('add')}" />
+                               forward="onClick=onAdd" iconSclass="z-icon-plus-circle"
+                               label="${c:l('add')}" />
 
                             <!-- 					<label style="lb-formula" id="title"> -->
                             <!-- 						Tổng tiền thanh toán: -->
@@ -142,7 +142,7 @@
                             <a class="btn-cursor btn-approve"
                                id="formula" />
                             <a class="btn-cursor btn-staff" id="title"
-                                                           label="${c:l('bills.detail.formula')}" />
+                               label="${c:l('bills.detail.formula')}" />
 							
                         </div>
                     </hbox>
@@ -189,43 +189,47 @@
                     <!--loai may bom -->
                     <cell>
                         <combobox hflex="1" buttonVisible="false" autodrop="true"
-                                                          inplace="true" readonly="true">
+                                  inplace="true" readonly="true">
                             <template name="model">
                                 <comboitem value="${each.paramValue}"
-                                                                           label="${each.paramName}" />
+                                           label="${each.paramName}" />
                             </template>
                         </combobox>
+                        <label hflex="0" style="color:red"/>
                     </cell>
                     <!--chon may bom -->
                     <cell>
                         <combobox hflex="1" buttonVisible="false" autodrop="true"
-                                                          inplace="true" readonly="true">
+                                  inplace="true" readonly="true">
                             <template name="model">
                                 <comboitem value="${each.pumpsID}"
-                                                                           label="${each.pumpsName}" />
+                                           label="${each.pumpsName}" />
                             </template>
                         </combobox>
+                        <label hflex="0" style="color:red"/>
                     </cell>
 
                     <!--chon loai vi tri -->
                     <cell>
                         <combobox hflex="1" buttonVisible="false" autodrop="true"
-                                                          inplace="true" readonly="true">
+                                  inplace="true" readonly="true">
                             <template name="model">
                                 <comboitem value="${each.paramValue}"
-                                                                           label="${each.paramName}" />
+                                           label="${each.paramName}" />
                             </template>
                         </combobox>
+                        <label hflex="0" style="color:red"/>
                     </cell>
                     <!--chon vi tri -->
                     <cell>
                         <combobox hflex="1" buttonVisible="false" autodrop="true"
-                                                          inplace="true" readonly="true">
+                                  inplace="true" readonly="true">
                             <template name="model">
                                 <comboitem value="${each.locationID}"
-                                                                           label="${each.locationName}" />
+                                           label="${each.locationName}" />
                             </template>
                         </combobox>
+                         <label hflex="0" style="color:red"/>
                     </cell>
                     <!--tu dong chuyen doi -->
                     <cell style="text-align: center;">
@@ -235,46 +239,47 @@
                     <!--khoi luong bom -->
                     <cell>
                         <doublebox value="${each.quantity}"
-                                                           style="text-align: right;" tooltiptext="${each.quantity}"
-                                                           hflex="1" inplace="true" readonly="true" />
+                                   style="text-align: right;" tooltiptext="${each.quantity}"
+                                   hflex="1" inplace="true" readonly="true" />
+                        <label hflex="0" style="color:red"/>
                     </cell>
                     <!--Ca cho -->
                     <cell>
                         <intbox value="${each.shift}"
-                                                        style="text-align: right;" tooltiptext="${each.shift}" hflex="1"
-                                                        inplace="true" readonly="true" />
+                                style="text-align: right;" tooltiptext="${each.shift}" hflex="1"
+                                inplace="true" readonly="true" />
                     </cell>
 
                     <!--Ca chuyen chan -->
                     <cell>
                         <intbox value="${each.numSwitch}"
-                                                        style="text-align: right;" tooltiptext="${each.numSwitch}"
-                                                        hflex="1" inplace="true" readonly="true" />
+                                style="text-align: right;" tooltiptext="${each.numSwitch}"
+                                hflex="1" inplace="true" readonly="true" />
                     </cell>
 
                     <!--Tong tien -->
                     <cell style="text-align: right;">
                         <label value="${each.total}"
-                                                       style="text-align: right;" tooltiptext="${each.totalView}"
-                                                       hflex="1" />
+                               style="text-align: right;" tooltiptext="${each.totalView}"
+                               hflex="1" />
                     </cell>
 
 
                     <cell style="text-align:center">
                         <a class="btn-cursor" iconSclass="z-icon-pencil"
-                                                   forward="onClick=onEdit" tooltiptext="${c:l('edit')}" />
+                           forward="onClick=onEdit" tooltiptext="${c:l('edit')}" />
 
                         <a class="btn-cursor"
-                                                   iconSclass="z-icon-trash-o" forward="onClick=onDelete"
-                                                   tooltiptext="${c:l('delete')}" />
+                           iconSclass="z-icon-trash-o" forward="onClick=onDelete"
+                           tooltiptext="${c:l('delete')}" />
 
                         <a class="btn-cursor" iconSclass="z-icon-check"
-                                                   forward="onClick=onSave" visible="false"
-                                                   tooltiptext="${c:l('save')}" />
+                           forward="onClick=onSave" visible="false"
+                           tooltiptext="${c:l('save')}" />
 
                         <a class="btn-cursor" iconSclass="z-icon-ban"
-                                                   forward="onClick=onDisable" visible="false"
-                                                   tooltiptext="${c:l('cancel')}" />
+                           forward="onClick=onDisable" visible="false"
+                           tooltiptext="${c:l('cancel')}" />
 
                     </cell>
                 </row>

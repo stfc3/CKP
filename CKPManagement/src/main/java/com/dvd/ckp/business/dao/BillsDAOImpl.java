@@ -485,4 +485,20 @@ public class BillsDAOImpl implements BillDAO {
         return null;
     }
 
+    @Override
+    public void update(String billCode, Long billID) {
+        try {
+            StringBuilder builder = new StringBuilder("update bills set ");
+            builder.append(" bill_code = :billCode");
+            builder.append(" where bill_id = :billID");
+            Query query = getCurrentSession().createSQLQuery(builder.toString());
+            query.setParameter("billCode", billCode);
+            query.setParameter("billID", billID);
+            query.executeUpdate();
+            
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
 }

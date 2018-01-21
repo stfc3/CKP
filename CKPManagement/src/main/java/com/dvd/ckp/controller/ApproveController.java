@@ -45,6 +45,17 @@ import com.dvd.ckp.domain.StaffQuantity;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
+import com.dvd.ckp.utils.StyleUtils;
+import com.dvd.ckp.utils.ValidateUtils;
+import org.zkoss.zul.A;
+import org.zkoss.zul.Button;
+import org.zkoss.zul.Cell;
+import org.zkoss.zul.Checkbox;
+import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Label;
+import org.zkoss.zul.Longbox;
+import org.zkoss.zul.Textbox;
 
 /**
  *
@@ -155,39 +166,11 @@ public class ApproveController extends GenericForwardComposer {
         return listCode;
     }
 
-    private String getStaffList(Long bill, List<StaffQuantity> listStaff) {
-        String staffName = "";
-        int index = 0;
-        if (listStaff != null && !listStaff.isEmpty()) {
-            for (StaffQuantity item : listStaff) {
-                if (bill.equals(item.getBillId())) {
-                    if (index == 0) {
-                        staffName = item.getStaffName();
-                    } else {
-                        staffName += ", " + item.getStaffName();
-                    }
-                    index++;
-                }
-
-            }
-        }
-        return staffName;
-    }
-
     private void reload() {
         listStaff = staffServices.getAll();
         listData.clear();
         listData = billServices.getApproveBill();
-//        if (listData != null && !listData.isEmpty()) {
-//            for (BillViewDetail viewDetail : listData) {
-//
-//                viewDetail.setFormatDate(
-//                        DateTimeUtils.convertDateToString(viewDetail.getPrdID(),
-//                                Constants.FORMAT_DATE_DD_MM_YYY));
-//
-//            }
-//
-//        }
+
         List<BillViewDetail> vlstData = new ArrayList<>();
         if (listData != null && !listData.isEmpty()) {
             vlstData.addAll(listData);
@@ -476,8 +459,8 @@ public class ApproveController extends GenericForwardComposer {
                                 && pump.equals(c.getPumpID())) {
                             vlstData.add(c);
                         }
-                    } else if (StringUtils.isValidString(bill) && contruction != null && 
-                            date != null && pump != null) {
+                    } else if (StringUtils.isValidString(bill) && contruction != null
+                            && date != null && pump != null) {
                         String dateInput = DateTimeUtils.convertDateToString(date, Constants.FORMAT_DATE_DD_MM_YYY);
                         if (bill.equals(c.getBillCode()) && dateInput.equals(c.getPrdID())
                                 && contruction.equals(c.getContruction()) && pump.equals(c.getPumpID())) {
@@ -497,4 +480,215 @@ public class ApproveController extends GenericForwardComposer {
         onChange$cbBillCode();
     }
 
+    /**
+     * Edit row
+     *
+     * @param event
+     */
+    public void onEdit(ForwardEvent event) {
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        List<Component> lstCell = rowSelected.getChildren();
+        StyleUtils.setEnableComponent(lstCell, 5);
+    }
+
+    public void onCancel(ForwardEvent event) {
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        List<Component> lstCell = rowSelected.getChildren();
+        setDisableComponent(lstCell, 5);
+        reload(lstCell);
+    }
+
+    /**
+     * Save
+     *
+     * @param event
+     */
+    public void onSave(ForwardEvent event) {
+        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        List<Component> lstCell = rowSelected.getChildren();
+        if (!valiDate(lstCell)) {
+            BillViewDetail billViewDetail = rowSelected.getValue();
+            getDataInRow(lstCell, billViewDetail);
+            Bills bills = new Bills();
+            bills.setBillCode(billViewDetail.getBillCode());
+            bills.setBillID(billViewDetail.getBillID());
+            save(bills);
+            setDisableComponent(lstCell, 5);
+        }
+
+    }
+
+    private void save(Bills bills) {
+
+        bills.setCreateDate(new Date());
+        billServices.update(bills.getBillCode(), bills.getBillID());
+
+    }
+
+    /**
+     * Get object customer
+     *
+     * @param lstCell
+     * @return
+     */
+    private void getDataInRow(List<Component> lstCell, BillViewDetail bills) {
+
+        Component component;
+
+        Textbox txtBillsCode = null;
+
+        // ma phieu bom
+        component = lstCell.get(1).getFirstChild();
+        if (component != null && component instanceof Textbox) {
+            txtBillsCode = (Textbox) component;
+            bills.setBillCode(txtBillsCode.getValue());
+        }
+
+    }
+
+    public static void setDisableComponent(List<Component> lstCell, int numberAction) {
+        if (lstCell != null && !lstCell.isEmpty()) {
+            for (Component c : lstCell) {
+                if (c instanceof Cell) {
+                    Component child = c.getFirstChild();
+                    if (child instanceof Combobox) {
+                        ((Combobox) child).setButtonVisible(false);
+                        ((Combobox) child).setInplace(true);
+                        ((Combobox) child).setReadonly(true);
+                    } else if (child instanceof Datebox) {
+                        ((Datebox) child).setButtonVisible(false);
+                        ((Datebox) child).setInplace(true);
+                        ((Datebox) child).setReadonly(true);
+                    } else if (child instanceof Doublebox) {
+                        ((Doublebox) child).setReadonly(true);
+                        ((Doublebox) child).setInplace(true);
+                    } else if (child instanceof Intbox) {
+                        ((Intbox) child).setReadonly(true);
+                        ((Intbox) child).setInplace(true);
+                    } else if (child instanceof Longbox) {
+                        ((Longbox) child).setReadonly(true);
+                        ((Longbox) child).setInplace(true);
+                    } else if (child instanceof Textbox) {
+                        ((Textbox) child).setReadonly(true);
+                        ((Textbox) child).setInplace(true);
+                    } else if (child instanceof Checkbox) {
+                        ((Checkbox) child).setDisabled(true);
+                    } else if (child instanceof A && c.getChildren().size() == 1) {
+                        ((A) child).setDisabled(true);
+                    } else if (child instanceof A && c.getChildren().size() == 2) {
+                        Button btn = (Button) c.getChildren().get(1);
+//                        btn.setDisabled(true);
+                        btn.setVisible(false);
+                    } else if (child instanceof A && c.getChildren().size() >= 4) {
+                        A edit;
+                        A delete;
+                        A save;
+                        A cancel;
+                        A detail;
+                        A view;
+                        A reset;
+                        // edit, delete, save, cancel
+                        switch (numberAction) {
+                            case 4:
+                                edit = (A) child;
+                                delete = (A) c.getChildren().get(1);
+                                save = (A) c.getChildren().get(2);
+                                cancel = (A) c.getChildren().get(3);
+
+                                edit.setVisible(true);
+                                delete.setVisible(true);
+
+                                save.setVisible(false);
+                                cancel.setVisible(false);
+                                break;
+                            case 5:
+                                edit = (A) child;
+                                delete = (A) c.getChildren().get(1);
+                                save = (A) c.getChildren().get(2);
+                                cancel = (A) c.getChildren().get(3);
+                                reset = (A) c.getChildren().get(4);
+
+                                edit.setVisible(true);
+                                delete.setVisible(true);
+                                reset.setVisible(true);
+
+                                save.setVisible(false);
+                                cancel.setVisible(false);
+                                break;
+                            case 6:
+                                edit = (A) child;
+                                delete = (A) c.getChildren().get(1);
+                                save = (A) c.getChildren().get(2);
+                                cancel = (A) c.getChildren().get(3);
+                                detail = (A) c.getChildren().get(4);
+                                view = (A) c.getChildren().get(5);
+
+                                edit.setVisible(true);
+                                delete.setVisible(true);
+                                view.setVisible(true);
+
+                                save.setVisible(false);
+                                cancel.setVisible(false);
+                                detail.setVisible(false);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void reload(List<Component> lstCell) {
+        Component component;
+        Component componentLast;
+
+        // Khach hang
+        component = lstCell.get(1).getFirstChild();
+        componentLast = lstCell.get(1).getLastChild();
+        if (component != null && component instanceof Textbox) {
+
+            Label mesage = (Label) componentLast;
+
+            mesage.setVisible(false);
+            mesage.setHflex("0");
+            mesage.setValue("");
+
+        }
+    }
+
+    private boolean valiDate(List<Component> lstCell) {
+
+        Component component;
+        Component componentLast;
+
+        Textbox txtBillCode = null;
+        boolean isFalse = false;
+
+        // Khach hang
+        component = lstCell.get(1).getFirstChild();
+        componentLast = lstCell.get(1).getLastChild();
+        if (component != null && component instanceof Textbox) {
+            txtBillCode = (Textbox) component;
+
+            Label mesage = (Label) componentLast;
+            if (!ValidateUtils.validate(txtBillCode.getValue())) {
+                txtBillCode.setHflex("1");
+                mesage.setValue(Labels.getLabel("validate.code.bills"));
+                mesage.setVisible(true);
+                mesage.setHflex("1");
+                txtBillCode.focus();
+                isFalse = true;
+            } else {
+                mesage.setVisible(false);
+                mesage.setHflex("0");
+                mesage.setValue("");
+
+            }
+
+        }
+
+        return isFalse;
+    }
 }

@@ -86,7 +86,9 @@
                             <label value="${forEachStatus.index+1}" />
                         </cell>
                         <cell>
-                            <label value="${each.billCode}" />
+                            <textbox value="${each.billCode}" inplace="true" hflex="1" 
+                                     readonly="true" tooltiptext="${each.billCode}"/>
+                            <label hflex="0" style="color:red"/>
                         </cell>
                         <cell>
                             <label value="${each.contructionName}" />
@@ -111,15 +113,26 @@
                             <label value="${each.staff}" />
                         </cell>
                         <cell style="text-align:center">
-                            <!-- 							<a class="btn-cursor" -->
-                            <!-- 								iconSclass="z-icon-newspaper-o" forward="onClick=onEdit" -->
-                            <!-- 								tooltiptext="${c:l('edit')}" /> -->
+                            <a class="btn-cursor" 
+                               iconSclass="z-icon-pencil" forward="onClick=onEdit" 
+                               tooltiptext="${c:l('edit')}" />
                             <a class="btn-cursor"
                                iconSclass="z-icon-check-circle-o" forward="onClick=onApprove"
-                               tooltiptext="${c:l('delete')}" />
+                               tooltiptext="${c:l('staff.quantity.approve')}" />
+                            <a class="btn-cursor"
+                               iconSclass="z-icon-check" forward="onClick=onSave"
+                               visible="false" tooltiptext="${c:l('save')}" />
+                            
+                            
+                            <a class="btn-cursor"
+                               iconSclass="z-icon-ban" forward="onClick=onCancel"
+                               visible="false" tooltiptext="${c:l('cancel')}" /> 
                             <a class="btn-cursor"
                                iconSclass="z-icon-user-plus" forward="onClick=onAddStaff"
-                               visible="true" tooltiptext="${c:l('save')}" />
+                               visible="true" tooltiptext="${c:l('staff.quantity.add')}" />
+
+                            
+                            
 
 
                         </cell>

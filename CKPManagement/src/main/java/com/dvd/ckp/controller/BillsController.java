@@ -5,7 +5,7 @@
  */
 package com.dvd.ckp.controller;
 
-import com.dvd.ckp.bean.UserToken;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -66,7 +66,13 @@ import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
+import com.dvd.ckp.utils.ValidateUtils;
 import java.util.stream.Collectors;
+import org.zkoss.zul.Checkbox;
+import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Label;
+import org.zkoss.zul.Longbox;
 
 /**
  *
@@ -266,7 +272,7 @@ public class BillsController extends GenericForwardComposer<Component> {
     public void onCancel(ForwardEvent event) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        StyleUtils.setDisableComponent(lstCell, 6);
+        setDisableComponent(lstCell, 6);
         reloadGrid();
 
     }
@@ -279,13 +285,15 @@ public class BillsController extends GenericForwardComposer<Component> {
     public void onSave(ForwardEvent event) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        Bills bill = rowSelected.getValue();
-        getDataInRow(lstCell, bill);
+        if (!valiDate(lstCell)) {
+            Bills bill = rowSelected.getValue();
+            getDataInRow(lstCell, bill);
 
-        bill.setStatus(1);
-        save(bill);
-        StyleUtils.setDisableComponent(lstCell, 6);
-        reloadGrid();
+            bill.setStatus(1);
+            save(bill);
+            setDisableComponent(lstCell, 6);
+            reloadGrid();
+        }
 
     }
 
@@ -431,6 +439,109 @@ public class BillsController extends GenericForwardComposer<Component> {
             bills.setStatus(Integer.valueOf(cbxStatus.getSelectedItem().getValue()));
         }
 
+    }
+
+    /**
+     * viettx bo sung 21/01/2018 validate compoment
+     */
+    private boolean valiDate(List<Component> lstCell) {
+
+        Component component;
+        Component componentLast;
+
+        Combobox cbCustomer = null;
+        Combobox cbxConstruction = null;
+        Datebox dtPrdID = null;
+
+        boolean isFalse = false;
+
+        // ma phieu bom
+//        component = lstCell.get(billsCode).getFirstChild();
+//        componentLast = lstCell.get(billsCode).getLastChild();
+//        if (component != null && component instanceof Textbox) {
+//            txtBillsCode = (Textbox) component;
+//            if (!ValidateUtils.validate(txtBillsCode.getValue())) {
+//                Label mesageBillCode = (Label) componentLast;
+//                mesageBillCode.setValue("Mã phiếu bơm không được để trống");
+//                isFalse = true;
+//            }
+//        }
+        // Khach hang
+        component = lstCell.get(customerID).getFirstChild();
+        componentLast = lstCell.get(customerID).getLastChild();
+        if (component != null && component instanceof Textbox) {
+            cbCustomer = (Combobox) component;
+            Long value = null;
+            if (cbCustomer.getSelectedItem() != null) {
+                value = cbCustomer.getSelectedItem().getValue();
+            }
+            Label mesage = (Label) componentLast;
+            if (value == null || value.equals(-1l)) {
+
+                cbCustomer.setHflex("1");
+                mesage.setValue(Labels.getLabel("validate.customer.empty"));
+                mesage.setVisible(true);
+                mesage.setHflex("1");
+                cbCustomer.focus();
+                isFalse = true;
+            } else {
+                mesage.setVisible(false);
+                mesage.setHflex("0");
+                mesage.setValue("");
+
+            }
+
+        }
+        // Cong trinh
+        component = lstCell.get(constructionID).getFirstChild();
+        componentLast = lstCell.get(constructionID).getLastChild();
+        if (component != null && component instanceof Combobox) {
+            cbxConstruction = (Combobox) component;
+
+            Long value = null;
+            if (cbxConstruction.getSelectedItem() != null) {
+                value = cbxConstruction.getSelectedItem().getValue();
+            }
+            Label mesage = (Label) componentLast;
+            if (value == null || value.equals(-1l)) {
+
+                mesage.setValue(Labels.getLabel("validate.construction.empty"));
+                mesage.setVisible(true);
+                mesage.setHflex("1");
+                cbxConstruction.focus();
+                isFalse = true;
+            } else {
+                mesage.setVisible(false);
+                mesage.setHflex("0");
+                mesage.setValue("");
+
+            }
+
+        }
+
+        // Ngay bom
+        component = lstCell.get(prd).getFirstChild();
+        componentLast = lstCell.get(prd).getLastChild();
+        if (component != null && component instanceof Datebox) {
+            dtPrdID = (Datebox) component;
+            Label mesage = (Label) componentLast;
+            if (dtPrdID.getValue() == null) {
+
+                mesage.setValue(Labels.getLabel("validate.pump.date.empty"));
+                mesage.setVisible(true);
+                mesage.setHflex("1");
+                dtPrdID.focus();
+                isFalse = true;
+            } else {
+                mesage.setVisible(false);
+                mesage.setHflex("0");
+                mesage.setValue("");
+
+            }
+
+        }
+
+        return isFalse;
     }
 
     /**
@@ -733,7 +844,6 @@ public class BillsController extends GenericForwardComposer<Component> {
                 Messagebox.INFORMATION);
     }
 
-
     /**
      * Lay thon tin cong trinh
      *
@@ -867,6 +977,100 @@ public class BillsController extends GenericForwardComposer<Component> {
             }
         }
         return -1;
+    }
+    
+    public static void setDisableComponent(List<Component> lstCell, int numberAction) {
+        if (lstCell != null && !lstCell.isEmpty()) {
+            for (Component c : lstCell) {
+                if (c instanceof Cell) {
+                    Component child = c.getFirstChild();
+                    if (child instanceof Combobox) {
+                        ((Combobox) child).setButtonVisible(false);
+                        ((Combobox) child).setInplace(true);
+                        ((Combobox) child).setReadonly(true);
+                    } else if (child instanceof Datebox) {
+                        ((Datebox) child).setButtonVisible(false);
+                        ((Datebox) child).setInplace(true);
+                        ((Datebox) child).setReadonly(true);
+                    } else if (child instanceof Doublebox) {
+                        ((Doublebox) child).setReadonly(true);
+                        ((Doublebox) child).setInplace(true);
+                    } else if (child instanceof Intbox) {
+                        ((Intbox) child).setReadonly(true);
+                        ((Intbox) child).setInplace(true);
+                    } else if (child instanceof Longbox) {
+                        ((Longbox) child).setReadonly(true);
+                        ((Longbox) child).setInplace(true);
+                    } else if (child instanceof Textbox) {
+                        ((Textbox) child).setReadonly(true);
+                        ((Textbox) child).setInplace(true);
+                    } else if (child instanceof Checkbox) {
+                        ((Checkbox) child).setDisabled(true);
+                    } else if (child instanceof A && c.getChildren().size() == 1) {
+                        ((A) child).setDisabled(true);
+                    } else if (child instanceof A && c.getChildren().size() == 2) {
+                        Button btn = (Button) c.getChildren().get(1);
+//                        btn.setDisabled(true);
+                        btn.setVisible(false);
+                    } else if (child instanceof A && c.getChildren().size() >= 4) {
+                        A edit;
+                        A delete;
+                        A save;
+                        A cancel;
+                        A detail;
+                        A view;
+                        A reset;
+                        // edit, delete, save, cancel
+                        switch (numberAction) {
+                            case 4:
+                                edit = (A) child;
+                                delete = (A) c.getChildren().get(1);
+                                save = (A) c.getChildren().get(2);
+                                cancel = (A) c.getChildren().get(3);
+
+                                edit.setVisible(true);
+                                delete.setVisible(true);
+
+                                save.setVisible(false);
+                                cancel.setVisible(false);
+                                break;
+                            case 5:
+                                edit = (A) child;
+                                delete = (A) c.getChildren().get(1);
+                                save = (A) c.getChildren().get(2);
+                                cancel = (A) c.getChildren().get(3);
+                                reset = (A) c.getChildren().get(4);
+
+                                edit.setVisible(true);
+                                delete.setVisible(true);
+                                reset.setVisible(true);
+
+                                save.setVisible(false);
+                                cancel.setVisible(false);
+                                break;
+                            case 6:
+                                edit = (A) child;
+                                delete = (A) c.getChildren().get(1);
+                                save = (A) c.getChildren().get(2);
+                                cancel = (A) c.getChildren().get(3);
+                                detail = (A) c.getChildren().get(4);
+                                view = (A) c.getChildren().get(5);
+
+                                edit.setVisible(true);
+                                delete.setVisible(true);
+                                view.setVisible(true);
+
+                                save.setVisible(false);
+                                cancel.setVisible(false);
+                                detail.setVisible(false);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

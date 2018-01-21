@@ -111,4 +111,9 @@ public class BillSeviceImpl implements BillsServices {
         return billDAO.getApproveBill();
     }
 
+    @Override
+    public void update(String billCode, Long billID) {
+        billDAO.update(billCode, billID);
+    }
+
 }

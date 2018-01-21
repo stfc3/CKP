@@ -10,35 +10,37 @@ import com.dvd.ckp.domain.CalculatorRevenue;
 
 public interface BillDAO {
 
-	public List<Bills> getData();
+    public List<Bills> getData();
 
-	public void save(Bills bills);
+    public void save(Bills bills);
 
-	public void update(Bills bills);
+    public void update(Bills bills);
 
-	public void delete(Bills bills);
+    public void delete(Bills bills);
 
-	public List<BillsDetail> getBillDetail();
+    public List<BillsDetail> getBillDetail();
 
-	public List<BillsDetail> getBillDetail(Long billID);
+    public List<BillsDetail> getBillDetail(Long billID);
 
-	public void save(BillsDetail billsDetail);
+    public void save(BillsDetail billsDetail);
 
-	public void update(BillsDetail billsDetail);
+    public void update(BillsDetail billsDetail);
 
-	public void update(Integer isFar, Double quantityConvert, Integer maxStaff, Long billDetail);
+    public void update(Integer isFar, Double quantityConvert, Integer maxStaff, Long billDetail);
 
-	public void upadte(Double quantityApprove, Double totalApprove, Long billDetailID);
+    public void upadte(Double quantityApprove, Double totalApprove, Long billDetailID);
 
-	public void delete(BillsDetail billsDetail);
+    public void update(String billCode, Long billID);
 
-	public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpType, Long locationType,
-			Long locationID, Double quantity, Integer shift, Integer numSwitch, Integer numAuto);
+    public void delete(BillsDetail billsDetail);
 
-	public List<BillViewDetail> getDataView(Long billID);
+    public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpType, Long locationType,
+            Long locationID, Double quantity, Integer shift, Integer numSwitch, Integer numAuto);
 
-	public List<QuantityValue> getQuantity(Long billDetailId);
-        
-        public List<BillViewDetail> getApproveBill();
+    public List<BillViewDetail> getDataView(Long billID);
+
+    public List<QuantityValue> getQuantity(Long billDetailId);
+
+    public List<BillViewDetail> getApproveBill();
 
 }
