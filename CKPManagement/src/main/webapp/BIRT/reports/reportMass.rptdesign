@@ -482,7 +482,7 @@
         <simple-master-page name="Simple MasterPage" id="2">
             <property name="type">custom</property>
             <property name="height">11in</property>
-            <property name="width">14in</property>
+            <property name="width">12in</property>
         </simple-master-page>
     </page-setup>
     <body>
@@ -692,7 +692,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     <property name="name">vat</property>
                     <text-property name="displayName">vat</text-property>
                     <expression name="expression" type="javascript">row["sum_revenue_all"]*0.1</expression>
-                    <property name="dataType">float</property>
+                    <property name="dataType">integer</property>
                     <property name="allowExport">true</property>
                 </structure>
                 <structure>
@@ -712,7 +712,10 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 <structure>
                     <property name="name">date_signature</property>
                     <text-property name="displayName">date_signature</text-property>
-                    <expression name="expression" type="javascript">"Hà Nội, ngày "+BirtDateTime.day(BirtDateTime.today())+" tháng "+BirtDateTime.month(BirtDateTime.today())+ " năm "+BirtDateTime.year(BirtDateTime.today())</expression>
+                    <expression name="expression" type="javascript">var toDay=params["p_to_date"].value.substr(6,2);&#13;
+var toMonth=params["p_to_date"].value.substr(4,2);&#13;
+var toYear=params["p_to_date"].value.substr(0,4);&#13;
+"Hà Nội, ngày "+toDay+" tháng "+toMonth+ " năm "+toYear</expression>
                     <property name="dataType">string</property>
                     <property name="allowExport">true</property>
                 </structure>
@@ -814,62 +817,76 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     </list-property>
                     <property name="allowExport">true</property>
                 </structure>
+                <structure>
+                    <property name="name">lbl_quantity</property>
+                    <text-property name="displayName">lbl_quantity</text-property>
+                    <expression name="expression" type="javascript">"Khối \nlượng"</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">lbl_quantity_real</property>
+                    <text-property name="displayName">lbl_quantity_real</text-property>
+                    <expression name="expression" type="javascript">"Khối \nlượng \nthực tế"</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
             </list-property>
             <column id="40">
-                <property name="width">0.5in</property>
+                <property name="width">0.4in</property>
             </column>
             <column id="41">
                 <property name="width">1in</property>
             </column>
             <column id="42">
-                <property name="width">2.5in</property>
+                <property name="width">2in</property>
             </column>
             <column id="43">
-                <property name="width">1.5in</property>
+                <property name="width">1.2in</property>
             </column>
             <column id="44">
-                <property name="width">0.75in</property>
+                <property name="width">0.5in</property>
             </column>
             <column id="421">
-                <property name="width">0.75in</property>
+                <property name="width">0.5in</property>
             </column>
             <column id="450">
-                <property name="width">0.75in</property>
+                <property name="width">0.5in</property>
             </column>
             <column id="45">
-                <property name="width">0.75in</property>
+                <property name="width">0.5in</property>
             </column>
             <column id="46">
                 <property name="width">0.5in</property>
             </column>
             <column id="47">
-                <property name="width">1in</property>
+                <property name="width">1.5in</property>
             </column>
             <column id="293">
-                <property name="width">1in</property>
+                <property name="width">0.8in</property>
                 <list-property name="visibility"/>
             </column>
             <column id="307">
                 <property name="width">1in</property>
             </column>
             <column id="48">
-                <property name="width">2in</property>
+                <property name="width">1in</property>
             </column>
             <header>
                 <row id="69">
-                    <property name="height">0.3in</property>
                     <cell id="70">
                         <property name="colSpan">2</property>
                         <property name="rowSpan">4</property>
+                        <property name="verticalAlign">middle</property>
                         <image id="129">
-                            <property name="height">1in</property>
-                            <property name="width">1.8in</property>
+                            <property name="height">0.5in</property>
+                            <property name="width">1.4in</property>
                             <property name="source">embed</property>
                             <property name="imageName">logo.png</property>
                         </image>
                     </cell>
                     <cell id="72">
-                        <property name="colSpan">2</property>
+                        <property name="colSpan">4</property>
                         <property name="rowSpan">1</property>
                         <label id="138">
                             <property name="fontFamily">sans-serif</property>
@@ -880,8 +897,6 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <text-property name="text">CÔNG TY CỔ PHẦN CKP</text-property>
                         </label>
                     </cell>
-                    <cell id="74"/>
-                    <cell id="402"/>
                     <cell id="431"/>
                     <cell id="75"/>
                     <cell id="76"/>
@@ -891,9 +906,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     <cell id="78"/>
                 </row>
                 <row id="89">
-                    <property name="height">0.3in</property>
                     <cell id="92">
-                        <property name="colSpan">2</property>
+                        <property name="colSpan">4</property>
                         <property name="rowSpan">1</property>
                         <label id="140">
                             <property name="backgroundAttachment">scroll</property>
@@ -947,8 +961,6 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <text-property name="text">Địa chỉ: Số 15 ngõ 2 - Chu Văn An - Yết Kiêu - Hà Đông - Hà Nội</text-property>
                         </label>
                     </cell>
-                    <cell id="94"/>
-                    <cell id="403"/>
                     <cell id="432"/>
                     <cell id="95"/>
                     <cell id="96"/>
@@ -958,9 +970,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     <cell id="98"/>
                 </row>
                 <row id="99">
-                    <property name="height">0.3in</property>
                     <cell id="102">
-                        <property name="colSpan">2</property>
+                        <property name="colSpan">4</property>
                         <property name="rowSpan">1</property>
                         <label id="135">
                             <property name="backgroundAttachment">scroll</property>
@@ -1014,8 +1025,6 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <text-property name="text">VPGD: P 2508 - CT6 Khu ĐTM Văn Khê - Hà Đông - Hà Nội</text-property>
                         </label>
                     </cell>
-                    <cell id="104"/>
-                    <cell id="404"/>
                     <cell id="433"/>
                     <cell id="105"/>
                     <cell id="106"/>
@@ -1025,9 +1034,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     <cell id="108"/>
                 </row>
                 <row id="119">
-                    <property name="height">0.3in</property>
                     <cell id="122">
-                        <property name="colSpan">2</property>
+                        <property name="colSpan">4</property>
                         <property name="rowSpan">1</property>
                         <label id="134">
                             <property name="backgroundAttachment">scroll</property>
@@ -1081,8 +1089,6 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <text-property name="text">ĐT: 0422450159 - Fax: 0422253243</text-property>
                         </label>
                     </cell>
-                    <cell id="124"/>
-                    <cell id="405"/>
                     <cell id="434"/>
                     <cell id="125"/>
                     <cell id="126"/>
@@ -1308,6 +1314,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="149">
                             <property name="fontSize">9pt</property>
                             <property name="fontWeight">bold</property>
@@ -1327,6 +1334,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="150">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
@@ -1392,6 +1400,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="151">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
@@ -1457,6 +1466,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="152">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
@@ -1522,57 +1532,11 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
-                        <label id="153">
-                            <property name="backgroundAttachment">scroll</property>
-                            <property name="backgroundPositionX">0%</property>
-                            <property name="backgroundPositionY">0%</property>
-                            <property name="backgroundRepeat">repeat</property>
-                            <property name="fontFamily">sans-serif</property>
-                            <property name="fontSize">9pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="491">
                             <property name="fontWeight">bold</property>
-                            <property name="fontStyle">normal</property>
-                            <property name="fontVariant">normal</property>
-                            <property name="color">black</property>
-                            <property name="textLineThrough">none</property>
-                            <property name="textOverline">none</property>
-                            <property name="textUnderline">none</property>
-                            <property name="borderBottomColor">black</property>
-                            <property name="borderBottomStyle">none</property>
-                            <property name="borderBottomWidth">medium</property>
-                            <property name="borderLeftColor">black</property>
-                            <property name="borderLeftStyle">none</property>
-                            <property name="borderLeftWidth">medium</property>
-                            <property name="borderRightColor">black</property>
-                            <property name="borderRightStyle">none</property>
-                            <property name="borderRightWidth">medium</property>
-                            <property name="borderTopColor">black</property>
-                            <property name="borderTopStyle">none</property>
-                            <property name="borderTopWidth">medium</property>
-                            <property name="marginTop">0pt</property>
-                            <property name="marginLeft">0pt</property>
-                            <property name="marginBottom">0pt</property>
-                            <property name="marginRight">0pt</property>
-                            <property name="paddingTop">1pt</property>
-                            <property name="paddingLeft">1pt</property>
-                            <property name="paddingBottom">1pt</property>
-                            <property name="paddingRight">1pt</property>
-                            <property name="textAlign">center</property>
-                            <property name="letterSpacing">normal</property>
-                            <property name="lineHeight">normal</property>
-                            <property name="orphans">2</property>
-                            <property name="textTransform">none</property>
-                            <property name="whiteSpace">normal</property>
-                            <property name="widows">2</property>
-                            <property name="wordSpacing">normal</property>
-                            <property name="display">block</property>
-                            <property name="pageBreakAfter">auto</property>
-                            <property name="pageBreakBefore">auto</property>
-                            <property name="pageBreakInside">auto</property>
-                            <property name="showIfBlank">false</property>
-                            <property name="canShrink">false</property>
-                            <property name="overflow">hidden</property>
-                            <text-property name="text">Khối lượng</text-property>
-                        </label>
+                            <property name="resultSetColumn">lbl_quantity</property>
+                        </data>
                     </cell>
                     <cell id="410">
                         <property name="borderBottomColor">#C0C0C0</property>
@@ -1587,57 +1551,11 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
-                        <label id="422">
-                            <property name="backgroundAttachment">scroll</property>
-                            <property name="backgroundPositionX">0%</property>
-                            <property name="backgroundPositionY">0%</property>
-                            <property name="backgroundRepeat">repeat</property>
-                            <property name="fontFamily">sans-serif</property>
-                            <property name="fontSize">9pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="492">
                             <property name="fontWeight">bold</property>
-                            <property name="fontStyle">normal</property>
-                            <property name="fontVariant">normal</property>
-                            <property name="color">black</property>
-                            <property name="textLineThrough">none</property>
-                            <property name="textOverline">none</property>
-                            <property name="textUnderline">none</property>
-                            <property name="borderBottomColor">black</property>
-                            <property name="borderBottomStyle">none</property>
-                            <property name="borderBottomWidth">medium</property>
-                            <property name="borderLeftColor">black</property>
-                            <property name="borderLeftStyle">none</property>
-                            <property name="borderLeftWidth">medium</property>
-                            <property name="borderRightColor">black</property>
-                            <property name="borderRightStyle">none</property>
-                            <property name="borderRightWidth">medium</property>
-                            <property name="borderTopColor">black</property>
-                            <property name="borderTopStyle">none</property>
-                            <property name="borderTopWidth">medium</property>
-                            <property name="marginTop">0pt</property>
-                            <property name="marginLeft">0pt</property>
-                            <property name="marginBottom">0pt</property>
-                            <property name="marginRight">0pt</property>
-                            <property name="paddingTop">1pt</property>
-                            <property name="paddingLeft">1pt</property>
-                            <property name="paddingBottom">1pt</property>
-                            <property name="paddingRight">1pt</property>
-                            <property name="textAlign">center</property>
-                            <property name="letterSpacing">normal</property>
-                            <property name="lineHeight">normal</property>
-                            <property name="orphans">2</property>
-                            <property name="textTransform">none</property>
-                            <property name="whiteSpace">normal</property>
-                            <property name="widows">2</property>
-                            <property name="wordSpacing">normal</property>
-                            <property name="display">block</property>
-                            <property name="pageBreakAfter">auto</property>
-                            <property name="pageBreakBefore">auto</property>
-                            <property name="pageBreakInside">auto</property>
-                            <property name="showIfBlank">false</property>
-                            <property name="canShrink">false</property>
-                            <property name="overflow">hidden</property>
-                            <text-property name="text">Khối lượng thực tế</text-property>
-                        </label>
+                            <property name="resultSetColumn">lbl_quantity_real</property>
+                        </data>
                     </cell>
                     <cell id="439">
                         <property name="borderBottomColor">#C0C0C0</property>
@@ -1652,6 +1570,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="451">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
@@ -1691,7 +1610,6 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="lineHeight">normal</property>
                             <property name="orphans">2</property>
                             <property name="textTransform">none</property>
-                            <property name="whiteSpace">normal</property>
                             <property name="widows">2</property>
                             <property name="wordSpacing">normal</property>
                             <property name="display">block</property>
@@ -1717,6 +1635,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="154">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
@@ -1756,7 +1675,6 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <property name="lineHeight">normal</property>
                             <property name="orphans">2</property>
                             <property name="textTransform">none</property>
-                            <property name="whiteSpace">normal</property>
                             <property name="widows">2</property>
                             <property name="wordSpacing">normal</property>
                             <property name="display">block</property>
@@ -1782,6 +1700,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="155">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
@@ -1847,6 +1766,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="156">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
@@ -1912,6 +1832,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="308">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
@@ -1977,6 +1898,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="309">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
@@ -2042,6 +1964,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
                         <label id="157">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
@@ -2595,6 +2518,9 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopWidth">1px</property>
                         <data id="159">
                             <property name="textAlign">left</property>
+                            <method name="onRender"><![CDATA[if (reportContext.getOutputFormat() == "xlsx" || reportContext.getOutputFormat() == "xls" ){
+     this.getStyle().whiteSpace = "pre";
+}]]></method>
                             <property name="resultSetColumn">construction_name</property>
                         </data>
                     </cell>
@@ -2613,6 +2539,9 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopWidth">1px</property>
                         <data id="160">
                             <property name="textAlign">left</property>
+                            <method name="onRender"><![CDATA[if (reportContext.getOutputFormat() == "xlsx" || reportContext.getOutputFormat() == "xls" ){
+     this.getStyle().whiteSpace = "pre";
+}]]></method>
                             <property name="resultSetColumn">location_name</property>
                         </data>
                     </cell>
@@ -2877,6 +2806,9 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopWidth">1px</property>
                         <data id="166">
                             <property name="textAlign">left</property>
+                            <method name="onRender"><![CDATA[if (reportContext.getOutputFormat() == "xlsx" || reportContext.getOutputFormat() == "xls" ){
+     this.getStyle().whiteSpace = "pre";
+}]]></method>
                             <property name="resultSetColumn">param_name</property>
                         </data>
                     </cell>
@@ -4391,6 +4323,11 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 </row>
             </footer>
         </table>
+        <text id="488">
+            <property name="fontWeight">bold</property>
+            <property name="contentType">html</property>
+            <text-property name="content"><![CDATA[<VALUE-OF>"Khối \nlượng"</VALUE-OF>]]></text-property>
+        </text>
     </body>
     <list-property name="images">
         <structure>

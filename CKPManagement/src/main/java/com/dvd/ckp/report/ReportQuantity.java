@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
@@ -92,12 +93,18 @@ public class ReportQuantity extends GenericForwardComposer {
     }
 
     public void onClick$btnHtml() {
+        if (!validateParam()) {
+            return;
+        }
         HashMap paramMap = getParam();
         StringBuilder src = buildUrl(paramMap);
         ifrReportMonth.setSrc(src.toString());
     }
 
     public void onClick$btnExcel() {
+        if (!validateParam()) {
+            return;
+        }
         HashMap paramMap = getParam();
         paramMap.put(BirtConstant.PARAM_EXTENSION, BirtConstant.EXCEL_EXTENSION);
         paramMap.put(BirtConstant.PARAM_FILE_NAME, fileName);
@@ -134,26 +141,20 @@ public class ReportQuantity extends GenericForwardComposer {
         return paramMap;
     }
 
-//    public void onSelect$cbxCustomer() {
-//
-//        Long customerId = null;
-//        if (StringUtils.isValidString(cbxPump.getValue()) && !Labels.getLabel("option").equals(cbxPump.getValue())) {
-//            customerId = cbxPump.getSelectedItem().getValue();
-//        }
-//        lstConstructions = constructionService.getConstructionByCustomer(customerId);
-//
-//        Construction constructionOption = new Construction();
-//        constructionOption.setConstructionId(null);
-//        constructionOption.setConstructionName(Labels.getLabel("option"));
-//        if (lstConstructions == null) {
-//            lstConstructions = new ArrayList<>();
-//        }
-//        lstConstructions.add(Constants.FIRST_INDEX, constructionOption);
-//
-//        ListModelList listContructionModel = new ListModelList<>(lstConstructions);
-//        listContructionModel.addToSelection(constructionOption);
-//
-//        cbxConstruction.setModel(listContructionModel);
-//
-//    }
+    private boolean validateParam() {
+        if (dteFromDate.getValue() == null) {
+            Messagebox.show("Từ ngày không được để trống", "Lỗi", Messagebox.OK, Messagebox.ERROR);
+            return false;
+        }
+        if (dteToDate.getValue() == null) {
+            Messagebox.show("Đến ngày không được để trống", "Lỗi", Messagebox.OK, Messagebox.ERROR);
+            return false;
+        }
+        if (dteFromDate.getValue().after(dteToDate.getValue())) {
+            Messagebox.show("Từ ngày phải nhỏ hơn hoặc bằng đến ngày", "Lỗi", Messagebox.OK, Messagebox.ERROR);
+            return false;
+        }
+        return true;
+    }
+
 }

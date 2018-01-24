@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.zkoss.util.resource.Labels;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
@@ -52,7 +53,6 @@ public class ReportMonth extends GenericForwardComposer {
     private Datebox dteToDate;
 
     private List<Customer> lstCustomers;
-    private List<Construction> lstConstructions;
     private String reportName = "reportMass.rptdesign";
     private String fileName = "BaoCaoKhoiLuongHopDong";
 
@@ -78,12 +78,19 @@ public class ReportMonth extends GenericForwardComposer {
     }
 
     public void onClick$btnHtml() {
+
+        if (!validateParam()) {
+            return;
+        }
         HashMap paramMap = getParam();
         StringBuilder src = buildUrl(paramMap);
         ifrReportMonth.setSrc(src.toString());
     }
 
     public void onClick$btnExcel() {
+        if (!validateParam()) {
+            return;
+        }
         HashMap paramMap = getParam();
         paramMap.put(BirtConstant.PARAM_EXTENSION, BirtConstant.EXCEL_EXTENSION);
         paramMap.put(BirtConstant.PARAM_FILE_NAME, fileName);
@@ -123,6 +130,8 @@ public class ReportMonth extends GenericForwardComposer {
     public void onSelect$cbxCustomer() {
 
         Long customerId = null;
+        List<Construction> lstConstructions;
+//        List<Construction> constructionSelectDefault= new ArrayList<>();
         if (StringUtils.isValidString(cbxCustomer.getValue()) && !Labels.getLabel("option").equals(cbxCustomer.getValue())) {
             customerId = cbxCustomer.getSelectedItem().getValue();
         }
@@ -137,10 +146,25 @@ public class ReportMonth extends GenericForwardComposer {
         lstConstructions.add(Constants.FIRST_INDEX, constructionOption);
 
         MyListModel listContructionModel = new MyListModel<>(lstConstructions);
-        listContructionModel.addToSelection(constructionOption);
-
+        cbxConstruction.setValue("");
         cbxConstruction.setModel(listContructionModel);
 
+    }
+
+    private boolean validateParam() {
+        if (dteFromDate.getValue() == null) {
+            Messagebox.show("Từ ngày không được để trống", "Lỗi", Messagebox.OK, Messagebox.ERROR);
+            return false;
+        }
+        if (dteToDate.getValue() == null) {
+            Messagebox.show("Đến ngày không được để trống", "Lỗi", Messagebox.OK, Messagebox.ERROR);
+            return false;
+        }
+        if (dteFromDate.getValue().after(dteToDate.getValue())) {
+            Messagebox.show("Từ ngày phải nhỏ hơn hoặc bằng đến ngày", "Lỗi", Messagebox.OK, Messagebox.ERROR);
+            return false;
+        }
+        return true;
     }
 
 }
