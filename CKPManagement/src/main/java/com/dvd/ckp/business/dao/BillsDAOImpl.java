@@ -66,7 +66,8 @@ public class BillsDAOImpl implements BillDAO {
             sql.append(" LEFT JOIN ");
             sql.append(" construction ct ON b.construction_id = ct.construction_id ");
             sql.append(" LEFT JOIN ");
-            sql.append(" (select bill_id,case when sum(total_approve) is not null then sum(total_approve) else sum(total) end total from bill_detail where status in (1,2) group by bill_id) e ");
+//            sql.append(" (select bill_id,case when sum(total_approve) is not null then sum(total_approve) else sum(total) end total from bill_detail where status in (1,2) group by bill_id) e ");
+            sql.append(" (select bill_id,sum( case when total_approve is not null then total_approve else total end) total from bill_detail where status in (1,2) group by bill_id) e ");
             sql.append(" on b.bill_id = e.bill_id ");
             sql.append(" WHERE ");
             sql.append(" b.status = 1 ");
