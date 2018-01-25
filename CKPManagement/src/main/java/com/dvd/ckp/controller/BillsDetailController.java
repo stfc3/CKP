@@ -352,7 +352,7 @@ public class BillsDetailController extends GenericForwardComposer {
      * @param lstCell
      * @return
      */
-    private void getDataInRow(List<Component> lstCell, BillsDetail billsDetail) {
+     private void getDataInRow(List<Component> lstCell, BillsDetail billsDetail) {
 
         Component component;
 

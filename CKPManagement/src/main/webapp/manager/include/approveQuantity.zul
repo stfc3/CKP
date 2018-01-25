@@ -34,11 +34,11 @@
 			<intbox id="txtShift" value="${arg.billDetai.shift}"
 				visible="false">
 			</intbox>
-			<intbox id="txtIsAuto" value="${arg.billDetai.shift}"
+			<intbox id="txtIsAuto" value="${arg.billDetai.autoConvert}"
 				visible="false">
 			</intbox>
 			<intbox id="txtMaxStaff"
-				value="${arg.billDetai.autoConvert}" visible="false">
+				value="${arg.billDetai.maxStaff}" visible="false">
 			</intbox>
 			<intbox id="txtSwitch"
 				value="${arg.billDetai.numSwitch}" visible="false">
