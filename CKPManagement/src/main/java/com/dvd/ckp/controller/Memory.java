@@ -29,9 +29,9 @@ public class Memory {
 
     private CustomerService customerService;
 
-    protected ConstructionService constructionService;
+    private ConstructionService constructionService;
 
-    protected LocationServices locationServices;
+    private LocationServices locationServices;
 
     //list KH
     public static Map<Long, Customer> lstCustomerCache;
@@ -79,6 +79,7 @@ public class Memory {
     private synchronized void clearCache() {
         lstCustomerCache.clear();
         lstConstructionCache.clear();
+        lstLocationCache.clear();
     }
 
     public void loadCustomer() {
@@ -121,7 +122,7 @@ public class Memory {
     }
 
     public Map<Long, Customer> getCustomerCache() {
-        if (lstCustomerCache == null && lstCustomerCache.isEmpty()) {
+        if (lstCustomerCache == null || lstCustomerCache.isEmpty()) {
             loadCustomer();
         }
         return lstCustomerCache;
@@ -132,7 +133,7 @@ public class Memory {
     }
 
     public Map<Long, Construction> getConstructionCache() {
-        if (lstConstructionCache == null && lstConstructionCache.isEmpty()) {
+        if (lstConstructionCache == null || lstConstructionCache.isEmpty()) {
             loadConstruction();
         }
         return lstConstructionCache;
@@ -143,7 +144,7 @@ public class Memory {
     }
 
     public Map<Long, Location> getLocationCache() {
-        if (lstLocationCache == null && lstLocationCache.isEmpty()) {
+        if (lstLocationCache == null || lstLocationCache.isEmpty()) {
             loadLocation();
         }
         return lstLocationCache;
