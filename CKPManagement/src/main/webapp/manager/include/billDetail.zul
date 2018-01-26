@@ -128,7 +128,7 @@
 
         <grid id="gridBillsDetail">
             <auxhead sclass="category-center">
-                <auxheader colspan="20">
+                <auxheader colspan="11">
                     <hbox hflex="1" class="action-staff-approve">
                         <div>
                             <a class="btn-cursor btn-add-pumps-detail"

@@ -850,23 +850,23 @@ public class BillsDetailController extends GenericForwardComposer {
         }
 
         // khoi luong bom
-        component = lstCell.get(6).getFirstChild();
-        componentLast = lstCell.get(6).getLastChild();
-        if (component != null && component instanceof Doublebox) {
-            txtQuantity = (Doublebox) component;
-            Label mesage = (Label) componentLast;
-            if (txtQuantity.getValue() == null || txtQuantity.getValue() == 0) {
-                mesage.setValue(Labels.getLabel("validate.quantity.empty"));
-                mesage.setVisible(true);
-                mesage.setHflex("1");
-                txtQuantity.focus();
-                isFalse = true;
-            } else {
-                mesage.setVisible(false);
-                mesage.setHflex("0");
-                mesage.setValue("");
-            }
-        }
+//        component = lstCell.get(6).getFirstChild();
+//        componentLast = lstCell.get(6).getLastChild();
+//        if (component != null && component instanceof Doublebox) {
+//            txtQuantity = (Doublebox) component;
+//            Label mesage = (Label) componentLast;
+//            if (txtQuantity.getValue() == null || txtQuantity.getValue() == 0) {
+//                mesage.setValue(Labels.getLabel("validate.quantity.empty"));
+//                mesage.setVisible(true);
+//                mesage.setHflex("1");
+//                txtQuantity.focus();
+//                isFalse = true;
+//            } else {
+//                mesage.setVisible(false);
+//                mesage.setHflex("0");
+//                mesage.setValue("");
+//            }
+//        }
 
         return isFalse;
     }
