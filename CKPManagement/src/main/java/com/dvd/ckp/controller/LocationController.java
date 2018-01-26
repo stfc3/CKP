@@ -251,6 +251,7 @@ public class LocationController extends GenericForwardComposer {
         Location locationAddItem = new Location();
         locationAddItem.setStatus(1);
         listDataModel.add(0, locationAddItem);
+        gridLocation.setActivePage(com.dvd.ckp.utils.Constants.FIRST_INDEX);
         gridLocation.setModel(listDataModel);
         gridLocation.renderAll();
         List<Component> lstCell = gridLocation.getRows().getChildren().get(0).getChildren();

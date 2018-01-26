@@ -208,11 +208,11 @@ public class StyleUtils {
                                 save = (A) c.getChildren().get(2);
                                 cancel = (A) c.getChildren().get(3);
 
-                                edit.setVisible(false);
-                                delete.setVisible(false);
+                                edit.setVisible(true);
+                                delete.setVisible(true);
 
-                                save.setVisible(true);
-                                cancel.setVisible(true);
+                                save.setVisible(false);
+                                cancel.setVisible(false);
                                 break;
                             case 5:
                                 edit = (A) child;

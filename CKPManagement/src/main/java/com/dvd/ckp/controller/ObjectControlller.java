@@ -159,6 +159,7 @@ public class ObjectControlller extends GenericForwardComposer {
     public void onClick$add() {
         Object object = new Object();
         listDataModel.add(0, object);
+        lstObject.setActivePage(Constants.FIRST_INDEX);
         lstObject.setModel(listDataModel);
         lstObject.renderAll();
         List<Component> lstCell = lstObject.getRows().getChildren().get(0).getChildren();

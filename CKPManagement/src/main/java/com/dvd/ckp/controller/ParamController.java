@@ -120,6 +120,7 @@ public class ParamController extends GenericForwardComposer {
     public void onClick$add() {
         Param paramAdd = new Param();
         listDataModel.add(0, paramAdd);
+        lstParam.setActivePage(Constants.FIRST_INDEX);
         lstParam.setModel(listDataModel);
         lstParam.renderAll();
         List<Component> lstCell = lstParam.getRows().getChildren().get(0).getChildren();

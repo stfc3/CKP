@@ -94,11 +94,7 @@ public class AddStaffController extends GenericForwardComposer {
         lstStaffAll = new ArrayList<Staff>();
         billID = txtBillID.getValue();
         Long pumpType = txtPumpType.getValue();
-        if (pumpType == 1l) {
-            intMaxStaff.setValue(5);
-        } else if (pumpType == 3l) {
-            intMaxStaff.setValue(3);
-        }
+
         List<Staff> vlstStaff = staffService.getAllData();
         if (vlstStaff != null) {
             lstStaff.addAll(vlstStaff);
@@ -114,7 +110,21 @@ public class AddStaffController extends GenericForwardComposer {
         if (lstStaffQuantity != null && !lstStaffQuantity.isEmpty()) {
             listQuantity.addAll(lstStaffQuantity);
         }
+        int staff = listQuantity.size();
+        if (pumpType == 1l) {
+            if (staff == 0) {
+                intMaxStaff.setValue(5);
+            } else {
+                intMaxStaff.setValue(staff);
+            }
+        } else if (pumpType == 3l) {
 
+            if (staff == 0) {
+                intMaxStaff.setValue(3);
+            } else {
+                intMaxStaff.setValue(staff);
+            }
+        }
         /*
 		 * loai bo nhung cong nhan da duoc chon khoi list full
          */

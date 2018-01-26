@@ -191,6 +191,7 @@ public class ContractController extends GenericForwardComposer {
             isAdd = true;
             Contract contract = new Contract();
             listDataModel.add(Constants.FIRST_INDEX, contract);
+            lstContract.setActivePage(Constants.FIRST_INDEX);
             lstContract.setModel(listDataModel);
             lstContract.renderAll();
             List<Component> lstCell = lstContract.getRows().getFirstChild().getChildren();

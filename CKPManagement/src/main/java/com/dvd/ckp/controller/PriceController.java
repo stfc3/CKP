@@ -335,6 +335,7 @@ public class PriceController extends GenericForwardComposer {
             isAdd = true;
             Price price = new Price();
             listDataModelPrice.add(Constants.FIRST_INDEX, price);
+            lstPrice.setActivePage(Constants.FIRST_INDEX);
             lstPrice.setModel(listDataModelPrice);
             lstPrice.renderAll();
             List<Component> lstCell = lstPrice.getRows().getFirstChild().getChildren();

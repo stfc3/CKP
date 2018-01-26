@@ -195,6 +195,7 @@ public class PriceLocationController extends GenericForwardComposer {
     public void onClick$add() {
         PriceLocation priceLocation = new PriceLocation();
         listDataModelPriceLocation.add(Constants.FIRST_INDEX, priceLocation);
+        lstPriceLocation.setActivePage(Constants.FIRST_INDEX);
         lstPriceLocation.setModel(listDataModelPriceLocation);
         lstPriceLocation.renderAll();
         List<Component> lstCell = lstPriceLocation.getRows().getFirstChild().getChildren();

@@ -135,6 +135,7 @@ public class ConstructionController extends GenericForwardComposer {
     public void onClick$add() {
         Construction construction = new Construction();
         listDataModel.add(Constants.FIRST_INDEX, construction);
+        lstConstruction.setActivePage(Constants.FIRST_INDEX);
         lstConstruction.setModel(listDataModel);
         lstConstruction.renderAll();
         List<Component> lstCell = lstConstruction.getRows().getFirstChild().getChildren();

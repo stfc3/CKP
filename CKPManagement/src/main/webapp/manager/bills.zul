@@ -86,11 +86,11 @@
                         </cell>
                         <!--khach hang -->
                         <cell>
-                            <combobox hflex="1" buttonVisible="false" autodrop="true"
-                                      inplace="true" readonly="true">
+                            <combobox hflex="1" buttonVisible="false" autodrop="true" tooltiptext="${each.customerName}"
+                                      inplace="true" readonly="true" >
                                 <template name="model">
                                     <comboitem
-                                        value="${each.customerId}" label="${each.customerName}" />
+                                        value="${each.customerId}" label="${each.customerName}"/>
                                 </template>
                             </combobox>
                             <label hflex="0" style="color:red"/>

@@ -202,6 +202,7 @@ public class UserController extends GenericForwardComposer {
         blnAddOrEdit = true;
         User user = new User();
         listDataModel.add(0, user);
+        lstUser.setActivePage(com.dvd.ckp.utils.Constants.FIRST_INDEX);
         lstUser.setModel(listDataModel);
         lstUser.renderAll();
         List<Component> lstCell = lstUser.getRows().getChildren().get(0).getChildren();

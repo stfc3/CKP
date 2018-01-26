@@ -130,6 +130,7 @@ public class RoleController extends GenericForwardComposer {
     public void onClick$add() {
         Role role = new Role();
         listDataModel.add(0, role);
+        lstRole.setActivePage(Constants.FIRST_INDEX);
         lstRole.setModel(listDataModel);
         lstRole.renderAll();
         List<Component> lstCell = lstRole.getRows().getChildren().get(0).getChildren();

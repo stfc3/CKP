@@ -155,6 +155,7 @@ public class CustomerController extends GenericForwardComposer {
     public void onClick$add() {
         Customer customer = new Customer();
         listDataModel.add(Constants.FIRST_INDEX, customer);
+        lstCustomer.setActivePage(Constants.FIRST_INDEX);
         lstCustomer.setModel(listDataModel);
         lstCustomer.renderAll();
         List<Component> lstCell = lstCustomer.getRows().getFirstChild().getChildren();

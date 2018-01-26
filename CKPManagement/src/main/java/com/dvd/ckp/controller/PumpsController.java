@@ -185,6 +185,7 @@ public class PumpsController extends GenericForwardComposer {
         Pumps pumpAddItem = new Pumps();
         pumpAddItem.setStatus(1);
         listDataModel.add(0, pumpAddItem);
+        gridPumps.setActivePage(com.dvd.ckp.utils.Constants.FIRST_INDEX);
         gridPumps.setModel(listDataModel);
         gridPumps.renderAll();
         List<Component> lstCell = gridPumps.getRows().getChildren().get(0).getChildren();

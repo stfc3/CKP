@@ -31,6 +31,7 @@ import org.zkoss.zul.Window;
 import com.dvd.ckp.business.service.DistributeService;
 import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Distribute;
+import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StyleUtils;
 
@@ -158,6 +159,7 @@ public class DistributeController extends GenericForwardComposer {
 		Distribute distributeAddItem = new Distribute();
 		distributeAddItem.setStatus(1);
 		listDataModel.add(0, distributeAddItem);
+                gridDistribute.setActivePage(Constants.FIRST_INDEX);
 		gridDistribute.setModel(listDataModel);
 		gridDistribute.renderAll();
 		List<Component> lstCell = gridDistribute.getRows().getChildren().get(0).getChildren();

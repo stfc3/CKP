@@ -45,9 +45,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
-import com.dvd.ckp.business.service.ConstructionService;
 import com.dvd.ckp.business.service.ContractService;
-import com.dvd.ckp.business.service.CustomerService;
 import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
@@ -154,7 +152,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 
     private Map<Long, Customer> mapCustomer;
     private Map<Long, Construction> mapConstruction;
-    
+
     private Memory memory = new Memory();
 
     @Override
@@ -273,7 +271,9 @@ public class BillsController extends GenericForwardComposer<Component> {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         setDisableComponent(lstCell, 6);
+//        if (insertOrUpdate == 1) {
         reloadGrid();
+//        }
 
     }
 
@@ -285,30 +285,31 @@ public class BillsController extends GenericForwardComposer<Component> {
     public void onSave(ForwardEvent event) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        if (!valiDate(lstCell)) {
-            Bills bill = rowSelected.getValue();
-            getDataInRow(lstCell, bill);
 
-            bill.setStatus(1);
-            save(bill);
-            setDisableComponent(lstCell, 6);
-            reloadGrid();
-        }
+        Bills bill = rowSelected.getValue();
+        getDataInRow(lstCell, bill);
+
+        bill.setStatus(1);
+        save(bill, lstCell);
+        setDisableComponent(lstCell, 6);
+        reloadGrid();
 
     }
 
-    private void save(Bills bills) {
-        if (insertOrUpdate == 1) {
-            bills.setStatus(1);
-            billsServices.save(bills);
-            lstBills.add(bills);
-            lstBillsFilter.add(bills);
-        } else {
-            bills.setCreateDate(new Date());
-            billsServices.update(bills);
-        }
+    private void save(Bills bills, List<Component> lstCell) {
+        if (!valiDate(lstCell)) {
+            if (insertOrUpdate == 1) {
+                bills.setStatus(1);
+                billsServices.save(bills);
+                lstBills.add(bills);
+                lstBillsFilter.add(bills);
+            } else {
+                bills.setCreateDate(new Date());
+                billsServices.update(bills);
+            }
 
-        insertOrUpdate = 0;
+            insertOrUpdate = 0;
+        }
     }
 
     public void onDelete(ForwardEvent event) {
@@ -341,6 +342,8 @@ public class BillsController extends GenericForwardComposer<Component> {
         Bills bill = new Bills();
         bill.setStatus(1);
         listDataModel.add(0, bill);
+        gridBills.setActivePage(0);
+//        gridBills.setPagingPosition("1");
         gridBills.setModel(listDataModel);
         gridBills.renderAll();
         List<Component> lstCell = gridBills.getRows().getChildren().get(0).getChildren();
@@ -895,7 +898,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         Bills billsValue = rowSelected.getValue();
         getDataInRow(lstCell, billsValue);
         billsValue.setStatus(1);
-        save(billsValue);
+        save(billsValue, lstCell);
         reloadGrid();
 
         Map<String, Object> arguments = new HashMap();
@@ -1078,7 +1081,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 
                                 edit.setVisible(true);
                                 delete.setVisible(true);
-                                view.setVisible(true);
+                                view.setVisible(false);
 
                                 save.setVisible(false);
                                 cancel.setVisible(false);

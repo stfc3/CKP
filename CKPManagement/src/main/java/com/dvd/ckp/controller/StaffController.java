@@ -209,6 +209,7 @@ public class StaffController extends GenericForwardComposer {
         Staff newItem = new Staff();
         newItem.setStatus(1);
         listDataModel.add(0, newItem);
+        gridStaff.setActivePage(com.dvd.ckp.utils.Constants.FIRST_INDEX);
         gridStaff.setModel(listDataModel);
         gridStaff.renderAll();
         List<Component> lstCell = gridStaff.getRows().getChildren().get(0).getChildren();
