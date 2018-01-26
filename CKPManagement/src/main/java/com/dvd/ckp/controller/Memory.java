@@ -11,13 +11,11 @@ import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Location;
-import com.dvd.ckp.utils.SpringConstant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.apache.log4j.Logger;
-import org.zkoss.zkplus.spring.SpringUtil;
 
 /**
  *
@@ -84,9 +82,6 @@ public class Memory {
 
     public void loadCustomer() {
         List<Customer> vlstCustomers;
-        if (customerService == null) {
-            customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
-        }
         vlstCustomers = customerService.getCustomerActive();
         if (vlstCustomers != null) {
             lstCustomerCache = vlstCustomers.stream().collect(Collectors.toMap(Customer::getCustomerId, customers -> customers));
@@ -97,9 +92,6 @@ public class Memory {
 
     public void loadConstruction() {
         List<Construction> vlstConstructions;
-        if (constructionService == null) {
-            constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
-        }
         vlstConstructions = constructionService.getConstructionActive();
         if (vlstConstructions != null) {
             lstConstructionCache = vlstConstructions.stream().collect(Collectors.toMap(Construction::getConstructionId, constructions -> constructions));
@@ -110,9 +102,6 @@ public class Memory {
 
     public void loadLocation() {
         List<Location> vlstLocation;
-        if (locationServices == null) {
-            locationServices = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
-        }
         vlstLocation = locationServices.getListLocation();
         if (vlstLocation != null) {
             lstLocationCache = vlstLocation.stream().collect(Collectors.toMap(Location::getLocationID, locations -> locations));

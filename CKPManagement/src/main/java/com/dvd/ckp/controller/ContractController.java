@@ -110,7 +110,7 @@ public class ContractController extends GenericForwardComposer {
 
         lstCustomers = customerService.getCustomerActive();
 
-        listDataModelFilter=new MyListModel<>(lstContracts);
+        listDataModelFilter = new MyListModel<>(lstContracts);
         cbxContractFilter.setModel(listDataModelFilter);
         cbxCustomerFilter.setModel(new MyListModel<>(lstCustomers));
 
@@ -271,7 +271,7 @@ public class ContractController extends GenericForwardComposer {
         listDataModel = new ListModelList(lstContracts);
         lstContract.setModel(listDataModel);
 
-        listDataModelFilter=new MyListModel(lstContracts);
+        listDataModelFilter = new MyListModel(lstContracts);
         cbxContractFilter.setModel(listDataModelFilter);
 
         setDataDefaultInGrid();
@@ -395,6 +395,7 @@ public class ContractController extends GenericForwardComposer {
         } else {
             vlngContractId = contract.getContractId();
         }
+        isAdd = false;
         StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
         arguments.put("contractId", vlngContractId);

@@ -82,7 +82,7 @@ public class PriceController extends GenericForwardComposer {
 
     Param defaultParam;
     List<Param> lstPumpType;
-    
+
     Distribute defaultDistribute;
     List<Distribute> lstDistributes;
 
@@ -110,9 +110,9 @@ public class PriceController extends GenericForwardComposer {
 
     private Long lngContractId;
     private boolean isAdd;
-    
-    private final Integer pricePump=1;
-    private final Integer priceDistribute=2;
+
+    private final Integer pricePump = 1;
+    private final Integer priceDistribute = 2;
     ///
 
     @Override
@@ -215,6 +215,7 @@ public class PriceController extends GenericForwardComposer {
         setComboboxParam(lstCell, getParamDefault(price.getConvertType(), convertTypeIndex), convertTypeIndex);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
+
     /**
      * Edit row
      *
@@ -243,6 +244,7 @@ public class PriceController extends GenericForwardComposer {
         reloadGrid();
 
     }
+
     /**
      * Cancel
      *
@@ -277,6 +279,7 @@ public class PriceController extends GenericForwardComposer {
         StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
     }
+
     public void onSaveDistribute(ForwardEvent event) {
         isAdd = false;
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
@@ -307,6 +310,7 @@ public class PriceController extends GenericForwardComposer {
             }
         });
     }
+
     public void onDeleteDistribute(ForwardEvent event) {
         Messagebox.show(Labels.getLabel("message.confirm.delete.content"), Labels.getLabel("message.confirm.delete.title"), Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
             @Override
@@ -338,6 +342,7 @@ public class PriceController extends GenericForwardComposer {
             StyleUtils.setEnableComponent(lstCell, 4);
         }
     }
+
     /**
      * Add row
      */
@@ -405,6 +410,7 @@ public class PriceController extends GenericForwardComposer {
             price.setConvertValue(dbbConvertValue.getValue());
         }
     }
+
     /**
      * Get object customer
      *
@@ -435,6 +441,7 @@ public class PriceController extends GenericForwardComposer {
         lstPrice.setModel(listDataModelPrice);
         setDataDefaultInGrid();
     }
+
     /**
      * Reload grid distribute
      */
@@ -457,6 +464,7 @@ public class PriceController extends GenericForwardComposer {
             }
         }
     }
+
     private void setDataDefaultInGridDistribute() {
         lstPriceDistribute.renderAll();
         List<Component> lstRows = lstPriceDistribute.getRows().getChildren();
@@ -519,7 +527,7 @@ public class PriceController extends GenericForwardComposer {
             cbxParam.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getParamName());
         }
     }
-    
+
     private void setComboboxDistribute(List<Component> lstCell, List<Distribute> selectedIndex, int columnIndex) {
         Combobox cbxDistribute = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
@@ -532,7 +540,7 @@ public class PriceController extends GenericForwardComposer {
         }
 
     }
-    
+
     private List<Distribute> getDistributeDefault(Long distributeId) {
         List<Distribute> distributeSelected = new ArrayList<>();
         if (distributeId != null && lstDistributes != null && !lstDistributes.isEmpty()) {
@@ -548,7 +556,6 @@ public class PriceController extends GenericForwardComposer {
         }
         return distributeSelected;
     }
-
 
     public void onPriceLocation(ForwardEvent event) {
         Map<String, Object> arguments = new HashMap<>();
@@ -569,6 +576,7 @@ public class PriceController extends GenericForwardComposer {
             vlngPriceId = price.getPriceId();
 
         }
+        isAdd = false;
         StyleUtils.setDisableComponent(lstCell, 4);
         reloadGrid();
         arguments.put("priceId", vlngPriceId);
