@@ -115,7 +115,7 @@
                         <cell style="text-align:center">
                             <a class="btn-cursor" 
                                iconSclass="z-icon-pencil" forward="onClick=onEdit" 
-                               tooltiptext="${c:l('edit')}" />
+                               tooltiptext="${c:l('edit')}" visible="false"/>
                             <a class="btn-cursor"
                                iconSclass="z-icon-check-circle-o" forward="onClick=onApprove"
                                tooltiptext="${c:l('staff.quantity.approve')}" />
