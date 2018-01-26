@@ -65,7 +65,6 @@ import com.dvd.ckp.utils.FileUtils;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
-import com.dvd.ckp.utils.ValidateUtils;
 import java.util.stream.Collectors;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Doublebox;
@@ -85,10 +84,10 @@ public class BillsController extends GenericForwardComposer<Component> {
     private static final long serialVersionUID = 457994854668836097L;
     private static final Logger logger = Logger.getLogger(BillsController.class);
     ServletContext context;
-    @WireVariable
-    protected ConstructionService constructionService;
-    @WireVariable
-    protected CustomerService customerService;
+//    @WireVariable
+//    protected ConstructionService constructionService;
+//    @WireVariable
+//    protected CustomerService customerService;
     @WireVariable
     protected BillsServices billsServices;
     @WireVariable
@@ -155,6 +154,8 @@ public class BillsController extends GenericForwardComposer<Component> {
 
     private Map<Long, Customer> mapCustomer;
     private Map<Long, Construction> mapConstruction;
+    
+    private Memory memory = new Memory();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -162,8 +163,8 @@ public class BillsController extends GenericForwardComposer<Component> {
         Long startTime = System.currentTimeMillis();
         context = Sessions.getCurrent().getWebApp().getServletContext();
         // khai bao services
-        constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
-        customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
+//        constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
+//        customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
         billsServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
         contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
         locationServices = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
@@ -171,19 +172,19 @@ public class BillsController extends GenericForwardComposer<Component> {
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
 
         // list danh sach cong trinh
-        lstConstructions = new ArrayList<>();
-        List<Construction> lstCon = constructionService.getConstructionActive();
-        if (lstCon != null && !lstCon.isEmpty()) {
-            lstConstructions.addAll(lstCon);
-        }
+        lstConstructions = new ArrayList<>(memory.getConstructionCache().values());
+//        List<Construction> lstCon = new ArrayList<>(memory.getConstructionCache().values());
 
+//        if (lstCon != null && !lstCon.isEmpty()) {
+//            lstConstructions.addAll(lstCon);
+//        }
         // list danh sach khach hang
-        lstCustomer = new ArrayList<>();
-        List<Customer> lstCus = customerService.getCustomerActive();
-        if (lstCus != null && !lstCus.isEmpty()) {
-            lstCustomer.addAll(lstCus);
-        }
+        lstCustomer = new ArrayList<>(memory.getCustomerCache().values());
 
+//        List<Customer> lstCus = customerService.getCustomerActive();
+//        if (lstCus != null && !lstCus.isEmpty()) {
+//            lstCustomer.addAll(lstCus);
+//        }
         // list danh sach chi tiet hoa don
         lstBillDetail = new ArrayList<>();
         List<BillsDetail> lstBillDe = billsServices.getBillDetail();

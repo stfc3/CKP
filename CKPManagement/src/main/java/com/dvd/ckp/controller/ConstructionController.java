@@ -59,13 +59,16 @@ public class ConstructionController extends GenericForwardComposer {
     private final int contractIndex = 3;
     private final int addressIndex = 4;
     private final int farIndex = 5;
+    private Memory memory = new Memory();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
         contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
-        lstConstructions = constructionService.getConstructionActive();
+        
+        lstConstructions = new ArrayList<>(memory.getConstructionCache().values());
+
         listDataModel = new ListModelList(lstConstructions);
         lstConstruction.setModel(listDataModel);
 
@@ -75,8 +78,9 @@ public class ConstructionController extends GenericForwardComposer {
         defaultContract.setContractName(Labels.getLabel("option"));
         lstContract.add(Constants.FIRST_INDEX, defaultContract);
 
-        listDataModelFilter=new MyListModel(lstConstructions);
+        listDataModelFilter = new MyListModel(lstConstructions);
         cbxConstructionFilter.setModel(listDataModelFilter);
+
         setDataDefaultInGrid();
     }
 
@@ -103,7 +107,7 @@ public class ConstructionController extends GenericForwardComposer {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         StyleUtils.setDisableComponent(lstCell, 4);
-        reloadGrid();
+        reloadGrid(0);
 
     }
 
@@ -122,7 +126,7 @@ public class ConstructionController extends GenericForwardComposer {
         construction.setCreateDate(new Date());
         constructionService.insertOrUpdateConstruction(construction);
         StyleUtils.setDisableComponent(lstCell, 4);
-        reloadGrid();
+        reloadGrid(1);
     }
 
     /**
@@ -148,7 +152,7 @@ public class ConstructionController extends GenericForwardComposer {
                     construction.setStatus(Constants.STATUS_INACTIVE);
                     construction.setCreateDate(new Date());
                     constructionService.insertOrUpdateConstruction(construction);
-                    reloadGrid();
+                    reloadGrid(1);
                 }
             }
         });
@@ -205,8 +209,12 @@ public class ConstructionController extends GenericForwardComposer {
     /**
      * Reload grid
      */
-    private void reloadGrid() {
-        lstConstructions = constructionService.getConstructionActive();
+    private void reloadGrid(int loadCache) {
+        if (loadCache == 1) {
+            memory.loadConstruction();
+        }
+        lstConstructions = new ArrayList<>(memory.getConstructionCache().values());
+        
         listDataModel = new ListModelList(lstConstructions);
         listDataModelFilter = new MyListModel(lstConstructions);
         lstConstruction.setModel(listDataModel);

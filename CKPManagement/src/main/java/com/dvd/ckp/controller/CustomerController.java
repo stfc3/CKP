@@ -58,30 +58,29 @@ public class CustomerController extends GenericForwardComposer {
     private final int addressIndex = 5;
     private final int accountIndex = 6;
     private final int bankIndex = 7;
-    
+
     Param defaultParam;
     List<Param> lstBanks;
-
+    private Memory memory = new Memory();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
-        
+
         defaultParam = new Param();
         defaultParam.setParamValue(Constants.DEFAULT_ID);
         defaultParam.setParamName(Labels.getLabel("option"));
-        
+
         //list loai may bom
         lstBanks = utilsService.getParamByKey(Constants.PRAM_BANK);
         if (lstBanks == null) {
             lstBanks = new ArrayList<>();
         }
         lstBanks.add(Constants.FIRST_INDEX, defaultParam);
-        
-        
-        reloadGrid();
+
+        reloadGrid(0);
     }
 
     /**
@@ -108,7 +107,7 @@ public class CustomerController extends GenericForwardComposer {
 //        Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 //        List<Component> lstCell = rowSelected.getChildren();
 //        StyleUtils.setDisableComponent(lstCell, 4);
-        reloadGrid();
+        reloadGrid(0);
         cbxCustomerFilter.setFocus(true);
 
     }
@@ -128,7 +127,7 @@ public class CustomerController extends GenericForwardComposer {
         customer.setCreateDate(new Date());
         customerService.insertOrUpdateCustomer(customer);
 //        StyleUtils.setDisableComponent(lstCell, 4);
-        reloadGrid();
+        reloadGrid(1);
         cbxCustomerFilter.setFocus(true);
     }
 
@@ -142,12 +141,12 @@ public class CustomerController extends GenericForwardComposer {
                     customer.setStatus(Constants.STATUS_INACTIVE);
                     customer.setCreateDate(new Date());
                     customerService.insertOrUpdateCustomer(customer);
-                    reloadGrid();
+                    reloadGrid(1);
                 }
                 cbxCustomerFilter.setFocus(true);
             }
         });
-        
+
     }
 
     /**
@@ -220,13 +219,16 @@ public class CustomerController extends GenericForwardComposer {
     /**
      * Reload grid
      */
-    private void reloadGrid() {
-        lstCustomers = customerService.getCustomerActive();
+    private void reloadGrid(int loadCache) {
+        if (loadCache == 1) {
+            memory.loadCustomer();
+        }
+        lstCustomers = new ArrayList<>(memory.getCustomerCache().values());
         listDataModel = new ListModelList(lstCustomers);
         lstCustomer.setModel(listDataModel);
 
         cbxCustomerFilter.setModel(new MyListModel(lstCustomers));
-        
+
         setDataDefaultInGrid();
     }
 
@@ -256,7 +258,6 @@ public class CustomerController extends GenericForwardComposer {
         setDataDefaultInGrid();
     }
 
-    
     private void setDataDefaultInGrid() {
         lstCustomer.renderAll();
         List<Component> lstRows = lstCustomer.getRows().getChildren();
@@ -269,6 +270,7 @@ public class CustomerController extends GenericForwardComposer {
             }
         }
     }
+
     private List<Param> getParamDefault(Long paramValue, int type) {
         List<Param> paramSelected = new ArrayList<>();
         List<Param> lstParam = null;
@@ -292,6 +294,7 @@ public class CustomerController extends GenericForwardComposer {
         }
         return paramSelected;
     }
+
     private void setComboboxParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
         Combobox cbxParam = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
@@ -311,6 +314,7 @@ public class CustomerController extends GenericForwardComposer {
             cbxParam.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getParamName());
         }
     }
+
     public void onImport(ForwardEvent event) {
         Messagebox.show("Chức năng chưa được hỗ trợ", "Thông báo", Messagebox.OK, Messagebox.INFORMATION);
     }

@@ -71,9 +71,8 @@ public class ApproveController extends GenericForwardComposer {
     @Autowired
     protected BillsServices billServices;
 
-    @Autowired
-    protected StaffServices staffServices;
-
+//    @Autowired
+//    protected StaffServices staffServices;
     @Autowired
     protected ConstructionService contructionServices;
 
@@ -87,7 +86,7 @@ public class ApproveController extends GenericForwardComposer {
     private ListModelList<BillViewDetail> listApprove;
 
     private List<BillViewDetail> listData;
-    private List<StaffQuantity> listStaff;
+//    private List<StaffQuantity> listStaff;
 
     private List<Bills> lstBill;
 
@@ -108,17 +107,17 @@ public class ApproveController extends GenericForwardComposer {
 
     @Wire
     private Window approve;
+    private Memory memory = new Memory();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
         billServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
-        staffServices = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
+//        staffServices = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
         contructionServices = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
         pumpServices = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
 
-        listStaff = staffServices.getAll();
-
+//        listStaff = staffServices.getAll();
         lstBill = billServices.getAllData();
 
         listData = billServices.getApproveBill();
@@ -144,7 +143,8 @@ public class ApproveController extends GenericForwardComposer {
         listApprove = new ListModelList<>(vlstData);
         gridApprove.setModel(listApprove);
 
-        listContruction = contructionServices.getAllConstruction();
+        listContruction = new ArrayList<>(memory.getConstructionCache().values());
+
         modelListContruction = new MyListModel<>(listContruction);
         cbContruction.setModel(modelListContruction);
 
@@ -167,7 +167,7 @@ public class ApproveController extends GenericForwardComposer {
     }
 
     private void reload() {
-        listStaff = staffServices.getAll();
+//        listStaff = staffServices.getAll();
         listData.clear();
         listData = billServices.getApproveBill();
 
