@@ -139,8 +139,8 @@ public class Memory {
         return lstLocationCache;
     }
 
-    public void setLstLocationCache(Map<Long, Location> lstLocationCache) {
-        Memory.lstLocationCache = lstLocationCache;
+    public void setLstLocationCache(Map<Long, Location> locationCache) {
+        lstLocationCache = locationCache;
     }
 
     /*------------------------------get set cua service ------------------------------*/

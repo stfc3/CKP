@@ -20,5 +20,4 @@ http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
         <property name="constructionService" ref="ConstructionService" />
         <property name="locationServices" ref="LocationService" />
     </bean>
-    
 </beans>

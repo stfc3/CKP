@@ -64,8 +64,8 @@ public class PriceController extends GenericForwardComposer {
     protected UtilsService utilsService;
     @WireVariable
     protected PumpServices pumpService;
-    @WireVariable
-    protected LocationServices locationService;
+//    @WireVariable
+//    protected LocationServices locationService;
     @WireVariable
     protected DistributeService distributeService;
     @Wire
@@ -113,6 +113,7 @@ public class PriceController extends GenericForwardComposer {
 
     private final Integer pricePump = 1;
     private final Integer priceDistribute = 2;
+    private Memory memory = new Memory();
     ///
 
     @Override
@@ -122,7 +123,7 @@ public class PriceController extends GenericForwardComposer {
         contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
         pumpService = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
-        locationService = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
+//        locationService = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
         distributeService = (DistributeService) SpringUtil.getBean(SpringConstant.DISTRIBUTE_SERVICES);
 
 //        price
@@ -174,7 +175,7 @@ public class PriceController extends GenericForwardComposer {
         defaultLocation = new Location();
         defaultLocation.setLocationID(Constants.SPECIAL_ID);
         defaultLocation.setLocationName(Labels.getLabel("option"));
-        lstLocationMin = locationService.getListLocation();
+        lstLocationMin = new ArrayList<>(memory.getLocationCache().values());
         if (lstLocationMin == null) {
             lstLocationMin = new ArrayList<>();
         }

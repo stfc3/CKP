@@ -56,8 +56,8 @@ public class BillsDetailController extends GenericForwardComposer {
     protected UtilsService utilsService;
     @WireVariable
     protected BillsServices billsServices;
-    @WireVariable
-    protected LocationServices locationServices;
+//    @WireVariable
+//    protected LocationServices locationServices;
 
     private Pumps defaultPumps;
     private Param defaultParam;
@@ -107,7 +107,7 @@ public class BillsDetailController extends GenericForwardComposer {
     private Intbox txtShift = null;
     private Label txtTotal;
     private Intbox txtSwitch = null;
-
+    private Memory memory = new Memory();
     @Wire
     private A formula;
 
@@ -119,7 +119,7 @@ public class BillsDetailController extends GenericForwardComposer {
         pumpServices = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
         billsServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
-        locationServices = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
+//        locationServices = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
 
         // danh sach bom
         lstPumps = pumpServices.getAllListData();
@@ -131,7 +131,7 @@ public class BillsDetailController extends GenericForwardComposer {
         lstTypeLocation = utilsService.getParamByKey(Constants.PRAM_LOCATION_TYPE);
 
         // danh sach vi tri bom
-        lstLocation = locationServices.getListLocation();
+        lstLocation = new ArrayList<>(memory.getLocationCache().values());
 
         // list danh sach chi tiet hoa don
         lstBillDetail = new ArrayList<>();

@@ -95,6 +95,7 @@ public class LocationController extends GenericForwardComposer {
     public Button errorList;
 
     private Param defaultParam;
+    private Memory memory = new Memory();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -104,11 +105,12 @@ public class LocationController extends GenericForwardComposer {
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
         // danh sach loai vi tri
         lstTypeLocation = utilsService.getParamByKey(com.dvd.ckp.utils.Constants.PRAM_LOCATION_TYPE);
-        lstLocation = new ArrayList<>();
-        List<Location> vlstData = locationServices.getListLocation();
-        if (vlstData != null) {
-            lstLocation.addAll(vlstData);
-            lstFilter.addAll(vlstData);
+
+        lstLocation = new ArrayList<>(memory.getLocationCache().values());
+//        List<Location> vlstData = locationServices.getListLocation();
+        if (lstLocation != null) {
+//            lstLocation.addAll(vlstData);
+            lstFilter.addAll(lstLocation);
         }
         listDataLocation = new MyListModel(lstLocation);
         cbFilterName.setModel(listDataLocation);
@@ -151,7 +153,7 @@ public class LocationController extends GenericForwardComposer {
                     lstFilter.remove(getIndexLocationFilter(c.getLocationID()));
                     lstLocation.remove(getIndexLocation(c.getLocationID()));
                     StyleUtils.setDisableComponent(lstCell, 4);
-                    reloadGrid();
+                    reloadGrid(1);
                 }
             }
         });
@@ -167,7 +169,7 @@ public class LocationController extends GenericForwardComposer {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
         StyleUtils.setDisableComponent(lstCell, 4);
-        reloadGrid();
+        reloadGrid(0);
     }
 
     // get pump type default
@@ -240,7 +242,7 @@ public class LocationController extends GenericForwardComposer {
             locationServices.update(location);
         }
         StyleUtils.setDisableComponent(lstCell, 4);
-        reloadGrid();
+        reloadGrid(1);
         insertOrUpdate = 0;
     }
 
@@ -284,8 +286,11 @@ public class LocationController extends GenericForwardComposer {
     /**
      * Reload grid
      */
-    private void reloadGrid() {
-        List<Location> vlstData = locationServices.getListLocation();
+    private void reloadGrid(int loadCache) {
+        if (loadCache == 1) {
+            memory.loadLocation();
+        }
+        List<Location> vlstData = new ArrayList<>(memory.getLocationCache().values());
         if (vlstData != null && !vlstData.isEmpty()) {
             listDataModel = new ListModelList(vlstData);
             listDataLocation = new MyListModel(vlstData);
@@ -295,9 +300,9 @@ public class LocationController extends GenericForwardComposer {
         }
 
         gridLocation.setModel(listDataModel);
-        
+
         cbFilterName.setModel(listDataLocation);
-        
+
         setDataDefaultInGridViewDetail();
     }
 
@@ -365,7 +370,7 @@ public class LocationController extends GenericForwardComposer {
 
             @Override
             public void onEvent(Event event) throws Exception {
-                reloadGrid();
+                reloadGrid(1);
 
             }
         });

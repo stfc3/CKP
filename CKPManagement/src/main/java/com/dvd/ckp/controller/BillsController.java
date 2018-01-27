@@ -92,8 +92,8 @@ public class BillsController extends GenericForwardComposer<Component> {
     protected ContractService contractService;
     @WireVariable
     protected PumpServices pumpServices;
-    @WireVariable
-    protected LocationServices locationServices;
+//    @WireVariable
+//    protected LocationServices locationServices;
     @WireVariable
     protected UtilsService utilsService;
 
@@ -165,7 +165,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 //        customerService = (CustomerService) SpringUtil.getBean(SpringConstant.CUSTOMER_SERVICES);
         billsServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
         contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
-        locationServices = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
+//        locationServices = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
         pumpServices = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
 
@@ -192,7 +192,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 
         // danh sach vi tri bom
         lstLocation = new ArrayList<>();
-        List<Location> lstLoca = locationServices.getListLocation();
+        List<Location> lstLoca = new ArrayList<>(memory.getLocationCache().values());
         if (lstLoca != null && !lstLoca.isEmpty()) {
             lstLocation.addAll(lstLoca);
         }

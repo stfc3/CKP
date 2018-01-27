@@ -54,8 +54,8 @@ public class PriceLocationController extends GenericForwardComposer {
     protected ContractService contractService;
     @WireVariable
     protected UtilsService utilsService;
-    @WireVariable
-    protected LocationServices locationService;
+//    @WireVariable
+//    protected LocationServices locationService;
     @Wire
     private Grid lstPriceLocation;
     @Wire
@@ -79,6 +79,7 @@ public class PriceLocationController extends GenericForwardComposer {
     private final int locationShiftIndex = 5;
 
     private Long lngPriceId;
+    private Memory memory = new Memory();
     ///
 
     @Override
@@ -87,7 +88,7 @@ public class PriceLocationController extends GenericForwardComposer {
         context = Sessions.getCurrent().getWebApp().getServletContext();
         contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
-        locationService = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
+//        locationService = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
 
 //        price
         defaultParam = new Param();
@@ -105,7 +106,7 @@ public class PriceLocationController extends GenericForwardComposer {
         defaultLocation = new Location();
         defaultLocation.setLocationID(Constants.SPECIAL_ID);
         defaultLocation.setLocationName(Labels.getLabel("option"));
-        lstLocationMin = locationService.getListLocation();
+        lstLocationMin = new ArrayList<>(memory.getLocationCache().values());
         if (lstLocationMin == null) {
             lstLocationMin = new ArrayList<>();
         }
