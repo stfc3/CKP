@@ -2802,6 +2802,7 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
                         <data id="263">
+                            <property name="textAlign">center</property>
                             <property name="resultSetColumn">unit</property>
                         </data>
                     </cell>

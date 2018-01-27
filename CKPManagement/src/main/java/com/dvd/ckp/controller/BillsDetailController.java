@@ -337,7 +337,7 @@ public class BillsDetailController extends GenericForwardComposer {
     public void onAdd(ForwardEvent event) {
         BillsDetail billsDetail = new BillsDetail();
         listDataModelDetail.add(0, billsDetail);
-        gridBillsDetail.setActivePage(0);
+//        gridBillsDetail.setActivePage(0);
         gridBillsDetail.setModel(listDataModelDetail);
         gridBillsDetail.renderAll();
         List<Component> lstCell = gridBillsDetail.getRows().getChildren().get(0).getChildren();
