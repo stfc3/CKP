@@ -226,11 +226,11 @@ public class ApproveController extends GenericForwardComposer {
             // reload();
 
         } else if (isApprove == 2) {
-            Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message"), Labels.getLabel("comfirm"),
-                    Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
-                @Override
-                public void onEvent(Event e) {
-                    if (Messagebox.ON_NO.equals(e.getName())) {
+//            Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message"), Labels.getLabel("comfirm"),
+//                    Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
+//                @Override
+//                public void onEvent(Event e) {
+//                    if (Messagebox.ON_NO.equals(e.getName())) {
                         final Window windownUpload = (Window) Executions
                                 .createComponents("/manager/include/approveQuantity.zul", approve, arguments);
                         windownUpload.doModal();
@@ -249,22 +249,22 @@ public class ApproveController extends GenericForwardComposer {
                         // }
                         // });
                         // reload();
-                    } else if (Messagebox.ON_YES.equals(e.getName())) {
-                        try {
-                            BillsDetail billsDetail = new BillsDetail();
-                            billsDetail.setBillDetailId(data.getBillDetailID());
-                            billsDetail.setStatus(2);
-
-                            billServices.delete(billsDetail);
-                            onClick$reloadData();
-                        } catch (Exception e2) {
-                            logger.error(e2.getMessage(), e2);
-                        }
-//                        Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message.ok"),
-//                                Labels.getLabel("comfirm"), Messagebox.OK, Messagebox.INFORMATION);
-                    }
-                }
-            });
+//                    } else if (Messagebox.ON_YES.equals(e.getName())) {
+//                        try {
+//                            BillsDetail billsDetail = new BillsDetail();
+//                            billsDetail.setBillDetailId(data.getBillDetailID());
+//                            billsDetail.setStatus(2);
+//
+//                            billServices.delete(billsDetail);
+//                            onClick$reloadData();
+//                        } catch (Exception e2) {
+//                            logger.error(e2.getMessage(), e2);
+//                        }
+////                        Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message.ok"),
+////                                Labels.getLabel("comfirm"), Messagebox.OK, Messagebox.INFORMATION);
+//                    }
+//                }
+//            });
 
         }
 

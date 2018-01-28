@@ -617,7 +617,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <expression name="value" type="javascript">row["quantity"]</expression>
                         </structure>
                     </list-property>
-                    <expression name="filterExpr" type="javascript">if(dataSetRow["param_value"]==3){&#13;
+                    <expression name="filterExpr" type="javascript">//Loại bơm là CPP&#13;
+if(dataSetRow["param_value"]==3){&#13;
 	true;&#13;
 }else{&#13;
 	false;&#13;
@@ -637,7 +638,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <expression name="value" type="javascript">row["quantity"]</expression>
                         </structure>
                     </list-property>
-                    <expression name="filterExpr" type="javascript">if(dataSetRow["param_value"]==1 &amp;&amp; dataSetRow["param_value_5"]==1){&#13;
+                    <expression name="filterExpr" type="javascript">//Loại bơm là bơm tĩnh và vị trí là sàn&#13;
+if(dataSetRow["param_value"]==1 &amp;&amp; dataSetRow["param_value_5"]==1){&#13;
 	true;&#13;
 }else{&#13;
 	false;&#13;
@@ -658,7 +660,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <expression name="value" type="javascript">row["quantity"]</expression>
                         </structure>
                     </list-property>
-                    <expression name="filterExpr" type="javascript">if(dataSetRow["param_value"]==1 &amp;&amp; (dataSetRow["param_value_5"]==2 || dataSetRow["param_value_5"]==3 || dataSetRow["param_value_5"]==4)){&#13;
+                    <expression name="filterExpr" type="javascript">//Loại bơm là bơm tĩnh và vị trí là côt, vách, lót&#13;
+if(dataSetRow["param_value"]==1 &amp;&amp; (dataSetRow["param_value_5"]==2 || dataSetRow["param_value_5"]==3 || dataSetRow["param_value_5"]==4)){&#13;
 	true;&#13;
 }else{&#13;
 	false;&#13;
@@ -679,7 +682,8 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                             <expression name="value" type="javascript">row["quantity"]</expression>
                         </structure>
                     </list-property>
-                    <expression name="filterExpr" type="javascript">if(dataSetRow["param_value"]==1 &amp;&amp; dataSetRow["param_value_5"]==5){&#13;
+                    <expression name="filterExpr" type="javascript">//Loại bơm là bơm tĩnh và loại vị trí là đài móng&#13;
+if(dataSetRow["param_value"]==1 &amp;&amp; dataSetRow["param_value_5"]==5){&#13;
 	true;&#13;
 }else{&#13;
 	false;&#13;
