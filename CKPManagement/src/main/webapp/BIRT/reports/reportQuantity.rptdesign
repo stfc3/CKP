@@ -157,17 +157,17 @@
                 <list-property name="resultSet">
                     <structure>
                         <property name="position">1</property>
-                        <property name="name">construction_name</property>
+                        <property name="name">contruction</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">2</property>
-                        <property name="name">param_value</property>
+                        <property name="name">pump_type_value</property>
                         <property name="dataType">decimal</property>
                     </structure>
                     <structure>
                         <property name="position">3</property>
-                        <property name="name">param_name</property>
+                        <property name="name">pump_type</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -177,7 +177,7 @@
                     </structure>
                     <structure>
                         <property name="position">5</property>
-                        <property name="name">param_value_5</property>
+                        <property name="name">location_type</property>
                         <property name="dataType">decimal</property>
                     </structure>
                     <structure>
@@ -197,13 +197,18 @@
                     </structure>
                     <structure>
                         <property name="position">9</property>
-                        <property name="name">param_name_9</property>
+                        <property name="name">position</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">10</property>
                         <property name="name">quantity</property>
                         <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">quantity_type</property>
+                        <property name="dataType">integer</property>
                     </structure>
                 </list-property>
             </structure>
@@ -268,6 +273,12 @@
                     <property name="name">quantity</property>
                     <property name="nativeName">quantity</property>
                     <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">quantity_type</property>
+                    <property name="nativeName">quantity_type</property>
+                    <property name="dataType">integer</property>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[CALL proc_report_quantity(?,?,?,?)]]></xml-property>
@@ -702,6 +713,27 @@ if(dataSetRow["param_value"]==1 &amp;&amp; dataSetRow["param_value_5"]==5){&#13;
                     <text-property name="displayName">lbl_quantity</text-property>
                     <expression name="expression" type="javascript">"Khối \nlượng"</expression>
                     <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">wait_quantity_total</property>
+                    <text-property name="displayName">wait_quantity_total</text-property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>GroupStaff</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["quantity"]</expression>
+                        </structure>
+                    </list-property>
+                    <expression name="filterExpr" type="javascript">if(dataSetRow["quantity_type"]==1){&#13;
+	true;&#13;
+}else{&#13;
+	false;&#13;
+}</expression>
                     <property name="allowExport">true</property>
                 </structure>
             </list-property>
@@ -2055,6 +2087,9 @@ if(dataSetRow["param_value"]==1 &amp;&amp; dataSetRow["param_value_5"]==5){&#13;
                             <property name="borderTopStyle">solid</property>
                             <property name="borderTopWidth">1px</property>
                             <property name="textAlign">right</property>
+                            <data id="495">
+                                <property name="resultSetColumn">wait_quantity_total</property>
+                            </data>
                         </cell>
                     </row>
                 </footer>
