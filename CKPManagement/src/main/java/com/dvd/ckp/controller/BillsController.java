@@ -155,6 +155,8 @@ public class BillsController extends GenericForwardComposer<Component> {
 
     private Memory memory = new Memory();
 
+    private boolean billCodeIsChange = false;
+
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);
@@ -256,6 +258,7 @@ public class BillsController extends GenericForwardComposer<Component> {
     public void onEdit(ForwardEvent event) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
+        billCodeChange(lstCell);
         Bills c = rowSelected.getValue();
         setDataConstruction(lstCell, getConstructionDefault(c.getConstructionID()), constructionID);
         setDataCustomer(lstCell, getCustomerDefault(c.getCustomerID()), customerID);
@@ -291,8 +294,6 @@ public class BillsController extends GenericForwardComposer<Component> {
 
         bill.setStatus(1);
         save(bill, lstCell);
-        setDisableComponent(lstCell, 6);
-        reloadGrid();
 
     }
 
@@ -309,6 +310,8 @@ public class BillsController extends GenericForwardComposer<Component> {
             }
 
             insertOrUpdate = 0;
+            setDisableComponent(lstCell, 6);
+            reloadGrid();
         }
     }
 
@@ -465,17 +468,21 @@ public class BillsController extends GenericForwardComposer<Component> {
         if (component != null && component instanceof Textbox) {
             txtBillsCode = (Textbox) component;
             Label mesage = (Label) componentLast;
-            if (checkExits(txtBillsCode.getValue(), lstBills)) {
 
-                mesage.setValue(Labels.getLabel("validate.code.duplicate"));
-                mesage.setHflex("1");
-                txtBillsCode.focus();
-                isFalse = true;
-            } else {
-                mesage.setVisible(false);
-                mesage.setHflex("0");
-                mesage.setValue("");
+            if (billCodeIsChange) {
+                if (checkExits(txtBillsCode.getValue(), lstBills)) {
 
+                    mesage.setValue(Labels.getLabel("validate.code.duplicate"));
+                    mesage.setHflex("1");
+                    txtBillsCode.focus();
+                    isFalse = true;
+                } else {
+                    mesage.setVisible(false);
+                    mesage.setHflex("0");
+                    mesage.setValue("");
+
+                }
+                billCodeIsChange = false;
             }
         }
         // Khach hang
@@ -554,6 +561,27 @@ public class BillsController extends GenericForwardComposer<Component> {
         }
 
         return isFalse;
+    }
+
+    private void billCodeChange(List<Component> lstCell) {
+
+        Component component;
+        Textbox txtBillsCode;
+
+        // ma phieu bom
+        component = lstCell.get(billsCode).getFirstChild();
+
+        if (component != null && component instanceof Textbox) {
+            txtBillsCode = (Textbox) component;
+            txtBillsCode.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
+                @Override
+                public void onEvent(Event event) throws Exception {
+                    // TODO Auto-generated method stub
+                    billCodeIsChange = true;
+                }
+            });
+        }
+
     }
 
     private boolean checkExits(String billCode, List<Bills> listData) {

@@ -229,7 +229,7 @@
                                            label="${each.locationName}" />
                             </template>
                         </combobox>
-                         <label hflex="0" style="color:red"/>
+                        <label hflex="0" style="color:red"/>
                     </cell>
                     <!--tu dong chuyen doi -->
                     <cell style="text-align: center;">
@@ -238,9 +238,11 @@
 
                     <!--khoi luong bom -->
                     <cell>
-                        <doublebox value="${each.quantity}"
-                                   style="text-align: right;" tooltiptext="${each.quantity}"
-                                   hflex="1" inplace="true" readonly="true" />
+                        <!--                        <doublebox value="${each.quantity}"
+                        style="text-align: right;" tooltiptext="${each.quantity}"
+                        hflex="1" inplace="true" readonly="true" />-->
+                        <doublebox style="text-align: right;" inplace="true" hflex="1" 
+                                                                          readonly="true" format="#,##0.##" locale="en" value="${each.quantity}" />
                         <label hflex="0" style="color:red"/>
                     </cell>
                     <!--Ca cho -->
