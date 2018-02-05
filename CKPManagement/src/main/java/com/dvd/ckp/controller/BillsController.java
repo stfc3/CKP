@@ -46,7 +46,6 @@ import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
 import com.dvd.ckp.business.service.ContractService;
-import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.common.Constants;
@@ -407,6 +406,7 @@ public class BillsController extends GenericForwardComposer<Component> {
                 dtPrdID = (Datebox) component;
                 bills.setPrdID(
                         DateTimeUtils.convertDateToString(dtPrdID.getValue(), Constants.FORMAT_DATE));
+                bills.setStrDateInput(DateTimeUtils.convertDateToString(dtPrdID.getValue(), Constants.FORMAT_DATE_DD_MM_YYY));
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }
@@ -914,6 +914,21 @@ public class BillsController extends GenericForwardComposer<Component> {
         return null;
     }
 
+    private Customer getCustomer(Long customerId) {
+
+        if (lstCustomer != null && !lstCustomer.isEmpty()) {
+            for (Customer item : lstCustomer) {
+                if (customerId != null && customerId.equals(item.getCustomerId())) {
+                    return item;
+
+                }
+            }
+        }
+        return null;
+    }
+
+
+
     /**
      * Open windown add bill detail
      *
@@ -923,43 +938,52 @@ public class BillsController extends GenericForwardComposer<Component> {
     public void onAddDetail(ForwardEvent event) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
         List<Component> lstCell = rowSelected.getChildren();
-        Bills billsValue = rowSelected.getValue();
-        getDataInRow(lstCell, billsValue);
-        billsValue.setStatus(1);
-        save(billsValue, lstCell);
-        reloadGrid();
+        if (!valiDate(lstCell)) {
+            Bills billsValue = rowSelected.getValue();
+            getDataInRow(lstCell, billsValue);
+            billsValue.setStatus(1);
 
-        Map<String, Object> arguments = new HashMap();
-        BillsDetail billsDetail = getBillsDetail(billsValue.getBillID());
-        if (billsDetail != null) {
-            arguments.put("detail", billsDetail);
-        } else {
-            arguments.put("detail", new BillsDetail());
-        }
-        arguments.put("bill", billsValue);
-        if (billsDetail != null) {
-            Pumps pumps = getPumps(billsDetail.getPumpID());
-            arguments.put("pumps", pumps);
-            Location location = getLocation(billsDetail.getLocationId());
-            arguments.put("location", location);
-        }
-        Construction construction = getConstruction(billsValue.getConstructionID());
-        arguments.put("construction", construction);
+            save(billsValue, lstCell);
+            reloadGrid();
 
-        final Window windownUpload = (Window) Executions.createComponents("/manager/include/billDetail.zul", bills,
-                arguments);
-        windownUpload.doModal();
-        windownUpload.setBorder(true);
-        windownUpload.setBorder("normal");
-        windownUpload.setClosable(true);
-        windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
-
-            @Override
-            public void onEvent(Event event) throws Exception {
-                lstBillDetail = billsServices.getBillDetail();
-                reloadGrid();
+            Map<String, Object> arguments = new HashMap();
+            BillsDetail billsDetail = getBillsDetail(billsValue.getBillID());
+            if (billsDetail != null) {
+                arguments.put("detail", billsDetail);
+            } else {
+                arguments.put("detail", new BillsDetail());
             }
-        });
+            
+            arguments.put("bill", billsValue);
+
+            if (billsDetail != null) {
+                Pumps pumps = getPumps(billsDetail.getPumpID());
+                arguments.put("pumps", pumps);
+                Location location = getLocation(billsDetail.getLocationId());
+                arguments.put("location", location);
+            }
+            Construction construction = getConstruction(billsValue.getConstructionID());
+            arguments.put("construction", construction);
+
+            Customer customer = getCustomer(billsValue.getCustomerID());
+            arguments.put("customer", customer);
+            
+            
+            final Window windownUpload = (Window) Executions.createComponents("/manager/include/billDetail.zul", bills,
+                    arguments);
+            windownUpload.doModal();
+            windownUpload.setBorder(true);
+            windownUpload.setBorder("normal");
+            windownUpload.setClosable(true);
+            windownUpload.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+                @Override
+                public void onEvent(Event event) throws Exception {
+                    lstBillDetail = billsServices.getBillDetail();
+                    reloadGrid();
+                }
+            });
+        }
     }
 
     /**
@@ -1030,7 +1054,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         return -1;
     }
 
-    public static void setDisableComponent(List<Component> lstCell, int numberAction) {
+    private static void setDisableComponent(List<Component> lstCell, int numberAction) {
         if (lstCell != null && !lstCell.isEmpty()) {
             for (Component c : lstCell) {
                 if (c instanceof Cell) {

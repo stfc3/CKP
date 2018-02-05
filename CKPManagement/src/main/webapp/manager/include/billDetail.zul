@@ -87,7 +87,7 @@
                 </label>
             </hbox>
             <hbox hflex="2">
-                <label value="${arg.bill.customerName}"></label>
+                <label value="${arg.customer.customerName}"></label>
             </hbox>
             <hbox hflex="2">
                 <label style="font-weight: bold;">
@@ -110,7 +110,8 @@
                 </label>
             </hbox>
             <hbox hflex="2">
-                <label value="${arg.bill.constructionName}"></label>
+                <!--<label value="${arg.bill.constructionName}"></label>-->
+                <label value="${arg.construction.constructionName}"></label>
             </hbox>
             <hbox hflex="2">
                 <label style="font-weight: bold;">

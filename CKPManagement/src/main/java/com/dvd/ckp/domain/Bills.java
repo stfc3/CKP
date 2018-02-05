@@ -248,13 +248,7 @@ public class Bills implements Serializable {
 
     @Transient
     public String getStrDateInput() {
-        try {
-            return DateTimeUtils.convertDateToString(dateInput, Constants.FORMAT_DATE_DD_MM_YYY);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            LOGGER.error(e.getMessage(), e);
-        }
-        return "";
+        return strDateInput;
     }
 
     public void setStrDateInput(String strDateInput) {
