@@ -6,6 +6,7 @@
     <style src="css/theme.css"></style>
     <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
     <script type="text/javascript" src="js/myjs.js"></script>
+    <script type="text/javascript" src="js/monthbox.js"></script>
 
     <borderlayout apply="com.dvd.ckp.controller.MainController"
                   class="main-index">

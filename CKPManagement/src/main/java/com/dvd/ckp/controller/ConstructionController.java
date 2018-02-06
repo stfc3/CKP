@@ -59,7 +59,6 @@ public class ConstructionController extends GenericForwardComposer {
     private final int contractIndex = 3;
     private final int addressIndex = 4;
     private final int farIndex = 5;
-    private Memory memory = new Memory();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -67,7 +66,7 @@ public class ConstructionController extends GenericForwardComposer {
         constructionService = (ConstructionService) SpringUtil.getBean(SpringConstant.CONSTRUCTION_SERVICES);
         contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
         
-        lstConstructions = new ArrayList<>(memory.getConstructionCache().values());
+        lstConstructions = new ArrayList<>(Memory.lstConstructionCache.values());
 
         listDataModel = new ListModelList(lstConstructions);
         lstConstruction.setModel(listDataModel);
@@ -212,9 +211,9 @@ public class ConstructionController extends GenericForwardComposer {
      */
     private void reloadGrid(int loadCache) {
         if (loadCache == 1) {
-            memory.loadConstruction();
+            Memory.loadConstruction();
         }
-        lstConstructions = new ArrayList<>(memory.getConstructionCache().values());
+        lstConstructions = new ArrayList<>(Memory.lstConstructionCache.values());
         
         listDataModel = new ListModelList(lstConstructions);
         listDataModelFilter = new MyListModel(lstConstructions);

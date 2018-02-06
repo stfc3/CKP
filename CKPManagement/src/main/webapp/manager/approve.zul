@@ -103,7 +103,9 @@
                             <label value="${each.location}" />
                         </cell>
                         <cell style="text-align: right;">
-                            <label value="${c:formatNumber(each.quantity, '###,###,###.##')}" />
+                            <doublebox style="text-align: right;" inplace="true" hflex="1" 
+                                     readonly="true" format="#,##0.##" locale="en" value="${each.quantity}" />
+                            <!--<label value="${each.quantity}" />-->
                         </cell>
                         <cell style="text-align: right;">
                             <label
@@ -144,3 +146,4 @@
     </window>
 
 </zk>
+>>>>>>> CKP/master

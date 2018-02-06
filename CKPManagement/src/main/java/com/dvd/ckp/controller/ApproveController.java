@@ -139,6 +139,7 @@ public class ApproveController extends GenericForwardComposer {
             vlstData.addAll(listData);
         }
         listApprove = new ListModelList<>(vlstData);
+        
         gridApprove.setModel(listApprove);
 
         listContruction = new ArrayList<>(memory.getConstructionCache().values());
