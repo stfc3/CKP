@@ -103,7 +103,7 @@
                             <label value="${each.location}" />
                         </cell>
                         <cell style="text-align: right;">
-                            <label value="${each.quantity}" />
+                            <label value="${c:formatNumber(each.quantity, '###,###,###.##')}" />
                         </cell>
                         <cell style="text-align: right;">
                             <label

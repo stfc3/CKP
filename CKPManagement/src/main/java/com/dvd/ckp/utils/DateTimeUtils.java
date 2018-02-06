@@ -70,11 +70,16 @@ public class DateTimeUtils {
 			return null;
 		}
 	}
+	
+	public static boolean compareDate(Date startDate, Date endDate){
+		return startDate.after(endDate);
+	}
 
 	public static void main(String[] arg) {
 		try {
-			System.out.println(convertDateToString(new Date(), "dd/MM/yyyy HH:MM:ss"));
-			System.out.println(convertStringToTime("20170922110926", "HH:MM:ss"));
+			Date fromDate = convertStringToTime("20180209", "yyyyMMdd");
+			Date toDate = convertStringToTime("20180207", "yyyyMMdd");
+			System.out.println(compareDate(fromDate, toDate));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

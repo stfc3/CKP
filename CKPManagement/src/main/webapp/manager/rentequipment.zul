@@ -104,6 +104,7 @@
                                         value="${each.paramValue}" label="${each.paramName}" />
                                 </template>
                             </combobox>
+                            <label hflex="0" style="color:red"/>
                         </cell>
                         <!--khach hang -->
                         <cell>
@@ -114,6 +115,7 @@
                                         value="${each.customerId}" label="${each.customerName}" />
                                 </template>
                             </combobox>
+                            <label hflex="0" style="color:red"/>
                         </cell>
                         <!--cong trinh -->
                         <cell>
@@ -125,6 +127,7 @@
                                         label="${each.constructionName}" />
                                 </template>
                             </combobox>
+                            <label hflex="0" style="color:red"/>
                         </cell>
 
                         <!--to truong -->
@@ -136,6 +139,7 @@
                                                label="${each.staffName}" />
                                 </template>
                             </combobox>
+                            <label hflex="0" style="color:red"/>
                         </cell>
 
                         <!--giam sat -->
@@ -147,6 +151,7 @@
                                                label="${each.staffName}" />
                                 </template>
                             </combobox>
+                            <label hflex="0" style="color:red"/>
                         </cell>
 
                         <!--thoi gian bat dau -->
@@ -154,6 +159,7 @@
                             <datebox value="${each.startDate}"
                                      format="dd/MM/yyyy" style="text-align: right;" hflex="1"
                                      inplace="true" readonly="true" buttonVisible="false"/>
+                                     <label hflex="0" style="color:red"/>
                         </cell>
 
                         <!--thoi gian ket thuc -->
@@ -161,6 +167,7 @@
                             <datebox value="${each.endDate}"
                                      format="dd/MM/yyyy" style="text-align: right;" hflex="1"
                                      inplace="true" readonly="true" buttonVisible="false"/>
+                                     <label hflex="0" style="color:red"/>
                         </cell>
 
                         <!--thanh tien -->
