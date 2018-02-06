@@ -95,7 +95,6 @@ public class LocationController extends GenericForwardComposer {
     public Button errorList;
 
     private Param defaultParam;
-    private Memory memory = new Memory();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -106,7 +105,7 @@ public class LocationController extends GenericForwardComposer {
         // danh sach loai vi tri
         lstTypeLocation = utilsService.getParamByKey(com.dvd.ckp.utils.Constants.PRAM_LOCATION_TYPE);
 
-        lstLocation = new ArrayList<>(memory.getLocationCache().values());
+        lstLocation = new ArrayList<>(Memory.lstLocationCache.values());
 //        List<Location> vlstData = locationServices.getListLocation();
         if (lstLocation != null) {
 //            lstLocation.addAll(vlstData);
@@ -288,9 +287,9 @@ public class LocationController extends GenericForwardComposer {
      */
     private void reloadGrid(int loadCache) {
         if (loadCache == 1) {
-            memory.loadLocation();
+            Memory.loadLocation();
         }
-        List<Location> vlstData = new ArrayList<>(memory.getLocationCache().values());
+        List<Location> vlstData = new ArrayList<>(Memory.lstLocationCache.values());
         if (vlstData != null && !vlstData.isEmpty()) {
             listDataModel = new ListModelList(vlstData);
             listDataLocation = new MyListModel(vlstData);

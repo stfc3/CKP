@@ -61,7 +61,6 @@ public class CustomerController extends GenericForwardComposer {
 
     Param defaultParam;
     List<Param> lstBanks;
-    private Memory memory = new Memory();
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -222,9 +221,9 @@ public class CustomerController extends GenericForwardComposer {
      */
     private void reloadGrid(int loadCache) {
         if (loadCache == 1) {
-            memory.loadCustomer();
+            Memory.loadCustomer();
         }
-        lstCustomers = new ArrayList<>(memory.getCustomerCache().values());
+        lstCustomers = new ArrayList<>(Memory.lstCustomerCache.values());
         listDataModel = new ListModelList(lstCustomers);
         lstCustomer.setModel(listDataModel);
 

@@ -25,11 +25,11 @@ public class Memory {
 
     private static final Logger logger = Logger.getLogger(Memory.class);
 
-    private CustomerService customerService;
+    private static CustomerService customerService;
 
-    private ConstructionService constructionService;
+    private static ConstructionService constructionService;
 
-    private LocationServices locationServices;
+    private static LocationServices locationServices;
 
     //list KH
     public static Map<Long, Customer> lstCustomerCache;
@@ -80,7 +80,7 @@ public class Memory {
         lstLocationCache.clear();
     }
 
-    public void loadCustomer() {
+    public static void loadCustomer() {
         List<Customer> vlstCustomers;
         vlstCustomers = customerService.getCustomerActive();
         if (vlstCustomers != null) {
@@ -90,7 +90,7 @@ public class Memory {
         }
     }
 
-    public void loadConstruction() {
+    public static void loadConstruction() {
         List<Construction> vlstConstructions;
         vlstConstructions = constructionService.getConstructionActive();
         if (vlstConstructions != null) {
@@ -100,7 +100,7 @@ public class Memory {
         }
     }
 
-    public void loadLocation() {
+    public static void loadLocation() {
         List<Location> vlstLocation;
         vlstLocation = locationServices.getListLocation();
         if (vlstLocation != null) {
@@ -149,7 +149,7 @@ public class Memory {
     }
 
     public void setCustomerService(CustomerService customerService) {
-        this.customerService = customerService;
+        Memory.customerService = customerService;
     }
 
     public ConstructionService getConstructionService() {
@@ -157,7 +157,7 @@ public class Memory {
     }
 
     public void setConstructionService(ConstructionService constructionService) {
-        this.constructionService = constructionService;
+        Memory.constructionService = constructionService;
     }
 
     public LocationServices getLocationServices() {
@@ -165,7 +165,7 @@ public class Memory {
     }
 
     public void setLocationServices(LocationServices locationServices) {
-        this.locationServices = locationServices;
+        Memory.locationServices = locationServices;
     }
 
 }
