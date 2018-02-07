@@ -277,7 +277,10 @@ public class LocationController extends GenericForwardComposer {
         location.setLocationCode(txtLocationCode.getValue());
         location.setLocationName(txtLocationName.getValue());
         location.setLocationValue(txtLocationValue.getValue());
-        location.setLocationType(txtLocationType.getSelectedItem().getValue());
+        if (txtLocationType.getSelectedItem() != null) {
+            location.setLocationType(txtLocationType.getSelectedItem().getValue());
+        }
+
         location.setStatus(1);
         return location;
     }
