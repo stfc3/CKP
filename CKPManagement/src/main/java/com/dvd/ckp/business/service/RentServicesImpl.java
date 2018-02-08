@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dvd.ckp.business.dao.RentEquimentDAO;
+import com.dvd.ckp.domain.Rent;
 import com.dvd.ckp.domain.RentEquiment;
 
 public class RentServicesImpl implements RentServices {
@@ -57,6 +58,20 @@ public class RentServicesImpl implements RentServices {
 			logger.error(e.getMessage(), e);
 		}
 
+	}
+
+	@Override
+	public List<Rent> storeRent(Long rentID) {
+		// TODO Auto-generated method stub
+
+		return rentPumpDao.storeRent(rentID);
+
+	}
+
+	@Override
+	public Long getMaxID() {
+		// TODO Auto-generated method stub
+		return rentPumpDao.getMaxID();
 	}
 
 }
