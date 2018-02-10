@@ -191,9 +191,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		List<Distribute> lstDistribute = distributeService.getDistributeActive();
 		if (lstDistribute != null && !lstDistribute.isEmpty()) {
 			listDistribute.addAll(lstDistribute);
-			for (Distribute item : lstDistribute) {
-				item.setDistributeName(item.getDistributeCode() + "-" + item.getDistributeName());
-			}
+//			for (Distribute item : lstDistribute) {
+//				item.setDistributeName(item.getDistributeCode() + "-" + item.getDistributeName());
+//			}
 		}
 
 		listPriceByContact = contractServices.getAllPrice();
@@ -244,7 +244,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 
 		distribute = new Distribute();
 		distribute.setDistributeId(-1l);
-		distribute.setDistributeCode("");
 		distribute.setDistributeName(Labels.getLabel("option"));
 		listDistribute.add(0, distribute);
 		// set model
@@ -297,7 +296,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 			getDataInRow(lstCell, value);
 			value.setStatus(1);
 			save(value);
-			StyleUtils.setDisableComponent(lstCell, 4);
+//			StyleUtils.setDisableComponent(lstCell, 4);
 			reloadGrid();
 		}
 

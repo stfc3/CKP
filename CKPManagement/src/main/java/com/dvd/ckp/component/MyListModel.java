@@ -581,7 +581,7 @@ public class MyListModel<E> extends AbstractListModel<E> implements Sortable<E>,
                 return ((Pumps) object).getPumpsName();
             }
             if(object instanceof Distribute){
-                return ((Distribute) object).getDistributeName();
+                return ((Distribute) object).getDistributeCode()+"-"+((Distribute) object).getDistributeName();
             }
             if(object instanceof Location){
                 return ((Location) object).getLocationName();
