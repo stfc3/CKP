@@ -3,6 +3,7 @@ package com.dvd.ckp.domain;
 public class Rent {
 	private Long code;
 	private String message;
+	private Double revenue;
 	
 	public Long getCode() {
 		return code;
@@ -15,6 +16,12 @@ public class Rent {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public Double getRevenue() {
+		return revenue;
+	}
+	public void setRevenue(Double revenue) {
+		this.revenue = revenue;
 	}
 	
 

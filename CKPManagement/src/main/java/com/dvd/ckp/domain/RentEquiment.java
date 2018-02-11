@@ -15,9 +15,6 @@ import javax.persistence.Transient;
 
 import org.apache.log4j.Logger;
 
-import com.dvd.ckp.common.Constants;
-import com.dvd.ckp.utils.DateTimeUtils;
-
 @Entity
 @Table(name = "rent_equipment")
 @NamedQuery(name = "RentEquipment.getAll", query = "FROM RentEquiment u where status = 1 order by createDate desc")

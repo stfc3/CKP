@@ -1,5 +1,6 @@
 package com.dvd.ckp.business.service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -69,7 +70,7 @@ public class RentServicesImpl implements RentServices {
 	}
 
 	@Override
-	public Long getMaxID() {
+	public BigInteger getMaxID() {
 		// TODO Auto-generated method stub
 		return rentPumpDao.getMaxID();
 	}

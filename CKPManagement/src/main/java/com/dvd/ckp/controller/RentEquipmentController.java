@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.controller;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,6 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
@@ -42,7 +42,6 @@ import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Construction;
-import com.dvd.ckp.domain.Contract;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Distribute;
 import com.dvd.ckp.domain.Param;
@@ -95,8 +94,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 	private List<RentEquiment> lstRents;
 
 	private List<Construction> lstConstructions;
-	private List<Customer> lstCustomer;
-	private List<Contract> listContact;
+	private List<Customer> lstCustomer;	
 	private List<Param> listRentType;
 	private List<Distribute> listDistribute;
 
@@ -120,8 +118,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 	private final int indexStartDate = 7;
 	private final int indexEndDate = 8;
 	private final int aveagePrice = 9;
-	private final int aveageValue = 10;
-
 	private static boolean isInsert = false;
 
 	@Wire
@@ -136,7 +132,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 	private Datebox dtFilterEndDate;
 
 	Double price = null;
-	Label averagePrice = null;
 	Combobox cbCustomer = null;
 	Combobox cbxConstruction = null;
 	Combobox cbxMajority = null;
@@ -208,13 +203,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 
 		List<RentEquiment> lstData = rentServices.getAllRentPumps();
 		if (lstData != null && !lstData.isEmpty()) {
-			for (RentEquiment item : lstData) {
-				item.setConstructionName(getConstructionByID(item.getConstructionID()));
-				item.setCustomerName(getCustomerByID(item.getCustomerID()));
-				item.setRentTypeName(getRentType(item.getRentType()).getParamName());
-				
 
-			}
 			lstRents.addAll(lstData);
 		}
 
@@ -296,25 +285,30 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 			RentEquiment value = rowSelected.getValue();
 			getDataInRow(lstCell, value);
 			value.setStatus(1);
-			save(value);
-			StyleUtils.setDisableComponent(lstCell, 4);
-			reloadGrid();
+			save(value,lstCell);
+			System.out.println("Avage value: " + averageValue.getValue());
+			
+			
 		}
 
 	}
 
-	private void save(RentEquiment value) {
-		Long rentID = null;
+	private void save(RentEquiment value, List<Component> lstCell) {
+		BigInteger rentID = null;
 		if (isInsert) {
 			value.setStatus(1);
 			rentServices.insert(value);
 			lstRents.add(value);
 			rentID = rentServices.getMaxID();
-			calculateAveragePriceOfDay(rentID);
+			Rent rent = calculateAveragePriceOfDay(rentID.longValue());
+			onChangeData(rent, lstCell);
+			StyleUtils.setDisableComponent(lstCell, 4);
+			
 		} else {
 			value.setCreateDate(new Date());
 			rentServices.update(value);
 			calculateAveragePriceOfDay(value.getRentID());
+			reloadGrid();
 		}
 
 		isInsert = false;
@@ -468,15 +462,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		lstRents.clear();
 		List<RentEquiment> lstData = rentServices.getAllRentPumps();
 		if (lstData != null && !lstData.isEmpty()) {
-			for (RentEquiment item : lstData) {
-
-				item.setConstructionName(getConstructionByID(item.getConstructionID()));
-				item.setCustomerName(getCustomerByID(item.getCustomerID()));
-				item.setRentTypeName(getRentType(item.getRentType()).getParamName());
-
-				
-
-			}
 			lstRents.addAll(lstData);
 		}
 		listDataModel = new ListModelList(lstRents);
@@ -1026,89 +1011,24 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		// }
 		// Double price = diff * priceOfContact / lastDayOfMonth;
 		List<Rent> listData = rentServices.storeRent(rentID);
-		System.out.println(listData.size());
 
 		return listData.get(0);
 	}
 
-	// private void onChangeData(List<Component> lstCell) {
-	//
-	// Component component;
-	//
-	// component = lstCell.get(aveagePrice).getFirstChild();
-	// if (component != null && component instanceof Label) {
-	// averagePrice = (Label) component;
-	// }
-	//
-	// // Khach hang
-	// component = lstCell.get(customer).getFirstChild();
-	// if (component != null && component instanceof Textbox) {
-	// cbCustomer = (Combobox) component;
-	//
-	// }
-	// // Cong trinh
-	// component = lstCell.get(construction).getFirstChild();
-	// if (component != null && component instanceof Combobox) {
-	// cbxConstruction = (Combobox) component;
-	// }
-	//
-	// // Ngay bat dau
-	// component = lstCell.get(indexStartDate).getFirstChild();
-	// if (component != null && component instanceof Datebox) {
-	// startDate = (Datebox) component;
-	// }
-	// // Ngay ket thuc
-	// component = lstCell.get(indexEndDate).getFirstChild();
-	// if (component != null && component instanceof Datebox) {
-	// endDate = (Datebox) component;
-	// }
-	//
-	// cbxConstruction.addEventListener(Events.ON_CHANGE, new
-	// EventListener<Event>() {
-	//
-	// @Override
-	// public void onEvent(Event event) throws Exception {
-	// // TODO Auto-generated method stub
-	// price = calculateAveragePriceOfDay();
-	// averagePrice.setValue(StringUtils.formatPrice(price));
-	//
-	// }
-	// });
-	//
-	// startDate.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
-	//
-	// @Override
-	// public void onEvent(Event event) throws Exception {
-	// // TODO Auto-generated method stub
-	// price = calculateAveragePriceOfDay();
-	// averagePrice.setValue(StringUtils.formatPrice(price));
-	//
-	// }
-	// });
-	//
-	// endDate.addEventListener(Events.ON_CHANGE, new EventListener<Event>() {
-	//
-	// @Override
-	// public void onEvent(Event event) throws Exception {
-	// // TODO Auto-generated method stub
-	// price = calculateAveragePriceOfDay();
-	// averagePrice.setValue(StringUtils.formatPrice(price));
-	//
-	// }
-	// });
-	//
-	// }
+	private void onChangeData(Rent rent,List<Component> lstCell) {
 
-	private Price getPrices(Long contactId) {
-		if (listPriceByContact != null && !listPriceByContact.isEmpty()) {
-			for (Price item : listPriceByContact) {
-				if (contactId != null && contactId.equals(item.getContractId())) {
-					return item;
-				}
-			}
+		Component component;
+
+		component = lstCell.get(aveagePrice).getFirstChild();
+		if (component != null && component instanceof Doublebox) {
+			averageValue = (Doublebox) component;
+			averageValue.setValue(rent.getRevenue());
 		}
-		return null;
+
+
 	}
+
+
 
 	private void setDataMajority(List<Component> lstCell, List<Staff> selectedIndex, int columnIndex) {
 		Combobox combobox = null;
@@ -1381,6 +1301,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 				mesage.setHflex("1");
 				dtToDate.focus();
 				isFalse = true;
+				isCheckFromDate = true;
 			} else {
 				mesage.setVisible(false);
 				mesage.setHflex("0");
@@ -1404,6 +1325,31 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 				mesageFromDate.setHflex("1");
 
 				mesageToDate.setValue(Labels.getLabel("validate.compare.end.date.start.date"));
+				mesageToDate.setVisible(true);
+				mesageToDate.setHflex("1");
+				dtToDate.focus();
+				isFalse = true;
+				isCheckFromDate = true;
+			} else {
+				mesageFromDate.setVisible(false);
+				mesageFromDate.setHflex("0");
+				mesageFromDate.setValue("");
+
+				mesageToDate.setVisible(false);
+				mesageToDate.setHflex("0");
+				mesageToDate.setValue("");
+
+			}
+		}
+		// check ngay bat dau va  ngay ket thuc cung 1 thang
+		if (!isCheckFromDate) {
+			if (dtFromDate.getValue() != null && dtToDate.getValue() != null
+					&& !DateTimeUtils.compareMonth(dtFromDate.getValue(), dtToDate.getValue())) {
+				mesageFromDate.setValue(Labels.getLabel("validate.compare.month"));
+				mesageFromDate.setVisible(true);
+				mesageFromDate.setHflex("1");
+
+				mesageToDate.setValue(Labels.getLabel("validate.compare.month"));
 				mesageToDate.setVisible(true);
 				mesageToDate.setHflex("1");
 				dtToDate.focus();

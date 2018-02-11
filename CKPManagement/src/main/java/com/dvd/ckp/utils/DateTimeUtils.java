@@ -75,6 +75,18 @@ public class DateTimeUtils {
 		return startDate.after(endDate);
 	}
 
+	public static boolean compareMonth(Date startDate, Date endDate){
+		Calendar cal = Calendar.getInstance();		
+		cal.setTime(startDate);
+		
+		int monthStartDate = cal.get(Calendar.MONTH);
+		
+		cal.setTime(endDate);
+		
+		int monthEndDate = cal.get(Calendar.MONTH);
+		
+		return (monthStartDate == monthEndDate);
+	}
 	public static void main(String[] arg) {
 		try {
 			Date fromDate = convertStringToTime("20170101", "yyyyMMdd");

@@ -1,5 +1,6 @@
 package com.dvd.ckp.business.dao;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -115,15 +116,15 @@ public class RentEquipmentDAOImpl implements RentEquimentDAO {
 		// TODO Auto-generated method stub
 		Session session = getCurrentSession();
 		try {
-			 StringBuilder strSQL = new StringBuilder("CALL calculator_rent(:rentID)");
-	            Query query = getCurrentSession().createSQLQuery(strSQL.toString())
-	                    .addScalar("code", StandardBasicTypes.LONG)
-	                    .addScalar("message", StandardBasicTypes.STRING)
-	                    .setResultTransformer(Transformers.aliasToBean(Rent.class));
-	            query.setParameter("rentID", rentID);
-	            @SuppressWarnings("unchecked")
-	            List<Rent> lstData = query.list();
-	            return lstData;
+			StringBuilder strSQL = new StringBuilder("CALL calculator_rent(:rentID)");
+			Query query = getCurrentSession().createSQLQuery(strSQL.toString())
+					.addScalar("code", StandardBasicTypes.LONG).addScalar("message", StandardBasicTypes.STRING)
+					.addScalar("revenue", StandardBasicTypes.DOUBLE)
+					.setResultTransformer(Transformers.aliasToBean(Rent.class));
+			query.setParameter("rentID", rentID);
+			@SuppressWarnings("unchecked")
+			List<Rent> lstData = query.list();
+			return lstData;
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error(e.getMessage(), e);
@@ -132,17 +133,12 @@ public class RentEquipmentDAOImpl implements RentEquimentDAO {
 	}
 
 	@Override
-	public Long getMaxID() {
+	public BigInteger getMaxID() {
 		// TODO Auto-generated method stub
-		Session session = getCurrentSession();
 		try {
-			 StringBuilder strSQL = new StringBuilder("SELECT max(rent_id) as code FROM rent_equipment");
-	            Query query = getCurrentSession().createSQLQuery(strSQL.toString())
-	            		 .addScalar("code", StandardBasicTypes.LONG)
-	            		 .setResultTransformer(Transformers.aliasToBean(Rent.class));	            
-	            @SuppressWarnings("unchecked")
-	            List<Rent> lstData = query.list();
-	            return lstData.get(0).getCode();
+			StringBuilder strSQL = new StringBuilder("SELECT LAST_INSERT_ID()");
+			Query query = getCurrentSession().createSQLQuery(strSQL.toString());
+			return (BigInteger) query.list().get(0);
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error(e.getMessage(), e);

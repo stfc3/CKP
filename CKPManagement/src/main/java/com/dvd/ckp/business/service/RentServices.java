@@ -1,5 +1,6 @@
 package com.dvd.ckp.business.service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import com.dvd.ckp.domain.Rent;
@@ -16,5 +17,5 @@ public interface RentServices {
 	
 	public List<Rent> storeRent(Long rentID);
 	
-	public Long getMaxID();
+	public BigInteger getMaxID();
 }

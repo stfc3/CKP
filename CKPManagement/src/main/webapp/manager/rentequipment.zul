@@ -116,8 +116,7 @@
 								autodrop="true" inplace="true" readonly="true">
 								<template name="model">
 									<comboitem
-										value="${each.distributeId}"
-										label="${each.distributeName}" />
+										value="${each.distributeId}" label="${each.distributeName}" />
 								</template>
 							</combobox>
 							<label hflex="0" style="color:red" />
@@ -185,19 +184,8 @@
 								inplace="true" readonly="true" buttonVisible="false" />
 							<label hflex="0" style="color:red" />
 						</cell>
-
-						<!--                         thanh tien -->
-						<!--                         <cell style="text-align: right;"> -->
-						<!--                             <label style="text-align: right;" -->
-						<!--                                    value="${each.averagePriceView}" -->
-						<!--                                    tooltiptext="${each.averagePriceView}" /> -->
-						<!--                         </cell> -->
-
 						<!--thanh tien -->
 						<cell style="text-align: right;">
-<!-- 							<doublebox style="text-align: right;" -->
-<!-- 								inplace="true" readonly="true" value="${each.averagePrice}" -->
-<!-- 								tooltiptext="${each.averagePrice}" /> -->
 							<doublebox style="text-align: right;"
 								inplace="true" hflex="1" readonly="true" format="#,##0.##"
 								locale="en" value="${each.averagePrice}" />
