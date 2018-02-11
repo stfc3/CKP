@@ -94,7 +94,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 	private List<RentEquiment> lstRents;
 
 	private List<Construction> lstConstructions;
-	private List<Customer> lstCustomer;	
+	private List<Customer> lstCustomer;
 	private List<Param> listRentType;
 	private List<Distribute> listDistribute;
 
@@ -186,9 +186,10 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		List<Distribute> lstDistribute = distributeService.getDistributeActive();
 		if (lstDistribute != null && !lstDistribute.isEmpty()) {
 			listDistribute.addAll(lstDistribute);
-			for (Distribute item : lstDistribute) {
-				item.setDistributeName(item.getDistributeCode() + "-" + item.getDistributeName());
-			}
+			// for (Distribute item : lstDistribute) {
+			// item.setDistributeName(item.getDistributeCode() + "-" +
+			// item.getDistributeName());
+			// }
 		}
 
 		listPriceByContact = contractServices.getAllPrice();
@@ -233,7 +234,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 
 		distribute = new Distribute();
 		distribute.setDistributeId(-1l);
-		distribute.setDistributeCode("");
 		distribute.setDistributeName(Labels.getLabel("option"));
 		listDistribute.add(0, distribute);
 		// set model
@@ -285,10 +285,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 			RentEquiment value = rowSelected.getValue();
 			getDataInRow(lstCell, value);
 			value.setStatus(1);
-			save(value,lstCell);
-			System.out.println("Avage value: " + averageValue.getValue());
-			
-			
+			save(value, lstCell);
 		}
 
 	}
@@ -303,7 +300,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 			Rent rent = calculateAveragePriceOfDay(rentID.longValue());
 			onChangeData(rent, lstCell);
 			StyleUtils.setDisableComponent(lstCell, 4);
-			
+
 		} else {
 			value.setCreateDate(new Date());
 			rentServices.update(value);
@@ -1015,7 +1012,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 		return listData.get(0);
 	}
 
-	private void onChangeData(Rent rent,List<Component> lstCell) {
+	private void onChangeData(Rent rent, List<Component> lstCell) {
 
 		Component component;
 
@@ -1025,10 +1022,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 			averageValue.setValue(rent.getRevenue());
 		}
 
-
 	}
-
-
 
 	private void setDataMajority(List<Component> lstCell, List<Staff> selectedIndex, int columnIndex) {
 		Combobox combobox = null;
@@ -1341,7 +1335,7 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
 
 			}
 		}
-		// check ngay bat dau va  ngay ket thuc cung 1 thang
+		// check ngay bat dau va ngay ket thuc cung 1 thang
 		if (!isCheckFromDate) {
 			if (dtFromDate.getValue() != null && dtToDate.getValue() != null
 					&& !DateTimeUtils.compareMonth(dtFromDate.getValue(), dtToDate.getValue())) {

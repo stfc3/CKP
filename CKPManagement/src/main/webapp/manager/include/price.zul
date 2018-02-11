@@ -133,7 +133,7 @@
                                         <combobox  hflex="1"  
                                                   buttonVisible="false" inplace="true"  readonly="true" autodrop="true">
                                             <template name="model">
-                                                <comboitem value="${each.distributeId}" label="${each.distributeName}" />
+                                                <comboitem value="${each.distributeId}" label="${each.distributeCode}${each.distributeCode !=null ? '-':''}${each.distributeName}" />
                                             </template>
                                         </combobox>
                                     </cell>

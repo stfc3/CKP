@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 
 import org.apache.log4j.Logger;
 
+
 @Entity
 @Table(name = "rent_equipment")
 @NamedQuery(name = "RentEquipment.getAll", query = "FROM RentEquiment u where status = 1 order by createDate desc")
