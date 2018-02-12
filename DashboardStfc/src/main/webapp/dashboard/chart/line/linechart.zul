@@ -1,0 +1,3 @@
+<window apply="com.stfc.dashboard.chart.ChartBaseLine">
+    <charts id="chart" zclass="chartline" type="spline"/>
+</window>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="CKP Management" href="../images/faviconCKP.ico"?>
+<?link rel="shortcut icon" type="image/x-icon" href="../images/faviconCKP.ico"?>
+<?link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"?>
+
+<!-- Google Open Sans font -->
+<!-- Load fonts from local -->
+<?link href="css/fonts.css" rel="stylesheet" type="text/css"?>
+
+<!-- Unmark if we want to use fonts from google server
+<?link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'?>
+-->
+
+<?link href="less/index.css.dsp" rel="stylesheet" type="text/css"?>
+<?link href="css/mydashboard.css" rel="stylesheet" type="text/css"?>
+
+<zk xmlns:w="client" >
+    <div id="main">
+        <div sclass="top">
+            <include src="navbar.zul" style="width:100%; position: relative;"/>  
+        </div>
+        <div zclass="dashboard-main">
+            <div zclass="dashboard-main-left">
+                <include src="sidebar.zul"/>
+            </div>
+            <div sclass="dashboard-main-right">
+                <include src="breadcrumbs.zul" style=""/>
+                <include src="content/content.zul"/>
+                <include src="content/content.zul"/>
+                <include src="content/content.zul"/>
+                <include src="content/content.zul"/>
+            </div>
+        </div>
+    </div>
+    
+</zk>

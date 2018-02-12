@@ -1,0 +1,520 @@
+{
+	"line-basic": {
+		"category": "Line charts",
+		"title": "Basic line",
+		"content": ["line/line-basic.zul"],
+		"controller": ["source/demo/line/LineBasicComposer.java"],
+		"model": ["source/demo/line/LineBasicData.java"]
+	},
+	"line-ajax": {
+		"category": "Line charts",
+		"title": "Ajax loaded data, clickable points",
+		"content": ["line/line-ajax.zul"],
+		"controller": ["source/demo/line/LineAjaxComposer.java"],
+		"model": ["source/demo/line/LineAjaxData.java", "source/demo/util/TimeUtil.java"]
+	},
+	"line-labels": {
+		"category": "Line charts",
+		"title": "With data labels",
+		"content": ["line/line-labels.zul"],
+		"controller": ["source/demo/line/LineLabelsComposer.java"],
+		"model": ["source/demo/line/LineLabelsData.java"]
+	},
+	"line-time-series": {
+		"category": "Line charts",
+		"title": "Time series, zoomable",
+		"content": ["line/line-time-series.zul"],
+		"controller": ["source/demo/line/LineTimeSeriesComposer.java"],
+		"model": ["source/demo/line/LineTimeSeriesData.java", "source/demo/util/TimeUtil.java"]
+	},
+	"spline-inverted": {
+		"category": "Line charts",
+		"title": "Spline with inverted axes",
+		"content": ["line/spline-inverted.zul"],
+		"controller": ["source/demo/line/SplineInvertedComposer.java"],
+		"model": ["source/demo/line/SplineInvertedData.java"]
+	},
+	"spline-symbols": {
+		"category": "Line charts",
+		"title": "Spline with symbols",
+		"content": ["line/spline-symbols.zul"],
+		"controller": ["source/demo/line/SplineSymbolsComposer.java"]
+	},
+	"spline-plot-bands": {
+		"category": "Line charts",
+		"title": "Spline with plot bands",
+		"content": ["line/spline-plot-bands.zul"],
+		"controller": ["source/demo/line/SplinePlotBandsComposer.java"]
+	},
+	"spline-irregular-time": {
+		"category": "Line charts",
+		"title": "Time data with irregular intervals",
+		"content": ["line/spline-irregular-time.zul"],
+		"controller": ["source/demo/line/SplineIrregularTimeComposer.java"],
+		"model": ["source/demo/line/SplineIrregularTimeData.java"]
+	},
+	"log-axis": {
+		"category": "Line charts",
+		"title": "Logarithmic axis",
+		"content": ["line/log-axis.zul"],
+		"controller": ["source/demo/line/LogAxisComposer.java"]
+	},
+	"area-basic": {
+		"category": "Area charts",
+		"title": "Basic area",
+		"content": ["area/area-basic.zul"],
+		"controller": ["source/demo/area/AreaBasicComposer.java"],
+		"model": ["source/demo/area/AreaBasicData.java"]
+	},
+	"area-negative": {
+		"category": "Area charts",
+		"title": "Area with negative values",
+		"content": ["area/area-negative.zul"],
+		"controller": ["source/demo/area/AreaNegativeComposer.java"]
+	},
+	"area-stacked": {
+		"category": "Area charts",
+		"title": "Stacked area",
+		"content": ["area/area-stacked.zul"],
+		"controller": ["source/demo/area/AreaStackedComposer.java"],
+		"model": ["source/demo/area/AreaStackedData.java"]
+	},
+	"area-stacked-percent": {
+		"category": "Area charts",
+		"title": "Percentage area",
+		"content": ["area/area-stacked-percent.zul"],
+		"controller": ["source/demo/area/AreaStackedPercentComposer.java"],
+		"model": ["source/demo/area/AreaStackedPercentData.java"]
+	},
+	"area-missing": {
+		"category": "Area charts",
+		"title": "Area with missing points",
+		"content": ["area/area-missing.zul"],
+		"controller": ["source/demo/area/AreaMissingComposer.java"],
+		"model": ["source/demo/area/AreaMissingData.java"]
+	},
+	"area-inverted": {
+		"category": "Area charts",
+		"title": "Inverted axes",
+		"content": ["area/area-inverted.zul"],
+		"controller": ["source/demo/area/AreaInvertedComposer.java"],
+		"model": ["source/demo/area/AreaInvertedData.java"]
+	},
+	"areaspline": {
+		"category": "Area charts",
+		"title": "Area-spline",
+		"content": ["area/areaspline.zul"],
+		"controller": ["source/demo/area/AreaSplineComposer.java"]
+	},
+	"arearange": {
+		"category": "Area charts",
+		"title": "Basic Area",
+		"content": ["area/arearange.zul"],
+		"controller": ["source/demo/area/AreaRangeComposer.java"],
+		"model": ["source/demo/area/AreaRangeData.java"]
+	},
+	"arearange-line": {
+		"category": "Area charts",
+		"title": "Area range and line",
+		"content": ["area/arearange-line.zul"],
+		"controller": ["source/demo/area/AreaRangeLineComposer.java"],
+		"model": ["source/demo/area/AreaRangeLineData.java"]
+	},
+	"area-sparkline": {
+		"category": "Area charts",
+		"title": "Sparkline charts",
+		"content": ["area/area-sparkline.zul"],
+		"controller": ["source/demo/area/AreaSparklineComposer.java"],
+		"model": ["source/demo/area/AreaSparklineData.java"]
+	},
+	"bar-basic": {
+		"category": "Column and bar charts",
+		"title": "Basic bar",
+		"content": ["bar/bar-basic.zul"],
+		"controller": ["source/demo/bar/BarBasicComposer.java"],
+		"model": ["source/demo/bar/BarBasicData.java"]
+	},
+	"bar-stacked": {
+		"category": "Column and bar charts",
+		"title": "Stacked bar",
+		"content": ["bar/bar-stacked.zul"],
+		"controller": ["source/demo/bar/BarStackedComposer.java"],
+		"model": ["source/demo/bar/BarStackedData.java"]
+	},
+	"bar-negative-stack": {
+		"category": "Column and bar charts",
+		"title": "Bar with negative stack",
+		"content": ["bar/bar-negative-stack.zul"],
+		"controller": ["source/demo/bar/BarNegativeStackComposer.java"],
+		"model": ["source/demo/bar/BarNegativeStackData.java"]
+	},
+	"column-basic": {
+		"category": "Column and bar charts",
+		"title": "Basic column",
+		"content": ["bar/column-basic.zul"],
+		"controller": ["source/demo/bar/ColumnBasicComposer.java"],
+		"model": ["source/demo/bar/ColumnBasicData.java"]
+	},
+	"column-negative": {
+		"category": "Column and bar charts",
+		"title": "Column with negative values",
+		"content": ["bar/column-negative.zul"],
+		"controller": ["source/demo/bar/ColumnNegativeComposer.java"]
+	},
+	"column-stacked": {
+		"category": "Column and bar charts",
+		"title": "Stacked column",
+		"content": ["bar/column-stacked.zul"],
+		"controller": ["source/demo/bar/ColumnStackedComposer.java"],
+		"model": ["source/demo/bar/ColumnStackedData.java"]
+	},
+	"column-stacked-grouped": {
+		"category": "Column and bar charts",
+		"title": "Stacked and grouped column",
+		"content": ["bar/column-stacked-grouped.zul"],
+		"controller": ["source/demo/bar/ColumnStackedGroupedComposer.java"],
+		"model": ["source/demo/bar/ColumnStackedGroupedData.java"]
+	},
+	"column-stacked-percent": {
+		"category": "Column and bar charts",
+		"title": "Basic column",
+		"content": ["bar/column-stacked-percent.zul"],
+		"controller": ["source/demo/bar/ColumnStackedPercentComposer.java"],
+		"model": ["source/demo/bar/ColumnStackedPercentData.java"]
+	},
+	"column-rotated-labels": {
+		"category": "Column and bar charts",
+		"title": "Column with rotated labels",
+		"content": ["bar/column-rotated-labels.zul"],
+		"controller": ["source/demo/bar/ColumnRotatedLabelsComposer.java"],
+		"model": ["source/demo/bar/ColumnRotatedLabelsData.java"]
+	},
+	"column-drilldown": {
+		"category": "Column and bar charts",
+		"title": "Column with drilldown",
+		"content": ["bar/column-drilldown.zul"],
+		"controller": ["source/demo/bar/ColumnDrilldownComposer.java"],
+		"model": ["source/demo/data/BrowserMarketShare.java", "source/demo/data/Browser.java"]
+	},
+	"column-fixed-placement": {
+		"category": "Column and bar charts",
+		"title": "Fixed placement columns",
+		"content": ["bar/column-fixed-placement.zul"],
+		"controller": ["source/demo/bar/ColumnFixedPlacementComposer.java"],
+		"model": ["source/demo/bar/ColumnFixedPlacementData.java"]
+	},
+	"column-parsed": {
+		"category": "Column and bar charts",
+		"title": "Data defined in a ZK grid model",
+		"content": ["bar/column-parsed.zul"],
+		"controller": ["source/demo/bar/ColumnParsedComposer.java"],
+		"model": ["source/demo/bar/ColumnParsedData.java", "source/demo/bar/Food.java"]
+	},
+	"columnrange": {
+		"category": "Column and bar charts",
+		"title": "Column range",
+		"content": ["bar/columnrange.zul"],
+		"controller": ["source/demo/bar/ColumnRangeComposer.java"],
+		"model": ["source/demo/bar/ColumnRangeData.java"]
+	},
+	"pie-basic": {
+		"category": "Pie charts",
+		"title": "Pie chart",
+		"content": ["pie/pie-basic.zul"],
+		"controller": ["source/demo/pie/PieBasicComposer.java"]
+	},
+	"pie-gradient": {
+		"category": "Pie charts",
+		"title": "Pie with gradient fill",
+		"content": ["pie/pie-gradient.zul"],
+		"controller": ["source/demo/pie/PieGradientComposer.java"]
+	},
+	"pie-monochrome": {
+		"category": "Pie charts",
+		"title": "Pie with monochrome fill",
+		"content": ["pie/pie-monochrome.zul"],
+		"controller": ["source/demo/pie/PieMonochromeComposer.java"]
+	},
+	"pie-legend": {
+		"category": "Pie charts",
+		"title": "Pie with legend",
+		"content": ["pie/pie-legend.zul"],
+		"controller": ["source/demo/pie/PieLegendComposer.java"]
+	},
+	"pie-donut": {
+		"category": "Pie charts",
+		"title": "Donut chart",
+		"content": ["pie/pie-donut.zul"],
+		"controller": ["source/demo/pie/PieDonutComposer.java"],
+		"model": ["source/demo/pie/PieDonutData.java"]
+	},
+	"pie-semi-circle": {
+		"category": "Pie charts",
+		"title": "Semi circle donut",
+		"content": ["pie/pie-semi-circle.zul"],
+		"controller": ["source/demo/pie/PieSemiCircleComposer.java"],
+		"model": ["source/demo/pie/PieSemiCircleData.java"]
+	},
+	"pie-drilldown": {
+		"category": "Pie charts",
+		"title": "Pie with drilldown",
+		"content": ["pie/pie-drilldown.zul"],
+		"controller": ["source/demo/pie/PieDrilldownComposer.java"],
+		"model": ["source/demo/data/BrowserMarketShare.java", "source/demo/data/Browser.java"]
+	},
+	"scatter": {
+		"category": "Scatter and bubble charts",
+		"title": "Scatter plot",
+		"content": ["scatter/scatter.zul"],
+		"controller": ["source/demo/scatter/ScatterComposer.java"],
+		"model": ["source/demo/scatter/ScatterData.java"]
+	},
+	"bubble": {
+		"category": "Scatter and bubble charts",
+		"title": "Bubble chart",
+		"content": ["scatter/bubble.zul"],
+		"controller": ["source/demo/scatter/BubbleComposer.java"]
+	},
+	"bubble-3d": {
+		"category": "Scatter and bubble charts",
+		"title": "3D bubbles",
+		"content": ["scatter/bubble-3d.zul"],
+		"controller": ["source/demo/scatter/Bubble3dComposer.java"],
+		"model": ["source/demo/scatter/Bubble3dData.java"]
+	},
+	"dynamic-update": {
+		"category": "Dynamic charts",
+		"title": "Spline updating each second",
+		"content": ["dynamic/dynamic-update.zul"],
+		"controller": ["source/demo/dynamic/DynamicUpdateComposer.java", "source/demo/util/TimeUtil.java"]
+	},
+	"dynamic-click-to-add": {
+		"category": "Dynamic charts",
+		"title": "Click to add a point",
+		"content": ["dynamic/dynamic-click-to-add.zul"],
+		"controller": ["source/demo/dynamic/DynamicClickToAddComposer.java"]
+	},
+	"dynamic-master-detail": {
+		"category": "Dynamic charts",
+		"title": "Master-detail chart",
+		"content": ["dynamic/dynamic-master-detail.zul"],
+		"controller": ["source/demo/dynamic/DynamicMasterDetailComposer.java"],
+		"model": ["source/demo/dynamic/DynamicMasterDetailData.java", "source/demo/util/TimeUtil.java"]
+	},
+	"combo": {
+		"category": "Combinations",
+		"title": "Column line and pie",
+		"content": ["combo/combo.zul"],
+		"controller": ["source/demo/combo/ComboComposer.java"],
+		"model": ["source/demo/combo/ComboData.java"]
+	},
+	"combo-dual-axes": {
+		"category": "Combinations",
+		"title": "Dual axes, line and column",
+		"content": ["combo/combo-dual-axes.zul"],
+		"controller": ["source/demo/combo/ComboDualAxesComposer.java"],
+		"model": ["source/demo/data/WeatherData.java"]
+	},
+	"combo-multi-axes": {
+		"category": "Combinations",
+		"title": "Multiple axes",
+		"content": ["combo/combo-multi-axes.zul"],
+		"controller": ["source/demo/combo/ComboMultiAxesComposer.java"],
+		"model": ["source/demo/data/WeatherData.java"]
+	},
+	"combo-regression": {
+		"category": "Combinations",
+		"title": "Scatter with regression line",
+		"content": ["combo/combo-regression.zul"],
+		"controller": ["source/demo/combo/ComboRegressionComposer.java"]
+	},
+	"column-3d": {
+		"category": "3D Charts",
+		"title": "3D column",
+		"content": ["charts3d/column-3d.zul"],
+		"controller": ["source/demo/charts3d/Column3DComposer.java"]
+	},
+	"column-3d-zero": {
+		"category": "3D Charts",
+		"title": "3D column with null and 0 values",
+		"content": ["charts3d/column-3d-zero.zul"],
+		"controller": ["source/demo/charts3d/Column3DZeroComposer.java"]
+	},
+	"column-3d-stack": {
+		"category": "3D Charts",
+		"title": "3D column with stacking and grouping",
+		"content": ["charts3d/column-3d-stack.zul"],
+		"controller": ["source/demo/charts3d/Column3DStackComposer.java"],
+		"model": ["source/demo/bar/ColumnStackedGroupedData.java"]
+	},
+	"pie-3d": {
+		"category": "3D Charts",
+		"title": "3D pie",
+		"content": ["charts3d/pie-3d.zul"],
+		"controller": ["source/demo/charts3d/Pie3DComposer.java"]
+	},
+	"donut-3d": {
+		"category": "3D Charts",
+		"title": "3D donut",
+		"content": ["charts3d/donut-3d.zul"],
+		"controller": ["source/demo/charts3d/Donut3DComposer.java"]
+	},
+	"scatter-3d": {
+		"category": "3D Charts",
+		"title": "3D scatter chart",
+		"content": ["charts3d/scatter-3d.zul"],
+		"controller": ["source/demo/charts3d/Scatter3DComposer.java"]
+	},
+	"gauge-speedometer": {
+		"category": "Gauges",
+		"title": "Angular gauge",
+		"content": ["gauges/gauge-speedometer.zul"],
+		"controller": ["source/demo/gauges/GaugeSpeedometerComposer.java"]
+	},
+	"gauge-clock": {
+		"category": "Gauges",
+		"title": "Clock",
+		"content": ["gauges/gauge-clock.zul"],
+		"controller": ["source/demo/gauges/GaugeClockComposer.java", "source/demo/util/TimeUtil.java"]
+	},
+	"gauge-dual": {
+		"category": "Gauges",
+		"title": "Gauge with dual axes",
+		"content": ["gauges/gauge-dual.zul"],
+		"controller": ["source/demo/gauges/GaugeDualComposer.java"]
+	},
+	"gauge-vu-meter": {
+		"category": "Gauges",
+		"title": "VU meter",
+		"content": ["gauges/gauge-vu-meter.zul"],
+		"controller": ["source/demo/gauges/GaugeVuMeterComposer.java"]
+	},
+	"gauge-solid": {
+		"category": "Gauges",
+		"title": "Solid gauge",
+		"content": ["gauges/gauge-solid.zul"],
+		"controller": ["source/demo/gauges/SolidGaugeComposer.java"]
+	},
+	"polar": {
+		"category": "More chart types",
+		"title": "Polar chart",
+		"content": ["more/polar.zul"],
+		"controller": ["source/demo/more/PolarComposer.java"]
+	},
+	"polar-spider": {
+		"category": "More chart types",
+		"title": "Spiderweb",
+		"content": ["more/polar-spider.zul"],
+		"controller": ["source/demo/more/PolarSpiderComposer.java"]
+	},
+	"polar-wind-rose": {
+		"category": "More chart types",
+		"title": "Wind rose",
+		"content": ["more/polar-wind-rose.zul"],
+		"controller": ["source/demo/more/PolarWindRoseComposer.java"],
+		"model": ["source/demo/more/PolarWindRoseData.java"]
+	},
+	"box-plot": {
+		"category": "More chart types",
+		"title": "Box plot",
+		"content": ["more/box-plot.zul"],
+		"controller": ["source/demo/more/BoxPlotComposer.java"],
+		"model": ["source/demo/more/BoxPlotData.java"]
+	},
+	"error-bar": {
+		"category": "More chart types",
+		"title": "Error bar",
+		"content": ["more/error-bar.zul"],
+		"controller": ["source/demo/more/ErrorBarComposer.java"]
+	},
+	"waterfall": {
+		"category": "More chart types",
+		"title": "Waterfall",
+		"content": ["more/waterfall.zul"],
+		"controller": ["source/demo/more/WaterfallComposer.java"]
+	},
+	"funnel": {
+		"category": "More chart types",
+		"title": "Funnel chart",
+		"content": ["more/funnel.zul"],
+		"controller": ["source/demo/more/FunnelComposer.java"]
+	},
+	"renderer": {
+		"category": "More chart types",
+		"title": "General drawing",
+		"content": ["more/renderer.zul"],
+		"controller": ["source/demo/more/RendererComposer.java"]
+	},
+	"heatmap": {
+		"category": "Heat and Tree Maps",
+		"title": "Heat map",
+		"content": ["heatandtree/heatmap.zul"],
+		"controller": ["source/demo/heatandtree/HeatmapComposer.java"],
+		"model": ["source/demo/heatandtree/HeatmapData.java"]
+	},
+	"treemap": {
+		"category": "Heat and Tree Maps",
+		"title": "Tree map with color axis",
+		"content": ["heatandtree/treemap.zul"],
+		"controller": ["source/demo/heatandtree/TreemapComposer.java"]
+	},
+	"treemap-levels": {
+		"category": "Heat and Tree Maps",
+		"title": "Tree map with levels",
+		"content": ["heatandtree/treemap-levels.zul"],
+		"controller": ["source/demo/heatandtree/TreemapLevelsComposer.java"]
+	},
+	"treemap-large": {
+		"category": "Heat and Tree Maps",
+		"title": "Large tree map",
+		"content": ["heatandtree/treemap-large.zul"],
+		"controller": ["source/demo/heatandtree/TreemapLargeComposer.java"]
+	},
+	"pyramid": {
+		"category": "More chart types",
+		"title": "Pyramid chart",
+		"content": ["more/pyramid.zul"],
+		"controller": ["source/demo/more/PyramidComposer.java"]
+	},
+	"polygon": {
+		"category": "More chart types",
+		"title": "Polygon series",
+		"content": ["more/polygon.zul"],
+		"controller": ["source/demo/more/PolygonComposer.java"]
+	},
+	"category-model": {
+		"category": "ZK chart model",
+		"title": "Category Model",
+		"content": ["model/category-model.zul"],
+		"view model": ["source/demo/model/CategoryModelVM.java"],
+		"model": ["source/demo/model/CategoryModelData.java"]
+	},
+	"svc-model": {
+		"category": "ZK chart model",
+		"title": "Single Value Category Model",
+		"content": ["model/svc-model.zul"],
+		"view model": ["source/demo/model/SingleValueCategoryModelVM.java"],
+		"model": ["source/demo/model/SingleValueCategoryModelData.java"]
+	},
+	"xy-model": {
+		"category": "ZK chart model",
+		"title": "XY Model",
+		"content": ["model/xy-model.zul"],
+		"view model": ["source/demo/model/XYModelVM.java"],
+		"model": ["source/demo/model/XYModelData.java", "source/demo/model/XYItem.java"]
+	},
+	"xyz-model": {
+		"category": "ZK chart model",
+		"title": "XYZ Model",
+		"content": ["model/xyz-model.zul"],
+		"view model": ["source/demo/model/XYZModelVM.java"],
+		"model": ["source/demo/model/XYZModelData.java", "source/demo/model/XYZItem.java"]
+	},
+	"dial-model": {
+		"category": "ZK chart model",
+		"title": "Dial Model",
+		"content": ["model/dial-model.zul"],
+		"view model": ["source/demo/model/DialModelVM.java"],
+		"model": ["source/demo/model/DialModelData.java"]
+	}
+}

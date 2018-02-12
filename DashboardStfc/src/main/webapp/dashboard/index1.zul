@@ -1,0 +1,33 @@
+<?page title="Dashboard - ZK Admin"?>
+<!-- Load Bootstrap  -->
+<?link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"?>
+
+<!-- Google Open Sans font -->
+<!-- Load fonts from local -->
+<?link href="css/fonts.css" rel="stylesheet" type="text/css"?>
+
+<!-- Unmark if we want to use fonts from google server
+<?link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'?>
+-->
+
+<?link href="less/index.css.dsp" rel="stylesheet" type="text/css"?>
+<?link href="css/mydashboard.css" rel="stylesheet" type="text/css"?>
+<zk xmlns:n="native">
+    <div style="position: absolute; width:100%;">
+        <include src="navbar.zul" style="width:100%; position: relative;"/>             
+        <hlayout id="main" spacing="0" style="position: relative;">
+            <include src="sidebar.zul"/>    
+            <vlayout spacing="0" hflex="1" style="">
+                <include src="breadcrumbs.zul" style=""/>
+                <include src="page.zul" style=""/>
+            </vlayout>
+        </hlayout>
+    </div>>
+    <!-- Include the jQuery plugins to draw the chart -->
+    <script src="js/excanvas.min.js" if="${zk.ie lt 9}"/>
+    <script src="js/jquery.easy-pie-chart.min.js"></script>
+    <script src="js/jquery.flot.min.js"/>
+    <script src="js/jquery.flot.pie.js"/>
+    <script src="js/jquery.sparkline.min.js"></script>
+    
+</zk>
