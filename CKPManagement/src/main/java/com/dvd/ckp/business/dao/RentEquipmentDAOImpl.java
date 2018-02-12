@@ -1,14 +1,18 @@
 package com.dvd.ckp.business.dao;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dvd.ckp.domain.Rent;
 import com.dvd.ckp.domain.RentEquiment;
 
 @Repository
@@ -56,6 +60,7 @@ public class RentEquipmentDAOImpl implements RentEquimentDAO {
 
 			StringBuilder builder = new StringBuilder();
 			builder.append("update rent_equipment set rent_type = :rentType, ");
+			builder.append("distribute_id = :distribute, ");
 			builder.append("customers_id = :customer, ");
 			builder.append("construction_id = :construction, ");
 			builder.append("monitoring = :monitoring, ");
@@ -67,6 +72,7 @@ public class RentEquipmentDAOImpl implements RentEquimentDAO {
 			builder.append("where rent_id = :rentId ");
 			Query query = session.createSQLQuery(builder.toString());
 			query.setParameter("rentType", value.getRentType());
+			query.setParameter("distribute", value.getDistribute());
 			query.setParameter("customer", value.getCustomerID());
 			query.setParameter("construction", value.getConstructionID());
 			query.setParameter("monitoring", value.getMonitoring());
@@ -103,6 +109,41 @@ public class RentEquipmentDAOImpl implements RentEquimentDAO {
 			// TODO: handle exception
 			logger.error(e.getMessage(), e);
 		}
+	}
+
+	@Override
+	public List<Rent> storeRent(Long rentID) {
+		// TODO Auto-generated method stub
+		Session session = getCurrentSession();
+		try {
+			StringBuilder strSQL = new StringBuilder("CALL calculator_rent(:rentID)");
+			Query query = getCurrentSession().createSQLQuery(strSQL.toString())
+					.addScalar("code", StandardBasicTypes.LONG).addScalar("message", StandardBasicTypes.STRING)
+					.addScalar("revenue", StandardBasicTypes.DOUBLE)
+					.setResultTransformer(Transformers.aliasToBean(Rent.class));
+			query.setParameter("rentID", rentID);
+			@SuppressWarnings("unchecked")
+			List<Rent> lstData = query.list();
+			return lstData;
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	@Override
+	public BigInteger getMaxID() {
+		// TODO Auto-generated method stub
+		try {
+			StringBuilder strSQL = new StringBuilder("SELECT LAST_INSERT_ID()");
+			Query query = getCurrentSession().createSQLQuery(strSQL.toString());
+			return (BigInteger) query.list().get(0);
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error(e.getMessage(), e);
+		}
+		return null;
 	}
 
 }

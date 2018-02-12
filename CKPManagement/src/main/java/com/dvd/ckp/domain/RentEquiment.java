@@ -15,8 +15,6 @@ import javax.persistence.Transient;
 
 import org.apache.log4j.Logger;
 
-import com.dvd.ckp.common.Constants;
-import com.dvd.ckp.utils.DateTimeUtils;
 
 @Entity
 @Table(name = "rent_equipment")
@@ -43,6 +41,10 @@ public class RentEquiment implements Serializable {
 	private Date createDate;
 	private Long majority;
 	private Long monitoring;
+	private Long distribute;
+	private String prdID;
+	
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -180,8 +182,27 @@ public class RentEquiment implements Serializable {
 		return monitoring;
 	}
 
+	
 	public void setMonitoring(Long monitoring) {
 		this.monitoring = monitoring;
+	}
+
+	@Column(name = "distribute_id")
+	public Long getDistribute() {
+		return distribute;
+	}
+
+	public void setDistribute(Long distribute) {
+		this.distribute = distribute;
+	}
+
+	@Column(name = "prd_id")
+	public String getPrdID() {
+		return prdID;
+	}
+
+	public void setPrdID(String prdID) {
+		this.prdID = prdID;
 	}
 	
 

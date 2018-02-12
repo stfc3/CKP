@@ -50,7 +50,7 @@ public class DateTimeUtils {
 
 	public static Long getDifferenceDay(Date startDate, Date endDate) {
 		Long diff = endDate.getTime() - startDate.getTime();
-		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1;
 	}
 
 	public static int getLastDayOfMonth(Date date) {
@@ -75,11 +75,23 @@ public class DateTimeUtils {
 		return startDate.after(endDate);
 	}
 
+	public static boolean compareMonth(Date startDate, Date endDate){
+		Calendar cal = Calendar.getInstance();		
+		cal.setTime(startDate);
+		
+		int monthStartDate = cal.get(Calendar.MONTH);
+		
+		cal.setTime(endDate);
+		
+		int monthEndDate = cal.get(Calendar.MONTH);
+		
+		return (monthStartDate == monthEndDate);
+	}
 	public static void main(String[] arg) {
 		try {
-			Date fromDate = convertStringToTime("20180209", "yyyyMMdd");
-			Date toDate = convertStringToTime("20180207", "yyyyMMdd");
-			System.out.println(compareDate(fromDate, toDate));
+			Date fromDate = convertStringToTime("20170101", "yyyyMMdd");
+			Date toDate = convertStringToTime("20170131", "yyyyMMdd");
+			System.out.println(getDifferenceDay(fromDate, toDate));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

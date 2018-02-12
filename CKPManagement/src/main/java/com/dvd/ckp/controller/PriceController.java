@@ -23,7 +23,6 @@ import org.zkoss.zul.Row;
 
 import com.dvd.ckp.business.service.ContractService;
 import com.dvd.ckp.business.service.DistributeService;
-import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.component.MyListModel;
@@ -113,7 +112,6 @@ public class PriceController extends GenericForwardComposer {
 
     private final Integer pricePump = 1;
     private final Integer priceDistribute = 2;
-    private Memory memory = new Memory();
     ///
 
     @Override
@@ -175,7 +173,7 @@ public class PriceController extends GenericForwardComposer {
         defaultLocation = new Location();
         defaultLocation.setLocationID(Constants.SPECIAL_ID);
         defaultLocation.setLocationName(Labels.getLabel("option"));
-        lstLocationMin = new ArrayList<>(memory.getLocationCache().values());
+        lstLocationMin = new ArrayList<>(Memory.lstLocationCache.values());
         if (lstLocationMin == null) {
             lstLocationMin = new ArrayList<>();
         }
