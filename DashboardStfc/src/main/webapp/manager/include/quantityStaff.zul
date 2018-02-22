@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:n="native">
+	<window id="quantityStaff"
+		apply="com.dvd.ckp.controller.QuantityStaffController"
+		position="center,center" closable="true"
+		action="show: slideDown;hide: slideUp" border="normal" width="60%"
+		height="90%" maximizable="false" title="${c:l('staff.quantity')}"
+		onCancel="quantityStaff.detach();">
+		<style src="/css/style.css" />
+		<vlayout>
+			<hbox hflex="1">
+				<hbox hflex="2" />
+				<label hflex="1"
+					value="${c:l('bills.detail.is.far')}">
+				</label>
+				<radiogroup id="isFar" />
+				<radio hflex="1" id="yes" label="${c:l('yes')}"
+					radiogroup="isFar" />
+				<radio hflex="1" id="no" label="${c:l('no')}"
+					radiogroup="isFar" />
+				<hbox hflex="2" />
+			</hbox>
+			<hbox hflex="1">
+				<hbox hflex="2" />
+				<label hflex="1"
+					value="${c:l('bills.detail.quantity.convert')}">
+				</label>
+				<doublebox hflex="2" id="quantity_convest"></doublebox>
+				<hbox hflex="2" />
+			</hbox>
+			<listbox hflex="6" visible="true"
+				emptyMessage="${c:l('noResult')}" id="resultList"
+				model="${$composer.listDataModelDetail}" mold="paging" pageSize="5"
+				checkmark="true" multiple="true" pagingPosition="both"
+				sizedByContent="true">
+				<listhead sizable="true">
+					<listheader hflex="1" align="center"></listheader>
+					<listheader hflex="1" align="center">
+						${c:l('pump.index')}
+					</listheader>
+					<listheader hflex="2" align="center">
+						${c:l('staff.code')}
+					</listheader>
+					<listheader hflex="2" align="center">
+						${c:l('staff.name')}
+					</listheader>
+					<listheader hflex="2" align="center">
+						${c:l('staff.phone')}
+					</listheader>
+					<listheader hflex="2" align="center">
+						${c:l('staff.email')}
+					</listheader>
+				</listhead>
+				<template name="model">
+					<listitem label="${each}">
+						<listcell style="text-align:center"></listcell>
+						<listcell style="text-align:right">
+							<label value="${forEachStatus.index+1}" />
+						</listcell>
+						<listcell style="text-align:left">
+							<label value="${each.staffCode}" />
+						</listcell>
+						<listcell style="text-align:left">
+							<label value="${each.staffName}" />
+						</listcell>
+						<listcell style="text-align:left">
+							<label value="${each.phone}" />
+						</listcell>
+						<listcell style="text-align:left">
+							<label value="${each.email}" />
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+			<hbox>
+				<hbox hflex="4" />
+				<button hflex="1" iconSclass="z-icon-check"
+					label="${c:l('save')}">
+				</button>
+				<hbox hflex="1" />
+				<button hflex="1" iconSclass="z-icon-ban"
+					label="${c:l('cancel')}" onClick="quantityStaff.detach();">
+				</button>
+				<hbox hflex="4" />
+			</hbox>
+		</vlayout>
+
+	</window>
+</zk>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+
+    <!--<zk xmlns:n="native">-->
+    <style>
+        .z-a{ color: green; cursor: auto; text-decoration: none;
+        margin-right: 5px; } .z-auxheader-content{ line-height: 14px;
+        text-align:right; } a [class^="z-icon-"]{ margin-right: 5px; }
+    </style>
+    <window id="distribute"
+            apply="com.dvd.ckp.controller.DistributeController">
+        <style src="/css/theme.css" />
+        <groupbox>
+            <caption label="${c:l('distribute.title')}" />
+            <grid id="gridDistribute" mold="paging" pageSize="10" pagingPosition="both">
+                <auxhead sclass="category-center">
+                    <auxheader colspan="7">
+                        <a class="btn-cursor" forward="onClick=onAdd"
+                           iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
+                        <!--
+                                <a class="btn-cursor"
+                                iconSclass="z-icon-file-excel-o" forward="onClick=onImport"
+                                label="${c:l('import')}" />
+                                <a class="btn-cursor"
+                                iconSclass="z-icon-file-excel-o" forward="onClick=onExport"
+                                label="${c:l('export')}" />
+                        -->
+                    </auxheader>
+                </auxhead>
+                <auxhead sclass="category-center">
+
+                    <!-- 					<auxheader colspan="4"> -->
+                    <!-- 						<a iconSclass="z-icon-filter" /> -->
+                    <!-- 						<combobox hflex="1" id="cbFilterCode" -->
+                    <!-- 							placeholder="${c:l('distribute.filter.code')}" autodrop="true" -->
+                    <!-- 							buttonVisible="false"> -->
+                    <!-- 							<template name="model"> -->
+                    <!-- 								<comboitem value="${each.distributeId}" -->
+                    <!-- 									label="${each.distributeCode}" /> -->
+                    <!-- 							</template> -->
+                    <!-- 						</combobox> -->
+                    <!-- 					</auxheader> -->
+                    <auxheader colspan="7">
+                        <a iconSclass="z-icon-filter" />
+                        <combobox hflex="1" id="cbFilterName"
+                                  placeholder="${c:l('distribute.filter.name')}" autodrop="true"
+                                  buttonVisible="false">
+                            <template name="model">
+                                <comboitem value="${each.distributeId}"
+                                           label="${each.distributeName}" />
+                            </template>
+                        </combobox>
+                    </auxheader>
+                </auxhead>
+                <columns style="text-align:center; ">
+                    <column hflex="1">${c:l('pump.index')}</column>
+                    <column hflex="2">${c:l('distribute.code')}</column>
+                    <column hflex="6">${c:l('distribute.name')}</column>
+                    <column hflex="2">${c:l('distribute.year')}</column>
+                    <column hflex="3">
+                        ${c:l('distribute.remote')}
+                    </column>
+                    <column hflex="2">
+                        ${c:l('distribute.handheld')}
+                    </column>
+                    <column hflex="2">${c:l('pump.action')}</column>
+                </columns>
+                <template name="model">
+                    <row value="${each}">
+                        <cell style="text-align: center;">
+                            <label value="${forEachStatus.index+1}" />
+                        </cell>
+                        <cell>
+                            <textbox value="${each.distributeCode}"
+                                     tooltiptext="${each.distributeCode}" hflex="1" inplace="true"
+                                     readonly="true" />
+                        </cell>
+                        <cell>
+                            <textbox value="${each.distributeName}"
+                                     tooltiptext="${each.distributeName}" hflex="1" inplace="true"
+                                     readonly="true" />
+                        </cell>
+                        <cell>
+                            <datebox value="${each.distributeYear}" format="yyyy" sclass="datebox-year-only"
+                                     style="text-align: center;" hflex="1" inplace="true"
+                                     readonly="true" />
+                        </cell>
+                        <cell>
+                            <intbox value="${each.distributeRemote}"
+                                    style="text-align: right;" tooltiptext="${each.distributeRemote}"
+                                    hflex="1" inplace="true" readonly="true" />
+                        </cell>
+                        <cell>
+                            <intbox style="text-align: right;"
+                                    value="${each.distributeHandheld}" tooltiptext="${each.distributeHandheld}"
+                                    hflex="1" inplace="true" readonly="true" />
+                        </cell>
+                        <cell style="text-align:center">
+                            <a class="btn-cursor"
+                               iconSclass="z-icon-pencil" forward="onClick=onEdit"
+                               tooltiptext="${c:l('edit')}" />
+                            <a class="btn-cursor"
+                               iconSclass="z-icon-trash-o" forward="onClick=onDelete"
+                               tooltiptext="${c:l('delete')}" />
+                            <a class="btn-cursor"
+                               iconSclass="z-icon-check" forward="onClick=onSave"
+                               visible="false" tooltiptext="${c:l('save')}" />
+                            <a class="btn-cursor"
+                               iconSclass="z-icon-ban" forward="onClick=onCancel"
+                               visible="false" tooltiptext="${c:l('cancel')}" />
+
+                        </cell>
+                    </row>
+                </template>
+            </grid>
+        </groupbox>
+    </window>
+</zk>

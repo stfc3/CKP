@@ -1,0 +1,83 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 9, 2018, 11:22:26 AM
+    Author     : daond
+*/
+
+/*Dashboard*/
+.title-dashboard {
+    line-height: 43px;
+    color: white !important;
+    font-weight: bold;
+    font-size: 14px;
+}
+.content-border {
+    border: 1px solid silver;
+}
+.chartline {
+    /*width: 90% !important;*/
+    /*position: relative;*/
+    /*float: left;*/
+}
+
+.daond {
+    width: auto;
+    height: 100%;
+}
+.dashboard-main{
+    width: 100%;
+    height: 100%;
+}
+.dashboard-main-left{
+    width: auto;
+    height: 100%;
+    float:left;
+}
+.dashboard-main-right {
+    width: auto;
+    width: calc(100% - 190px);
+    float: left;
+    /*padding: 10px;*/
+}
+.dashboard-content {
+    width: calc(50% - 10px);
+    float: left;
+    margin: 5px;
+    border: 1px solid #c0c0c0;
+    box-shadow: none;
+    background-color: white;
+}
+/*.dashboard-content-title {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d0cece;
+    height: 30px;
+}
+*/.dashboard-content-title .z-caption-content{
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #585858;
+    line-height: 38px;
+    padding-left: 10px;
+}
+.dashboard-content-title .z-icon-caret-up {
+    line-height: 38px;
+}
+/*Resize content*/
+@media only screen and (max-width: 768px) {
+    .dashboard-content {
+        width: calc(100% - 10px);
+        float: left;
+        margin-right: 10px;
+        border: 1px solid #c0c0c0;
+        margin-top: 10px;
+        box-shadow: none;
+        background-color: white;
+    }
+}
+/*Dashboard*/
+/*End Dashboard*/

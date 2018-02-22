@@ -1,0 +1,15 @@
+<div zclass="dashboard-content">
+<!--    <div zclass="dashboard-content-title">
+        <span>Popular Domains</span>
+    </div>
+    <include src="chart/line/linechart.zul"/>-->
+
+
+<panel border="none" collapsible="true" sclass="transparent">
+    <caption iconSclass="z-icon-star orange" sclass="dashboard-content-title" label="Popular Domains"/>
+    <panelchildren >
+        <!--<label value="CKP Management" class="title-dashboard"/>-->
+        <include src="chart/line/linechart.zul"/>
+    </panelchildren>
+</panel>
+</div>
