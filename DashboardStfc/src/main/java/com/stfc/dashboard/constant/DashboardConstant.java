@@ -11,4 +11,8 @@ package com.stfc.dashboard.constant;
  */
 public class DashboardConstant {
     public static final String LEGEND_LAYOUT_VERTICAL = "vertical";
+    
+    public static final String TYPE_CHART_LINE = "LINE";
+    public static final String TYPE_CHART_PIE = "PIE";
+    
 }

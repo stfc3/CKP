@@ -1,4 +1,4 @@
-package com.stfc.dashboard;
+package com.stfc.dashboard.controller;
 
 import java.util.List;
 

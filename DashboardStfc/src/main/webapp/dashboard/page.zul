@@ -23,7 +23,7 @@
         <include src="content/conversation.zul" hflex="6"/>
     </hlayout>
 </vlayout>-->
-<div apply="com.stfc.dashboard.PageController" sclass="mainContainer">
+<div sclass="mainContainer">
     <div sclass="page-header">
         <label value="Dashboard"/>
         <a label="overview &amp; stats" iconSclass="z-icon-angle-double-right" sclass="subtitle"/>
@@ -36,7 +36,7 @@
     </hlayout>
     <separator bar="true"/>
     <div class="background-blue">
-        <include id="show" />
+        <!--<include id="show" />-->
         <!--        <include src="chart/line/linechart.zul"/>
         <include src="chart/line/linechart.zul" style="float:left;"/>
         <include src="chart/line/linechart.zul" style="float:right; width: 50%"/>

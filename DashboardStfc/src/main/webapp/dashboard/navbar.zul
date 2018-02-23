@@ -1,4 +1,4 @@
-<div sclass="navbar" apply="com.stfc.dashboard.NavbarComposer">
+<div sclass="navbar" apply="com.stfc.dashboard.controller.NavbarComposer">
     <!-- Brand Logo -->
     <image id="image" class="index-banner"
            src="../images/logoDashboard.png" height="46px" />

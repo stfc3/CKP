@@ -1,4 +1,4 @@
-<div id="sidebar" sclass="sidebar" apply="com.stfc.dashboard.SidebarComposer">
+<div id="sidebar" sclass="sidebar" apply="com.stfc.dashboard.controller.SidebarComposer">
 	<!-- Shortcuts Button-->
 <!--	<div class="shortcuts">
 		 Display when expanded 

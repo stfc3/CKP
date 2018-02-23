@@ -12,7 +12,7 @@ a:focus {
 .z-menuitem-text,
 .z-nav-text,
 .z-navitem-text {
-  font-family: 'Open Sans';
+  font-family: 'Arial';
   font-size: 13px;
 }
 .z-a > [class*="icon-"] {
@@ -39,7 +39,7 @@ a:focus {
 }
 .z-caption-content {
   padding: 0;
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: lighter;
   line-height: 32px;
 }
@@ -114,7 +114,7 @@ a:focus {
 .z-drop-ghost .z-drop-content {
   width: auto;
   height: auto;
-  font-family: 'Open Sans';
+  font-family: 'Arial';
   font-size: 13px;
   border: 1px solid #CCC;
 }
@@ -913,7 +913,7 @@ a:focus {
   line-height: 24px;
 }
 .nav-search .z-bandbox-input {
-  font-family: 'Open Sans';
+  font-family: 'Arial';
   font-size: 13px;
   font-weight: normal;
   font-style: normal;
@@ -1891,7 +1891,7 @@ a:focus {
   border-bottom-color: #DCE8F1;
 }
 .z-panel-header {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Arial", "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding: 0;
   background: #F7F7F7;
 }
@@ -1977,7 +1977,7 @@ a:focus {
   border: 0;
    ${ t:borderRadius('0') };
   padding-top: 0;
-  font-family: 'Open Sans';
+  font-family: 'Arial';
 }
 .rtab.z-tabbox .z-tab,
 .rtab.z-tabbox .z-tab:hover,
@@ -2072,7 +2072,7 @@ a:focus {
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
 .z-grid .z-column-content {
-  font-family: 'Open Sans';
+  font-family: 'Arial';
   font-size: 13px;
   color: #707070;
 }
@@ -2185,7 +2185,7 @@ a:focus {
 }
 .conversation.z-panel .action .z-textbox {
   height: 34px;
-  font-family: 'Open Sans';
+  font-family: 'Arial';
    ${ t:borderRadius('0') };
   color: #858585;
   border: 1px solid #D5D5D5;
@@ -2763,7 +2763,7 @@ body {
   padding: 0;
   background-color: #e4e6e9;
   min-height: 100%;
-  font-family: 'Open Sans';
+  font-family: 'Arial';
   font-size: 13px;
   font-weight: normal;
   font-style: normal;

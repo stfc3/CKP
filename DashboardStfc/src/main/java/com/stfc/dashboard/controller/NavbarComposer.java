@@ -1,4 +1,4 @@
-package com.stfc.dashboard;
+package com.stfc.dashboard.controller;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.HtmlBasedComponent;
