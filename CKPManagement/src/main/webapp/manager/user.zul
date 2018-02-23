@@ -57,7 +57,7 @@
                             <label value="${forEachStatus.index+1}" />
                         </cell>
                         <cell>
-                            <label value="${each.userName}" tooltiptext="${each.userName}" hflex="1"/>
+                            <textbox value="${each.userName}" tooltiptext="${each.userName}" hflex="1" inplace="true" readonly="true"/>
                         </cell>
                         <cell>
                             <textbox value="${each.fullName}" tooltiptext="${each.fullName}" hflex="1" inplace="true" readonly="true"/>
