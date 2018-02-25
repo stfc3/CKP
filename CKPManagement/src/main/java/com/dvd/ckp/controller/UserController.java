@@ -145,8 +145,10 @@ public class UserController extends GenericForwardComposer {
         if (blnAddOrEdit) {
             vstrPassword = RandomStringUtils.random(8, Constants.RESET_RANDOM_PASSWORD);
             user.setPassword(EncryptUtil.encrypt(vstrPassword));
+            user.setType(Constants.USER_TYPE);
         } else {
             user.setPassword(c.getPassword());
+            user.setType(c.getType());
         }
         if (blnAddOrEdit) {
             for (User u : lstUsers) {
@@ -157,7 +159,7 @@ public class UserController extends GenericForwardComposer {
             }
         }
         user.setStatus(Constants.STATUS_ACTIVE);
-        user.setType(Constants.USER_TYPE);
+        
         user.setCreateDate(new Date());
         userService.insertOrUpdateUser(user);
         StyleUtils.setDisableComponent(lstCell, 5);
@@ -217,14 +219,14 @@ public class UserController extends GenericForwardComposer {
      */
     private User getDataInRow(List<Component> lstCell) {
         User user = new User();
-        Label lblUserName = (Label) lstCell.get(1).getFirstChild();
+        Textbox txtUserName = (Textbox) lstCell.get(1).getFirstChild();
         Textbox txtFullName = (Textbox) lstCell.get(2).getFirstChild();
         Textbox txtEmail = (Textbox) lstCell.get(3).getFirstChild();
         Textbox txtPhone = (Textbox) lstCell.get(4).getFirstChild();
         Textbox txtAddress = (Textbox) lstCell.get(5).getFirstChild();
         Textbox txtCard = (Textbox) lstCell.get(6).getFirstChild();
 
-        user.setUserName(lblUserName.getValue());
+        user.setUserName(txtUserName.getValue());
         user.setFullName(txtFullName.getValue());
         user.setEmail(txtEmail.getValue());
         user.setPhone(txtPhone.getValue());
