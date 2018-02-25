@@ -8,11 +8,13 @@ import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Grid;
@@ -23,6 +25,7 @@ import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
 import com.dvd.ckp.business.service.StaffServices;
@@ -30,10 +33,6 @@ import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.domain.StaffQuantity;
 import com.dvd.ckp.utils.SpringConstant;
-import org.zkoss.zk.ui.event.Events;
-import org.zkoss.zul.Button;
-import org.zkoss.zul.Vbox;
-import org.zkoss.zul.Window;
 
 public class AddStaffController extends GenericForwardComposer {
 
@@ -202,6 +201,7 @@ public class AddStaffController extends GenericForwardComposer {
             gridSelectStaff.setVisible(true);
             titleStaffSelected.setVisible(true);
         }
+        
         lstStaff.remove(getIndexStaff(c.getStaffId()));
         onReloadSelectGrid();
     }
@@ -226,6 +226,7 @@ public class AddStaffController extends GenericForwardComposer {
         gridFullStaff.setModel(listDataModel);
         listDataModelSelected = new ListModelList<Staff>(lstStaffSelected);
         gridSelectStaff.setModel(listDataModelSelected);
+        intMaxStaff.setValue(lstStaffSelected.size());
     }
 
     private int getIndexStaff(Long staffID) {
@@ -257,6 +258,7 @@ public class AddStaffController extends GenericForwardComposer {
         getDataInRow(lstCell, c);
         lstStaff.add(c);
         lstStaffSelected.remove(getIndexStaffSelected(c.getStaffId()));
+        intMaxStaff.setValue(lstStaffSelected.size());
 
         onReloadSelectGrid();
     }
@@ -306,6 +308,7 @@ public class AddStaffController extends GenericForwardComposer {
                     staffService.save(lstQuantity);
                     logger.info("Bill detail id: " + billID);
                     billsServices.getQuantity(billID).get(0).getV_quantity();
+                    billsServices.upadte(null, null, billID);
                     onReloadSelectGrid();
 
                     //reload data

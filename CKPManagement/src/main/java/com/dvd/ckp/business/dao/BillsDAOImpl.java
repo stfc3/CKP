@@ -395,29 +395,37 @@ public class BillsDAOImpl implements BillDAO {
 
     }
 
-    @Override
-    public void upadte(Double quantityApprove, Double totalApprove, Long billDetailID) {
-        // TODO Auto-generated method stub
-        try {
-            StringBuilder builder = new StringBuilder("update bill_detail set ");
-            builder.append(" quantity_approve = :quantityApprove, ");
-            builder.append(" total_approve = :totalApprove, ");
-            builder.append(" status = 2 ");
-            builder.append(" where bill_detail_id = :billDetailId ");
-            Query query = getCurrentSession().createSQLQuery(builder.toString());
-            query.setParameter("quantityApprove", quantityApprove);
-            query.setParameter("totalApprove", totalApprove);
-            query.setParameter("billDetailId", billDetailID);
-            query.executeUpdate();
-            String billDetailIdApprove = "bill_detail_" + billDetailID;
-            Clients.evalJavaScript("approveBilDetail('" + billDetailIdApprove + "');");
-        } catch (Exception e) {
-            // TODO: handle exception
-            logger.error(e.getMessage(), e);
-        } finally {
-            // TODO: handle finally clause
-        }
-    }
+	@Override
+	public void upadte(Double quantityApprove, Double totalApprove, Long billDetailID) {
+		// TODO Auto-generated method stub
+		try {
+			StringBuilder builder = new StringBuilder("update bill_detail set ");
+			if (quantityApprove != null) {
+				builder.append(" quantity_approve = :quantityApprove, ");
+			}
+			if (totalApprove != null) {
+				builder.append(" total_approve = :totalApprove, ");
+			}
+			builder.append(" status = 2 ");
+			builder.append(" where bill_detail_id = :billDetailId ");
+			Query query = getCurrentSession().createSQLQuery(builder.toString());
+			if (quantityApprove != null) {
+				query.setParameter("quantityApprove", quantityApprove);
+			}
+			if (totalApprove != null) {
+				query.setParameter("totalApprove", totalApprove);
+			}
+			query.setParameter("billDetailId", billDetailID);
+			query.executeUpdate();
+			String billDetailIdApprove = "bill_detail_" + billDetailID;
+			Clients.evalJavaScript("approveBilDetail('" + billDetailIdApprove + "');");
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error(e.getMessage(), e);
+		} finally {
+			// TODO: handle finally clause
+		}
+	}
 
     @Override
     public List<BillViewDetail> getApproveBill() {
