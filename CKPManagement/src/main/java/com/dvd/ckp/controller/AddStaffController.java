@@ -30,6 +30,7 @@ import org.zkoss.zul.Window;
 import com.dvd.ckp.business.service.BillsServices;
 import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.component.MyListModel;
+import com.dvd.ckp.domain.CalculatorRevenue;
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.domain.StaffQuantity;
 import com.dvd.ckp.utils.SpringConstant;
@@ -83,6 +84,40 @@ public class AddStaffController extends GenericForwardComposer {
 
     private Long billID;
     List<StaffQuantity> listQuantity;
+    
+    private Long billDetail;
+    private Long bill;
+
+    @Wire
+    private Doublebox quantityApprove;
+//    @Wire
+//    private Window approveQuantity;
+    @Wire
+    private Longbox txtConstruction;
+
+    @Wire
+    private Longbox txtPumpId;
+
+    @Wire
+    private Longbox txtPumpTypeId;
+
+    @Wire
+    private Longbox txtLocationID;
+
+    @Wire
+    private Longbox txtLocationTypeID;
+
+    @Wire
+    private Intbox txtShift;
+
+    @Wire
+    private Intbox txtMaxStaff;
+
+    @Wire
+    private Intbox txtIsAuto;
+
+    @Wire
+    private Intbox txtSwitch;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -139,6 +174,9 @@ public class AddStaffController extends GenericForwardComposer {
         cbFilterName.setModel(listDataStaff);
 
         cbFilterNameSelected.setModel(listDataModelSelected);
+        
+        billDetail = txtBillID.getValue();
+        
 
     }
 
@@ -311,8 +349,34 @@ public class AddStaffController extends GenericForwardComposer {
                     billsServices.upadte(null, null, billID);
                     onReloadSelectGrid();
 
+
+                    
+                    
+                    Double quantityApproveValue = quantityApprove.getValue();
+                    Double totalApproveValue = null;
+                    // billsServices.upadte(quantityApproveValue,
+                    // totalApproveValue, billDetail);
+//							if (listQuantity == null || listQuantity.isEmpty()) {
+//								Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message.max.staff"),
+//										Labels.getLabel("comfirm"), Messagebox.OK, Messagebox.ERROR);
+//								return;
+//							}
+                    List<CalculatorRevenue> lstRevenue = billsServices.calculatorRevenue(
+                            txtConstruction.getValue(), txtPumpTypeId.getValue(), txtLocationTypeID.getValue(),
+                            txtLocationID.getValue(), quantityApproveValue, txtShift.getValue(),
+                            txtSwitch.getValue(), txtIsAuto.getValue());
+                    totalApproveValue = lstRevenue.get(0).getRevenue();
+                    billsServices.upadte(quantityApproveValue, totalApproveValue, billDetail);
+                    
+                    billsServices.getQuantity(billDetail);
+                    // totalApprove.setValue(totalApproveValue);
+                    // approveQuantity.onClose();
+                    logger.info("Value: " + lstRevenue.get(0).getRevenue());
+                    //reload data
                     //reload data
                     Events.sendEvent("onClick", (Button) ((Window) addStaff.getParent()).getFellow("reloadData"), null);
+                    addStaff.onClose();
+                    addStaff.detach();
 
                 }
                 addStaff.detach();
