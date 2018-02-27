@@ -202,7 +202,7 @@ public class ApproveController extends GenericForwardComposer {
         arguments.put("billDetailID", data.getBillDetailID());
         arguments.put("bill", getBill(data.getBillID()));
         arguments.put("billDetai", getBillDetail(data.getBillDetailID()));
-        if (isApprove == 1) {
+//        if (isApprove == 1) {
             final Window windownUpload = (Window) Executions.createComponents("/manager/include/addStaff.zul", approve,
                     arguments);
             windownUpload.doModal();
@@ -223,18 +223,18 @@ public class ApproveController extends GenericForwardComposer {
             // });
             // reload();
 
-        } else if (isApprove == 2) {
+//        } else if (isApprove == 2) {
 //            Messagebox.show(Labels.getLabel("staff.quantity.comfirm.approve.message"), Labels.getLabel("comfirm"),
 //                    Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, new EventListener() {
 //                @Override
 //                public void onEvent(Event e) {
 //                    if (Messagebox.ON_NO.equals(e.getName())) {
-                        final Window windownUpload = (Window) Executions
-                                .createComponents("/manager/include/approveQuantity.zul", approve, arguments);
-                        windownUpload.doModal();
-                        windownUpload.setBorder(true);
-                        windownUpload.setBorder("normal");
-                        windownUpload.setClosable(true);
+//                        final Window windownUpload = (Window) Executions
+//                                .createComponents("/manager/include/approveQuantity.zul", approve, arguments);
+//                        windownUpload.doModal();
+//                        windownUpload.setBorder(true);
+//                        windownUpload.setBorder("normal");
+//                        windownUpload.setClosable(true);
                         // windownUpload.addEventListener(Events.ON_DROP,
                         // new EventListener<Event>() {
                         //
@@ -264,7 +264,7 @@ public class ApproveController extends GenericForwardComposer {
 //                }
 //            });
 
-        }
+//        }
 
     }
 

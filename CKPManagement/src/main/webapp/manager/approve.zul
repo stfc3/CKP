@@ -118,7 +118,7 @@
                                tooltiptext="${c:l('edit')}" visible="false"/>
                             <a class="btn-cursor"
                                iconSclass="z-icon-check-circle-o" forward="onClick=onApprove"
-                               tooltiptext="${c:l('staff.quantity.approve')}" />
+                               tooltiptext="${c:l('staff.quantity.approve')}" visible="false"/>
                             <a class="btn-cursor"
                                iconSclass="z-icon-check" forward="onClick=onSave"
                                visible="false" tooltiptext="${c:l('save')}" />

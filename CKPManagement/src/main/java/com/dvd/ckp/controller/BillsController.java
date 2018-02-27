@@ -350,7 +350,7 @@ public class BillsController extends GenericForwardComposer<Component> {
 		Bills bill = new Bills();
 		bill.setStatus(1);
 		listDataModel.add(0, bill);
-		
+
 		gridBills.setActivePage(0);
 		// gridBills.setPagingPosition("1");
 		gridBills.setModel(listDataModel);
@@ -484,13 +484,14 @@ public class BillsController extends GenericForwardComposer<Component> {
 					mesage.setHflex("1");
 					txtBillsCode.focus();
 					isFalse = true;
+					
 				} else {
 					mesage.setVisible(false);
 					mesage.setHflex("0");
 					mesage.setValue("");
 
 				}
-				billCodeIsChange = false;
+				
 			}
 		}
 		// Khach hang
@@ -945,12 +946,12 @@ public class BillsController extends GenericForwardComposer<Component> {
 	public void onAddDetail(ForwardEvent event) {
 		Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
 		List<Component> lstCell = rowSelected.getChildren();
-		
+
 		if (!valiDate(lstCell)) {
 			Bills billsValue = rowSelected.getValue();
 			getDataInRow(lstCell, billsValue);
 			billsValue.setStatus(1);
-			
+
 			save(billsValue, lstCell);
 			reloadGrid();
 
