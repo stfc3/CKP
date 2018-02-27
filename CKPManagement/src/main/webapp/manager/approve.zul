@@ -128,8 +128,11 @@
                                iconSclass="z-icon-ban" forward="onClick=onCancel"
                                visible="false" tooltiptext="${c:l('cancel')}" /> 
                             <a class="btn-cursor"
+                               iconSclass="z-icon-check-circle-o" forward="onClick=onAddStaff"
+                               visible="true" tooltiptext="${c:l('staff.quantity.approve')}" />
+<!--                            <a class="btn-cursor"
                                iconSclass="z-icon-user-plus" forward="onClick=onAddStaff"
-                               visible="true" tooltiptext="${c:l('staff.quantity.add')}" />
+                               visible="true" tooltiptext="${c:l('staff.quantity.add')}" />-->
 
                             
                             

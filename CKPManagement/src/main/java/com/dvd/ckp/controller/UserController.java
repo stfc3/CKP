@@ -321,8 +321,8 @@ public class UserController extends GenericForwardComposer {
      * Reload grid Role
      */
     private void reloadGridRole(String userId) {
-        List<Role> vlstRole = userService.getRoleByUser(userId, 1);
-        listDataModelRole = new ListModelList(vlstRole);
+        lstRoles = userService.getRoleByUser(userId, 1);
+        listDataModelRole = new ListModelList(lstRoles);
         lstRole.setModel(listDataModelRole);
     }
 

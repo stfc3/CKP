@@ -24,6 +24,7 @@ import com.dvd.ckp.domain.Location;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.domain.Staff;
+import com.dvd.ckp.domain.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,6 +40,7 @@ import org.zkoss.lang.Objects;
 import org.zkoss.zk.ui.UiException;
 import org.zkoss.zul.AbstractListModel;
 import org.zkoss.zul.ListModel;
+import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.ListModelMap;
 import org.zkoss.zul.ListSubModel;
 import org.zkoss.zul.Listbox;
@@ -591,6 +593,9 @@ public class MyListModel<E> extends AbstractListModel<E> implements Sortable<E>,
             }
             if(object instanceof Staff){
                 return ((Staff) object).getStaffName();
+            }
+            if(object instanceof User){
+                return ((User) object).getUserName();
             }
             return "";
         }
