@@ -27,15 +27,15 @@
             End content 4-->
             
         </div>
-        <div zclass="dashboard-content-100">
+<!--        <div zclass="dashboard-content-100">
                 <panel border="none" collapsible="true" sclass="transparent">
                     <caption iconSclass="z-icon-star orange" sclass="dashboard-content-title" label="Popular Domains"/>
                     <panelchildren >
-                        <!--<label value="CKP Management" class="title-dashboard"/>-->
+                        <label value="CKP Management" class="title-dashboard"/>
                         <include src="/dashboard/demockp/chartdemo.zul"/>
                     </panelchildren>
                 </panel>
-            </div>
+            </div>-->
         <!--        <div class="dashboard-footer">
             © 2017 - Công ty cổ phần CKP. Được phát triển bởi
                     stfc Team

@@ -34,7 +34,7 @@ public class ChartBaseLine extends ChartBase {
             pchart.setSubtitle(chartSubTitle);
         }
         pchart.getYAxis().setTitle(yAXisTitle);
-        pchart.getYAxis().getLabels().setFormat("{value}°");
+        pchart.getYAxis().getLabels().setFormat("{value}");
         pchart.getTooltip().setShared(shared);
         pchart.getTooltip().setCrosshairs(true);
         pchart.setZoomType("xy");

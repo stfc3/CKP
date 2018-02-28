@@ -26,7 +26,7 @@ public class SeriesModel {
                 Point point;
                 PointMarker pointMaker = lstPoint.get(i);
                 try {
-                    int pointValue = Integer.parseInt(pointMaker.getValue());
+                    double pointValue = Double.valueOf(pointMaker.getValue());
                     point = new Point(pointValue);
                 } catch (Exception e) {
                     point = new Point(null);
