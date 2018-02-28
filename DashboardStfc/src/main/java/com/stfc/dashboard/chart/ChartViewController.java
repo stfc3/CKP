@@ -38,6 +38,13 @@ public class ChartViewController {
             + "	\"color\": \"#666666\",\n"
             + "	\"lineWidth\": \"1\",\n"
             + "	\"markerRadius\": \"4\"\n"
+//            sql
+//           list series
+//                   {
+//                        name
+//                        order: ten cot
+//                           
+//                   }
             + "}";
     String chartPieDetail = "{\n"
             + "	\"chartTitle\": \"Tỷ trọng bơm\",\n"
@@ -54,6 +61,8 @@ public class ChartViewController {
 
     public Charts buildChart() {
         Charts chart = new Charts();
+        chart.setStyle("chartbase");
+        chart.setZclass("chartbase");
         try {
             if (DashboardConstant.TYPE_CHART_LINE.equalsIgnoreCase(chartType)) {
                 ChartBase chartView = (ChartBase) Class.forName(chartClassLine).newInstance();

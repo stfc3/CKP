@@ -1,21 +1,11 @@
-<div zclass="dashboard-main" apply="com.stfc.dashboard.view.DashboardView">
-    <div zclass="dashboard-main-left">
+<div zclass="dashboard-main" apply="com.stfc.daond.demo.chart.DashboardViewDemo">
+    <!--    <div zclass="dashboard-main-left">
         <include src="sidebar.zul"/>
-    </div>
+    </div>-->
     <div sclass="dashboard-main-right">
-        <div sclass="breadcrumbs">
-            <div sclass="breadcrumb">
-                <span sclass="home-icon z-icon-home"/>
-                <a label="Home" href="#"/>
-                <label value="Dashboard"/>
-            </div>
-            <div sclass="dashboard-breadcrumb-data-date">
-                <label value="Dữ liệu ngày: "/>
-                <datebox cols="12" format="dd/MM/yyyy" id="dataDate"/>
-            </div>
-        </div>
+        
         <div id="dashboardView">
-            <include src="content/tablecontent.zul"/>
+            <!--<include src="content/tablecontent.zul"/>-->
             <!--            Content 1
             <include src="content/content.zul"/>
             End content 1
@@ -35,10 +25,20 @@
             Content 4
             <include src="content/content.zul"/>
             End content 4-->
+            
         </div>
-        <div class="dashboard-footer">
+        <div zclass="dashboard-content-100">
+                <panel border="none" collapsible="true" sclass="transparent">
+                    <caption iconSclass="z-icon-star orange" sclass="dashboard-content-title" label="Popular Domains"/>
+                    <panelchildren >
+                        <!--<label value="CKP Management" class="title-dashboard"/>-->
+                        <include src="/dashboard/demockp/chartdemo.zul"/>
+                    </panelchildren>
+                </panel>
+            </div>
+        <!--        <div class="dashboard-footer">
             © 2017 - Công ty cổ phần CKP. Được phát triển bởi
                     stfc Team
-        </div>
+        </div>-->
     </div>
 </div>

@@ -7,14 +7,14 @@ and open the template in the editor.
     Created on : Feb 9, 2018, 11:22:26 AM
     Author     : daond
 */
-body {
+/*body {
     padding: 0px;
 }
 #main {
     font-family: 'Arial';
-}
+}*/
 /*Dashboard*/
-.title-dashboard {
+/*.title-dashboard {
     line-height: 43px;
     color: white !important;
     font-weight: bold;
@@ -22,19 +22,19 @@ body {
 }
 .content-border {
     border: 1px solid silver;
-}
-.chartbase {
-    /*width: 100% !important;*/
-    /*height: auto !important;*/
+}*/
+/*.chartbase {
+    width: 100% !important;
+    height: auto !important;
     height: 100% !important;
-    /*position: relative;*/
-    /*float: left;*/
-}
+    position: relative;
+    float: left;
+}*/
 
-.daond {
+/*.daond {
     width: auto;
     height: 100%;
-}
+}*/
 .dashboard-main{
     width: 100%;
     height: 100%;
@@ -46,21 +46,31 @@ body {
 }
 .dashboard-main-right {
     width: auto;
-    width: calc(100% - 190px);
-    float: left;
+    /*width: calc(100% - 190px);*/
+/*    float: left;*/
     /*padding: 10px;*/
 }
 .dashboard-content {
-    width: calc(50% - 10px);
+    width: calc(50% - 6px);
     float: left;
-    margin: 5px;
+    margin: 3px;
     border: 1px solid #c0c0c0;
     box-shadow: none;
     background-color: white;
     /*max-height: 450px;*/
-    height: 450px;
+    /*height: 450px;*/
 }
-.transparent {
+.dashboard-content-100 {
+    width: calc(100% - 6px);
+    float: left;
+    margin: 3px;
+    border: 1px solid #c0c0c0;
+    box-shadow: none;
+    background-color: white;
+    /*max-height: 450px;*/
+    /*height: 450px;*/
+}
+/*.transparent {
     height: 100%;
 }
 .z-panel-body {
@@ -70,13 +80,14 @@ body {
     height: 100%;
     overflow-y: auto;
     padding: 5px;
-}
+}*/
 /*.dashboard-content-title {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d0cece;
     height: 30px;
 }
-*/.dashboard-content-title .z-caption-content{
+*/
+/*.dashboard-content-title .z-caption-content{
     font-weight: bold;
     font-size: 14px;
     text-transform: uppercase;
@@ -87,7 +98,7 @@ body {
 .dashboard-content-title .z-icon-caret-up {
     line-height: 38px;
 }
-/*Resize content*/
+Resize content
 @media only screen and (max-width: 768px) {
     .dashboard-content {
         width: calc(100% - 10px);
@@ -100,7 +111,7 @@ body {
     }
 }
 .dashboard-breadcrumb-data-date {
-    /*background-color: red;*/
+    background-color: red;
     float: right;
 }
 .nav-user > div .user-menu.z-menubar {
@@ -111,7 +122,7 @@ body {
     border-radius: 0 !important;
 }
 
-/*border grid*/
+border grid
 .border-content-grid .z-row-inner:first-child, .z-columns:first-child {
     border-left: 1px solid #c0c0c0;
 }
@@ -134,7 +145,7 @@ body {
     text-align:center; 
     line-height: 40px;
     
-}
+}*/
 /*end border grid*/
 /*Dashboard*/
 /*End Dashboard*/

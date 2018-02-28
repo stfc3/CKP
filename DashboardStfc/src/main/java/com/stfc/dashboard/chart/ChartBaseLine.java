@@ -37,6 +37,7 @@ public class ChartBaseLine extends ChartBase {
         pchart.getYAxis().getLabels().setFormat("{value}°");
         pchart.getTooltip().setShared(shared);
         pchart.getTooltip().setCrosshairs(true);
+        pchart.setZoomType("xy");
 
         Marker marker = pchart.getPlotOptions().getSpline().getMarker();
         marker.setRadius(markerRadius);

@@ -2,6 +2,14 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <?page title="CKP Management" href="images/faviconCKP.ico"?>
 <?link rel="shortcut icon" type="image/x-icon" href="images/faviconCKP.ico"?>
+
+<!--daond Demo CKP-->
+<?link href="dashboard/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"?>
+<?link href="dashboard/css/fonts.css" rel="stylesheet" type="text/css"?>
+<?link href="dashboard/less/index.css.dsp" rel="stylesheet" type="text/css"?>
+<?link href="dashboard/demockp/mydashboarddemo.css" rel="stylesheet" type="text/css"?>
+<!--daond End demo CKP-->
+
 <zk xmlns:x="xhtml" xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
     <style src="css/theme.css"></style>
     <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
@@ -20,7 +28,7 @@
                 </north>
                 <center class="menu-index-background" autoscroll="true">
                     <tree id="treeMenu" class="menu-index-background">
-<!--                        <treechildren>
+                        <!--                        <treechildren>
                             <treeitem label="${c:l('revenue')}">
                                 <treechildren>
                                     <treeitem id="itemCustomer" label="${c:l('revenue.customer')}" value="/manager/customer.zul" />

@@ -1,0 +1,4 @@
+<window apply="com.stfc.daond.demo.chart.ChartDemoLineColumnController">
+    <charts id="chart"  zoomType="xy" subtitle="Source: WorldClimate.com" 
+        title="Average Monthly Temperature and Rainfall in Tokyo" style="width: calc(100% - 6px)"/>
+</window>

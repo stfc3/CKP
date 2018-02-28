@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.stfc.dashboard.view;
+package com.stfc.daond.demo.chart;
 
+import com.stfc.dashboard.view.*;
 import com.stfc.dashboard.chart.ChartViewController;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,10 +22,10 @@ import org.zkoss.zul.Panelchildren;
  *
  * @author daond
  */
-public class DashboardView extends SelectorComposer<Div> {
+public class DashboardViewDemo extends SelectorComposer<Div> {
 
-    @Wire
-    private Datebox dataDate;
+//    @Wire
+//    private Datebox dataDate;
 
     @Wire
     Div dashboardView;
@@ -32,11 +33,11 @@ public class DashboardView extends SelectorComposer<Div> {
     public void doAfterCompose(Div comp) throws Exception {
         super.doAfterCompose(comp);
         Date today = Calendar.getInstance().getTime();
-        dataDate.setValue(today);
+//        dataDate.setValue(today);
 
         addContentDemo("LINE");
         addContentDemo("PIE");
-        addContentDemo("LINE");
+//        addContentDemo("LINE");
 //        addContentDemo("LINE");
 
     }
