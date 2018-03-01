@@ -106,8 +106,8 @@ public class LoginController extends SelectorComposer<Component> {
                 userToken.setListObject(utilsService.getListObject(vuser.getUserId()));
             }
             session.setAttribute(Constants.USER_TOKEN, userToken);
-//            Executions.sendRedirect(Constants.PAGE_HOME);
-            Executions.sendRedirect(Constants.DASHBOARD_HOME);
+            Executions.sendRedirect(Constants.PAGE_HOME);
+//            Executions.sendRedirect(Constants.DASHBOARD_HOME);
         }
     }
 

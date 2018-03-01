@@ -29,7 +29,7 @@ public class ChartViewController {
     String chartClassPie = "com.stfc.dashboard.chart.ChartBasePie";
     //Lấy từ 1 trường trong db. Là dạng json. Chứa các thông tin cấu hình chart như tên, format, color
     String chartLineDetail = "{\n"
-            + "	\"categoryType\": \"1\",\n"
+            + "	\"categoryType\": \"0\",\n"
             + "	\"chartTitle\": \"Doanh thu\",\n"
             + "	\"chartSubTitle\": \"\",\n"
             + "	\"yAXisTitle\": \"Tỷ đồng\",\n"
@@ -128,18 +128,18 @@ public class ChartViewController {
     private List<SeriesModel> dataLine() {
 
         List<PointMarker> point1 = new ArrayList<>();
-        PointMarker p1 = new PointMarker("1", "url(https://www.highcharts.com/demo/gfx/sun.png)");
-        PointMarker p2 = new PointMarker("2", "square");
-        PointMarker p3 = new PointMarker("3", "square");
-        PointMarker p4 = new PointMarker("4", "square");
-        PointMarker p5 = new PointMarker("5", "square");
-        PointMarker p6 = new PointMarker("6", "url(https://www.highcharts.com/demo/gfx/snow.png)");
-        PointMarker p7 = new PointMarker("7", "square");
-        PointMarker p8 = new PointMarker("8", "square");
-        PointMarker p9 = new PointMarker("9", "square");
-        PointMarker p10 = new PointMarker("10", "square");
-        PointMarker p11 = new PointMarker("11", "square");
-        PointMarker p12 = new PointMarker("12", "square");
+        PointMarker p1 = new PointMarker("5.2", "square");
+        PointMarker p2 = new PointMarker("4.9", "square");
+        PointMarker p3 = new PointMarker("5.3", "square");
+        PointMarker p4 = new PointMarker("5.6", "square");
+        PointMarker p5 = new PointMarker("5.5", "square");
+        PointMarker p6 = new PointMarker("5.8", "square");
+        PointMarker p7 = new PointMarker("6.3", "square");
+        PointMarker p8 = new PointMarker("5.7", "square");
+        PointMarker p9 = new PointMarker("6.1", "square");
+        PointMarker p10 = new PointMarker("6.5", "square");
+        PointMarker p11 = new PointMarker("7.1", "square");
+        PointMarker p12 = new PointMarker("8.3", "square");
         point1.add(p1);
         point1.add(p2);
         point1.add(p3);
@@ -154,18 +154,18 @@ public class ChartViewController {
         point1.add(p12);
 
         List<PointMarker> point21 = new ArrayList<>();
-        PointMarker p21 = new PointMarker("12", "square");
-        PointMarker p22 = new PointMarker("24", "square");
-        PointMarker p23 = new PointMarker("33", "square");
-        PointMarker p24 = new PointMarker("43", "square");
-        PointMarker p25 = new PointMarker("15", "square");
-        PointMarker p26 = new PointMarker("36", "square");
-        PointMarker p27 = new PointMarker("27", "square");
-        PointMarker p28 = new PointMarker("48", "square");
-        PointMarker p29 = new PointMarker("29", "square");
-        PointMarker p210 = new PointMarker("16", "url(https://www.highcharts.com/demo/gfx/snow.png)");
-        PointMarker p211 = new PointMarker("12", "square");
-        PointMarker p212 = new PointMarker("19", "square");
+        PointMarker p21 = new PointMarker("6.3", "diamond");
+        PointMarker p22 = new PointMarker("5.9", "diamond");
+        PointMarker p23 = new PointMarker("5.8", "diamond");
+        PointMarker p24 = new PointMarker("6.7", "diamond");
+        PointMarker p25 = new PointMarker("6.6", "diamond");
+        PointMarker p26 = new PointMarker("6.3", "diamond");
+        PointMarker p27 = new PointMarker("7.5", "diamond");
+        PointMarker p28 = new PointMarker("7.7", "diamond");
+        PointMarker p29 = new PointMarker("8.4", "diamond");
+        PointMarker p210 = new PointMarker("9.5", "diamond");
+        PointMarker p211 = new PointMarker("8.8", "diamond");
+        PointMarker p212 = new PointMarker("10.2", "diamond");
         point21.add(p21);
         point21.add(p22);
         point21.add(p23);
@@ -180,11 +180,11 @@ public class ChartViewController {
         point21.add(p212);
         List<SeriesModel> lstseries = new ArrayList<>();
         SeriesModel ser1 = new SeriesModel();
-        ser1.setSeriesName("daond1");
+        ser1.setSeriesName("Năm 2016");
         ser1.setLstPoint(point1);
         lstseries.add(ser1);
         SeriesModel ser21 = new SeriesModel();
-        ser21.setSeriesName("daond2");
+        ser21.setSeriesName("Năm 2017");
         ser21.setLstPoint(point21);
 
         lstseries.add(ser21);
@@ -194,16 +194,13 @@ public class ChartViewController {
     private List<SeriesModel> dataPie() {
 
         List<PointMarker> point1 = new ArrayList<>();
-        PointMarker p1 = new PointMarker("39", "May bom 1");
-        PointMarker p2 = new PointMarker("25", "May bom 2");
-        PointMarker p3 = new PointMarker("11", "May bom 3");
-        PointMarker p4 = new PointMarker("20", "May bom 4");
-        PointMarker p5 = new PointMarker("5", "May bom 5");
+        PointMarker p1 = new PointMarker("58", "Bơm tĩnh");
+        PointMarker p2 = new PointMarker("28", "Bơm cần");
+        PointMarker p3 = new PointMarker("14", "Bơm cần phân phối");
         point1.add(p1);
         point1.add(p2);
         point1.add(p3);
-        point1.add(p4);
-        point1.add(p5);
+        
         List<SeriesModel> lstseries = new ArrayList<>();
         SeriesModel ser1 = new SeriesModel();
         ser1.setSeriesName("Khối lượng bơm");

@@ -5,7 +5,6 @@
  */
 package com.stfc.daond.demo.chart;
 
-import com.stfc.dashboard.view.*;
 import com.stfc.dashboard.chart.ChartViewController;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +12,6 @@ import org.zkoss.chart.Charts;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Caption;
-import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Panel;
 import org.zkoss.zul.Panelchildren;
@@ -35,8 +33,8 @@ public class DashboardViewDemo extends SelectorComposer<Div> {
         Date today = Calendar.getInstance().getTime();
 //        dataDate.setValue(today);
 
-        addContentDemo("LINE");
-        addContentDemo("PIE");
+        addContentDemo("LINE", "Tăng Trưởng Doanh Thu");
+        addContentDemo("PIE", "So Sánh Các Loại Bơm");
 //        addContentDemo("LINE");
 //        addContentDemo("LINE");
 
@@ -73,7 +71,7 @@ public class DashboardViewDemo extends SelectorComposer<Div> {
         panel.setParent(panelContent);
     }
     
-    private void addContentDemo(String chartType) {
+    private void addContentDemo(String chartType, String title) {
         Div dashboardContent = new Div();
         dashboardContent.setClass("dashboard-content");
         dashboardContent.setParent(dashboardView);
@@ -87,7 +85,7 @@ public class DashboardViewDemo extends SelectorComposer<Div> {
         Caption contentCaption = new Caption();
         contentCaption.setIconSclass("z-icon-star orange");
         contentCaption.setClass("dashboard-content-title");
-        contentCaption.setLabel("Popular Domains");
+        contentCaption.setLabel(title);
         contentCaption.setParent(panelContent);
 
         Panelchildren panel = new Panelchildren();
