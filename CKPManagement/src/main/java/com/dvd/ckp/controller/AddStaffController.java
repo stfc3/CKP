@@ -264,7 +264,7 @@ public class AddStaffController extends GenericForwardComposer {
         gridFullStaff.setModel(listDataModel);
         listDataModelSelected = new ListModelList<Staff>(lstStaffSelected);
         gridSelectStaff.setModel(listDataModelSelected);
-        intMaxStaff.setValue(lstStaffSelected.size());
+//        intMaxStaff.setValue(lstStaffSelected.size());
     }
 
     private int getIndexStaff(Long staffID) {
@@ -296,7 +296,7 @@ public class AddStaffController extends GenericForwardComposer {
         getDataInRow(lstCell, c);
         lstStaff.add(c);
         lstStaffSelected.remove(getIndexStaffSelected(c.getStaffId()));
-        intMaxStaff.setValue(lstStaffSelected.size());
+//        intMaxStaff.setValue(lstStaffSelected.size());
 
         onReloadSelectGrid();
     }
