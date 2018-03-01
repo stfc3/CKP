@@ -20,7 +20,7 @@ public interface Constants {
 
     //Page
     String PAGE_HOME = "/index.zul";
-    String DASHBOARD_HOME = "/dashboard/index.zul";
+    String DASHBOARD_HOME = "/index.zul";
     String PAGE_LOGIN = "/login.zul";
     String PAGE_CHANGE_PASSWORD = "/changepassword.zul";
     String PASSWORD_PATTERN = "(?=.*[0-9])([a-z])([A-Z])(?=\\S+$).{8,}";

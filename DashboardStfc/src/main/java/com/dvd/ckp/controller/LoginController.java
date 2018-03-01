@@ -71,8 +71,14 @@ public class LoginController extends SelectorComposer<Component> {
         userService = (UserService) SpringUtil.getBean(SpringConstant.USER_SERVICES);
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
         objectService = (ObjectService) SpringUtil.getBean(SpringConstant.OBJECT_SERVICES);
+        String vstrCurrentPath = Executions.getCurrent().getDesktop().getRequestPath();
+        logger.info("PATH ====> "+vstrCurrentPath);
         if (session.getAttribute(Constants.USER_TOKEN) != null) {
-            Executions.sendRedirect(Constants.PAGE_HOME);
+            if (Constants.PAGE_LOGIN.equals(vstrCurrentPath)) {
+                Executions.sendRedirect(Constants.DASHBOARD_HOME);
+            } else if (!Constants.PAGE_CHANGE_PASSWORD.equals(vstrCurrentPath)) {
+                Executions.sendRedirect(vstrCurrentPath);
+            }
         }
     }
 
