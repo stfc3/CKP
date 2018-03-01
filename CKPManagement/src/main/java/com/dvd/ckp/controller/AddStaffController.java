@@ -144,16 +144,16 @@ public class AddStaffController extends GenericForwardComposer {
         if (lstStaffQuantity != null && !lstStaffQuantity.isEmpty()) {
             listQuantity.addAll(lstStaffQuantity);
         }
-        int staff = listQuantity.size();
+        Integer staff = txtMaxStaff.getValue();
         if (pumpType == 1l) {
-            if (staff == 0) {
+            if (staff == null) {
                 intMaxStaff.setValue(5);
             } else {
                 intMaxStaff.setValue(staff);
             }
         } else if (pumpType == 3l) {
 
-            if (staff == 0) {
+            if (staff == null) {
                 intMaxStaff.setValue(3);
             } else {
                 intMaxStaff.setValue(staff);
