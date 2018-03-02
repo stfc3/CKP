@@ -21,6 +21,8 @@ public class ConfigEntity {
     private String port;
     private String host;
     private String starttls;
+    private String cc;
+    private String bcc;
 
     public Integer getTimeOut() {
         return timeOut;
@@ -102,16 +104,30 @@ public class ConfigEntity {
         this.starttls = starttls;
     }
 
-    @Override
-    public String toString() {
-        return "ConfigEntity{" + "timeOut=" + timeOut 
-                + ", recipient=" + recipient + ", mailSend=" 
-                + mailSend + ", password=" + password + ", content="
-                + content + ", title=" + title + ", attachment=" 
-                + attachment + ", port=" + port + ", host=" + host 
-                + ", starttls=" + starttls + '}';
+    public String getCc() {
+        return cc;
     }
 
-    
+    public void setCc(String cc) {
+        this.cc = cc;
+    }
+
+    public String getBcc() {
+        return bcc;
+    }
+
+    public void setBcc(String bcc) {
+        this.bcc = bcc;
+    }
+
+    @Override
+    public String toString() {
+        return "ConfigEntity{" + "timeOut=" + timeOut + ", recipient="
+                + recipient + ", mailSend=" + mailSend + ", password="
+                + password + ", content=" + content + ", title="
+                + title + ", attachment=" + attachment + ", port="
+                + port + ", host=" + host + ", starttls="
+                + starttls + ", cc=" + cc + ", bcc=" + bcc + '}';
+    }
 
 }

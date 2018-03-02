@@ -65,8 +65,16 @@ public class MailSend {
 //                input.put("Author", "java2db.com");
 //                input.put("Topic", "HTML Template for Email");
 //                input.put("Content In", "English");
-                InternetAddress[] recipient_mail_id = getInternetAddresses(entity.getRecipient());
-                message.addRecipients(Message.RecipientType.TO, recipient_mail_id);
+                InternetAddress[] recipient = getInternetAddresses(entity.getRecipient());
+                message.addRecipients(Message.RecipientType.TO, recipient);
+
+                // Add CC  
+                InternetAddress[] CcAddress = getInternetAddresses(entity.getCc());
+                message.setRecipients(javax.mail.Message.RecipientType.CC, CcAddress);
+
+                // Add BBC
+                InternetAddress[] BccAddress = getInternetAddresses(entity.getBcc());
+                message.setRecipients(javax.mail.Message.RecipientType.BCC, BccAddress);
 
                 // HTML mail content
                 // String htmlText =
