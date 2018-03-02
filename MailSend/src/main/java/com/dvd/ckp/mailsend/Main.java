@@ -5,21 +5,15 @@
  */
 package com.dvd.ckp.mailsend;
 
-import com.dvd.ckp.mailsend.entity.ConfigEntity;
-
 /**
  *
  * @author admin
  */
 public class Main {
-    public static void main(String[] arg) throws InterruptedException{
-        LoadProperties properties = new LoadProperties();
-        ConfigEntity entity = properties.loadConfig();
+
+    public static void main(String[] arg) throws InterruptedException {
         MailSend mailSend = new MailSend();
-        while (true) {
-            mailSend.sendMail();
-            Thread.sleep(entity.getTimeOut());
-            System.out.println("Mail send........");
-        }
+        mailSend.sendMail();
+
     }
 }
