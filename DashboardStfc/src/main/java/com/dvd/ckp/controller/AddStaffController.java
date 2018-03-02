@@ -305,7 +305,7 @@ public class AddStaffController extends GenericForwardComposer {
                     }
                     staffService.save(lstQuantity);
                     logger.info("Bill detail id: " + billID);
-                    billsServices.getQuantity(billID).get(0).getV_quantity();
+                    billsServices.getQuantity(billID);
                     onReloadSelectGrid();
 
                     //reload data
