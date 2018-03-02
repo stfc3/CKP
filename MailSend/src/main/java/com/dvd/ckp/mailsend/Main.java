@@ -14,6 +14,7 @@ public class Main {
     public static void main(String[] arg) throws InterruptedException {
         MailSend mailSend = new MailSend();
         mailSend.sendMail();
+        System.out.println("Sent successfull");
 
     }
 }

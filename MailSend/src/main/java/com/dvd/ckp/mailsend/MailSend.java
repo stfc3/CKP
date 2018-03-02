@@ -43,10 +43,10 @@ public class MailSend {
             // Set mail properties
             Properties props = System.getProperties();
             props.put(Constant.SMTP_STARTTLS, Constant.TRUE);
-            props.put(Constant.SMTP_HOST, Constant.HOST_NAME);
+            props.put(Constant.SMTP_HOST, entity.getHost());
             props.put(Constant.SMTP_USER, entity.getMailSend());
             props.put(Constant.SMTP_PASSWORD, entity.getPassword());
-            props.put(Constant.SMTP_PORT, Constant.PORT);
+            props.put(Constant.SMTP_PORT, entity.getPort());
             props.put(Constant.SMTP_AUTH, Constant.TRUE);
 
             Session session = Session.getDefaultInstance(props);
@@ -93,14 +93,16 @@ public class MailSend {
 
                 // Conect to smtp server and send Email
                 Transport transport = session.getTransport(Constant.SMTP);
-                transport.connect(Constant.HOST_NAME, entity.getMailSend(), entity.getPassword());
+                transport.connect(entity.getHost(), entity.getMailSend(), entity.getPassword());
                 transport.sendMessage(message, message.getAllRecipients());
                 transport.close();
 
             } catch (MessagingException ex) {
                 logger.error(ex.getMessage(), ex);
+                System.out.println("" + ex);
             } catch (Exception ae) {
                 logger.error(ae.getMessage(), ae);
+                System.out.println("" + ae);
             }
         } catch (Exception exception) {
             logger.error(exception.getMessage(), exception);

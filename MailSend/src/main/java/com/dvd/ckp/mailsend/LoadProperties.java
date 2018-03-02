@@ -20,16 +20,16 @@ import org.apache.log4j.Logger;
  * @author admin
  */
 public class LoadProperties {
-
+    
     private static final Logger LOGGER = Logger.getLogger(LoadProperties.class);
-
+    
     public ConfigEntity loadConfig() {
         ConfigEntity entity = new ConfigEntity();
         try {
             Properties properties = new Properties();
             InputStream input = new FileInputStream("config/config.properties");
             properties.load(new InputStreamReader(input, Charset.forName(Constant.UTF8)));
-
+            
             entity.setTimeOut(Integer.valueOf(properties.getProperty(Constant.PROPERTIES_TIME)));
             entity.setRecipient(properties.getProperty(Constant.PROPERTIES_RECIPIENT));
             entity.setMailSend(properties.getProperty(Constant.PROPERTIES_MAIL));
@@ -37,12 +37,16 @@ public class LoadProperties {
             entity.setTitle(properties.getProperty(Constant.PROPERTIES_TITLE));
             entity.setContent(properties.getProperty(Constant.PROPERTIES_CONTENT));
             entity.setAttachment(properties.getProperty(Constant.PROPERTIES_ATTACHMENT));
-
+            
+            entity.setHost(properties.getProperty(Constant.SMTP_HOST));
+            entity.setPort(properties.getProperty(Constant.SMTP_PORT));
+            entity.setStarttls(properties.getProperty(Constant.SMTP_STARTTLS));
+            
         } catch (IOException | NumberFormatException e) {
             LOGGER.error(e.getMessage(), e);
-
+            
         }
         return entity;
     }
-
+    
 }
