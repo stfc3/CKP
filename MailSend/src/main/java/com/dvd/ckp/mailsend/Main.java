@@ -17,10 +17,9 @@ public class Main {
         ConfigEntity entity = properties.loadConfig();
         MailSend mailSend = new MailSend();
         while (true) {
-            System.out.println("Test");
             mailSend.sendMail();
             Thread.sleep(entity.getTimeOut());
-            
+            System.out.println("Mail send........");
         }
     }
 }

@@ -5,6 +5,7 @@
  */
 package com.dvd.ckp.mailsend;
 
+import com.dvd.ckp.mailsend.common.Constant;
 import com.dvd.ckp.mailsend.entity.ConfigEntity;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,21 +28,21 @@ public class LoadProperties {
         try {
             Properties properties = new Properties();
             InputStream input = new FileInputStream("config/config.properties");
-            properties.load(new InputStreamReader(input, Charset.forName("UTF-8")));
+            properties.load(new InputStreamReader(input, Charset.forName(Constant.UTF8)));
 
-            entity.setTimeOut(Integer.valueOf(properties.getProperty("time.out")));
-            entity.setRecipient(properties.getProperty("recipient"));
-            entity.setMailSend(properties.getProperty("mail.send"));
-            entity.setPassword(properties.getProperty("password"));
-            entity.setTitle(properties.getProperty("title"));
-            entity.setContent(properties.getProperty("content"));
-            entity.setAttachment(properties.getProperty("attachment"));
+            entity.setTimeOut(Integer.valueOf(properties.getProperty(Constant.PROPERTIES_TIME)));
+            entity.setRecipient(properties.getProperty(Constant.PROPERTIES_RECIPIENT));
+            entity.setMailSend(properties.getProperty(Constant.PROPERTIES_MAIL));
+            entity.setPassword(properties.getProperty(Constant.PROPERTIES_PASSWORD));
+            entity.setTitle(properties.getProperty(Constant.PROPERTIES_TITLE));
+            entity.setContent(properties.getProperty(Constant.PROPERTIES_CONTENT));
+            entity.setAttachment(properties.getProperty(Constant.PROPERTIES_ATTACHMENT));
 
         } catch (IOException | NumberFormatException e) {
             LOGGER.error(e.getMessage(), e);
-            e.printStackTrace();
+
         }
         return entity;
     }
-    
+
 }

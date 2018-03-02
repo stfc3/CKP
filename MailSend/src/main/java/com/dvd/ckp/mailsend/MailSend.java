@@ -1,5 +1,6 @@
 package com.dvd.ckp.mailsend;
 
+import com.dvd.ckp.mailsend.common.Constant;
 import com.dvd.ckp.mailsend.entity.ConfigEntity;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,17 +39,14 @@ public class MailSend {
     public void sendMail() {
         try {
             ConfigEntity entity = properties.loadConfig();
-            // Email data
-
             // Set mail properties
             Properties props = System.getProperties();
-            String host_name = "smtp.gmail.com";
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.host", host_name);
-            props.put("mail.smtp.user", entity.getMailSend());
-            props.put("mail.smtp.password", entity.getPassword());
-            props.put("mail.smtp.port", "587");
-            props.put("mail.smtp.auth", "true");
+            props.put(Constant.SMTP_STARTTLS, Constant.TRUE);
+            props.put(Constant.SMTP_HOST, Constant.HOST_NAME);
+            props.put(Constant.SMTP_USER, entity.getMailSend());
+            props.put(Constant.SMTP_PASSWORD, entity.getPassword());
+            props.put(Constant.SMTP_PORT, Constant.PORT);
+            props.put(Constant.SMTP_AUTH, Constant.TRUE);
 
             Session session = Session.getDefaultInstance(props);
             MimeMessage message = new MimeMessage(session);
@@ -57,7 +55,7 @@ public class MailSend {
                 // Set email data
                 message.setFrom(new InternetAddress(entity.getMailSend()));
 
-                message.setSubject(entity.getTitle(),"UTF-8");
+                message.setSubject(entity.getTitle(), Constant.UTF8);
                 MimeMultipart multipart = new MimeMultipart();
                 BodyPart messageBodyPart = new MimeBodyPart();
 
@@ -73,7 +71,7 @@ public class MailSend {
                 // String htmlText =
                 // readEmailFromHtml("C:/mail/HTMLTemplate.html", input);
                 String htmlText = entity.getContent();
-                messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
+                messageBodyPart.setContent(htmlText, Constant.HTML_UTF_8);
 
                 multipart.addBodyPart(messageBodyPart);
 
@@ -93,11 +91,10 @@ public class MailSend {
                 message.setContent(multipart);
 
                 // Conect to smtp server and send Email
-                Transport transport = session.getTransport("smtp");
-                transport.connect(host_name, entity.getMailSend(), entity.getPassword());
+                Transport transport = session.getTransport(Constant.SMTP);
+                transport.connect(Constant.HOST_NAME, entity.getMailSend(), entity.getPassword());
                 transport.sendMessage(message, message.getAllRecipients());
                 transport.close();
-                System.out.println("Mail sent successfully...");
 
             } catch (MessagingException ex) {
                 logger.error(ex.getMessage(), ex);
