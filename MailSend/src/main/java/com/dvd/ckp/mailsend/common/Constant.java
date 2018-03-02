@@ -11,8 +11,8 @@ package com.dvd.ckp.mailsend.common;
  */
 public class Constant {
 
-    public static final String HOST_NAME = "smtp.gmail.com";
-    public static final String PORT = "587";
+//    public static final String HOST_NAME = "smtp.gmail.com";
+//    public static final String PORT = "587";
     public static final String TRUE = "true";
     public static final String UTF8 = "UTF-8";
     public static final String HTML_UTF_8 = "text/html; charset=UTF-8";
