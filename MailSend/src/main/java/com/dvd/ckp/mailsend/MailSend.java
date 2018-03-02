@@ -2,17 +2,18 @@ package com.dvd.ckp.mailsend;
 
 import com.dvd.ckp.mailsend.common.Constant;
 import com.dvd.ckp.mailsend.entity.ConfigEntity;
+import com.dvd.ckp.mailsend.utils.DatetimeUtils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Date;
 import java.util.StringTokenizer;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -55,7 +56,7 @@ public class MailSend {
                 // Set email data
                 message.setFrom(new InternetAddress(entity.getMailSend()));
 
-                message.setSubject(entity.getTitle(), Constant.UTF8);
+                message.setSubject(entity.getTitle() + " " + DatetimeUtils.convertDateToString(new Date(), Constant.FORMAT_DATE), Constant.UTF8);
                 MimeMultipart multipart = new MimeMultipart();
                 BodyPart messageBodyPart = new MimeBodyPart();
 

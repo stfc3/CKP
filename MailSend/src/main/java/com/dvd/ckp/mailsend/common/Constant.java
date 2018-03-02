@@ -23,7 +23,7 @@ public class Constant {
     public static final String SMTP_PASSWORD = "mail.smtp.password";
     public static final String SMTP_PORT = "mail.smtp.port";
     public static final String SMTP_AUTH = "mail.smtp.auth";
-    
+
     public static final String PROPERTIES_TIME = "time.out";
     public static final String PROPERTIES_MAIL = "mail.send";
     public static final String PROPERTIES_PASSWORD = "password";
@@ -31,5 +31,7 @@ public class Constant {
     public static final String PROPERTIES_TITLE = "title";
     public static final String PROPERTIES_ATTACHMENT = "attachment";
     public static final String PROPERTIES_RECIPIENT = "recipient";
+
+    public static final String FORMAT_DATE = "dd/MM/yyyy";
 
 }
