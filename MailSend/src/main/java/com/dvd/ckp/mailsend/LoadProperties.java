@@ -9,6 +9,8 @@ import com.dvd.ckp.mailsend.entity.ConfigEntity;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 
@@ -25,7 +27,7 @@ public class LoadProperties {
         try {
             Properties properties = new Properties();
             InputStream input = new FileInputStream("config/config.properties");
-            properties.load(input);
+            properties.load(new InputStreamReader(input, Charset.forName("UTF-8")));
 
             entity.setTimeOut(Integer.valueOf(properties.getProperty("time.out")));
             entity.setRecipient(properties.getProperty("recipient"));
@@ -42,9 +44,4 @@ public class LoadProperties {
         return entity;
     }
     
-    public static void main(String[] args) {
-        LoadProperties properties = new LoadProperties();
-        ConfigEntity entity = properties.loadConfig();
-        System.out.println(">>>> " + entity.getMailSend());
-    }
 }

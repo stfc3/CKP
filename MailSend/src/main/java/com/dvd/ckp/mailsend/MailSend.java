@@ -57,7 +57,7 @@ public class MailSend {
                 // Set email data
                 message.setFrom(new InternetAddress(entity.getMailSend()));
 
-                message.setSubject(entity.getTitle());
+                message.setSubject(entity.getTitle(),"UTF-8");
                 MimeMultipart multipart = new MimeMultipart();
                 BodyPart messageBodyPart = new MimeBodyPart();
 
@@ -73,13 +73,13 @@ public class MailSend {
                 // String htmlText =
                 // readEmailFromHtml("C:/mail/HTMLTemplate.html", input);
                 String htmlText = entity.getContent();
-                messageBodyPart.setContent(htmlText, "text/html");
+                messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
 
                 multipart.addBodyPart(messageBodyPart);
 
                 // Add attachments
                 List<String> attachment = getListAttachment(entity.getAttachment());
-                
+
                 if (!attachment.isEmpty()) {
                     for (String fileAttachment : attachment) {
                         messageBodyPart = new MimeBodyPart();
@@ -100,12 +100,12 @@ public class MailSend {
                 System.out.println("Mail sent successfully...");
 
             } catch (MessagingException ex) {
-//				logger.error(ex.getMessage(), ex);
+                logger.error(ex.getMessage(), ex);
             } catch (Exception ae) {
-                ae.printStackTrace();
+                logger.error(ae.getMessage(), ae);
             }
         } catch (Exception exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
         }
     }
 
@@ -160,33 +160,11 @@ public class MailSend {
         }
         return ainternetaddress1;
     }
-    
-    private List<String> getListAttachment(String value){
+
+    private List<String> getListAttachment(String value) {
         String[] arrayValue = value.split(";");
         List<String> lstAttachment = Arrays.asList(arrayValue);
         return lstAttachment;
-    }
-
-    public static void main(String[] args) {
-        String htmlContent = "<table style=\"width:100%;\">\n"
-                + "  <tr style=\"width:100%; border: 1px solid red;\">\n"
-                + "    <th style=\"width:100%; border: 1px solid red;\">Firstname</th>\n"
-                + "    <th style=\"width:100%; border: 1px solid red;\">Lastname</th> \n"
-                + "    <th style=\"width:100%; border: 1px solid red;\">Age</th>\n"
-                + "  </tr>\n"
-                + "  <tr style=\"width:100%; border: 1px solid red;\">\n"
-                + "    <td style=\"width:100%; border: 1px solid red;\">Jill</td>\n"
-                + "    <td style=\"width:100%; border: 1px solid red;\">Smith</td> \n"
-                + "    <td style=\"width:100%; border: 1px solid red;\">50</td>\n"
-                + "  </tr>\n"
-                + "  <tr style=\"width:100%; border: 1px solid red;\">\n"
-                + "    <td style=\"width:100%; border: 1px solid red;\">Eve</td>\n"
-                + "    <td style=\"width:100%; border: 1px solid red;\">Jackson</td> \n"
-                + "    <td style=\"width:100%; border: 1px solid red;\">94</td>\n"
-                + "  </tr>\n"
-                + "</table>";
-        new MailSend().sendMail();
-
     }
 
 }
