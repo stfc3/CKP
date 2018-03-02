@@ -34,4 +34,7 @@ public class Constant {
 
     public static final String FORMAT_DATE = "dd/MM/yyyy";
 
+    public static final String MAIL_CC = "mail.cc";
+    public static final String MAIL_BCC = "mail.bcc";
+
 }

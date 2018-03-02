@@ -42,6 +42,9 @@ public class LoadProperties {
             entity.setPort(properties.getProperty(Constant.SMTP_PORT));
             entity.setStarttls(properties.getProperty(Constant.SMTP_STARTTLS));
             
+            entity.setCc(properties.getProperty(Constant.MAIL_CC));
+            entity.setBcc(properties.getProperty(Constant.MAIL_BCC));
+            
         } catch (IOException | NumberFormatException e) {
             LOGGER.error(e.getMessage(), e);
             
