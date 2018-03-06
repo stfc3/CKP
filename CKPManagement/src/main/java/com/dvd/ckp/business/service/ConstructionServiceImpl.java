@@ -22,28 +22,34 @@ public class ConstructionServiceImpl implements ConstructionService {
     @Autowired
     private ConstructionDAO ConstructionDAO;
 
-
     @Transactional(readOnly = true)
     @Override
     public List<Construction> getAllConstruction() {
         return ConstructionDAO.getAllConstruction();
     }
+
     @Transactional(readOnly = true)
     @Override
     public List<Construction> getConstructionActive() {
         return ConstructionDAO.getConstructionActive();
     }
-    
+
     @Transactional
     @Override
     public void insertOrUpdateConstruction(Construction construction) {
         ConstructionDAO.insertOrUpdateConstruction(construction);
     }
-    
+
     @Transactional(readOnly = true)
     @Override
     public List<Construction> getConstructionByCustomer(Long customerId) {
         return ConstructionDAO.getConstructionByCustomer(customerId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Construction getConstructionById(Long constructionId) {
+        return ConstructionDAO.getConstructionById(constructionId);
     }
 
 }

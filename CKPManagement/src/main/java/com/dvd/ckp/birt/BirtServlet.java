@@ -5,7 +5,9 @@
  */
 package com.dvd.ckp.birt;
 
+import com.dvd.ckp.business.service.ConstructionService;
 import com.dvd.ckp.business.service.CustomerService;
+import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.utils.SpringConstant;
 import com.dvd.ckp.utils.SpringUtils;
@@ -14,7 +16,6 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.logging.Level;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -45,6 +46,7 @@ public class BirtServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(BirtServlet.class);
 
     protected CustomerService customerService;
+    protected ConstructionService constructionService;
 
     public BirtServlet() {
         super();
@@ -61,6 +63,7 @@ public class BirtServlet extends HttpServlet {
             throws ServletException, IOException {
 
         customerService = (CustomerService) SpringUtils.getBean(SpringConstant.CUSTOMER_SERVICES);
+        constructionService = (ConstructionService) SpringUtils.getBean(SpringConstant.CONSTRUCTION_SERVICES);
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         String reportName = request.getParameter(BirtConstant.PARAM_REPORT);
@@ -90,6 +93,19 @@ public class BirtServlet extends HttpServlet {
                 customerName = customer.getCustomerName();
             }
         }
+        
+        Long constructionId = null;
+        String constructionName = null;
+        String constructionParam = String.valueOf(param.get("p_construction"));
+        if (constructionParam != null && !"".equals(constructionParam)&& !"null".equalsIgnoreCase(constructionParam)) {
+            constructionId = Long.valueOf(constructionParam);
+        }
+        if (constructionId != null) {
+            Construction construction = constructionService.getConstructionById(constructionId);
+            if (construction != null) {
+                constructionName = construction.getConstructionName();
+            }
+        }
         IReportRunnable design;
         RenderOption options;
         try {
@@ -111,6 +127,9 @@ public class BirtServlet extends HttpServlet {
             IRunAndRenderTask task = birtReportEngine.createRunAndRenderTask(design);
             if(customerName!=null){
                 task.setParameterDisplayText("p_customer", customerName);
+            }
+            if(constructionName!=null){
+                task.setParameterDisplayText("p_construction", constructionName);
             }
             task.setParameterValues(param);
             task.validateParameters();

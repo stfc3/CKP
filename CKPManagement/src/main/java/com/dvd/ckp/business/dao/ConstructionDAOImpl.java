@@ -65,4 +65,17 @@ public class ConstructionDAOImpl implements ConstructionDAO {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Construction getConstructionById(Long constructionId) {
+
+        Query query = getCurrentSession().getNamedQuery("Construction.fillConstructionById");
+        query.setParameter("constructionId", constructionId);
+        List lstConstruction = query.list();
+        if (lstConstruction != null && !lstConstruction.isEmpty()) {
+            return (Construction) lstConstruction.get(0);
+        }
+        return null;
+    }
+
 }
