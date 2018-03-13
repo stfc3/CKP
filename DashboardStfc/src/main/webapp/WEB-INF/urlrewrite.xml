@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <urlrewrite>
-
     <rule match-type="wildcard">
-        <from>/main/*</from>
-        <to>/$1.zul</to>
+        <from>/new/**</from>
+        <to>/new.zul</to>
     </rule>
-<!--    <rule match-type="wildcard">
-        <from>/dashboard/*</from>
-        <to>/dashboard/$1.zul</to>
-    </rule>-->
+    
+    <rule match-type="wildcard">
+        <from>/new1/**</from>
+        <to>/new1.zul</to>
+    </rule>
 </urlrewrite>
