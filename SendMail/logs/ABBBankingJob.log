@@ -1,0 +1,1086 @@
+INFO  | 2018-03-02 14:20:49 | [main] common.Constants (Constants.java:81) - Constant init ex:
+java.io.FileNotFoundException: conf\config.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.common.Constants.init(Constants.java:53) [classes/:?]
+	at abbbankingjob.ABBBankingJob.main(ABBBankingJob.java:43) [classes/:?]
+INFO  | 2018-03-02 14:23:06 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:23:06
+INFO  | 2018-03-02 14:23:06 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.<clinit>(DataSource.java:25) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:23:06 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:23:06 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:23:07 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:23:07 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:23:07 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:23:07 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:23:07 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:23:07 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:23:16 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:23:16
+INFO  | 2018-03-02 14:23:16 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:23:16 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:23:16 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:23:16 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:23:16 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:23:16 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:23:16 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:23:16 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:23:26 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:23:26
+INFO  | 2018-03-02 14:23:26 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:23:26 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:23:26 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:23:26 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:23:26 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:23:26 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:23:26 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:23:26 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:23:36 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:23:36
+INFO  | 2018-03-02 14:23:36 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:23:36 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:23:36 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:23:36 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:23:36 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:23:36 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:23:36 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:23:36 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:11 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:24:11
+INFO  | 2018-03-02 14:24:11 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.<clinit>(DataSource.java:25) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:11 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:24:11 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:24:11 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:24:11 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:24:11 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:11 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:24:11 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:24:11 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:21 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:24:21
+INFO  | 2018-03-02 14:24:21 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:24:21 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:24:21 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:24:21 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:24:21 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:21 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:24:21 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:24:21 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:31 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:24:31
+INFO  | 2018-03-02 14:24:31 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:24:31 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:24:31 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:24:31 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:24:31 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:31 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:24:31 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:24:31 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:41 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:24:41
+INFO  | 2018-03-02 14:24:41 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:24:41 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:24:41 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:24:41 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:24:41 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:41 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:24:41 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:24:41 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:51 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:24:51
+INFO  | 2018-03-02 14:24:51 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:24:51 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:24:51 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:24:51 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:24:51 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:24:51 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:24:51 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:24:51 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:25:01 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:25:01
+INFO  | 2018-03-02 14:25:01 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:25:01 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:25:01 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:25:01 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:25:01 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:25:01 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:25:01 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:25:01 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:25:11 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:25:11
+INFO  | 2018-03-02 14:25:11 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:25:11 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:25:11 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:25:11 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:25:11 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:25:11 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:25:11 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:25:11 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:25:22 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:25:22
+INFO  | 2018-03-02 14:25:22 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.<clinit>(DataSource.java:25) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:25:22 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:25:22 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:25:22 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:25:22 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:25:22 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:25:22 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:25:22 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:25:22 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:25:52 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:25:52
+INFO  | 2018-03-02 14:25:52 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:25:52 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:25:52 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:25:52 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:25:52 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:25:52 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:25:52 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:25:52 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:26:22 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:26:22
+INFO  | 2018-03-02 14:26:22 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:26:22 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:26:22 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:26:22 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:26:22 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:26:22 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:26:22 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:26:22 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:26:52 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:26:52
+INFO  | 2018-03-02 14:26:52 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:26:52 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:26:52 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:26:52 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:26:52 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:26:52 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:26:52 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:26:52 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:27:22 | [pool-2-thread-1] abbbankingjob.ABBBankingJob$1 (ABBBankingJob.java:58) - Run Job Bill Alert on:02/03/2018 14:27:22
+INFO  | 2018-03-02 14:27:22 | [pool-2-thread-1] database.DataSource (DataSource.java:89) - DataSource BoneCP config ex1: java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+java.io.FileNotFoundException: conf\C3P0.properties (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_131]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_131]
+	at java.io.FileInputStream.<init>(FileInputStream.java:93) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getDataSource(DataSource.java:46) [classes/:?]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:98) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:27:22 | [pool-2-thread-1] database.DataSource (DataSource.java:104) - try to get another connection by normal way: null
+DEBUG | 2018-03-02 14:27:22 | [pool-2-thread-1] database.DataSource (DataSource.java:112) - error pool connection: The url cannot be null
+ERROR | 2018-03-02 14:27:22 | [pool-2-thread-1] database.DataSource (DataSource.java:113) - The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:106) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+DEBUG | 2018-03-02 14:27:22 | [pool-2-thread-1] database.DataSource (DataSource.java:119) - Oracle issue The url cannot be null
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[?:1.8.0_131]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_131]
+	at vn.vnpay.database.DataSource.getConnection(DataSource.java:116) [classes/:?]
+	at vn.vnpay.database.DBInterface.getBillAlert(DBInterface.java:71) [classes/:?]
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:85) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]
+INFO  | 2018-03-02 14:27:22 | [pool-2-thread-1] database.DBInterface (DBInterface.java:94) - connection is null
+INFO  | 2018-03-02 14:27:22 | [pool-2-thread-1] database.DBInterface (DBInterface.java:100) - not found getBillAlert...
+INFO  | 2018-03-02 14:27:22 | [pool-2-thread-1] abbbankingjob.ReloadJobBillAlert (ABBBankingJob.java:102) - ReloadJobBillAlert ex:
+java.lang.NullPointerException
+	at abbbankingjob.ReloadJobBillAlert.reload(ABBBankingJob.java:86) [classes/:?]
+	at abbbankingjob.ABBBankingJob$1.run(ABBBankingJob.java:59) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_131]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_131]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]

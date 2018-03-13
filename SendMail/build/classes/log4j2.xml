@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="RollingFile" fileName="logs/SendMail.log" 
+                     filePattern="logs/SendMail-%d{yyyyMMdd}-%i.log"
+                     ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n</Pattern>
+            </PatternLayout>
+            <SizeBasedTriggeringPolicy size="10 MB"/>
+            <TimeBasedTriggeringPolicy />
+        </RollingFile>
+    </appenders>
+
+    <loggers>     
+        <Logger name="com.stfc" level="debug"/>
+        <root level="debug">
+            <appender-ref ref="Console" level="info"/>
+            <appender-ref ref="RollingFile"/>
+        </root> 
+
+    </loggers>
+</configuration>
