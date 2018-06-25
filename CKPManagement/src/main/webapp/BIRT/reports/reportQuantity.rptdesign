@@ -781,7 +781,11 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                 <structure>
                     <property name="name">pump_type</property>
                     <text-property name="displayName">pump_type</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["param_name"]</expression>
+                    <expression name="expression" type="javascript">if(dataSetRow["quantity_type"]==1){&#13;
+	"Ca chờ";&#13;
+}else{&#13;
+	dataSetRow["param_name"];&#13;
+}</expression>
                     <property name="dataType">string</property>
                     <property name="allowExport">true</property>
                 </structure>
