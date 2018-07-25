@@ -11,7 +11,7 @@
             <caption label="${c:l('pricelocation.category')}" />
             <grid id="lstPriceLocation" mold="paging" pageSize="10" pagingPosition="both">
                 <auxhead sclass="category-center" >
-                    <auxheader colspan="6">
+                    <auxheader colspan="7">
                         <a class="btn-cursor" id="add" iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <!--
                         <space width="10px"/>

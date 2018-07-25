@@ -158,7 +158,7 @@ public class CustomerController extends GenericForwardComposer {
         lstCustomer.setModel(listDataModel);
         lstCustomer.renderAll();
         List<Component> lstCell = lstCustomer.getRows().getFirstChild().getChildren();
-        setDataDefaultInGrid();
+        setComboboxParam(lstCell, getParamDefault(null, bankIndex), bankIndex);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 
@@ -266,7 +266,7 @@ public class CustomerController extends GenericForwardComposer {
                 Customer customer = listDataModel.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setComboboxParam(lstCell, getParamDefault(customer.getBankId(), bankIndex), bankIndex);
+                setValueComboboxParam(lstCell, getParamDefault(customer.getBankId(), bankIndex), bankIndex);
             }
         }
     }
@@ -312,6 +312,14 @@ public class CustomerController extends GenericForwardComposer {
             listDataModelParam.setSelection(selectedIndex);
             cbxParam.setModel(listDataModelParam);
             cbxParam.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getParamName());
+        }
+    }
+    private void setValueComboboxParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+        Combobox cbxParam = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxParam = (Combobox) component;
+            cbxParam.setValue(selectedIndex.get(0).getParamName());
         }
     }
 

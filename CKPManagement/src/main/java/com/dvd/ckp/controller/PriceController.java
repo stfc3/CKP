@@ -63,8 +63,6 @@ public class PriceController extends GenericForwardComposer {
     protected UtilsService utilsService;
     @WireVariable
     protected PumpServices pumpService;
-//    @WireVariable
-//    protected LocationServices locationService;
     @WireVariable
     protected DistributeService distributeService;
     @Wire
@@ -121,7 +119,6 @@ public class PriceController extends GenericForwardComposer {
         contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
         pumpService = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
-//        locationService = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
         distributeService = (DistributeService) SpringUtil.getBean(SpringConstant.DISTRIBUTE_SERVICES);
 
 //        price
@@ -338,7 +335,8 @@ public class PriceController extends GenericForwardComposer {
             lstPrice.setModel(listDataModelPrice);
             lstPrice.renderAll();
             List<Component> lstCell = lstPrice.getRows().getFirstChild().getChildren();
-            setDataDefaultInGrid();
+            setComboboxParam(lstCell, getParamDefault(null, pumpTypeIndex), pumpTypeIndex);
+            setComboboxParam(lstCell, getParamDefault(null, convertTypeIndex), convertTypeIndex);
             StyleUtils.setEnableComponent(lstCell, 4);
         }
     }
@@ -354,7 +352,7 @@ public class PriceController extends GenericForwardComposer {
             lstPriceDistribute.setModel(listDataModelPriceDistribute);
             lstPriceDistribute.renderAll();
             List<Component> lstCell = lstPriceDistribute.getRows().getFirstChild().getChildren();
-            setDataDefaultInGridDistribute();
+            setComboboxDistribute(lstCell, getDistributeDefault(null), pumpTypeIndex);
             StyleUtils.setEnableComponent(lstCell, 4);
         }
     }
@@ -459,8 +457,8 @@ public class PriceController extends GenericForwardComposer {
                 Price price = listDataModelPrice.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setComboboxParam(lstCell, getParamDefault(price.getPumpType(), pumpTypeIndex), pumpTypeIndex);
-                setComboboxParam(lstCell, getParamDefault(price.getConvertType(), convertTypeIndex), convertTypeIndex);
+                setValueComboboxParam(lstCell, getParamDefault(price.getPumpType(), pumpTypeIndex), pumpTypeIndex);
+                setValueComboboxParam(lstCell, getParamDefault(price.getConvertType(), convertTypeIndex), convertTypeIndex);
             }
         }
     }
@@ -473,7 +471,7 @@ public class PriceController extends GenericForwardComposer {
                 Price price = listDataModelPriceDistribute.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setComboboxDistribute(lstCell, getDistributeDefault(price.getPumpType()), pumpTypeIndex);
+                setValueComboboxDistribute(lstCell, getDistributeDefault(price.getPumpType()), pumpTypeIndex);
             }
         }
     }
@@ -528,6 +526,15 @@ public class PriceController extends GenericForwardComposer {
         }
     }
 
+    private void setValueComboboxParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+        Combobox cbxParam = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxParam = (Combobox) component;
+            cbxParam.setValue(selectedIndex.get(0).getParamName());
+        }
+    }
+
     private void setComboboxDistribute(List<Component> lstCell, List<Distribute> selectedIndex, int columnIndex) {
         Combobox cbxDistribute = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
@@ -537,6 +544,15 @@ public class PriceController extends GenericForwardComposer {
             listDataModelDistribute.setSelection(selectedIndex);
             cbxDistribute.setModel(listDataModelDistribute);
             cbxDistribute.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getDistributeName());
+        }
+
+    }
+    private void setValueComboboxDistribute(List<Component> lstCell, List<Distribute> selectedIndex, int columnIndex) {
+        Combobox cbxDistribute = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxDistribute = (Combobox) component;
+            cbxDistribute.setValue(selectedIndex.get(0).getDistributeName());
         }
 
     }

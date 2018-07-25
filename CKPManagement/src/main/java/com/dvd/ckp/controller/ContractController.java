@@ -195,7 +195,7 @@ public class ContractController extends GenericForwardComposer {
             lstContract.setModel(listDataModel);
             lstContract.renderAll();
             List<Component> lstCell = lstContract.getRows().getFirstChild().getChildren();
-            setDataDefaultInGrid();
+            setComboboxCustomer(lstCell, getCustomerDefault(null), customerIndex);
             StyleUtils.setEnableComponent(lstCell, 4);
         }
     }
@@ -346,6 +346,15 @@ public class ContractController extends GenericForwardComposer {
         }
 
     }
+    private void setValueComboboxCustomer(List<Component> lstCell, List<Customer> selectedIndex, int columnIndex) {
+        Combobox cbxCustomer = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxCustomer = (Combobox) component;
+            cbxCustomer.setValue(selectedIndex.get(0).getCustomerName());
+        }
+
+    }
 
     private List<Customer> getCustomerDefault(Long customerId) {
         List<Customer> customerSelected = new ArrayList<>();
@@ -371,7 +380,7 @@ public class ContractController extends GenericForwardComposer {
                 Contract contract = listDataModel.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setComboboxCustomer(lstCell, getCustomerDefault(contract.getCustomerId()), customerIndex);
+                setValueComboboxCustomer(lstCell, getCustomerDefault(contract.getCustomerId()), customerIndex);
             }
         }
     }

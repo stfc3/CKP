@@ -54,8 +54,6 @@ public class PriceLocationController extends GenericForwardComposer {
     protected ContractService contractService;
     @WireVariable
     protected UtilsService utilsService;
-//    @WireVariable
-//    protected LocationServices locationService;
     @Wire
     private Grid lstPriceLocation;
     @Wire
@@ -88,7 +86,6 @@ public class PriceLocationController extends GenericForwardComposer {
         context = Sessions.getCurrent().getWebApp().getServletContext();
         contractService = (ContractService) SpringUtil.getBean(SpringConstant.CONTRACT_SERVICES);
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
-//        locationService = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
 
 //        price
         defaultParam = new Param();
@@ -123,7 +120,6 @@ public class PriceLocationController extends GenericForwardComposer {
 
         lstPriceLocation.setModel(listDataModelPriceLocation);
         setDataDefaultInGrid();
-//        price
     }
 
     /**
@@ -200,7 +196,9 @@ public class PriceLocationController extends GenericForwardComposer {
         lstPriceLocation.setModel(listDataModelPriceLocation);
         lstPriceLocation.renderAll();
         List<Component> lstCell = lstPriceLocation.getRows().getFirstChild().getChildren();
-        setDataDefaultInGrid();
+        setComboboxParam(lstCell, getParamDefault(null, locationTypeIndex), locationTypeIndex);
+        setComboboxLocation(lstCell, getLocatoionDefault(null, locationMinIndex), locationMinIndex);
+        setComboboxLocation(lstCell, getLocatoionDefault(null, locationMaxIndex), locationMaxIndex);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 
@@ -263,9 +261,9 @@ public class PriceLocationController extends GenericForwardComposer {
                 PriceLocation priceLocation = listDataModelPriceLocation.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setComboboxParam(lstCell, getParamDefault(priceLocation.getLocationType(), locationTypeIndex), locationTypeIndex);
-                setComboboxLocation(lstCell, getLocatoionDefault(priceLocation.getLocationMin(), locationMinIndex), locationMinIndex);
-                setComboboxLocation(lstCell, getLocatoionDefault(priceLocation.getLocationMax(), locationMaxIndex), locationMaxIndex);
+                setValueComboboxParam(lstCell, getParamDefault(priceLocation.getLocationType(), locationTypeIndex), locationTypeIndex);
+                setValueComboboxLocation(lstCell, getLocatoionDefault(priceLocation.getLocationMin(), locationMinIndex), locationMinIndex);
+                setValueComboboxLocation(lstCell, getLocatoionDefault(priceLocation.getLocationMax(), locationMaxIndex), locationMaxIndex);
             }
         }
     }
@@ -340,6 +338,14 @@ public class PriceLocationController extends GenericForwardComposer {
             cbxParam.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getParamName());
         }
     }
+    private void setValueComboboxParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+        Combobox cbxParam = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxParam = (Combobox) component;
+            cbxParam.setValue(selectedIndex.get(0).getParamName());
+        }
+    }
 
     private void setComboboxLocation(List<Component> lstCell, List<Location> selectedIndex, int columnIndex) {
         Combobox cbxLocation = null;
@@ -361,6 +367,14 @@ public class PriceLocationController extends GenericForwardComposer {
             listDataModelParam.setSelection(selectedIndex);
             cbxLocation.setModel(listDataModelParam);
             cbxLocation.setTooltiptext(selectedIndex.get(Constants.FIRST_INDEX).getLocationName());
+        }
+    }
+    private void setValueComboboxLocation(List<Component> lstCell, List<Location> selectedIndex, int columnIndex) {
+        Combobox cbxLocation = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            cbxLocation = (Combobox) component;
+            cbxLocation.setValue(selectedIndex.get(0).getLocationName());
         }
     }
 
