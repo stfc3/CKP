@@ -793,6 +793,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
+//            combobox.setValue(selectedIndex.get(0).getConstructionName());
             MyListModel listDataModelConstruction = new MyListModel(lstConstructions);
             listDataModelConstruction.setSelection(selectedIndex);
             combobox.setModel(listDataModelConstruction);
@@ -806,6 +807,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         Component component = lstCell.get(columnIndex).getFirstChild();
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
+//            combobox.setValue(selectedIndex.get(0).getCustomerName());
             MyListModel listDataModelCustomer = new MyListModel(lstCustomer);
             listDataModelCustomer.setSelection(selectedIndex);
             combobox.setModel(listDataModelCustomer);
