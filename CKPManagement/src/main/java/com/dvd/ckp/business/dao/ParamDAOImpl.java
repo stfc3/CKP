@@ -38,6 +38,16 @@ public class ParamDAOImpl implements ParamDAO {
         }
         return null;
     }
+    @Override
+    public List<Param> getParamByKey(String paramKey) {
+        Query query = getCurrentSession().getNamedQuery("Param.fillParamByKey");
+        query.setParameter("paramKey", paramKey);
+        List<Param> lstParams = query.list();
+        if (lstParams != null && !lstParams.isEmpty()) {
+            return lstParams;
+        }
+        return null;
+    }
 
     @Override
     public void insertOrUpdateParam(Param param) {
@@ -54,5 +64,6 @@ public class ParamDAOImpl implements ParamDAO {
                         Transformers.aliasToBean(Param.class));
         return (List<Param>) query.list();
     }
+    
 
 }

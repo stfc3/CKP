@@ -7,6 +7,7 @@ import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.CalculatorRevenue;
+import java.util.Date;
 
 public interface BillDAO {
 
@@ -41,6 +42,6 @@ public interface BillDAO {
 
     public List<QuantityValue> getQuantity(Long billDetailId);
 
-    public List<BillViewDetail> getApproveBill();
+    public List<BillViewDetail> getApproveBill(String billCode, Long contructionId, Date pumpDate, Long pumpId , Integer limitQuery);
 
 }

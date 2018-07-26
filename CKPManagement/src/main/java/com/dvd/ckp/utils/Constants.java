@@ -40,12 +40,13 @@ public interface Constants {
     String PRAM_OBJECT = "OBJECT";
     String RENT_TYPE = "RENT_PUMP";
     String PARAM_DEPARTMENT = "DEPARTMENT";
-    public static String PARAM_POSITION = "POSITION";
+    String PARAM_POSITION = "POSITION";
+    String PARAM_LIMIT_QUERY = "LIMIT_QUERY";
 
     Integer USER_ADMIN = 1;
     String ROLE_APPROVE = "approve";
 
-    String[] PARAM_TYPE = {PRAM_BANK, PRAM_PUMP_TYPE, PRAM_LOCATION_TYPE, PRAM_CONVERT_TYPE, RENT_TYPE, PARAM_DEPARTMENT, PARAM_POSITION};
+    String[] PARAM_TYPE = {PRAM_BANK, PRAM_PUMP_TYPE, PRAM_LOCATION_TYPE, PRAM_CONVERT_TYPE, RENT_TYPE, PARAM_DEPARTMENT, PARAM_POSITION, PARAM_LIMIT_QUERY};
 
     Integer USER_TYPE = 0;//0: Nguoi dung, 1: admin
     
@@ -64,7 +65,7 @@ public interface Constants {
             case PRAM_LOCATION_TYPE:
                 result = "Loại vị trí";
                 break;
-            case "RENT_PUMP":
+            case RENT_TYPE:
                 result = "Cần phân phối";
                 break;
             case PARAM_DEPARTMENT:
@@ -72,6 +73,9 @@ public interface Constants {
                 break;
             case PARAM_POSITION:
                 result = "Chức vụ";
+                break;
+            case PARAM_LIMIT_QUERY:
+                result = "Dòng dữ liệu";
                 break;
             default:
                 break;

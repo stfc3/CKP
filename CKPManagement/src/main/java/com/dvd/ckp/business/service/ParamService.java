@@ -16,7 +16,9 @@ public interface ParamService {
 
     List<Param> getAllParam();
 
+    List<Param> getParamByKey(String paramKey);
+
     void insertOrUpdateParam(Param param);
-    
+
     List<Param> getDistinctParamKey();
 }

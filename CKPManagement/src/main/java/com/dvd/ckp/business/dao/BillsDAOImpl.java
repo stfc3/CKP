@@ -16,6 +16,9 @@ import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.CalculatorRevenue;
+import com.dvd.ckp.utils.DateTimeUtils;
+import com.dvd.ckp.utils.StringUtils;
+import java.util.Date;
 import org.zkoss.zk.ui.util.Clients;
 
 @Repository
@@ -428,7 +431,7 @@ public class BillsDAOImpl implements BillDAO {
 	}
 
     @Override
-    public List<BillViewDetail> getApproveBill() {
+    public List<BillViewDetail> getApproveBill(String billCode, Long constructionId, Date pumpDate, Long pumpId, Integer limitQuery) {
         // TODO Auto-generated method stub
         try {
 
@@ -465,7 +468,20 @@ public class BillsDAOImpl implements BillDAO {
             builder.append(
                     " (select q.bill_detail_id,GROUP_CONCAT(s.staff_name SEPARATOR ', ') staff from quantity_staff q , staff s where q.staff_id = s.staff_id group by q.bill_detail_id) s ");
             builder.append(" on a.bill_detail_id = s.bill_detail_id ");
-            builder.append("order by prd_id desc");
+            builder.append(" WHERE 1=1 ");
+            if(StringUtils.isValidString(billCode)){
+                builder.append(" AND a.bill_code = :billCode ");
+            }
+            if(constructionId !=null){
+                builder.append(" AND c.construction_id = :constructionId ");
+            }
+            if(pumpDate !=null){
+                builder.append(" AND a.prd_id = :pumpDate ");
+            }
+            if(pumpId !=null){
+                builder.append(" AND p.pump_id = :pumpId ");
+            }
+            builder.append("order by prd_id desc limit :limitQuery");
             Query query = getCurrentSession().createSQLQuery(builder.toString())
                     .addScalar("billID", StandardBasicTypes.LONG)
                     .addScalar("billCode", StandardBasicTypes.STRING)
@@ -483,6 +499,21 @@ public class BillsDAOImpl implements BillDAO {
                     .addScalar("staff", StandardBasicTypes.STRING)
                     .addScalar("total", StandardBasicTypes.DOUBLE)
                     .setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));
+            
+            if(StringUtils.isValidString(billCode)){
+                query.setParameter("billCode", billCode);
+            }
+            if(constructionId !=null){
+                query.setParameter("constructionId", constructionId);
+            }
+            if(pumpDate !=null){
+                query.setParameter("pumpDate", DateTimeUtils.convertDateToString(pumpDate, "YYYYMMDD"));
+            }
+            if(pumpId !=null){
+                query.setParameter("pumpId", pumpId);
+            }
+            query.setParameter("limitQuery", limitQuery);
+            
             List<BillViewDetail> listData = query.list();
 
             return listData;

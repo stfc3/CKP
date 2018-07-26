@@ -27,6 +27,11 @@ public class ParamServiceImpl implements ParamService{
     public List<Param> getAllParam() {
         return paramDAO.getAllParam();
     }
+    @Transactional(readOnly = true)
+    @Override
+    public List<Param> getParamByKey(String paramKey) {
+        return paramDAO.getParamByKey(paramKey);
+    }
 
     @Transactional
     @Override

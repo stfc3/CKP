@@ -10,6 +10,7 @@ import com.dvd.ckp.domain.BillViewDetail;
 import com.dvd.ckp.domain.Bills;
 import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.CalculatorRevenue;
+import java.util.Date;
 
 public class BillSeviceImpl implements BillsServices {
 
@@ -106,9 +107,9 @@ public class BillSeviceImpl implements BillsServices {
     }
 
     @Override
-    public List<BillViewDetail> getApproveBill() {
+    public List<BillViewDetail> getApproveBill(String billCode, Long contructionId, Date pumpDate, Long pumpId, Integer limitQuery) {
         // TODO Auto-generated method stub
-        return billDAO.getApproveBill();
+        return billDAO.getApproveBill(billCode, contructionId, pumpDate, pumpId, limitQuery);
     }
 
     @Override
