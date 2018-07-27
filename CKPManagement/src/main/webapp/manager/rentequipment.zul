@@ -9,16 +9,16 @@
         text-align:right; } a [class^="z-icon-"]{ margin-right: 5px; }
     </style>
     <window id="rentPumps"
-                apply="com.dvd.ckp.controller.RentEquipmentController">
+            apply="com.dvd.ckp.controller.RentEquipmentController">
         <style src="/css/theme.css" />
         <groupbox>
             <caption label="${c:l('rent.pumps')}" />
             <grid id="gridRent" mold="paging" pageSize="10"
-                              pagingPosition="both">
+                  pagingPosition="both">
                 <auxhead sclass="category-center">
-                    <auxheader colspan="10">
+                    <auxheader colspan="12">
                         <a class="btn-cursor" forward="onClick=onAdd"
-                                                   iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
+                           iconSclass="z-icon-plus-circle" label="${c:l('add')}" />
                         <!-- 						<a class="btn-cursor" -->
                         <!-- 							iconSclass="z-icon-file-excel-o" forward="onClick=onImport" -->
                         <!-- 							label="${c:l('import')}" /> -->
@@ -32,19 +32,19 @@
                     <auxheader colspan="3">
                         <a iconSclass="z-icon-filter" />
                         <combobox id="cbFilterCustomer" hflex="1"
-                                                          placeholder="${c:l('bills.filter.customer')}" autodrop="true"
-                                                          buttonVisible="false">
+                                  placeholder="${c:l('bills.filter.customer')}" autodrop="true"
+                                  buttonVisible="false">
                             <template name="model">
                                 <comboitem value="${each.customerId}"
-                                                                           label="${each.customerName}" />
+                                           label="${each.customerName}" />
                             </template>
                         </combobox>
                     </auxheader>
                     <auxheader colspan="3">
                         <a iconSclass="z-icon-filter" />
                         <combobox hflex="1" id="cbFilterConstruction"
-                                                          placeholder="${c:l('bills.filter.construction')}" autodrop="true"
-                                                          buttonVisible="false">
+                                  placeholder="${c:l('bills.filter.construction')}" autodrop="true"
+                                  buttonVisible="false">
                             <template name="model">
                                 <comboitem
                                     value="${each.constructionId}"
@@ -52,17 +52,17 @@
                             </template>
                         </combobox>
                     </auxheader>
-                    <auxheader colspan="2">
+                    <auxheader colspan="3">
                         <a iconSclass="z-icon-filter" />
                         <datebox id="dtFilterStartDate"
-                                                         format="dd/MM/yyyy" placeholder="${c:l('rent.pump.from.date')}"
-                                                         hflex="1" />
+                                 format="dd/MM/yyyy" placeholder="${c:l('rent.pump.from.date')}"
+                                 hflex="1" />
                     </auxheader>
-                    <auxheader colspan="2">
+                    <auxheader colspan="3">
                         <a iconSclass="z-icon-filter" />
                         <datebox id="dtFilterEndDate"
-                                                         format="dd/MM/yyyy" placeholder="${c:l('rent.pump.end.date')}"
-                                                         hflex="1" />
+                                 format="dd/MM/yyyy" placeholder="${c:l('rent.pump.end.date')}"
+                                 hflex="1" />
                     </auxheader>
 
                 </auxhead>
@@ -103,7 +103,7 @@
                         <!--loai bom thue -->
                         <cell>
                             <combobox hflex="1" buttonVisible="false"
-                                                                  autodrop="true" inplace="true" readonly="true">
+                                      autodrop="true" inplace="true" readonly="true">
                                 <template name="model">
                                     <comboitem
                                         value="${each.paramValue}" label="${each.paramName}" />
@@ -114,7 +114,7 @@
                         <!--can phan phoi -->
                         <cell>
                             <combobox hflex="1" buttonVisible="false"
-                                                                  autodrop="true" inplace="true" readonly="true">
+                                      autodrop="true" inplace="true" readonly="true">
                                 <template name="model">
                                     <comboitem value="${each.distributeId}" label="${each.distributeCode}${each.distributeCode !=null ? '-':''}${each.distributeName}" />
                                 </template>
@@ -124,7 +124,7 @@
                         <!--khach hang -->
                         <cell>
                             <combobox hflex="1" buttonVisible="false"
-                                                                  autodrop="true" inplace="true" readonly="true">
+                                      autodrop="true" inplace="true" readonly="true">
                                 <template name="model">
                                     <comboitem
                                         value="${each.customerId}" label="${each.customerName}" />
@@ -135,7 +135,7 @@
                         <!--cong trinh -->
                         <cell>
                             <combobox hflex="1" buttonVisible="false"
-                                                                  autodrop="true" inplace="true" readonly="true">
+                                      autodrop="true" inplace="true" readonly="true">
                                 <template name="model">
                                     <comboitem
                                         value="${each.constructionId}"
@@ -148,10 +148,10 @@
                         <!--to truong -->
                         <cell>
                             <combobox hflex="1" buttonVisible="false"
-                                                                  autodrop="true" inplace="true" readonly="true">
+                                      autodrop="true" inplace="true" readonly="true">
                                 <template name="model">
                                     <comboitem value="${each.staffId}"
-                                                                                   label="${each.staffName}" />
+                                               label="${each.staffName}" />
                                 </template>
                             </combobox>
                             <label hflex="0" style="color:red" />
@@ -160,10 +160,10 @@
                         <!--giam sat -->
                         <cell>
                             <combobox hflex="1" buttonVisible="false"
-                                                                  autodrop="true" inplace="true" readonly="true">
+                                      autodrop="true" inplace="true" readonly="true">
                                 <template name="model">
                                     <comboitem value="${each.staffId}"
-                                                                                   label="${each.staffName}" />
+                                               label="${each.staffName}" />
                                 </template>
                             </combobox>
                             <label hflex="0" style="color:red" />
@@ -172,41 +172,41 @@
                         <!--thoi gian bat dau -->
                         <cell style="text-align: right;">
                             <datebox value="${each.startDate}"
-                                                                 format="dd/MM/yyyy" style="text-align: right;" hflex="1"
-                                                                 inplace="true" readonly="true" buttonVisible="false" />
+                                     format="dd/MM/yyyy" style="text-align: right;" hflex="1"
+                                     inplace="true" readonly="true" buttonVisible="false" />
                             <label hflex="0" style="color:red" />
                         </cell>
 
                         <!--thoi gian ket thuc -->
                         <cell style="text-align: right;">
                             <datebox value="${each.endDate}"
-                                                                 format="dd/MM/yyyy" style="text-align: right;" hflex="1"
-                                                                 inplace="true" readonly="true" buttonVisible="false" />
+                                     format="dd/MM/yyyy" style="text-align: right;" hflex="1"
+                                     inplace="true" readonly="true" buttonVisible="false" />
                             <label hflex="0" style="color:red" />
                         </cell>
                         <!--thanh tien -->
                         <cell style="text-align: right;">
                             <doublebox style="text-align: right;"
-                                                                   inplace="true" hflex="1" readonly="true" format="#,##0.##"
-                                                                   locale="en" value="${each.averagePrice}" />
+                                       inplace="true" hflex="1" readonly="true" format="#,##0.##"
+                                       locale="en" value="${each.averagePrice}" />
                         </cell>
 
                         <cell style="text-align:center">
                             <a class="btn-cursor"
-                                                           iconSclass="z-icon-pencil" forward="onClick=onEdit"
-                                                           tooltiptext="${c:l('edit')}" />
+                               iconSclass="z-icon-pencil" forward="onClick=onEdit"
+                               tooltiptext="${c:l('edit')}" />
 
                             <a class="btn-cursor"
-                                                           iconSclass="z-icon-trash-o" forward="onClick=onDelete"
-                                                           tooltiptext="${c:l('delete')}" />
+                               iconSclass="z-icon-trash-o" forward="onClick=onDelete"
+                               tooltiptext="${c:l('delete')}" />
 
                             <a class="btn-cursor"
-                                                           iconSclass="z-icon-check" forward="onClick=onSave"
-                                                           visible="false" tooltiptext="${c:l('save')}" />
+                               iconSclass="z-icon-check" forward="onClick=onSave"
+                               visible="false" tooltiptext="${c:l('save')}" />
 
                             <a class="btn-cursor"
-                                                           iconSclass="z-icon-ban" forward="onClick=onCancel"
-                                                           visible="false" tooltiptext="${c:l('cancel')}" />
+                               iconSclass="z-icon-ban" forward="onClick=onCancel"
+                               visible="false" tooltiptext="${c:l('cancel')}" />
 
                         </cell>
                     </row>

@@ -398,37 +398,37 @@ public class BillsDAOImpl implements BillDAO {
 
     }
 
-	@Override
-	public void upadte(Double quantityApprove, Double totalApprove, Long billDetailID) {
-		// TODO Auto-generated method stub
-		try {
-			StringBuilder builder = new StringBuilder("update bill_detail set ");
-			if (quantityApprove != null) {
-				builder.append(" quantity_approve = :quantityApprove, ");
-			}
-			if (totalApprove != null) {
-				builder.append(" total_approve = :totalApprove, ");
-			}
-			builder.append(" status = 2 ");
-			builder.append(" where bill_detail_id = :billDetailId ");
-			Query query = getCurrentSession().createSQLQuery(builder.toString());
-			if (quantityApprove != null) {
-				query.setParameter("quantityApprove", quantityApprove);
-			}
-			if (totalApprove != null) {
-				query.setParameter("totalApprove", totalApprove);
-			}
-			query.setParameter("billDetailId", billDetailID);
-			query.executeUpdate();
-			String billDetailIdApprove = "bill_detail_" + billDetailID;
-			Clients.evalJavaScript("approveBilDetail('" + billDetailIdApprove + "');");
-		} catch (Exception e) {
-			// TODO: handle exception
-			logger.error(e.getMessage(), e);
-		} finally {
-			// TODO: handle finally clause
-		}
-	}
+    @Override
+    public void upadte(Double quantityApprove, Double totalApprove, Long billDetailID) {
+        // TODO Auto-generated method stub
+        try {
+            StringBuilder builder = new StringBuilder("update bill_detail set ");
+            if (quantityApprove != null) {
+                builder.append(" quantity_approve = :quantityApprove, ");
+            }
+            if (totalApprove != null) {
+                builder.append(" total_approve = :totalApprove, ");
+            }
+            builder.append(" status = 2 ");
+            builder.append(" where bill_detail_id = :billDetailId ");
+            Query query = getCurrentSession().createSQLQuery(builder.toString());
+            if (quantityApprove != null) {
+                query.setParameter("quantityApprove", quantityApprove);
+            }
+            if (totalApprove != null) {
+                query.setParameter("totalApprove", totalApprove);
+            }
+            query.setParameter("billDetailId", billDetailID);
+            query.executeUpdate();
+            String billDetailIdApprove = "bill_detail_" + billDetailID;
+            Clients.evalJavaScript("approveBilDetail('" + billDetailIdApprove + "');");
+        } catch (Exception e) {
+            // TODO: handle exception
+            logger.error(e.getMessage(), e);
+        } finally {
+            // TODO: handle finally clause
+        }
+    }
 
     @Override
     public List<BillViewDetail> getApproveBill(String billCode, Long constructionId, Date pumpDate, Long pumpId, Integer limitQuery) {
@@ -469,16 +469,16 @@ public class BillsDAOImpl implements BillDAO {
                     " (select q.bill_detail_id,GROUP_CONCAT(s.staff_name SEPARATOR ', ') staff from quantity_staff q , staff s where q.staff_id = s.staff_id group by q.bill_detail_id) s ");
             builder.append(" on a.bill_detail_id = s.bill_detail_id ");
             builder.append(" WHERE 1=1 ");
-            if(StringUtils.isValidString(billCode)){
+            if (StringUtils.isValidString(billCode)) {
                 builder.append(" AND a.bill_code = :billCode ");
             }
-            if(constructionId !=null){
+            if (constructionId != null) {
                 builder.append(" AND c.construction_id = :constructionId ");
             }
-            if(pumpDate !=null){
+            if (pumpDate != null) {
                 builder.append(" AND a.prd_id = :pumpDate ");
             }
-            if(pumpId !=null){
+            if (pumpId != null) {
                 builder.append(" AND p.pump_id = :pumpId ");
             }
             builder.append("order by prd_id desc limit :limitQuery");
@@ -499,21 +499,21 @@ public class BillsDAOImpl implements BillDAO {
                     .addScalar("staff", StandardBasicTypes.STRING)
                     .addScalar("total", StandardBasicTypes.DOUBLE)
                     .setResultTransformer(Transformers.aliasToBean(BillViewDetail.class));
-            
-            if(StringUtils.isValidString(billCode)){
+
+            if (StringUtils.isValidString(billCode)) {
                 query.setParameter("billCode", billCode);
             }
-            if(constructionId !=null){
+            if (constructionId != null) {
                 query.setParameter("constructionId", constructionId);
             }
-            if(pumpDate !=null){
+            if (pumpDate != null) {
                 query.setParameter("pumpDate", DateTimeUtils.convertDateToString(pumpDate, "YYYYMMDD"));
             }
-            if(pumpId !=null){
+            if (pumpId != null) {
                 query.setParameter("pumpId", pumpId);
             }
             query.setParameter("limitQuery", limitQuery);
-            
+
             List<BillViewDetail> listData = query.list();
 
             return listData;
@@ -535,10 +535,88 @@ public class BillsDAOImpl implements BillDAO {
             query.setParameter("billCode", billCode);
             query.setParameter("billID", billID);
             query.executeUpdate();
-            
+
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public List<Bills> onSearch(Long customer, Long construction, String date, Integer limitQuery) {
+        // TODO Auto-generated method stub
+        try {
+            StringBuilder sql = new StringBuilder("SELECT ");
+            sql.append(" b.bill_id AS billID, ");
+            sql.append(" b.bill_code AS billCode, ");
+            sql.append(" b.customer_id AS customerID, ");
+            sql.append(" c.customer_name AS customerName, ");
+            sql.append(" b.prd_id AS prdID, ");
+            sql.append(" STR_TO_DATE(b.prd_id, '%Y%m%d') AS dateInput, ");
+            sql.append(" b.from_time AS fromDate, ");
+            sql.append(" b.to_time AS toDate, ");
+            sql.append(" b.start_time AS startTime, ");
+            sql.append(" b.end_time AS endTime, ");
+            sql.append(" b.construction_id AS constructionID, ");
+            sql.append(" ct.construction_name AS constructionName, ");
+            sql.append(" b.file_name AS fileName, ");
+            sql.append(" b.path AS filePath, ");
+            sql.append(" b.status AS status, ");
+            sql.append(" e.total AS cost ");
+            sql.append(" FROM bills b ");
+            sql.append(" LEFT JOIN ");
+            sql.append(" customers c ON b.customer_id = c.customer_id ");
+            sql.append(" LEFT JOIN ");
+            sql.append(" construction ct ON b.construction_id = ct.construction_id ");
+            sql.append(" LEFT JOIN ");
+//            sql.append(" (select bill_id,case when sum(total_approve) is not null then sum(total_approve) else sum(total) end total from bill_detail where status in (1,2) group by bill_id) e ");
+            sql.append(" (select bill_id,sum( case when total_approve is not null then total_approve else total end) total from bill_detail where status in (1,2) group by bill_id) e ");
+            sql.append(" on b.bill_id = e.bill_id ");
+            sql.append(" WHERE ");
+            sql.append(" b.status = 1 ");
+            if (customer != null) {
+                sql.append(" and b.customer_id = :customer");
+            }
+            if (construction != null) {
+                sql.append(" and b.construction_id = :construction");
+            }
+            if (StringUtils.isValidString(date)) {
+                sql.append(" and STR_TO_DATE(b.prd_id, '%Y%m%d') = :date");
+            }
+            sql.append(" order by b.prd_id desc limit :limitQuery");
+            Query query = getCurrentSession().createSQLQuery(sql.toString())
+                    .addScalar("billID", StandardBasicTypes.LONG)
+                    .addScalar("billCode", StandardBasicTypes.STRING)
+                    .addScalar("customerID", StandardBasicTypes.LONG)
+                    .addScalar("customerName", StandardBasicTypes.STRING)
+                    .addScalar("prdID", StandardBasicTypes.STRING)
+                    .addScalar("dateInput", StandardBasicTypes.DATE)
+                    .addScalar("fromDate", StandardBasicTypes.DATE)
+                    .addScalar("toDate", StandardBasicTypes.DATE)
+                    .addScalar("startTime", StandardBasicTypes.DATE)
+                    .addScalar("endTime", StandardBasicTypes.DATE)
+                    .addScalar("constructionID", StandardBasicTypes.LONG)
+                    .addScalar("constructionName", StandardBasicTypes.STRING)
+                    .addScalar("fileName", StandardBasicTypes.STRING)
+                    .addScalar("filePath", StandardBasicTypes.STRING)
+                    .addScalar("status", StandardBasicTypes.INTEGER)
+                    .addScalar("cost", StandardBasicTypes.DOUBLE)
+                    .setResultTransformer(Transformers.aliasToBean(Bills.class));
+            if (customer != null) {
+                query.setParameter("customer", customer);
+            }
+            if (construction != null) {
+                query.setParameter("construction", construction);
+            }
+            if (StringUtils.isValidString(date)) {
+                query.setParameter("date", date);
+            }
+            query.setParameter("limitQuery", limitQuery);
+            List<Bills> lstData = query.list();
+            return lstData;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
     }
 
 }

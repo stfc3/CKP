@@ -49,7 +49,7 @@ public interface Constants {
     String[] PARAM_TYPE = {PRAM_BANK, PRAM_PUMP_TYPE, PRAM_LOCATION_TYPE, PRAM_CONVERT_TYPE, RENT_TYPE, PARAM_DEPARTMENT, PARAM_POSITION, PARAM_LIMIT_QUERY};
 
     Integer USER_TYPE = 0;//0: Nguoi dung, 1: admin
-    
+
     public static String getParamFromType(String type) {
         String result = "";
         switch (type) {

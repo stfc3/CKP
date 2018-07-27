@@ -16,43 +16,43 @@ import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.utils.SpringConstant;
 
 public class QuantityStaffController extends GenericForwardComposer<Component> {
-	@WireVariable
-	protected StaffServices staffServices;
 
-	private List<Staff> lstStaff;
+    @WireVariable
+    protected StaffServices staffServices;
 
-	@Wire
-	private Listbox resultList;
+    private List<Staff> lstStaff;
 
-	@Wire
-	private List<QuantityBean> lstData;
+    @Wire
+    private Listbox resultList;
 
-	// Model grid in window bill detail
-	ListModelList<Staff> listDataModelDetail;
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    @Wire
+    private List<QuantityBean> lstData;
 
-	public ListModelList<Staff> getListDataModelDetail() {
-		return listDataModelDetail;
-	}
+    // Model grid in window bill detail
+    ListModelList<Staff> listDataModelDetail;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	public void setListDataModelDetail(ListModelList<Staff> listDataModelDetail) {
-		this.listDataModelDetail = listDataModelDetail;
-	}
+    public ListModelList<Staff> getListDataModelDetail() {
+        return listDataModelDetail;
+    }
 
-	@Override
-	public void doAfterCompose(Component comp) throws Exception {
-		// TODO Auto-generated method stub
-		super.doAfterCompose(comp);
-		staffServices = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
-		lstStaff = staffServices.getAllData();
-		listDataModelDetail = new ListModelList<>(lstStaff);
-		listDataModelDetail.setMultiple(true);
-		resultList.setModel(listDataModelDetail);
-		
+    public void setListDataModelDetail(ListModelList<Staff> listDataModelDetail) {
+        this.listDataModelDetail = listDataModelDetail;
+    }
 
-	}
+    @Override
+    public void doAfterCompose(Component comp) throws Exception {
+        // TODO Auto-generated method stub
+        super.doAfterCompose(comp);
+        staffServices = (StaffServices) SpringUtil.getBean(SpringConstant.STAFF_SERVICES);
+        lstStaff = staffServices.getAllData();
+        listDataModelDetail = new ListModelList<>(lstStaff);
+        listDataModelDetail.setMultiple(true);
+        resultList.setModel(listDataModelDetail);
+
+    }
 
 }

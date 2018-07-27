@@ -208,6 +208,20 @@ public class LocationController extends GenericForwardComposer {
 
     }
 
+    private void setValueLocationTypeDetail(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+        Combobox combobox = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            combobox = (Combobox) component;
+            combobox.setValue(selectedIndex.get(0).getParamName());
+//            MyListModel listDataModelLocation = new MyListModel(lstTypeLocation);
+//            listDataModelLocation.setSelection(selectedIndex);
+//            combobox.setModel(listDataModelLocation);
+
+        }
+
+    }
+
     private void setDataDefaultInGridViewDetail() {
         gridLocation.renderAll();
         List<Component> lstRows = gridLocation.getRows().getChildren();
@@ -216,7 +230,8 @@ public class LocationController extends GenericForwardComposer {
                 Location location = listDataModel.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setDataLocationTypeDetail(lstCell, getLocationTypeDefault(location.getLocationType()), 4);
+                setValueLocationTypeDetail(lstCell, getLocationTypeDefault(location.getLocationType()), 4);
+//                setDataLocationTypeDetail(lstCell, getLocationTypeDefault(location.getLocationType()), 4);
             }
         }
     }

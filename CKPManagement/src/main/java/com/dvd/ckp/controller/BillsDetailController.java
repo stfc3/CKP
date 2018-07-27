@@ -29,7 +29,6 @@ import org.zkoss.zul.Row;
 import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
-import com.dvd.ckp.business.service.LocationServices;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.component.MyListModel;
@@ -183,6 +182,20 @@ public class BillsDetailController extends GenericForwardComposer {
 
     }
 
+    private void setValuePumpsDetail(List<Component> lstCell, List<Pumps> selectedIndex, int columnIndex) {
+        Combobox combobox = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            combobox = (Combobox) component;
+            combobox.setValue(selectedIndex.get(0).getPumpsName());
+//            MyListModel listDataModel = new MyListModel(lstPumps);
+//            listDataModel.setSelection(selectedIndex);
+//            combobox.setModel(listDataModel);
+
+        }
+
+    }
+
     // get Customer default
     private List<Pumps> getPumpsDefault(Long pumpId) {
         List<Pumps> pumpSelected = new ArrayList<>();
@@ -237,6 +250,20 @@ public class BillsDetailController extends GenericForwardComposer {
 
     }
 
+    private void setValuePumpsTypeDetail(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+        Combobox combobox = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            combobox = (Combobox) component;
+            combobox.setValue(selectedIndex.get(0).getParamName());
+//            MyListModel listDataModel = new MyListModel(lstTypePump);
+//            listDataModel.setSelection(selectedIndex);
+//            combobox.setModel(listDataModel);
+
+        }
+
+    }
+
     // get pump type default
     private List<Param> getLocationTypeDefault(Long locationTypeId) {
         List<Param> paramSelected = new ArrayList<>();
@@ -269,6 +296,20 @@ public class BillsDetailController extends GenericForwardComposer {
             MyListModel listDataModel = new MyListModel(lstTypeLocation);
             listDataModel.setSelection(selectedIndex);
             combobox.setModel(listDataModel);
+
+        }
+
+    }
+
+    private void setValueLocationTypeDetail(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+        Combobox combobox = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            combobox = (Combobox) component;
+            combobox.setValue(selectedIndex.get(0).getParamName());
+//            MyListModel listDataModel = new MyListModel(lstTypeLocation);
+//            listDataModel.setSelection(selectedIndex);
+//            combobox.setModel(listDataModel);
 
         }
 
@@ -311,6 +352,20 @@ public class BillsDetailController extends GenericForwardComposer {
 
     }
 
+    private void setValueLocationDetail(List<Component> lstCell, List<Location> selectedIndex, int columnIndex) {
+        Combobox combobox = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            combobox = (Combobox) component;
+            combobox.setValue(selectedIndex.get(0).getLocationName());
+//            MyListModel listDataModel = new MyListModel(lstLocation);
+//            listDataModel.setSelection(selectedIndex);
+//            combobox.setModel(listDataModel);
+
+        }
+
+    }
+
     /**
      *
      */
@@ -322,10 +377,16 @@ public class BillsDetailController extends GenericForwardComposer {
                 BillsDetail billsDetail = listDataModelDetail.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setDataPumpsDetail(lstCell, getPumpsDefault(billsDetail.getPumpID()), pumpIdDetail);
-                setDataPumpsTypeDetail(lstCell, getPumpsTypeDefault(billsDetail.getPumpTypeId()), pumpTypeIdDetail);
-                setLocationDetail(lstCell, getLocationDefault(billsDetail.getLocationId()), locationDetail);
-                setDataLocationTypeDetail(lstCell, getLocationTypeDefault(billsDetail.getLocationType()),
+                setValuePumpsDetail(lstCell, getPumpsDefault(billsDetail.getPumpID()), pumpIdDetail);
+//                setDataPumpsDetail(lstCell, getPumpsDefault(billsDetail.getPumpID()), pumpIdDetail);
+                setValuePumpsTypeDetail(lstCell, getPumpsTypeDefault(billsDetail.getPumpTypeId()), pumpTypeIdDetail);
+//                setDataPumpsTypeDetail(lstCell, getPumpsTypeDefault(billsDetail.getPumpTypeId()), pumpTypeIdDetail);
+//                setLocationDetail(lstCell, getLocationDefault(billsDetail.getLocationId()), locationDetail);
+                setValueLocationDetail(lstCell, getLocationDefault(billsDetail.getLocationId()), locationDetail);
+
+//                setDataLocationTypeDetail(lstCell, getLocationTypeDefault(billsDetail.getLocationType()),
+//                        locationTypeDetail);
+                setValueLocationTypeDetail(lstCell, getLocationTypeDefault(billsDetail.getLocationType()),
                         locationTypeDetail);
 
                 setIsAutoDefault(lstCell, billsDetail.getBillDetailId(), 5);

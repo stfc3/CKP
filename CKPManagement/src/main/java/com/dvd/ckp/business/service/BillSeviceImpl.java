@@ -117,4 +117,9 @@ public class BillSeviceImpl implements BillsServices {
         billDAO.update(billCode, billID);
     }
 
+    @Override
+    public List<Bills> onSearch(Long customer, Long construction, String date, Integer limitQuery) {
+        return billDAO.onSearch(customer, construction, date, limitQuery);
+    }
+
 }

@@ -487,8 +487,8 @@ public class StaffController extends GenericForwardComposer {
                 Staff staff = listDataModel.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setComboboxPositionParam(lstCell, getParamPositionDefault(staff.getPosition(), 7), 7);
-                setComboboxParam(lstCell, getParamDefault(staff.getDepartment(), 8), 8);
+                setValueComboboxPositionParam(lstCell, getParamPositionDefault(staff.getPosition(), 7), 7);
+                setValueComboboxParam(lstCell, getParamDefault(staff.getDepartment(), 8), 8);
             }
         }
     }
@@ -539,6 +539,21 @@ public class StaffController extends GenericForwardComposer {
         }
     }
 
+    private void setValueComboboxParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+        Combobox cbxParam = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        List<Param> lstParam = null;
+        lstParam = lstPosition;
+        if (component != null && component instanceof Combobox) {
+            cbxParam = (Combobox) component;
+            cbxParam.setValue(selectedIndex.get(0).getParamName());
+//            MyListModel listDataModelParam = new MyListModel(lstParam);
+//            listDataModelParam.setSelection(selectedIndex);
+//            cbxParam.setModel(listDataModelParam);
+//            cbxParam.setTooltiptext(selectedIndex.get(com.dvd.ckp.utils.Constants.FIRST_INDEX).getParamName());
+        }
+    }
+
     private void setComboboxPositionParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
         Combobox cbxParam = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
@@ -551,6 +566,23 @@ public class StaffController extends GenericForwardComposer {
             MyListModel listDataModelParam = new MyListModel(lstParam);
             listDataModelParam.setSelection(selectedIndex);
             cbxParam.setModel(listDataModelParam);
+//            cbxParam.setTooltiptext(selectedIndex.get(com.dvd.ckp.utils.Constants.FIRST_INDEX).getParamName());
+        }
+    }
+
+    private void setValueComboboxPositionParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+        Combobox cbxParam = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        List<Param> lstParam = null;
+
+        lstParam = lstDepartment;
+
+        if (component != null && component instanceof Combobox) {
+            cbxParam = (Combobox) component;
+            cbxParam.setValue(selectedIndex.get(0).getParamName());
+//            MyListModel listDataModelParam = new MyListModel(lstParam);
+//            listDataModelParam.setSelection(selectedIndex);
+//            cbxParam.setModel(listDataModelParam);
 //            cbxParam.setTooltiptext(selectedIndex.get(com.dvd.ckp.utils.Constants.FIRST_INDEX).getParamName());
         }
     }

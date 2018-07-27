@@ -13,6 +13,8 @@ public interface BillsServices {
 
     public List<Bills> getAllData();
 
+    public List<Bills> onSearch(Long customer, Long construction, String date, Integer limitQuery);
+
     public void save(Bills bills);
 
     public void update(Bills bills);
@@ -42,6 +44,6 @@ public interface BillsServices {
 
     public List<QuantityValue> getQuantity(Long billDetailId);
 
-    public List<BillViewDetail> getApproveBill(String billCode, Long contructionId, Date pumpDate, Long pumpId , Integer limitQuery);
+    public List<BillViewDetail> getApproveBill(String billCode, Long contructionId, Date pumpDate, Long pumpId, Integer limitQuery);
 
 }

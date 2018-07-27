@@ -46,6 +46,7 @@ import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.BillsServices;
 import com.dvd.ckp.business.service.ContractService;
+import com.dvd.ckp.business.service.ParamService;
 import com.dvd.ckp.business.service.PumpServices;
 import com.dvd.ckp.business.service.UtilsService;
 import com.dvd.ckp.common.Constants;
@@ -55,6 +56,7 @@ import com.dvd.ckp.domain.BillsDetail;
 import com.dvd.ckp.domain.Construction;
 import com.dvd.ckp.domain.Customer;
 import com.dvd.ckp.domain.Location;
+import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.Pumps;
 import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.utils.DateTimeUtils;
@@ -91,6 +93,8 @@ public class BillsController extends GenericForwardComposer<Component> {
     protected ContractService contractService;
     @WireVariable
     protected PumpServices pumpServices;
+    @WireVariable
+    protected ParamService paramService;
     // @WireVariable
     // protected LocationServices locationServices;
     @WireVariable
@@ -106,7 +110,7 @@ public class BillsController extends GenericForwardComposer<Component> {
     ListModelList<Bills> listDataModel;
 
     private List<Bills> lstBills;
-    private List<Bills> lstBillsFilter;
+//    private List<Bills> lstBillsFilter;
 
     private List<Construction> lstConstructions;
     private List<Customer> lstCustomer;
@@ -155,6 +159,7 @@ public class BillsController extends GenericForwardComposer<Component> {
     private Memory memory = new Memory();
 
     private boolean billCodeIsChange = false;
+    private Integer limitQuery = 200;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -183,12 +188,16 @@ public class BillsController extends GenericForwardComposer<Component> {
         // }
         // list danh sach khach hang
         lstCustomer = new ArrayList<>(memory.getCustomerCache().values());
-
+        paramService = (ParamService) SpringUtil.getBean(SpringConstant.PARAM_SERVICES);
         // List<Customer> lstCus = customerService.getCustomerActive();
         // if (lstCus != null && !lstCus.isEmpty()) {
         // lstCustomer.addAll(lstCus);
         // }
         // list danh sach chi tiet hoa don
+        List<Param> listParam = paramService.getParamByKey(com.dvd.ckp.utils.Constants.PARAM_LIMIT_QUERY);
+        if (listParam != null && !listParam.isEmpty()) {
+            limitQuery = listParam.get(0).getParamValue().intValue();
+        }
         lstBillDetail = new ArrayList<>();
         List<BillsDetail> lstBillDe = billsServices.getBillDetail();
         if (lstBillDe != null && !lstBillDe.isEmpty()) {
@@ -223,11 +232,11 @@ public class BillsController extends GenericForwardComposer<Component> {
         // list danh sach hoa don
         lstBills = new ArrayList<>();
         // list de export data theo du lieu filter
-        lstBillsFilter = new ArrayList<>();
-        List<Bills> lstData = billsServices.getAllData();
+//        lstBillsFilter = new ArrayList<>();
+        List<Bills> lstData = billsServices.onSearch(null, null, null, limitQuery);
         if (lstData != null && !lstData.isEmpty()) {
             lstBills.addAll(lstData);
-            lstBillsFilter.addAll(lstData);
+//            lstBillsFilter.addAll(lstData);
         }
 
         // cong trinh default
@@ -308,7 +317,7 @@ public class BillsController extends GenericForwardComposer<Component> {
                 bills.setStatus(1);
                 billsServices.save(bills);
                 lstBills.add(bills);
-                lstBillsFilter.add(bills);
+//                lstBillsFilter.add(bills);
             } else {
                 bills.setCreateDate(new Date());
                 billsServices.update(bills);
@@ -335,7 +344,7 @@ public class BillsController extends GenericForwardComposer<Component> {
                     bill.setStatus(0);
                     billsServices.delete(bill);
                     lstBills.remove(getIndexBill(bill.getBillID()));
-                    lstBillsFilter.remove(getIndexBillFilter(bill.getBillID()));
+//                    lstBillsFilter.remove(getIndexBillFilter(bill.getBillID()));
                     reloadGrid();
                 }
             }
@@ -612,7 +621,7 @@ public class BillsController extends GenericForwardComposer<Component> {
         List<Bills> lstData = billsServices.getAllData();
         if (lstData != null && !lstData.isEmpty()) {
             lstBills.addAll(lstData);
-            lstBillsFilter.addAll(lstData);
+//            lstBillsFilter.addAll(lstData);
         }
         listDataModel = new ListModelList(lstBills);
         gridBills.setModel(listDataModel);
@@ -724,69 +733,79 @@ public class BillsController extends GenericForwardComposer<Component> {
     }
 
     private void filter(Bills bills) {
-        List<Bills> vlstBills = new ArrayList<>();
-        lstBillsFilter.clear();
-        if (lstBills != null && !lstBills.isEmpty() && bills != null) {
-            if (bills.getCustomerID() == null && bills.getConstructionID() == null && bills.getPrdID() == null) {
-                vlstBills.addAll(lstBills);
-
-            } else {
-                for (Bills c : lstBills) {
-                    // tim theo khach hang va cong trinh
-                    if (bills.getCustomerID() != null && bills.getConstructionID() != null
-                            && bills.getPrdID() == null) {
-                        if (bills.getCustomerID().equals(c.getCustomerID())
-                                && bills.getConstructionID().equals(c.getConstructionID())) {
-                            vlstBills.add(c);
-                        }
-                    } // tim theo khachs hang
-                    else if (bills.getCustomerID() != null && bills.getConstructionID() == null
-                            && bills.getPrdID() == null) {
-                        if (bills.getCustomerID().equals(c.getCustomerID())) {
-                            vlstBills.add(c);
-                        }
-                    } // tim theo cong trinh
-                    else if (bills.getCustomerID() == null && bills.getConstructionID() != null
-                            && bills.getPrdID() == null) {
-                        if (bills.getConstructionID().equals(c.getConstructionID())) {
-                            vlstBills.add(c);
-                        }
-                    } // Tim theo ngay
-                    else if (bills.getCustomerID() == null && bills.getConstructionID() == null
-                            && StringUtils.isValidString(bills.getPrdID())) {
-                        if (bills.getPrdID().equals(c.getPrdID())) {
-                            vlstBills.add(c);
-                        }
-                    } // Tim theo khach hang va ngay in hoa don
-                    else if (bills.getCustomerID() != null && bills.getConstructionID() == null
-                            && StringUtils.isValidString(bills.getPrdID())) {
-                        if (bills.getCustomerID().equals(c.getCustomerID()) && bills.getPrdID().equals(c.getPrdID())) {
-                            vlstBills.add(c);
-                        }
-                    } else if (bills.getCustomerID() == null && bills.getConstructionID() != null
-                            && StringUtils.isValidString(bills.getPrdID())) {
-                        if (bills.getConstructionID().equals(c.getConstructionID())
-                                && bills.getPrdID().equals(c.getPrdID())) {
-                            vlstBills.add(c);
-                        }
-                    } else if (bills.getCustomerID() != null && bills.getConstructionID() != null
-                            && StringUtils.isValidString(bills.getPrdID())) {
-                        if (bills.getCustomerID().equals(c.getCustomerID())
-                                && bills.getConstructionID().equals(c.getConstructionID())
-                                && bills.getPrdID().equals(c.getPrdID())) {
-                            vlstBills.add(c);
-                        }
-                    }
-                }
-            }
+        lstBills.clear();
+        List<Bills> lstData = billsServices.onSearch(bills.getCustomerID(), bills.getConstructionID(), bills.getPrdID(), limitQuery);
+        if (lstData != null && !lstData.isEmpty()) {
+            lstBills.addAll(lstData);
         }
-        lstBillsFilter.addAll(vlstBills);
-        listDataModel = new ListModelList(vlstBills);
+        listDataModel = new ListModelList(lstBills);
         gridBills.setModel(listDataModel);
         setDataDefaultInGrid();
-
     }
 
+//    private void filter(Bills bills) {
+//        List<Bills> vlstBills = new ArrayList<>();
+//        lstBillsFilter.clear();
+//        if (lstBills != null && !lstBills.isEmpty() && bills != null) {
+//            if (bills.getCustomerID() == null && bills.getConstructionID() == null && bills.getPrdID() == null) {
+//                vlstBills.addAll(lstBills);
+//
+//            } else {
+//                for (Bills c : lstBills) {
+//                    // tim theo khach hang va cong trinh
+//                    if (bills.getCustomerID() != null && bills.getConstructionID() != null
+//                            && bills.getPrdID() == null) {
+//                        if (bills.getCustomerID().equals(c.getCustomerID())
+//                                && bills.getConstructionID().equals(c.getConstructionID())) {
+//                            vlstBills.add(c);
+//                        }
+//                    } // tim theo khachs hang
+//                    else if (bills.getCustomerID() != null && bills.getConstructionID() == null
+//                            && bills.getPrdID() == null) {
+//                        if (bills.getCustomerID().equals(c.getCustomerID())) {
+//                            vlstBills.add(c);
+//                        }
+//                    } // tim theo cong trinh
+//                    else if (bills.getCustomerID() == null && bills.getConstructionID() != null
+//                            && bills.getPrdID() == null) {
+//                        if (bills.getConstructionID().equals(c.getConstructionID())) {
+//                            vlstBills.add(c);
+//                        }
+//                    } // Tim theo ngay
+//                    else if (bills.getCustomerID() == null && bills.getConstructionID() == null
+//                            && StringUtils.isValidString(bills.getPrdID())) {
+//                        if (bills.getPrdID().equals(c.getPrdID())) {
+//                            vlstBills.add(c);
+//                        }
+//                    } // Tim theo khach hang va ngay in hoa don
+//                    else if (bills.getCustomerID() != null && bills.getConstructionID() == null
+//                            && StringUtils.isValidString(bills.getPrdID())) {
+//                        if (bills.getCustomerID().equals(c.getCustomerID()) && bills.getPrdID().equals(c.getPrdID())) {
+//                            vlstBills.add(c);
+//                        }
+//                    } else if (bills.getCustomerID() == null && bills.getConstructionID() != null
+//                            && StringUtils.isValidString(bills.getPrdID())) {
+//                        if (bills.getConstructionID().equals(c.getConstructionID())
+//                                && bills.getPrdID().equals(c.getPrdID())) {
+//                            vlstBills.add(c);
+//                        }
+//                    } else if (bills.getCustomerID() != null && bills.getConstructionID() != null
+//                            && StringUtils.isValidString(bills.getPrdID())) {
+//                        if (bills.getCustomerID().equals(c.getCustomerID())
+//                                && bills.getConstructionID().equals(c.getConstructionID())
+//                                && bills.getPrdID().equals(c.getPrdID())) {
+//                            vlstBills.add(c);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        lstBillsFilter.addAll(vlstBills);
+//        listDataModel = new ListModelList(vlstBills);
+//        gridBills.setModel(listDataModel);
+//        setDataDefaultInGrid();
+//
+//    }
     // Set data for combobox construction
     private void setDataConstruction(List<Component> lstCell, List<Construction> selectedIndex, int columnIndex) {
         Combobox combobox = null;
@@ -801,6 +820,19 @@ public class BillsController extends GenericForwardComposer<Component> {
 
     }
 
+    private void setValueConstruction(List<Component> lstCell, List<Construction> selectedIndex, int columnIndex) {
+        Combobox combobox = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            combobox = (Combobox) component;
+            combobox.setValue(selectedIndex.get(0).getConstructionName());
+//            MyListModel listDataModelConstruction = new MyListModel(lstConstructions);
+//            listDataModelConstruction.setSelection(selectedIndex);
+//            combobox.setModel(listDataModelConstruction);
+        }
+
+    }
+
     // Set data for combobox customer
     private void setDataCustomer(List<Component> lstCell, List<Customer> selectedIndex, int columnIndex) {
         Combobox combobox = null;
@@ -811,6 +843,19 @@ public class BillsController extends GenericForwardComposer<Component> {
             MyListModel listDataModelCustomer = new MyListModel(lstCustomer);
             listDataModelCustomer.setSelection(selectedIndex);
             combobox.setModel(listDataModelCustomer);
+        }
+
+    }
+
+    private void setValueCustomer(List<Component> lstCell, List<Customer> selectedIndex, int columnIndex) {
+        Combobox combobox = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            combobox = (Combobox) component;
+            combobox.setValue(selectedIndex.get(0).getCustomerName());
+//            MyListModel listDataModelCustomer = new MyListModel(lstCustomer);
+//            listDataModelCustomer.setSelection(selectedIndex);
+//            combobox.setModel(listDataModelCustomer);
         }
 
     }
@@ -865,8 +910,10 @@ public class BillsController extends GenericForwardComposer<Component> {
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
                 // logger.info("Customer id: " + bills.getCustomerID());
-                setDataCustomer(lstCell, getCustomerDefault(bills.getCustomerID()), customerID);
-                setDataConstruction(lstCell, getConstructionDefault(bills.getConstructionID()), constructionID);
+                setValueCustomer(lstCell, getCustomerDefault(bills.getCustomerID()), customerID);
+//                setDataCustomer(lstCell, getCustomerDefault(bills.getCustomerID()), customerID);
+//                setDataConstruction(lstCell, getConstructionDefault(bills.getConstructionID()), constructionID);
+                setValueConstruction(lstCell, getConstructionDefault(bills.getConstructionID()), constructionID);
             }
         }
     }
@@ -877,23 +924,23 @@ public class BillsController extends GenericForwardComposer<Component> {
      * @param event
      */
     public void onExport(ForwardEvent event) {
-        ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
-        try {
-            int index = 0;
-            for (Bills staff : lstBillsFilter) {
-                index++;
-                staff.setIndex(index);
-            }
-            String pathFileInput = Constants.PATH_FILE + "file/template/export/bills_data_export.xlsx";
-            String pathFileOut = Constants.PATH_FILE + "file/export/bills_data_export.xlsx";
-
-            excelWriter.write(lstBillsFilter, pathFileInput, pathFileOut);
-            File file = new File(pathFileOut);
-            Filedownload.save(file, null);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            logger.error(e.getMessage(), e);
-        }
+//        ExcelWriter<Bills> excelWriter = new ExcelWriter<Bills>();
+//        try {
+//            int index = 0;
+//            for (Bills staff : lstBillsFilter) {
+//                index++;
+//                staff.setIndex(index);
+//            }
+//            String pathFileInput = Constants.PATH_FILE + "file/template/export/bills_data_export.xlsx";
+//            String pathFileOut = Constants.PATH_FILE + "file/export/bills_data_export.xlsx";
+//
+//            excelWriter.write(lstBillsFilter, pathFileInput, pathFileOut);
+//            File file = new File(pathFileOut);
+//            Filedownload.save(file, null);
+//        } catch (Exception e) {
+//            // TODO Auto-generated catch block
+//            logger.error(e.getMessage(), e);
+//        }
 
     }
 
@@ -1053,16 +1100,16 @@ public class BillsController extends GenericForwardComposer<Component> {
         return -1;
     }
 
-    private int getIndexBillFilter(Long bill) {
-        if (lstBillsFilter != null && !lstBillsFilter.isEmpty()) {
-            for (Bills bills : lstBillsFilter) {
-                if (bill.equals(bills.getBillID())) {
-                    return lstBillsFilter.indexOf(bills);
-                }
-            }
-        }
-        return -1;
-    }
+//    private int getIndexBillFilter(Long bill) {
+//        if (lstBillsFilter != null && !lstBillsFilter.isEmpty()) {
+//            for (Bills bills : lstBillsFilter) {
+//                if (bill.equals(bills.getBillID())) {
+//                    return lstBillsFilter.indexOf(bills);
+//                }
+//            }
+//        }
+//        return -1;
+//    }
 
     private static void setDisableComponent(List<Component> lstCell, int numberAction) {
         if (lstCell != null && !lstCell.isEmpty()) {
