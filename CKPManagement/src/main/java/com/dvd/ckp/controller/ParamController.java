@@ -15,6 +15,7 @@ import com.dvd.ckp.utils.StyleUtils;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -52,6 +53,7 @@ public class ParamController extends GenericForwardComposer {
     MyListModel<Param> listModelParamKey;
 
     private List<Param> lstKeyParams;
+    private Param defaultParam;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -60,11 +62,15 @@ public class ParamController extends GenericForwardComposer {
         lstParams = new ArrayList<>();
         List<Param> vlstRole = paramService.getAllParam();
         if (vlstRole != null) {
-            lstParams.addAll(getParamKeyName(vlstRole));
+            lstParams.addAll(vlstRole);
         }
         listDataModel = new ListModelList(lstParams);
         lstParam.setModel(listDataModel);
 
+        defaultParam = new Param();
+        defaultParam.setParamKey("OPTION");
+        defaultParam.setParamName(Labels.getLabel("option"));
+        
         getDistinctParamKeyName();
 
         listModelParamKey = new MyListModel(lstKeyParams);
@@ -79,7 +85,9 @@ public class ParamController extends GenericForwardComposer {
      */
     public void onEdit(ForwardEvent event) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        Param param=rowSelected.getValue();
         List<Component> lstCell = rowSelected.getChildren();
+        setDataParam(lstCell, getParamDefault(param.getParamKey()), 1);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 
@@ -124,8 +132,9 @@ public class ParamController extends GenericForwardComposer {
         lstParam.setModel(listDataModel);
         lstParam.renderAll();
         List<Component> lstCell = lstParam.getRows().getChildren().get(0).getChildren();
-        StyleUtils.setEnableComponent(lstCell, 4);
+        setDataParam(lstCell, getParamDefault(null), 1);
         setDataDefaultInGrid();
+        StyleUtils.setEnableComponent(lstCell, 4);
     }
 
     /**
@@ -150,7 +159,7 @@ public class ParamController extends GenericForwardComposer {
      */
     private void reloadGrid() {
         lstParams = paramService.getAllParam();
-        listDataModel = new ListModelList(getParamKeyName(lstParams));
+        listDataModel = new ListModelList(lstParams);
         lstParam.setModel(listDataModel);
         listModelParamKey = new MyListModel(lstKeyParams);
         cbxParamFilter.setModel(listModelParamKey);
@@ -233,26 +242,26 @@ public class ParamController extends GenericForwardComposer {
         });
     }
 
-    private List<Param> getParamKeyName(List<Param> plstParam) {
-        List<Param> result = new ArrayList<>();
-        if (plstParam != null && !plstParam.isEmpty()) {
-            for (Param p : plstParam) {
-                p.setParamKeyName(Constants.getParamFromType(p.getParamKey()));
-                result.add(p);
-            }
-        }
-        return result;
-    }
+//    private List<Param> getParamKeyName(List<Param> plstParam) {
+//        List<Param> result = new ArrayList<>();
+//        if (plstParam != null && !plstParam.isEmpty()) {
+//            for (Param p : plstParam) {
+//                p.setParamKeyName(Constants.getParamFromType(p.getParamKey()));
+//                result.add(p);
+//            }
+//        }
+//        return result;
+//    }
 
     private void getDistinctParamKeyName() {
         if (lstKeyParams == null || lstKeyParams.isEmpty()) {
-//            lstKeyParams = paramService.getDistinctParamKey();
             lstKeyParams = Constants.getParamKey();
-            if (lstKeyParams != null && !lstKeyParams.isEmpty()) {
-                for (Param p : lstKeyParams) {
-                    p.setParamKeyName(Constants.getParamFromType(p.getParamKey()));
-                }
-            }
+//            if (lstKeyParams != null && !lstKeyParams.isEmpty()) {
+//                for (Param p : lstKeyParams) {
+//                    p.setParamKeyName(Constants.getParamFromType(p.getParamKey()));
+//                }
+//            }
+            lstKeyParams.add(Constants.FIRST_INDEX, defaultParam);
         }
     }
 
@@ -264,7 +273,7 @@ public class ParamController extends GenericForwardComposer {
                 Param param = listDataModel.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setDataParam(lstCell, getParamDefault(param.getParamKey()), 1);
+                setValueParam(lstCell, getParamDefault(param.getParamKey()), 1);
             }
         }
     }
@@ -279,6 +288,9 @@ public class ParamController extends GenericForwardComposer {
                 }
             }
         }
+        if (paramSelected.isEmpty()) {
+            paramSelected.add(defaultParam);
+        }
         return paramSelected;
     }
 
@@ -290,6 +302,15 @@ public class ParamController extends GenericForwardComposer {
             MyListModel listDataModelParam = new MyListModel(lstKeyParams);
             listDataModelParam.setSelection(selectedIndex);
             combobox.setModel(listDataModelParam);
+        }
+
+    }
+    private void setValueParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
+        Combobox combobox = null;
+        Component component = lstCell.get(columnIndex).getFirstChild();
+        if (component != null && component instanceof Combobox) {
+            combobox = (Combobox) component;
+            combobox.setValue(selectedIndex.get(0).getParamName());
         }
 
     }

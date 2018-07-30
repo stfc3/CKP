@@ -52,7 +52,6 @@ import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.SpringConstant;
-import com.dvd.ckp.utils.StringUtils;
 import com.dvd.ckp.utils.StyleUtils;
 
 /**
@@ -256,6 +255,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
         setDataConstruction(lstCell, getConstructionDefault(c.getConstructionID()), construction);
         setDataCustomer(lstCell, getCustomerDefault(c.getCustomerID()), customer);
         setDataRentType(lstCell, getRentTypeDefault(c.getRentType()), rentType);
+        setDataMajority(lstCell, getMajorityDefault(c.getMajority()), majority);
+        setDataMonitoring(lstCell, getMonitoringDefault(c.getMonitoring()), monitoring);
+        setDataDistribute(lstCell, getDistributeDefault(c.getDistribute()), indexDistribute);
         StyleUtils.setEnableComponent(lstCell, 4);
 
     }
@@ -345,9 +347,14 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
         gridRent.setModel(listDataModel);
         gridRent.renderAll();
         List<Component> lstCell = gridRent.getRows().getChildren().get(0).getChildren();
+        setDataConstruction(lstCell, getConstructionDefault(null), construction);
+        setDataCustomer(lstCell, getCustomerDefault(null), customer);
+        setDataRentType(lstCell, getRentTypeDefault(null), rentType);
+        setDataMajority(lstCell, getMajorityDefault(null), majority);
+        setDataMonitoring(lstCell, getMonitoringDefault(null), monitoring);
+        setDataDistribute(lstCell, getDistributeDefault(null), indexDistribute);
         setDataDefaultInGrid();
         StyleUtils.setEnableComponent(lstCell, 4);
-        // onChangeData(lstCell);
         isInsert = true;
     }
 
@@ -441,14 +448,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
             value.setEndDate(dtEndDate);
 
         }
-
-        // component = lstCell.get(aveageValue).getFirstChild();
-        // if (component != null && component instanceof Doublebox) {
-        // averageValue = (Doublebox) component;
-        // Double priceValue = calculateAveragePriceOfDay();
-        // averageValue.setValue(priceValue);
-        // value.setAveragePrice(priceValue);
-        // }
     }
 
     /**
@@ -599,9 +598,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                     if (rent.getCustomerID() != null && rent.getConstructionID() != null && rent.getStartDate() != null
                             && rent.getEndDate() == null) {
                         String startDate = DateTimeUtils.convertDateToString(rent.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String startDateData = DateTimeUtils.convertDateToString(c.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         if (rent.getCustomerID().equals(c.getCustomerID())
                                 && rent.getConstructionID().equals(c.getConstructionID())
                                 && startDate.equals(startDateData)) {
@@ -613,9 +612,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                     if (rent.getCustomerID() != null && rent.getConstructionID() != null && rent.getStartDate() == null
                             && rent.getEndDate() != null) {
                         String endDate = DateTimeUtils.convertDateToString(rent.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String endDateData = DateTimeUtils.convertDateToString(c.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         if (rent.getCustomerID().equals(c.getCustomerID())
                                 && rent.getConstructionID().equals(c.getConstructionID())
                                 && endDate.equals(endDateData)) {
@@ -637,9 +636,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                     else if (rent.getCustomerID() == null && rent.getConstructionID() == null
                             && rent.getStartDate() != null && rent.getEndDate() == null) {
                         String startDate = DateTimeUtils.convertDateToString(rent.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String startDateData = DateTimeUtils.convertDateToString(c.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         if (startDate.equals(startDateData)) {
                             vlstRent.add(c);
                         }
@@ -647,9 +646,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                     else if (rent.getCustomerID() == null && rent.getConstructionID() == null
                             && rent.getStartDate() == null && rent.getEndDate() != null) {
                         String endDate = DateTimeUtils.convertDateToString(rent.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String endDateData = DateTimeUtils.convertDateToString(c.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         if (endDate.equals(endDateData)) {
                             vlstRent.add(c);
                         }
@@ -657,9 +656,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                     else if (rent.getCustomerID() != null && rent.getConstructionID() == null
                             && rent.getStartDate() != null && rent.getEndDate() == null) {
                         String startDate = DateTimeUtils.convertDateToString(rent.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String startDateData = DateTimeUtils.convertDateToString(c.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         if (rent.getCustomerID().equals(c.getCustomerID()) && startDate.equals(startDateData)) {
                             vlstRent.add(c);
                         }
@@ -667,13 +666,13 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                     else if (rent.getCustomerID() == null && rent.getConstructionID() == null
                             && rent.getStartDate() != null && rent.getEndDate() != null) {
                         String startDate = DateTimeUtils.convertDateToString(rent.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String startDateData = DateTimeUtils.convertDateToString(c.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String endDate = DateTimeUtils.convertDateToString(rent.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String endDateData = DateTimeUtils.convertDateToString(c.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         if (startDate.equals(startDateData) && endDate.equals(endDateData)) {
                             vlstRent.add(c);
                         }
@@ -681,13 +680,13 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                     else if (rent.getCustomerID() != null && rent.getConstructionID() == null
                             && rent.getStartDate() != null && rent.getEndDate() != null) {
                         String startDate = DateTimeUtils.convertDateToString(rent.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String startDateData = DateTimeUtils.convertDateToString(c.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String endDate = DateTimeUtils.convertDateToString(rent.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String endDateData = DateTimeUtils.convertDateToString(c.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         if (rent.getCustomerID().equals(c.getCustomerID()) && startDate.equals(startDateData)
                                 && endDate.equals(endDateData)) {
                             vlstRent.add(c);
@@ -696,13 +695,13 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                     else if (rent.getCustomerID() == null && rent.getConstructionID() != null
                             && rent.getStartDate() != null && rent.getEndDate() != null) {
                         String startDate = DateTimeUtils.convertDateToString(rent.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String startDateData = DateTimeUtils.convertDateToString(c.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String endDate = DateTimeUtils.convertDateToString(rent.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String endDateData = DateTimeUtils.convertDateToString(c.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         if (rent.getConstructionID().equals(c.getConstructionID()) && startDate.equals(startDateData)
                                 && endDate.equals(endDateData)) {
                             vlstRent.add(c);
@@ -711,9 +710,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                     else if (rent.getCustomerID() == null && rent.getConstructionID() != null
                             && rent.getStartDate() != null && rent.getEndDate() == null) {
                         String startDate = DateTimeUtils.convertDateToString(rent.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String startDateData = DateTimeUtils.convertDateToString(c.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         if (rent.getConstructionID().equals(c.getConstructionID()) && startDate.equals(startDateData)) {
                             vlstRent.add(c);
                         }
@@ -721,13 +720,13 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                     else if (rent.getCustomerID() != null && rent.getConstructionID() != null
                             && rent.getStartDate() != null && rent.getEndDate() != null) {
                         String startDate = DateTimeUtils.convertDateToString(rent.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String startDateData = DateTimeUtils.convertDateToString(c.getStartDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String endDate = DateTimeUtils.convertDateToString(rent.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         String endDateData = DateTimeUtils.convertDateToString(c.getEndDate(),
-                                com.dvd.ckp.common.Constants.FORMAT_DATE);
+                                Constants.FORMAT_DATE);
                         if (rent.getCustomerID().equals(c.getCustomerID())
                                 && rent.getConstructionID().equals(c.getConstructionID())
                                 && startDate.equals(startDateData) && endDate.equals(endDateData)) {
@@ -742,56 +741,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
         gridRent.setModel(listDataModel);
         setDataDefaultInGrid();
 
-    }
-
-    private List<Long> getCustomerByName(String customerName) {
-        List<Long> lstDataReturn = new ArrayList<>();
-        if (lstCustomer != null && !lstCustomer.isEmpty()) {
-            for (Customer customer : lstCustomer) {
-                if (StringUtils.isValidString(customerName)
-                        && customer.getCustomerName().toLowerCase().contains(customerName.toLowerCase())) {
-                    lstDataReturn.add(customer.getCustomerId());
-                }
-            }
-        }
-        return lstDataReturn;
-    }
-
-    private String getCustomerByID(Long customerId) {
-        List<String> lstDataReturn = new ArrayList<>();
-        if (lstCustomer != null && !lstCustomer.isEmpty()) {
-            for (Customer customer : lstCustomer) {
-                if (customerId != null && customerId.equals(customer.getCustomerId())) {
-                    return customer.getCustomerName();
-                }
-            }
-        }
-        return "";
-    }
-
-    private String getConstructionByID(Long constructionId) {
-        List<String> lstDataReturn = new ArrayList<>();
-        if (lstConstructions != null && !lstConstructions.isEmpty()) {
-            for (Construction construction : lstConstructions) {
-                if (constructionId != null && constructionId.equals(construction.getConstructionId())) {
-                    return construction.getConstructionName();
-                }
-            }
-        }
-        return "";
-    }
-
-    private List<Long> getConstructionByName(String constructionName) {
-        List<Long> lstDataReturn = new ArrayList<>();
-        if (lstConstructions != null && !lstConstructions.isEmpty()) {
-            for (Construction construction : lstConstructions) {
-                if (StringUtils.isValidString(constructionName)
-                        && construction.getConstructionName().toLowerCase().contains(constructionName.toLowerCase())) {
-                    lstDataReturn.add(construction.getConstructionId());
-                }
-            }
-        }
-        return lstDataReturn;
     }
 
     // Set data for combobox construction
@@ -813,9 +762,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
             combobox.setValue(selectedIndex.get(0).getConstructionName());
-//            MyListModel listDataModelContruction = new MyListModel(lstConstructions);
-//            listDataModelContruction.setSelection(selectedIndex);
-//            combobox.setModel(listDataModelContruction);
         }
 
     }
@@ -839,9 +785,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
             combobox.setValue(selectedIndex.get(0).getCustomerName());
-//            MyListModel listDataModelCustomer = new MyListModel(lstCustomer);
-//            listDataModelCustomer.setSelection(selectedIndex);
-//            combobox.setModel(listDataModelCustomer);
         }
 
     }
@@ -889,15 +832,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
                 setValueCustomer(lstCell, getCustomerDefault(rentID.getCustomerID()), customer);
-//                setDataCustomer(lstCell, getCustomerDefault(rentID.getCustomerID()), customer);
-
-//                setDataConstruction(lstCell, getConstructionDefault(rentID.getConstructionID()), construction);
                 setValueConstruction(lstCell, getConstructionDefault(rentID.getConstructionID()), construction);
-
                 setValueRentType(lstCell, getRentTypeDefault(rentID.getRentType()), rentType);
-
                 setValueMajority(lstCell, getMajorityDefault(rentID.getMajority()), majority);
-
                 setValueMonitoring(lstCell, getMonitoringDefault(rentID.getMonitoring()), monitoring);
                 setValueDistribute(lstCell, getDistributeDefault(rentID.getDistribute()), indexDistribute);
             }
@@ -931,19 +868,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
      * @param constructionId
      * @return
      */
-    private Construction getConstruction(Long constructionId) {
-
-        if (lstConstructions != null && !lstConstructions.isEmpty()) {
-            for (Construction construction : lstConstructions) {
-                if (constructionId != null && constructionId.equals(construction.getConstructionId())) {
-                    return construction;
-
-                }
-            }
-        }
-        return null;
-    }
-
     private int getIndex(Long rentPumpID) {
         if (lstRents != null && !lstRents.isEmpty()) {
             for (RentEquiment item : lstRents) {
@@ -955,16 +879,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
         return -1;
     }
 
-    private Param getRentType(Long paramID) {
-        if (listRentType != null && !listRentType.isEmpty()) {
-            for (Param item : listRentType) {
-                if (paramID.equals(item.getParamValue())) {
-                    return item;
-                }
-            }
-        }
-        return null;
-    }
 
     /**
      * set data for combobox pump type in windown bill detail
@@ -992,9 +906,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
             combobox.setValue(selectedIndex.get(0).getParamName());
-//            MyListModel listDataModelType = new MyListModel(listRentType);
-//            listDataModelType.setSelection(selectedIndex);
-//            combobox.setModel(listDataModelType);
 
         }
 
@@ -1018,40 +929,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
     }
 
     private Rent calculateAveragePriceOfDay(Long rentID) {
-        // Long customerID = null;
-        // Long constructtion = null;
-        // Date dtStartDate = null;
-        // Date dtEndDate = null;
-        // if (cbCustomer != null) {
-        // customerID = cbCustomer.getSelectedItem().getValue();
-        // }
-        // if (cbxConstruction != null) {
-        // constructtion = cbxConstruction.getSelectedItem().getValue();
-        // }
-        // if (startDate != null) {
-        // dtStartDate = startDate.getValue();
-        // }
-        // if (endDate != null) {
-        // dtEndDate = endDate.getValue();
-        // }
-        // logger.debug("{customerID:" + customerID + "," + "}");
-        // if (customerID == -1 || constructtion == -1 || dtStartDate == null ||
-        // dtEndDate == null) {
-        // return 0d;
-        // }
-        // int lastDayOfMonth = DateTimeUtils.getLastDayOfMonth(dtStartDate);
-        // Long diff = DateTimeUtils.getDifferenceDay(dtStartDate, dtEndDate);
-        // Double priceOfContact = 0d;
-        //
-        // Construction item = getConstruction(constructtion);
-        // if (item != null) {
-        // Price price = getPrices(item.getContractId());
-        // if (price != null && price.getPriceRent() != null) {
-        // priceOfContact = price.getPriceRent();
-        //
-        // }
-        // }
-        // Double price = diff * priceOfContact / lastDayOfMonth;
         List<Rent> listData = rentServices.storeRent(rentID);
 
         return listData.get(0);
@@ -1089,9 +966,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
             combobox.setValue(selectedIndex.get(0).getStaffName());
-//            MyListModel listDataModelMajority = new MyListModel(listStaff);
-//            listDataModelMajority.setSelection(selectedIndex);
-//            combobox.setModel(listDataModelMajority);
 
         }
 
@@ -1136,9 +1010,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
             combobox.setValue(selectedIndex.get(0).getStaffName());
-//            MyListModel listDataModelMonitor = new MyListModel(listStaff);
-//            listDataModelMonitor.setSelection(selectedIndex);
-//            combobox.setModel(listDataModelMonitor);
 
         }
 
@@ -1147,7 +1018,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
     // get pump type default
     private List<Staff> getMonitoringDefault(Long monitoringId) {
         List<Staff> paramSelected = new ArrayList<>();
-        // List<Staff> lstData = getListMajority();
         if (monitoringId != null && listStaff != null && !listStaff.isEmpty()) {
             for (Staff param : listStaff) {
                 if (monitoringId.equals(param.getStaffId())) {
@@ -1457,10 +1327,6 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
             combobox.setValue(selectedIndex.get(0).getDistributeName());
-
-//            MyListModel listDataModel = new MyListModel(listDistribute);
-//            listDataModel.setSelection(selectedIndex);
-//            combobox.setModel(listDataModel);
         }
 
     }

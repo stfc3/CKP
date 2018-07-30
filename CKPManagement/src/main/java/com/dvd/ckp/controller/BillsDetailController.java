@@ -55,8 +55,6 @@ public class BillsDetailController extends GenericForwardComposer {
     protected UtilsService utilsService;
     @WireVariable
     protected BillsServices billsServices;
-//    @WireVariable
-//    protected LocationServices locationServices;
 
     private Pumps defaultPumps;
     private Param defaultParam;
@@ -112,13 +110,11 @@ public class BillsDetailController extends GenericForwardComposer {
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
-        // TODO Auto-generated method stub
         super.doAfterCompose(comp);
 
         pumpServices = (PumpServices) SpringUtil.getBean(SpringConstant.PUMPS_SERVICES);
         utilsService = (UtilsService) SpringUtil.getBean(SpringConstant.UTILS_SERVICES);
         billsServices = (BillsServices) SpringUtil.getBean(SpringConstant.BILL_SERVICES);
-//        locationServices = (LocationServices) SpringUtil.getBean(SpringConstant.LOCATION_SERVICES);
 
         // danh sach bom
         lstPumps = pumpServices.getAllListData();
@@ -188,9 +184,6 @@ public class BillsDetailController extends GenericForwardComposer {
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
             combobox.setValue(selectedIndex.get(0).getPumpsName());
-//            MyListModel listDataModel = new MyListModel(lstPumps);
-//            listDataModel.setSelection(selectedIndex);
-//            combobox.setModel(listDataModel);
 
         }
 
@@ -256,9 +249,6 @@ public class BillsDetailController extends GenericForwardComposer {
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
             combobox.setValue(selectedIndex.get(0).getParamName());
-//            MyListModel listDataModel = new MyListModel(lstTypePump);
-//            listDataModel.setSelection(selectedIndex);
-//            combobox.setModel(listDataModel);
 
         }
 
@@ -307,9 +297,6 @@ public class BillsDetailController extends GenericForwardComposer {
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
             combobox.setValue(selectedIndex.get(0).getParamName());
-//            MyListModel listDataModel = new MyListModel(lstTypeLocation);
-//            listDataModel.setSelection(selectedIndex);
-//            combobox.setModel(listDataModel);
 
         }
 
@@ -358,9 +345,6 @@ public class BillsDetailController extends GenericForwardComposer {
         if (component != null && component instanceof Combobox) {
             combobox = (Combobox) component;
             combobox.setValue(selectedIndex.get(0).getLocationName());
-//            MyListModel listDataModel = new MyListModel(lstLocation);
-//            listDataModel.setSelection(selectedIndex);
-//            combobox.setModel(listDataModel);
 
         }
 
@@ -378,17 +362,10 @@ public class BillsDetailController extends GenericForwardComposer {
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
                 setValuePumpsDetail(lstCell, getPumpsDefault(billsDetail.getPumpID()), pumpIdDetail);
-//                setDataPumpsDetail(lstCell, getPumpsDefault(billsDetail.getPumpID()), pumpIdDetail);
                 setValuePumpsTypeDetail(lstCell, getPumpsTypeDefault(billsDetail.getPumpTypeId()), pumpTypeIdDetail);
-//                setDataPumpsTypeDetail(lstCell, getPumpsTypeDefault(billsDetail.getPumpTypeId()), pumpTypeIdDetail);
-//                setLocationDetail(lstCell, getLocationDefault(billsDetail.getLocationId()), locationDetail);
                 setValueLocationDetail(lstCell, getLocationDefault(billsDetail.getLocationId()), locationDetail);
-
-//                setDataLocationTypeDetail(lstCell, getLocationTypeDefault(billsDetail.getLocationType()),
-//                        locationTypeDetail);
                 setValueLocationTypeDetail(lstCell, getLocationTypeDefault(billsDetail.getLocationType()),
                         locationTypeDetail);
-
                 setIsAutoDefault(lstCell, billsDetail.getBillDetailId(), 5);
                 setFormatTotalValue(lstCell, billsDetail.getBillDetailId(), 9);
             }
@@ -398,12 +375,16 @@ public class BillsDetailController extends GenericForwardComposer {
     public void onAdd(ForwardEvent event) {
         BillsDetail billsDetail = new BillsDetail();
         listDataModelDetail.add(0, billsDetail);
-//        gridBillsDetail.setActivePage(0);
         gridBillsDetail.setModel(listDataModelDetail);
         gridBillsDetail.renderAll();
         List<Component> lstCell = gridBillsDetail.getRows().getChildren().get(0).getChildren();
         onChangeData(lstCell);
-        setDataDefaultInGridViewDetail();
+        setDataPumpsDetail(lstCell, getPumpsDefault(null), pumpIdDetail);
+        setDataPumpsTypeDetail(lstCell, getPumpsTypeDefault(null), pumpTypeIdDetail);
+        setLocationDetail(lstCell, getLocationDefault(null), locationDetail);
+        setDataLocationTypeDetail(lstCell, getLocationTypeDefault(null), locationTypeDetail);
+        setIsAutoDefault(lstCell, billsDetail.getBillDetailId(), 5);
+        setFormatTotalValue(lstCell, billsDetail.getBillDetailId(), 9);
         StyleUtils.setEnableComponent(lstCell, 4);
         insertOrUpdate = 1;
     }
@@ -541,6 +522,8 @@ public class BillsDetailController extends GenericForwardComposer {
         setDataPumpsTypeDetail(lstCell, getPumpsTypeDefault(c.getPumpTypeId()), pumpTypeIdDetail);
         setLocationDetail(lstCell, getLocationDefault(c.getLocationId()), locationDetail);
         setDataLocationTypeDetail(lstCell, getLocationTypeDefault(c.getLocationType()), locationTypeDetail);
+        setIsAutoDefault(lstCell, null, 5);
+        setFormatTotalValue(lstCell, null, 9);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 

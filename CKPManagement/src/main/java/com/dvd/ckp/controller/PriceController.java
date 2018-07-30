@@ -337,6 +337,7 @@ public class PriceController extends GenericForwardComposer {
             List<Component> lstCell = lstPrice.getRows().getFirstChild().getChildren();
             setComboboxParam(lstCell, getParamDefault(null, pumpTypeIndex), pumpTypeIndex);
             setComboboxParam(lstCell, getParamDefault(null, convertTypeIndex), convertTypeIndex);
+            setDataDefaultInGrid();
             StyleUtils.setEnableComponent(lstCell, 4);
         }
     }
@@ -353,6 +354,7 @@ public class PriceController extends GenericForwardComposer {
             lstPriceDistribute.renderAll();
             List<Component> lstCell = lstPriceDistribute.getRows().getFirstChild().getChildren();
             setComboboxDistribute(lstCell, getDistributeDefault(null), pumpTypeIndex);
+            setDataDefaultInGridDistribute();
             StyleUtils.setEnableComponent(lstCell, 4);
         }
     }

@@ -37,13 +37,13 @@ import org.zkoss.zul.Window;
 
 import com.dvd.ckp.business.service.StaffServices;
 import com.dvd.ckp.business.service.UtilsService;
-import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.component.MyListModel;
 import com.dvd.ckp.domain.Param;
 import com.dvd.ckp.domain.Staff;
 import com.dvd.ckp.excel.ExcelReader;
 import com.dvd.ckp.excel.ExcelWriter;
 import com.dvd.ckp.excel.domain.StaffExcel;
+import com.dvd.ckp.utils.Constants;
 //import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.DateTimeUtils;
 import com.dvd.ckp.utils.FileUtils;
@@ -89,10 +89,9 @@ public class StaffController extends GenericForwardComposer {
 
     public Button btnCancel;
     public Button errorList;
-    // public Window uploadPump;
-//    private ListModelList<Param> listParamPositionModel;
     private List<Param> lstPosition;
     private List<Param> lstDepartment;
+    private Param defaultParam;
 
     List<StaffExcel> lstError = new ArrayList<StaffExcel>();
 
@@ -114,12 +113,15 @@ public class StaffController extends GenericForwardComposer {
         listDataStaff = new MyListModel<>(lstStaff);
         cbFilterName.setModel(listDataStaff);
 
+        defaultParam = new Param();
+        defaultParam.setParamValue(-1l);
+        defaultParam.setParamName(Labels.getLabel("option"));
+
         lstDepartment = new ArrayList<>();
         lstDepartment = utilsService.getParamByKey(com.dvd.ckp.utils.Constants.PARAM_POSITION);
-
+        lstDepartment.add(Constants.FIRST_INDEX, defaultParam);
         lstPosition = new ArrayList<>();
         lstPosition = utilsService.getParamByKey(com.dvd.ckp.utils.Constants.PARAM_DEPARTMENT);
-//        listParamPositionModel = new ListModelList<Param>(lstPosition);
         setDataDefaultInGrid();
     }
 
@@ -130,7 +132,10 @@ public class StaffController extends GenericForwardComposer {
      */
     public void onEdit(ForwardEvent event) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
+        Staff staff = rowSelected.getValue();
         List<Component> lstCell = rowSelected.getChildren();
+        setComboboxPositionParam(lstCell, getParamPositionDefault(staff.getPosition()), 7);
+        setComboboxParam(lstCell, getParamDefault(staff.getDepartment()), 8);
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 
@@ -213,9 +218,11 @@ public class StaffController extends GenericForwardComposer {
         gridStaff.setModel(listDataModel);
         gridStaff.renderAll();
         List<Component> lstCell = gridStaff.getRows().getChildren().get(0).getChildren();
+        setComboboxPositionParam(lstCell, getParamPositionDefault(null), 7);
+        setComboboxParam(lstCell, getParamDefault(null), 8);
+        setDataDefaultInGrid();
         StyleUtils.setEnableComponent(lstCell, 4);
         insertOrUpdate = 1;
-        setDataDefaultInGrid();
     }
 
     /**
@@ -295,28 +302,6 @@ public class StaffController extends GenericForwardComposer {
         setDataDefaultInGrid();
     }
 
-//    public void onExport(Event event) {
-//        ExcelWriter<Staff> excelWriter = new ExcelWriter<Staff>();
-//        try {
-//            int index = 0;
-//            for (Staff staff : lstStaffFilter) {
-//                index++;
-//                staff.setIndex(index);
-//                staff.setBirthdayString(
-//                        DateTimeUtils.convertDateToString(staff.getBirthday(), Constants.FORMAT_DATE_DD_MM_YYY));
-//            }
-//            String pathFileInput = Constants.PATH_FILE + "file/template/export/staff_data_export.xlsx";
-//            String pathFileOut = Constants.PATH_FILE + "file/export/staff_data_export.xlsx";
-//
-//            excelWriter.write(lstStaffFilter, pathFileInput, pathFileOut);
-//            File file = new File(pathFileOut);
-//            Filedownload.save(file, null);
-//        } catch (Exception e) {
-//            // TODO Auto-generated catch block
-//            logger.error(e.getMessage(), e);
-//        }
-//
-//    }
     public void onImport(ForwardEvent event) {
 
         final Window windownUpload = (Window) Executions.createComponents("/manager/uploadStaff.zul", staff, null);
@@ -433,7 +418,6 @@ public class StaffController extends GenericForwardComposer {
             File file = new File(pathFileInput);
             Filedownload.save(file, null);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             logger.error(e.getMessage(), e);
         }
     }
@@ -448,7 +432,6 @@ public class StaffController extends GenericForwardComposer {
             File file = new File(pathFileOutput);
             Filedownload.save(file, null);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             logger.error(e.getMessage(), e);
         }
     }
@@ -487,14 +470,14 @@ public class StaffController extends GenericForwardComposer {
                 Staff staff = listDataModel.get(i);
                 Component row = lstRows.get(i);
                 List<Component> lstCell = row.getChildren();
-                setValueComboboxPositionParam(lstCell, getParamPositionDefault(staff.getPosition(), 7), 7);
-                setValueComboboxParam(lstCell, getParamDefault(staff.getDepartment(), 8), 8);
+                setValueComboboxPositionParam(lstCell, getParamPositionDefault(staff.getPosition()), 7);
+                setValueComboboxParam(lstCell, getParamDefault(staff.getDepartment()), 8);
             }
         }
     }
 
     // Ham nay tach lam 2 
-    private List<Param> getParamDefault(Long paramValue, int type) {
+    private List<Param> getParamDefault(Long paramValue) {
         List<Param> paramSelected = new ArrayList<>();
         List<Param> lstParam = null;
         lstParam = lstPosition;
@@ -506,10 +489,13 @@ public class StaffController extends GenericForwardComposer {
                 }
             }
         }
+        if (paramSelected.isEmpty()) {
+            paramSelected.add(defaultParam);
+        }
         return paramSelected;
     }
 
-    private List<Param> getParamPositionDefault(Long paramValue, int type) {
+    private List<Param> getParamPositionDefault(Long paramValue) {
         List<Param> paramSelected = new ArrayList<>();
         List<Param> lstParam = null;
         lstParam = lstDepartment;
@@ -520,6 +506,9 @@ public class StaffController extends GenericForwardComposer {
                     break;
                 }
             }
+        }
+        if (paramSelected.isEmpty()) {
+            paramSelected.add(defaultParam);
         }
         return paramSelected;
     }
@@ -535,22 +524,15 @@ public class StaffController extends GenericForwardComposer {
             MyListModel listDataModelParam = new MyListModel(lstParam);
             listDataModelParam.setSelection(selectedIndex);
             cbxParam.setModel(listDataModelParam);
-//            cbxParam.setTooltiptext(selectedIndex.get(com.dvd.ckp.utils.Constants.FIRST_INDEX).getParamName());
         }
     }
 
     private void setValueComboboxParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
         Combobox cbxParam = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
-        List<Param> lstParam = null;
-        lstParam = lstPosition;
         if (component != null && component instanceof Combobox) {
             cbxParam = (Combobox) component;
             cbxParam.setValue(selectedIndex.get(0).getParamName());
-//            MyListModel listDataModelParam = new MyListModel(lstParam);
-//            listDataModelParam.setSelection(selectedIndex);
-//            cbxParam.setModel(listDataModelParam);
-//            cbxParam.setTooltiptext(selectedIndex.get(com.dvd.ckp.utils.Constants.FIRST_INDEX).getParamName());
         }
     }
 
@@ -566,24 +548,16 @@ public class StaffController extends GenericForwardComposer {
             MyListModel listDataModelParam = new MyListModel(lstParam);
             listDataModelParam.setSelection(selectedIndex);
             cbxParam.setModel(listDataModelParam);
-//            cbxParam.setTooltiptext(selectedIndex.get(com.dvd.ckp.utils.Constants.FIRST_INDEX).getParamName());
         }
     }
 
     private void setValueComboboxPositionParam(List<Component> lstCell, List<Param> selectedIndex, int columnIndex) {
         Combobox cbxParam = null;
         Component component = lstCell.get(columnIndex).getFirstChild();
-        List<Param> lstParam = null;
-
-        lstParam = lstDepartment;
 
         if (component != null && component instanceof Combobox) {
             cbxParam = (Combobox) component;
             cbxParam.setValue(selectedIndex.get(0).getParamName());
-//            MyListModel listDataModelParam = new MyListModel(lstParam);
-//            listDataModelParam.setSelection(selectedIndex);
-//            cbxParam.setModel(listDataModelParam);
-//            cbxParam.setTooltiptext(selectedIndex.get(com.dvd.ckp.utils.Constants.FIRST_INDEX).getParamName());
         }
     }
 }

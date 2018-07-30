@@ -159,6 +159,7 @@ public class CustomerController extends GenericForwardComposer {
         lstCustomer.renderAll();
         List<Component> lstCell = lstCustomer.getRows().getFirstChild().getChildren();
         setComboboxParam(lstCell, getParamDefault(null, bankIndex), bankIndex);
+        setDataDefaultInGrid();
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 

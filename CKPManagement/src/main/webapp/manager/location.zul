@@ -75,7 +75,7 @@
                         </cell>
                         <cell>
                             <combobox hflex="1" buttonVisible="false"
-                                                                  inplace="true" readonly="true">
+                                                                  inplace="true" readonly="true" autodrop="true">
                                 <template name="model">
                                     <comboitem
                                         value="${each.paramValue}" label="${each.paramName}" />

@@ -94,8 +94,8 @@ public class FileUtils {
         String vstrReportPath;
         try {
 
-            SAVE_PATH = com.dvd.ckp.common.Constants.PATH_FILE_UPLOAD + getSaveFilePath();
-            SAVE_PATH_REPORT = com.dvd.ckp.common.Constants.PATH_FILE_UPLOAD + getOutFilePath();
+            SAVE_PATH = Constants.PATH_FILE_UPLOAD + getSaveFilePath();
+            SAVE_PATH_REPORT = Constants.PATH_FILE_UPLOAD + getOutFilePath();
             final String vstrfileName = media.getName();
             if (!isValiDateMaxLengthFileName(vstrfileName)) {
                 Messagebox.show(Labels.getLabel("error.filename.maxlength"), Labels.getLabel("ERROR"), Messagebox.OK,
@@ -295,7 +295,7 @@ public class FileUtils {
     }
 
     private static boolean validateFile(String fileName) {
-        if (fileName.toLowerCase().endsWith(com.dvd.ckp.common.Constants.FILE_EXTENSION_XLSX)) {
+        if (fileName.toLowerCase().endsWith(Constants.FILE_EXTENSION_XLSX)) {
             return true;
         }
         return false;

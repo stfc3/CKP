@@ -31,7 +31,7 @@
                         <combobox  hflex="1" id="cbxParamFilter" autodrop="true" placeholder="${c:l('param.key.search')}"
                                    buttonVisible="false">
                             <template name="model">
-                                <comboitem value="${each.paramKey}" label="${each.paramKeyName}" />
+                                <comboitem value="${each.paramKey}" label="${each.paramName}" />
                             </template>
                         </combobox>
                     </auxheader>
@@ -61,7 +61,7 @@
                                 <template name="model">
                                     <comboitem
                                         value="${each.paramKey}"
-                                        label="${each.paramKeyName}" />
+                                        label="${each.paramName}" />
                                 </template>
                             </combobox>
                         </cell>

@@ -1,10 +1,10 @@
 package com.dvd.ckp.domain;
 
+import com.dvd.ckp.utils.Constants;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import com.dvd.ckp.common.Constants;
 import com.dvd.ckp.utils.DateTimeUtils;
 
 public class BillViewDetail {

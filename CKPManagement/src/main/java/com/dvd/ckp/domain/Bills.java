@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 
 import org.apache.log4j.Logger;
 
-import com.dvd.ckp.common.Constants;
+import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.DateTimeUtils;
 import java.io.Serializable;
 

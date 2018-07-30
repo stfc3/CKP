@@ -77,6 +77,9 @@ public interface Constants {
             case PARAM_LIMIT_QUERY:
                 result = "Dòng dữ liệu";
                 break;
+            case "OPTION":
+                result = "Chọn";
+                break;
             default:
                 break;
         }
@@ -90,11 +93,21 @@ public interface Constants {
             for (int i = 0; i < PARAM_TYPE.length; i++) {
                 p = new Param();
                 p.setParamKey(PARAM_TYPE[i]);
-                p.setParamKeyName(getParamFromType(PARAM_TYPE[i]));
+                p.setParamName(getParamFromType(PARAM_TYPE[i]));
                 vlstParam.add(p);
             }
         } catch (Exception e) {
         }
         return vlstParam;
     }
+
+    String PATH_FILE = "E:\\source\\CKP\\stfc\\CKP\\CKPManagement\\src\\main\\webapp\\";
+
+    String PATH_FILE_UPLOAD = "E:\\source\\CKP\\stfc\\CKP\\CKPManagement\\src\\main\\webapp\\file\\upload\\";
+    String FILE_EXTENSION_XLSX = "xlsx";
+
+    String FORMAT_DATE = "yyyyMMdd";
+    String FORMAT_HOUR = "HH:MM:ss";
+    String FORMAT_DATE_DDMMYYYY = "ddMMyyyy";
+    String FORMAT_DATE_DD_MM_YYY = "dd/MM/yyyy";
 }

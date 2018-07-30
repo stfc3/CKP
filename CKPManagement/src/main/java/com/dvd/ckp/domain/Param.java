@@ -40,7 +40,7 @@ public class Param implements Serializable {
     private String paramName;
     private Integer status;
     private Date createDate;
-    private String paramKeyName;
+//    private String paramKeyName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,13 +100,13 @@ public class Param implements Serializable {
         this.createDate = createDate;
     }
 
-    @Transient
-    public String getParamKeyName() {
-        return paramKeyName;
-    }
-
-    public void setParamKeyName(String paramKeyName) {
-        this.paramKeyName = Constants.getParamFromType(paramKey);
-    }
+//    @Transient
+//    public String getParamKeyName() {
+//        return paramKeyName;
+//    }
+//
+//    public void setParamKeyName(String paramKeyName) {
+//        this.paramKeyName = Constants.getParamFromType(paramKey);
+//    }
 
 }

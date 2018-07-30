@@ -139,6 +139,7 @@ public class ConstructionController extends GenericForwardComposer {
         lstConstruction.renderAll();
         List<Component> lstCell = lstConstruction.getRows().getFirstChild().getChildren();
         setDataCombobox(lstCell, getContractDefault(null), contractIndex);
+        setDataDefaultInGrid();
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 

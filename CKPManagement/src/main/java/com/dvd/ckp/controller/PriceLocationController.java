@@ -199,6 +199,7 @@ public class PriceLocationController extends GenericForwardComposer {
         setComboboxParam(lstCell, getParamDefault(null, locationTypeIndex), locationTypeIndex);
         setComboboxLocation(lstCell, getLocatoionDefault(null, locationMinIndex), locationMinIndex);
         setComboboxLocation(lstCell, getLocatoionDefault(null, locationMaxIndex), locationMaxIndex);
+        setDataDefaultInGrid();
         StyleUtils.setEnableComponent(lstCell, 4);
     }
 

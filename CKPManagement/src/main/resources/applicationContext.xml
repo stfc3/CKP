@@ -12,7 +12,8 @@
  
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="com.mysql.jdbc.Driver" /> 
-        <property name="jdbcUrl" value="jdbc:mysql://13.250.191.59:3306/ckp?characterEncoding=utf8" /> 
+        <property name="jdbcUrl" value="jdbc:mysql://192.168.1.250:3306/ckp?characterEncoding=utf8" /> 
+        <!--<property name="jdbcUrl" value="jdbc:mysql://13.250.191.59:3306/ckp?characterEncoding=utf8" />--> 
         <property name="user" value="ckp" /> 
         <property name="password" value="Ckp@Stfc@2017" /> 
         <property name="initialPoolSize" value="5" /> 

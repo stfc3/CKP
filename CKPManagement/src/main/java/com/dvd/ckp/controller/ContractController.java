@@ -196,6 +196,7 @@ public class ContractController extends GenericForwardComposer {
             lstContract.renderAll();
             List<Component> lstCell = lstContract.getRows().getFirstChild().getChildren();
             setComboboxCustomer(lstCell, getCustomerDefault(null), customerIndex);
+            setDataDefaultInGrid();
             StyleUtils.setEnableComponent(lstCell, 4);
         }
     }
