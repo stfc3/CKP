@@ -338,9 +338,9 @@ public class BillsController extends GenericForwardComposer<Component> {
                 if (Messagebox.ON_YES.equals(e.getName())) {
 
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-                    List<Component> lstCell = rowSelected.getChildren();
+//                    List<Component> lstCell = rowSelected.getChildren();
                     Bills bill = rowSelected.getValue();
-                    getDataInRow(lstCell, bill);
+//                    getDataInRow(lstCell, bill);
                     bill.setStatus(0);
                     billsServices.delete(bill);
                     lstBills.remove(getIndexBill(bill.getBillID()));
@@ -1110,7 +1110,6 @@ public class BillsController extends GenericForwardComposer<Component> {
 //        }
 //        return -1;
 //    }
-
     private static void setDisableComponent(List<Component> lstCell, int numberAction) {
         if (lstCell != null && !lstCell.isEmpty()) {
             for (Component c : lstCell) {
