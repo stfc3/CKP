@@ -123,10 +123,10 @@ public class PumpsController extends GenericForwardComposer {
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
                     List<Component> lstCell = rowSelected.getChildren();
                     Pumps c = rowSelected.getValue();
-                    Pumps pumps = getDataInRow(lstCell);
-                    pumps.setPumpsID(c.getPumpsID());
-                    pumps.setStatus(0);
-                    pumpsService.detele(pumps);
+//                    Pumps pumps = getDataInRow(lstCell);
+//                    pumps.setPumpsID(c.getPumpsID());
+                    c.setStatus(0);
+                    pumpsService.detele(c);
                     lstPumpsFilter.remove(getIndexPumpFilter(c.getPumpsID()));
                     lstPumps.remove(getIndexPump(c.getPumpsID()));
                     StyleUtils.setDisableComponent(lstCell, 4);
@@ -254,7 +254,7 @@ public class PumpsController extends GenericForwardComposer {
         }
         listDataModel = new ListModelList<>(vlstData);
         gridPumps.setModel(listDataModel);
-        
+
         listDataPump = new MyListModel<>(vlstData);
         cbFilterName.setModel(listDataPump);
     }

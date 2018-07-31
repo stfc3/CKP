@@ -322,9 +322,9 @@ public class RentEquipmentController extends GenericForwardComposer<Component> {
                 if (Messagebox.ON_YES.equals(e.getName())) {
 
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-                    List<Component> lstCell = rowSelected.getChildren();
+//                    List<Component> lstCell = rowSelected.getChildren();
                     RentEquiment item = rowSelected.getValue();
-                    getDataInRow(lstCell, item);
+//                    getDataInRow(lstCell, item);
                     item.setStatus(0);
                     rentServices.delete(item);
                     lstRents.remove(getIndex(item.getRentID()));

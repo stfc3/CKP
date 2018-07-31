@@ -105,7 +105,7 @@ public class DistributeController extends GenericForwardComposer {
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
                     List<Component> lstCell = rowSelected.getChildren();
                     Distribute c = rowSelected.getValue();
-                    getDataInRow(lstCell, c);
+//                    getDataInRow(lstCell, c);
                     c.setStatus(0);
                     distributeService.insertOrUpdateDistribute(c);
                     StyleUtils.setDisableComponent(lstCell, 4);

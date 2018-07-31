@@ -132,7 +132,7 @@ public class LocationController extends GenericForwardComposer {
      */
     public void onEdit(ForwardEvent event) {
         Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
-        Location location=rowSelected.getValue();
+        Location location = rowSelected.getValue();
         List<Component> lstCell = rowSelected.getChildren();
         setDataLocationTypeDetail(lstCell, getLocationTypeDefault(location.getLocationType()), 4);
         StyleUtils.setEnableComponent(lstCell, 4);
@@ -149,10 +149,10 @@ public class LocationController extends GenericForwardComposer {
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
                     List<Component> lstCell = rowSelected.getChildren();
                     Location c = rowSelected.getValue();
-                    Location location = getDataInRow(lstCell);
-                    location.setLocationID(c.getLocationID());
-                    location.setStatus(0);
-                    locationServices.detele(location);
+//                    Location location = getDataInRow(lstCell);
+//                    location.setLocationID(c.getLocationID());
+                    c.setStatus(0);
+                    locationServices.detele(c);
                     lstFilter.remove(getIndexLocationFilter(c.getLocationID()));
                     lstLocation.remove(getIndexLocation(c.getLocationID()));
                     StyleUtils.setDisableComponent(lstCell, 4);

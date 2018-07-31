@@ -149,11 +149,11 @@ public class StaffController extends GenericForwardComposer {
                     Row rowSelected = (Row) event.getOrigin().getTarget().getParent().getParent();
                     List<Component> lstCell = rowSelected.getChildren();
                     Staff c = rowSelected.getValue();
-                    Staff staff = getDataInRow(lstCell);
-                    staff.setStaffId(c.getStaffId());
-                    staff.setStatus(0);
-                    staff.setCreateDate(new Date());
-                    staffService.detele(staff);
+//                    Staff staff = getDataInRow(lstCell);
+//                    staff.setStaffId(c.getStaffId());
+                    c.setStatus(0);
+                    c.setCreateDate(new Date());
+                    staffService.detele(c);
                     lstStaffFilter.remove(getIndexStaffFilter(c.getStaffId()));
                     lstStaff.remove(getIndexStaff(c.getStaffId()));
                     StyleUtils.setDisableComponent(lstCell, 4);
