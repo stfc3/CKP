@@ -730,13 +730,13 @@ var toYear=params["p_to_date"].value.substr(0,4);&#13;
                     <property name="name">vat</property>
                     <text-property name="displayName">vat</text-property>
                     <expression name="expression" type="javascript">row["sum_revenue_all"]*0.1</expression>
-                    <property name="dataType">integer</property>
+                    <property name="dataType">float</property>
                     <property name="allowExport">true</property>
                 </structure>
                 <structure>
                     <property name="name">total_final</property>
                     <text-property name="displayName">total_final</text-property>
-                    <expression name="expression" type="javascript">row["sum_revenue_all"]+row["vat"]</expression>
+                    <expression name="expression" type="javascript">row["sum_revenue_all"]-row["vat"]</expression>
                     <property name="dataType">float</property>
                     <property name="allowExport">true</property>
                 </structure>
@@ -833,7 +833,7 @@ return chuoi;&#13;
 }&#13;
 return chuoi; &#13;
 }&#13;
-"Giá trị bằng chữ: "+docso(row["total_final"]) +" đồng";</expression>
+"Giá trị bằng chữ: "+docso(row["sum_revenue_all"]) +" đồng";</expression>
                     <property name="dataType">string</property>
                     <property name="allowExport">true</property>
                 </structure>
@@ -3608,7 +3608,7 @@ return chuoi; &#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
-                        <data id="342">
+                        <data id="344">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
                             <property name="backgroundPositionY">0%</property>
@@ -3661,7 +3661,7 @@ return chuoi; &#13;
                             <property name="showIfBlank">false</property>
                             <property name="canShrink">false</property>
                             <property name="overflow">hidden</property>
-                            <property name="resultSetColumn">sum_revenue_all</property>
+                            <property name="resultSetColumn">total_final</property>
                         </data>
                     </cell>
                     <cell id="39">
@@ -4148,7 +4148,7 @@ return chuoi; &#13;
                         <property name="borderTopColor">#C0C0C0</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">1px</property>
-                        <data id="344">
+                        <data id="342">
                             <property name="backgroundAttachment">scroll</property>
                             <property name="backgroundPositionX">0%</property>
                             <property name="backgroundPositionY">0%</property>
@@ -4201,7 +4201,7 @@ return chuoi; &#13;
                             <property name="showIfBlank">false</property>
                             <property name="canShrink">false</property>
                             <property name="overflow">hidden</property>
-                            <property name="resultSetColumn">total_final</property>
+                            <property name="resultSetColumn">sum_revenue_all</property>
                         </data>
                     </cell>
                     <cell id="338">
