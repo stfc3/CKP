@@ -18,10 +18,14 @@ import org.apache.log4j.Logger;
 import com.dvd.ckp.utils.Constants;
 import com.dvd.ckp.utils.DateTimeUtils;
 import java.io.Serializable;
+import javax.persistence.NamedQueries;
 
 @Entity
 @Table(name = "bills")
-@NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u where status = 1 order by createDate desc")
+@NamedQueries({
+    @NamedQuery(name = "Bills.getAllBills", query = "FROM Bills u where status = 1 order by createDate desc")
+    ,@NamedQuery(name = "Bills.getBillByCode", query = "FROM Bills u where status = 1 AND u.billCode = :billCode")
+})
 public class Bills implements Serializable {
 
     private static final Logger LOGGER = Logger.getLogger(Bills.class);

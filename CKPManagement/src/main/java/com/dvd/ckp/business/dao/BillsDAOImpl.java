@@ -619,4 +619,12 @@ public class BillsDAOImpl implements BillDAO {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Bills> getBillByCode(String billCode) {
+
+        Query query = getCurrentSession().getNamedQuery("Bills.getBillByCode");
+        query.setParameter("billCode", billCode);
+        return (List<Bills>) query.list();
+    }
 }

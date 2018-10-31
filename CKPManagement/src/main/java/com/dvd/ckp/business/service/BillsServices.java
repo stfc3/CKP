@@ -46,4 +46,5 @@ public interface BillsServices {
 
     public List<BillViewDetail> getApproveBill(String billCode, Long contructionId, Date pumpDate, Long pumpId, Integer limitQuery);
 
+    public List<Bills> getBillByCode(String billCode);
 }

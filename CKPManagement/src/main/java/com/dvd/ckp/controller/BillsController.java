@@ -452,7 +452,7 @@ public class BillsController extends GenericForwardComposer<Component> {
             Label mesage = (Label) componentLast;
 
             if (billCodeIsChange) {
-                if (checkExits(txtBillsCode.getValue(), lstBills)) {
+                if (checkExits(txtBillsCode.getValue())) {
 
                     mesage.setValue(Labels.getLabel("validate.code.duplicate"));
                     mesage.setHflex("1");
@@ -567,13 +567,10 @@ public class BillsController extends GenericForwardComposer<Component> {
 
     }
 
-    private boolean checkExits(String billCode, List<Bills> listData) {
-        if (listData != null && !listData.isEmpty()) {
-            for (Bills bills : listData) {
-                if (billCode.equals(bills.getBillCode())) {
-                    return true;
-                }
-            }
+    private boolean checkExits(String billCode) {
+        List<Bills> listBills= billsServices.getBillByCode(billCode);
+        if(listBills!=null && !listBills.isEmpty()){
+            return true;
         }
         return false;
     }

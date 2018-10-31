@@ -520,7 +520,7 @@
                     <property name="name">total</property>
                     <text-property name="displayName">total</text-property>
                     <expression name="expression" type="javascript">if(dataSetRow["total"]!=null &amp;&amp; dataSetRow["total"]!=0){&#13;
-	dataSetRow["total"];&#13;
+	dataSetRow["total"]*0.9;&#13;
 }</expression>
                     <property name="dataType">float</property>
                     <property name="allowExport">true</property>
@@ -560,7 +560,7 @@ var year=params["p_date"].value.substr(0,4);&#13;
                 <structure>
                     <property name="name">total_after_vat</property>
                     <text-property name="displayName">total_after_vat</text-property>
-                    <expression name="expression" type="javascript">(row["total"]+row["total_rent"])*1.1</expression>
+                    <expression name="expression" type="javascript">dataSetRow["total"]+dataSetRow["revenue"];</expression>
                     <property name="dataType">float</property>
                     <property name="allowExport">true</property>
                 </structure>
@@ -568,7 +568,7 @@ var year=params["p_date"].value.substr(0,4);&#13;
                     <property name="name">total_rent</property>
                     <text-property name="displayName">total_rent</text-property>
                     <expression name="expression" type="javascript">if(dataSetRow["revenue"]!=null &amp;&amp; dataSetRow["revenue"]!=0){&#13;
-	dataSetRow["revenue"];&#13;
+	dataSetRow["revenue"]*0.9;&#13;
 }</expression>
                     <property name="dataType">float</property>
                     <property name="allowExport">true</property>
