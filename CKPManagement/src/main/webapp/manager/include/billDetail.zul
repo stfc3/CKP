@@ -248,14 +248,14 @@
                     </cell>
                     <!--Ca cho -->
                     <cell>
-                        <intbox value="${each.shift}"
+                        <doublebox value="${each.shift}"
                                 style="text-align: right;" tooltiptext="${each.shift}" hflex="1"
                                 inplace="true" readonly="true" />
                     </cell>
 
                     <!--Ca chuyen chan -->
                     <cell>
-                        <intbox value="${each.numSwitch}"
+                        <doublebox value="${each.numSwitch}"
                                 style="text-align: right;" tooltiptext="${each.numSwitch}"
                                 hflex="1" inplace="true" readonly="true" />
                     </cell>

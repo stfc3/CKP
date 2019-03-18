@@ -101,9 +101,9 @@ public class BillsDetailController extends GenericForwardComposer {
     private Combobox cbLocationType = null;
     private Doublebox txtQuantity = null;
     private Checkbox checkBoxIsAuto = null;
-    private Intbox txtShift = null;
+    private Doublebox txtShift = null;
     private Label txtTotal;
-    private Intbox txtSwitch = null;
+    private Doublebox txtSwitch = null;
     private Memory memory = new Memory();
     @Wire
     private A formula;
@@ -405,9 +405,9 @@ public class BillsDetailController extends GenericForwardComposer {
         Combobox cbLocationType = null;
         Doublebox txtQuantity = null;
         Checkbox isAuto = null;
-        Intbox txtShift = null;
+        Doublebox txtShift = null;
         Label txtTotal = null;
-        Intbox txtSwitch = null;
+        Doublebox txtSwitch = null;
         // loai may bom
         component = lstCell.get(pumpTypeIdDetail).getFirstChild();
         if (component != null && component instanceof Combobox) {
@@ -452,13 +452,13 @@ public class BillsDetailController extends GenericForwardComposer {
         // ca cho
         component = lstCell.get(7).getFirstChild();
         if (component != null && component instanceof Intbox) {
-            txtShift = (Intbox) component;
+            txtShift = (Doublebox) component;
             billsDetail.setShift(txtShift.getValue());
         }
 
         component = lstCell.get(8).getFirstChild();
         if (component != null && component instanceof Intbox) {
-            txtSwitch = (Intbox) component;
+            txtSwitch = (Doublebox) component;
             billsDetail.setNumSwitch(txtSwitch.getValue());
         }
         component = lstCell.get(9).getFirstChild();
@@ -601,12 +601,12 @@ public class BillsDetailController extends GenericForwardComposer {
         // ca cho
         component = lstCell.get(7).getFirstChild();
         if (component != null && component instanceof Intbox) {
-            txtShift = (Intbox) component;
+            txtShift = (Doublebox) component;
         }
         // Ca chuyen chan
         component = lstCell.get(8).getFirstChild();
         if (component != null && component instanceof Intbox) {
-            txtSwitch = (Intbox) component;
+            txtSwitch = (Doublebox) component;
 
         }
         component = lstCell.get(9).getFirstChild();
@@ -701,8 +701,8 @@ public class BillsDetailController extends GenericForwardComposer {
         }
 
         Double quantity = txtQuantity.getValue();
-        Integer shift = txtShift.getValue();
-        Integer numSwitch = txtSwitch.getValue();
+        Double shift = txtShift.getValue();
+        Double numSwitch = txtSwitch.getValue();
         if (pumpID != -1l && pumpTypeID != -1l && locationID != -1l && locationTypeID != -1l && quantity != null) {
             List<CalculatorRevenue> calculatorRevenue = billsServices.calculatorRevenue(txtConstruction.getValue(),
                     Long.valueOf(pumpTypeID), Long.valueOf(locationTypeID), Long.valueOf(locationID), quantity, shift,

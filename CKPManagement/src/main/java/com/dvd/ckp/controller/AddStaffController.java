@@ -108,7 +108,7 @@ public class AddStaffController extends GenericForwardComposer {
     private Longbox txtLocationTypeID;
 
     @Wire
-    private Intbox txtShift;
+    private Doublebox txtShift;
 
     @Wire
     private Intbox txtMaxStaff;
@@ -117,7 +117,7 @@ public class AddStaffController extends GenericForwardComposer {
     private Intbox txtIsAuto;
 
     @Wire
-    private Intbox txtSwitch;
+    private Doublebox txtSwitch;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {

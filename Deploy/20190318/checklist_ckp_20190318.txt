@@ -1,0 +1,12 @@
+﻿1. Sửa pro: calculator_revenue
+2. Sửa pro: proc_report_mass
+3. Sửa file: billDetail.zul, BillsDetailController, BillsDetail
+
+
+alter table bill_detail MODIFY  shift double;
+
+alter table bill_detail MODIFY  switch double;
+
+alter table report_mass MODIFY  shift double;
+
+alter table report_mass MODIFY  wait double;

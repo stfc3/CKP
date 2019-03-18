@@ -38,7 +38,7 @@ public interface BillDAO {
     public void delete(BillsDetail billsDetail);
 
     public List<CalculatorRevenue> calculatorRevenue(Long constructionId, Long pumpType, Long locationType,
-            Long locationID, Double quantity, Integer shift, Integer numSwitch, Integer numAuto);
+            Long locationID, Double quantity, Double shift, Double numSwitch, Integer numAuto);
 
     public List<BillViewDetail> getDataView(Long billID);
 

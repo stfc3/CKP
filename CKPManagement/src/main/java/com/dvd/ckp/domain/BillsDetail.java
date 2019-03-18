@@ -40,7 +40,7 @@ public class BillsDetail implements Serializable {
 	private Double quantity;
 	private Double quantityApprove;
 	private Double quantityView;
-	private Integer shift;
+	private Double shift;
 	private Double total;
 	private Double totalApprove;
 	private String totalView;
@@ -50,7 +50,7 @@ public class BillsDetail implements Serializable {
 	private Double quantityConvert;
 	private Date createDate;
 	private Integer autoConvert;
-	private Integer numSwitch;
+	private Double numSwitch;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,11 +113,11 @@ public class BillsDetail implements Serializable {
 	}
 
 	@Column(name = "shift")
-	public Integer getShift() {
+	public Double getShift() {
 		return shift;
 	}
 
-	public void setShift(Integer shift) {
+	public void setShift(Double shift) {
 		this.shift = shift;
 	}
 
@@ -245,11 +245,11 @@ public class BillsDetail implements Serializable {
 	}
 
 	@Column(name = "switch")
-	public Integer getNumSwitch() {
+	public Double getNumSwitch() {
 		return numSwitch;
 	}
 
-	public void setNumSwitch(Integer numSwitch) {
+	public void setNumSwitch(Double numSwitch) {
 		this.numSwitch = numSwitch;
 	}
 
