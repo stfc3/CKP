@@ -31,12 +31,12 @@
             <longbox id="txtLocationTypeID"
                                  value="${arg.billDetai.locationType}" visible="false">
             </longbox>
-            <intbox id="txtShift" value="${arg.billDetai.shift}"
-                                visible="false">
-            </intbox>
-            <doublebox id="txtIsAuto" value="${arg.billDetai.autoConvert}"
+            <doublebox id="txtShift" value="${arg.billDetai.shift}"
                                 visible="false">
             </doublebox>
+            <intbox id="txtIsAuto" value="${arg.billDetai.autoConvert}"
+                                visible="false">
+            </intbox>
             <intbox id="txtMaxStaff"
                                 value="${arg.billDetai.maxStaff}" visible="false">
             </intbox>

@@ -451,13 +451,13 @@ public class BillsDetailController extends GenericForwardComposer {
         }
         // ca cho
         component = lstCell.get(7).getFirstChild();
-        if (component != null && component instanceof Intbox) {
+        if (component != null && component instanceof Doublebox) {
             txtShift = (Doublebox) component;
             billsDetail.setShift(txtShift.getValue());
         }
 
         component = lstCell.get(8).getFirstChild();
-        if (component != null && component instanceof Intbox) {
+        if (component != null && component instanceof Doublebox) {
             txtSwitch = (Doublebox) component;
             billsDetail.setNumSwitch(txtSwitch.getValue());
         }
@@ -600,12 +600,12 @@ public class BillsDetailController extends GenericForwardComposer {
         }
         // ca cho
         component = lstCell.get(7).getFirstChild();
-        if (component != null && component instanceof Intbox) {
+        if (component != null && component instanceof Doublebox) {
             txtShift = (Doublebox) component;
         }
         // Ca chuyen chan
         component = lstCell.get(8).getFirstChild();
-        if (component != null && component instanceof Intbox) {
+        if (component != null && component instanceof Doublebox) {
             txtSwitch = (Doublebox) component;
 
         }
